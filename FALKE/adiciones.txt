@@ -1,0 +1,91 @@
+TRANSACCIONES
+
+   #region Transacciones
+
+        public GestionTransaccion IniciarTransaccion()
+        {
+            var con = CrearConexion();
+            con.Open();
+
+            var tran = con.BeginTransaction();
+
+            return new GestionTransaccion(con, tran);
+        }
+
+        #endregion
+    }
+
+    public sealed class GestionTransaccion : IDisposable
+    {
+        public SqlConnection Conexion { get; private set; }
+        public SqlTransaction Transaccion { get; private set; }
+
+        private bool _finalizada;
+
+        internal GestionTransaccion(
+            SqlConnection con,
+            SqlTransaction tran)
+        {
+            Conexion = con;
+            Transaccion = tran;
+        }
+
+        public void Commit()
+        {
+            if (!_finalizada)
+            {
+                Transaccion.Commit();
+                _finalizada = true;
+            }
+        }
+
+        public void Rollback()
+        {
+            if (!_finalizada)
+            {
+                Transaccion.Rollback();
+                _finalizada = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_finalizada)
+            {
+                try
+                {
+                    Transaccion.Rollback();
+                }
+                catch
+                {
+                    // La transacción puede ya haber sido finalizada
+                    // por SQL Server o por una excepción previa.
+                }
+
+                _finalizada = true;
+            }
+
+            if (Transaccion != null)
+                Transaccion.Dispose();
+
+            if (Conexion != null)
+                Conexion.Dispose();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
