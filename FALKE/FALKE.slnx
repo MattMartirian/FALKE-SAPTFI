@@ -3,9 +3,9 @@
     <File Path="adiciones.txt" />
     <File Path="correcciones.txt" />
   </Folder>
-  <Project Path="BE/BE.csproj" />
-  <Project Path="BLL/BLL.csproj" />
-  <Project Path="DAL/DAL.csproj" />
+  <Project Path="BE/BE.csproj" Id="3088d443-6554-4746-84ff-120bee8fb829" />
+  <Project Path="BLL/BLL.csproj" Id="d61f042a-d396-4ae2-915b-670ffca54f3d" />
+  <Project Path="DAL/DAL.csproj" Id="662a14ed-f8d8-434c-a7a8-1a9b6c3e2354" />
   <Project Path="GUI/" Type="Website" DisplayName="GUI">
     <BuildType Project="Debug" />
     <Properties Name="WebsiteProperties">
@@ -29,9 +29,9 @@
       <Property Name="VWDPort" Value="&quot;53192&quot;" />
     </Properties>
   </Project>
-  <Project Path="ORM/ORM.csproj" />
-  <Project Path="SECURITY/SECURITY.csproj" />
-  <Project Path="SERVICES/SERVICES.csproj" />
-  <Project Path="TE/TE.csproj" />
-  <Project Path="TLL/TLL.csproj" />
+  <Project Path="ORM/ORM.csproj" Id="d7bf84ca-e746-41a1-b6d9-0d08a793de85" />
+  <Project Path="SECURITY/SECURITY.csproj" Id="b2e1b5c8-83d4-414a-afa3-623e2c8c5aac" />
+  <Project Path="SERVICES/SERVICES.csproj" Id="8fc92247-9a96-4db6-ba36-b77e3228e106" />
+  <Project Path="TE/TE.csproj" Id="fe60f8da-f67f-4f24-bd33-8e198a04c26a" />
+  <Project Path="TLL/TLL.csproj" Id="5739acb5-fcda-4be2-aaee-867ef1911b9c" />
 </Solution>
