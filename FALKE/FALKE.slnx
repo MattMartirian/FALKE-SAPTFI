@@ -1,0 +1,37 @@
+<Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path="adiciones.txt" />
+    <File Path="correcciones.txt" />
+  </Folder>
+  <Project Path="BE/BE.csproj" Id="3088d443-6554-4746-84ff-120bee8fb829" />
+  <Project Path="BLL/BLL.csproj" Id="d61f042a-d396-4ae2-915b-670ffca54f3d" />
+  <Project Path="DAL/DAL.csproj" Id="662a14ed-f8d8-434c-a7a8-1a9b6c3e2354" />
+  <Project Path="GUI/" Type="Website" DisplayName="GUI">
+    <BuildType Project="Debug" />
+    <Properties Name="WebsiteProperties">
+      <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+      <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+      <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+      <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;GUI\&quot;" />
+      <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_53192\&quot;" />
+      <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+      <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_53192&quot;" />
+      <Property Name="DefaultWebSiteLanguage" Value="&quot;Visual C#&quot;" />
+      <Property Name="ProjectReferences" Value="&quot;{d61f042a-d396-4ae2-915b-670ffca54f3d}|BLL.dll;{3088d443-6554-4746-84ff-120bee8fb829}|BE.dll;{fe60f8da-f67f-4f24-bd33-8e198a04c26a}|TE.dll;{5739acb5-fcda-4be2-aaee-867ef1911b9c}|TLL.dll;{8fc92247-9a96-4db6-ba36-b77e3228e106}|SERVICES.dll;{b2e1b5c8-83d4-414a-afa3-623e2c8c5aac}|SECURITY.dll;&quot;" />
+      <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+      <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+      <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+      <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;GUI\&quot;" />
+      <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_53192\&quot;" />
+      <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+      <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_53192&quot;" />
+      <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.7.2&quot;" />
+      <Property Name="VWDPort" Value="&quot;53192&quot;" />
+    </Properties>
+  </Project>
+  <Project Path="ORM/ORM.csproj" Id="d7bf84ca-e746-41a1-b6d9-0d08a793de85" />
+  <Project Path="SECURITY/SECURITY.csproj" Id="b2e1b5c8-83d4-414a-afa3-623e2c8c5aac" />
+  <Project Path="SERVICES/SERVICES.csproj" Id="8fc92247-9a96-4db6-ba36-b77e3228e106" />
+  <Project Path="TE/TE.csproj" Id="fe60f8da-f67f-4f24-bd33-8e198a04c26a" />
+  <Project Path="TLL/TLL.csproj" Id="5739acb5-fcda-4be2-aaee-867ef1911b9c" />
+</Solution>
