@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora_TE.cs" />
+    <Compile Include="PermisoAbstracto_TE.cs" />
+    <Compile Include="PermisoCompuesto_TE.cs" />
+    <Compile Include="PermisoSimple_TE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario_TE.cs" />
   </ItemGroup>

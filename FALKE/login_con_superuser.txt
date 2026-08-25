@@ -1,0 +1,49 @@
+public ResultadoLogin ValidarCredenciales(string email, string contrasenaPlana)
+{
+    // Chequeo de emergencia PRIMERO, sin tocar la base — esto es justamente
+    // lo que lo hace resiliente a un wipe de UsuarioTable.
+    if (EsCredencialDeEmergencia(email, contrasenaPlana))
+    {
+        var usuarioEmergencia = ConstruirUsuarioEmergenciaEnMemoria();
+        // La bitácora también podría estar corrupta/wipeada en este escenario;
+        // por eso además se loguea a un archivo plano en disco, independiente de la BD.
+        LoguearAccesoEmergenciaAArchivo(email);
+        return ResultadoLogin.Exitoso(usuarioEmergencia);
+    }
+
+    // A partir de acá, el flujo normal que ya tenías, dependiente de la BD
+    var usuario = _repo.ObtenerPorEmail(email);
+    // ...
+}
+
+private bool EsCredencialDeEmergencia(string email, string contrasenaPlana)
+{
+    string emailConfigurado = ConfigurationManager.AppSettings["FALKE_EMERGENCY_EMAIL"];
+    string hashConfigurado = ConfigurationManager.AppSettings["FALKE_EMERGENCY_HASH"];
+
+    if (email != emailConfigurado)
+        return false;
+
+    return _cifrador.Encoder(contrasenaPlana) == hashConfigurado;
+}
+
+private Usuario_TE ConstruirUsuarioEmergenciaEnMemoria()
+{
+    // Nunca se persiste — existe solo en memoria durante esta sesión
+    return new Usuario_TE
+    {
+        IdUsuario = -1,
+        NombreUsuario = "EMERGENCIA",
+        EmailUsuario = ConfigurationManager.AppSettings["FALKE_EMERGENCY_EMAIL"],
+        Estado = EstadoUsuario.Activo,
+        EsCuentaEmergencia = true
+        // sin IdEmpresa/NombrePermiso reales: la autorización la resuelve
+        // el flag EsCuentaEmergencia directamente, como vimos antes
+    };
+}
+
+private void LoguearAccesoEmergenciaAArchivo(string email)
+{
+    string linea = $"{DateTime.Now:o} | ACCESO DE EMERGENCIA | {email}";
+    File.AppendAllText(Server.MapPath("~/App_Data/emergencia.log"), linea + Environment.NewLine);
+}

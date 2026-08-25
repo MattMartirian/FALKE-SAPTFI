@@ -1,7 +1,9 @@
 <Solution>
   <Folder Name="/Elementos de la solución/">
+    <File Path="../../../../../Users/Matt/Downloads/transacciones-pendiente.md" />
     <File Path="adiciones.txt" />
     <File Path="correcciones.txt" />
+    <File Path="login_con_superuser.txt" />
   </Folder>
   <Project Path="BE/BE.csproj" Id="3088d443-6554-4746-84ff-120bee8fb829" />
   <Project Path="BLL/BLL.csproj" Id="d61f042a-d396-4ae2-915b-670ffca54f3d" />

@@ -2,7 +2,7 @@
 
 namespace SERVICIOS
 {
-    public class InconsistenciaIntegridad
+    public class InconsistenciaIntegridad_SERVICE
     {
         public TablasBD Tabla { get; set; }
         public TipoInconsistencia Tipo { get; set; }

@@ -16,11 +16,11 @@ namespace ORM
             string sql = @"
                 INSERT INTO UsuarioTable
                     (id_empresa, nombre_usuario, apellido_usuario, email_usuario,
-                     contrasena_hash_usuario, id_permiso, estado_usuario,
+                     contrasena_hash_usuario, rol_permiso, estado_usuario,
                      intentos_fallidos_usuario, id_idioma)
                 VALUES
                     (@idEmpresa, @nombre, @apellido, @email,
-                     @hash, @idPermiso, @estado,
+                     @hash, @rolPermiso, @estado,
                      @intentos, @idIdioma);
                 SELECT SCOPE_IDENTITY();";
 
@@ -30,7 +30,7 @@ namespace ORM
                 new SqlParameter("@apellido", ValorONulo(u.ApellidoUsuario)),
                 new SqlParameter("@email", ValorONulo(u.EmailUsuario)),
                 new SqlParameter("@hash", ValorONulo(u.ContrasenaHashUsuario)),
-                new SqlParameter("@idPermiso", u.IdPermiso),
+                new SqlParameter("@rolPermiso", u.Rol.Nombre),
                 new SqlParameter("@estado", (int)u.Estado),
                 new SqlParameter("@intentos", u.IntentosFallidosUsuario),
                 new SqlParameter("@idIdioma", u.IdIdioma)
@@ -38,7 +38,7 @@ namespace ORM
 
             u.IdUsuario = Convert.ToInt32(idGenerado);
 
-            //TODO : Se podría calcular el DVH aquí mismo (llamar al gestor para que lo haga el desde aca), hay que revisarlo
+            //TODO : Se podría calcular el DVH aca mismo (llamar al gestor para que lo haga el desde aca), hay que revisarlo
             // Nota: el DVH del registro recién creado NO se calcula acá.
             // Es responsabilidad de la capa superior (TLL) llamar a
             // GestorIntegridad.ActualizarDVHRegistro luego del alta.
@@ -53,7 +53,7 @@ namespace ORM
                     apellido_usuario = @apellido,
                     email_usuario = @email,
                     contrasena_hash_usuario = @hash,
-                    id_permiso = @idPermiso,
+                    rol_permiso = @rolPermiso,
                     estado_usuario = @estado,
                     intentos_fallidos_usuario = @intentos,
                     id_idioma = @idIdioma
@@ -66,7 +66,7 @@ namespace ORM
                 new SqlParameter("@apellido", ValorONulo(u.ApellidoUsuario)),
                 new SqlParameter("@email", ValorONulo(u.EmailUsuario)),
                 new SqlParameter("@hash", ValorONulo(u.ContrasenaHashUsuario)),
-                new SqlParameter("@idPermiso", u.IdPermiso),
+                new SqlParameter("@rolPermiso", u.Rol.Nombre),
                 new SqlParameter("@estado", (int)u.Estado),
                 new SqlParameter("@intentos", u.IntentosFallidosUsuario),
                 new SqlParameter("@idIdioma", u.IdIdioma)
@@ -119,6 +119,13 @@ namespace ORM
                 new SqlParameter("@estado", estado));
         }
 
+        public bool ExisteUsuarioConRol(string nombrePermiso)
+        {
+            string sql = "SELECT COUNT(1) FROM UsuarioTable WHERE rol_permiso = @nombre";
+            var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@nombre", nombrePermiso));
+            return Convert.ToInt32(dt.Rows[0][0]) > 0;
+        }
+
         #region Mapping
 
         private static Usuario_TE Map(DataRow dr)
@@ -131,7 +138,7 @@ namespace ORM
                 ApellidoUsuario = Valor<string>(dr, "apellido_usuario"),
                 EmailUsuario = Valor<string>(dr, "email_usuario"),
                 ContrasenaHashUsuario = Valor<string>(dr, "contrasena_hash_usuario"),
-                IdPermiso = Valor<int>(dr, "id_permiso"),
+                Rol = new PermisoCompuesto_TE(Valor<string>(dr, "rol_permiso"), true ),
                 Estado = Valor<EstadoUsuario>(dr, "estado_usuario"),
                 IntentosFallidosUsuario = Valor<int>(dr, "intentos_fallidos_usuario"),
                 IdIdioma = Valor<int>(dr, "id_idioma"),

@@ -5,12 +5,12 @@ using SECURITY;
 
 namespace SERVICIOS
 {
-    public class GestorIntegridad
+    public class GestorIntegridad_SERVICE
     {
         private readonly Integridad_ORM integridadRepo;
         private readonly Cifrador cifrador;
 
-        public GestorIntegridad()
+        public GestorIntegridad_SERVICE()
         {
             integridadRepo = new Integridad_ORM();
             cifrador = Cifrador.CypherInstance;
@@ -64,16 +64,16 @@ namespace SERVICIOS
             GuardarIntegridadTabla(tabla);
         }
 
-        public List<InconsistenciaIntegridad> VerificarIntegridadTabla(TablasBD tabla)
+        public List<InconsistenciaIntegridad_SERVICE> VerificarIntegridadTabla(TablasBD tabla)
         {
-            var inconsistencias = new List<InconsistenciaIntegridad>();
+            var inconsistencias = new List<InconsistenciaIntegridad_SERVICE>();
 
             var filas = integridadRepo.ObtenerDatosTabla(tabla);
             var registroGuardado = integridadRepo.LeerRegistroIntegridad(tabla);
 
             if (registroGuardado == null)
             {
-                inconsistencias.Add(new InconsistenciaIntegridad
+                inconsistencias.Add(new InconsistenciaIntegridad_SERVICE
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.ErrorLectura,
@@ -84,7 +84,7 @@ namespace SERVICIOS
 
             if (filas.Count > registroGuardado.Value.CR)
             {
-                inconsistencias.Add(new InconsistenciaIntegridad
+                inconsistencias.Add(new InconsistenciaIntegridad_SERVICE
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.RegistrosAgregados,
@@ -94,7 +94,7 @@ namespace SERVICIOS
 
             else if (filas.Count < registroGuardado.Value.CR)
             {
-                inconsistencias.Add(new InconsistenciaIntegridad
+                inconsistencias.Add(new InconsistenciaIntegridad_SERVICE
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.RegistrosEliminados,
@@ -112,7 +112,7 @@ namespace SERVICIOS
                 if (dvhCalculado != fila.Dvh)
                 {
                     string clave = string.Join("|", fila.ClavePK);
-                    inconsistencias.Add(new InconsistenciaIntegridad
+                    inconsistencias.Add(new InconsistenciaIntegridad_SERVICE
                     {
                         Tabla = tabla,
                         Tipo = TipoInconsistencia.RegistroAlterado,
@@ -126,7 +126,7 @@ namespace SERVICIOS
 
             if (dvvCalculado != registroGuardado.Value.DVV)
             {
-                inconsistencias.Insert(0, new InconsistenciaIntegridad
+                inconsistencias.Insert(0, new InconsistenciaIntegridad_SERVICE
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.FirmaTablaInvalida,
@@ -137,9 +137,9 @@ namespace SERVICIOS
             return inconsistencias;
         }
 
-        public List<InconsistenciaIntegridad> VerificarIntegridadTodasLasTablas()
+        public List<InconsistenciaIntegridad_SERVICE> VerificarIntegridadTodasLasTablas()
         {
-            var todas = new List<InconsistenciaIntegridad>();
+            var todas = new List<InconsistenciaIntegridad_SERVICE>();
 
             foreach (TablasBD tabla in (TablasBD[])Enum.GetValues(typeof(TablasBD)))
             {

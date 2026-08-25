@@ -41,12 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitacoraRepository.cs" />
+    <Compile Include="Repos\BitacoraRepository.cs" />
     <Compile Include="Integridad_ORM.cs" />
+    <Compile Include="Repos\PermisoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryBase.cs" />
+    <Compile Include="Repos\RepositoryBase.cs" />
     <Compile Include="TablasBD.cs" />
-    <Compile Include="UsuarioRepository.cs" />
+    <Compile Include="Repos\UsuarioRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

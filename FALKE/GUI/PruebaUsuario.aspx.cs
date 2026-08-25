@@ -16,7 +16,7 @@ namespace GUI
         {
             try
             {
-                var gestorIntegridad = new GestorIntegridad();
+                var gestorIntegridad = new GestorIntegridad_SERVICE();
                 gestorIntegridad.RecalcularTodasLasTablas();
 
                 lblResultado.Text = "Integridad recalculada correctamente para todas las tablas.";
@@ -39,8 +39,9 @@ namespace GUI
                     NombreUsuario = "Juan",
                     ApellidoUsuario = "Pérez",
                     EmailUsuario = "juan.perez." + DateTime.Now.Ticks + "@falke.com",
-                    IdPermiso = 1,
-                    IdIdioma = 1
+                    Rol = new PermisoCompuesto_TE("Usuario", true),
+                    IdIdioma = 1,
+                    EsCuentaEmergencia = false
                 };
 
                 usuarioTLL.RegistrarUsuario(nuevoUsuario, "ContrasenaTemporal123");

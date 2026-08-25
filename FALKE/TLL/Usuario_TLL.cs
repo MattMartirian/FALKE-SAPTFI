@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
-using ORM;
+﻿using ORM;
 using SECURITY;
 using SERVICIOS;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Net.Http;
+using System.Web;
 using TE;
 
 namespace TLL
@@ -12,17 +17,25 @@ namespace TLL
 
         private readonly UsuarioRepository usuarioRepo;
         private readonly Cifrador cifrador;
-        private readonly GestorIntegridad gestorIntegridad;
+        private readonly GestorIntegridad_SERVICE gestorIntegridad;
 
         public UsuarioTLL()
         {
             usuarioRepo = new UsuarioRepository();
             cifrador = Cifrador.CypherInstance;
-            gestorIntegridad = new GestorIntegridad();
+            gestorIntegridad = new GestorIntegridad_SERVICE();
         }
 
         public ResultadoLogin ValidarCredenciales(string email, string contrasenaPlana)
         {
+            // creación del usuario de emergencia antes de pasar a consultas de BD
+            if (EsCredencialDeEmergencia(email, contrasenaPlana))
+            {
+                var usuarioEmergencia = ConstruirUsuarioEmergenciaEnMemoria(email);
+                LoguearAccesoEmergenciaAArchivo(email);
+                return ResultadoLogin.Exitoso(usuarioEmergencia);
+            }
+
             var usuario = usuarioRepo.ObtenerPorEmail(email);
 
             if (usuario == null) return ResultadoLogin.CredencialesInvalidas();
@@ -88,6 +101,48 @@ namespace TLL
         private bool VerificarContrasena(string contrasenaPlana, string hashAlmacenado)
         {
             return cifrador.Encoder(contrasenaPlana) == hashAlmacenado;
+        }
+
+        private bool EsCredencialDeEmergencia(string identificador, string contrasenaPlana)
+        {
+            string usuarioConfigurado = ConfigurationManager.AppSettings["FALKE_EMERGENCY_USER"];
+            string hashConfigurado = ConfigurationManager.AppSettings["FALKE_EMERGENCY_HASH"];
+
+            if (string.IsNullOrEmpty(usuarioConfigurado) || string.IsNullOrEmpty(hashConfigurado)) return false;
+
+            if (identificador != usuarioConfigurado) return false;
+
+            return cifrador.Encoder(contrasenaPlana) == hashConfigurado;
+        }
+
+        private Usuario_TE ConstruirUsuarioEmergenciaEnMemoria(string identificador)
+        {
+            return new Usuario_TE
+            {
+                IdUsuario = -1,
+                NombreUsuario = "EMERGENCIA",
+                ApellidoUsuario = string.Empty,
+                EmailUsuario = identificador,
+                Estado = EstadoUsuario.Activo,
+                EsCuentaEmergencia = true
+            };
+        }
+
+        private void LoguearAccesoEmergenciaAArchivo(string identificador)
+        {
+            try
+            {
+                string linea = $"{DateTime.Now:o} | ACCESO DE EMERGENCIA | {identificador}";
+                string ruta = HttpContext.Current != null
+                    ? HttpContext.Current.Server.MapPath("~/App_Data/emergencia.log")
+                    : "emergencia.log";
+
+                File.AppendAllText(ruta, linea + Environment.NewLine);
+            }
+            catch
+            {
+                // Un fallo al escribir el log de emergencia no debe impedir el acceso de emergencia en sí.
+            }
         }
     }
 }
