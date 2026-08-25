@@ -161,8 +161,6 @@ namespace ORM
             return hijos;
         }
 
-        // Único lugar de todo el sistema que decide qué subclase instanciar
-        // a partir de una fila de PermisoTable.
         private static PermisoAbstracto_TE Map(DataRow dr)
         {
             string nombre = Valor<string>(dr, "nombre_permiso");
