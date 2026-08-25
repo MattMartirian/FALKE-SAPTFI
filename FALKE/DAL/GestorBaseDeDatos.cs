@@ -32,8 +32,7 @@ namespace DAL
    
                 using (var cmd = new SqlCommand(sql, con))
                 {
-                    if (parametros != null && parametros.Length > 0)
-                        cmd.Parameters.AddRange(parametros);
+                    if (parametros != null && parametros.Length > 0) cmd.Parameters.AddRange(parametros);
 
                     using (var da = new SqlDataAdapter(cmd))
                     {
@@ -53,8 +52,7 @@ namespace DAL
 
                 using (var cmd = new SqlCommand(sql, con))
                 {
-                    if (parametros != null && parametros.Length > 0)
-                        cmd.Parameters.AddRange(parametros);
+                    if (parametros != null && parametros.Length > 0) cmd.Parameters.AddRange(parametros);
 
                     return cmd.ExecuteNonQuery();
                 }
@@ -69,13 +67,11 @@ namespace DAL
 
                 using (var cmd = new SqlCommand(sql, con))
                 {
-                    if (parametros != null && parametros.Length > 0)
-                        cmd.Parameters.AddRange(parametros);
+                    if (parametros != null && parametros.Length > 0)  cmd.Parameters.AddRange(parametros);
 
                     object result = cmd.ExecuteScalar();
 
-                    if (result == null || result == DBNull.Value)
-                        return default(T);
+                    if (result == null || result == DBNull.Value) return default(T);
 
                     return (T)Convert.ChangeType(result, typeof(T));
                 }

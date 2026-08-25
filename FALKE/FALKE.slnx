@@ -17,7 +17,7 @@
       <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
       <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_53192&quot;" />
       <Property Name="DefaultWebSiteLanguage" Value="&quot;Visual C#&quot;" />
-      <Property Name="ProjectReferences" Value="&quot;{d61f042a-d396-4ae2-915b-670ffca54f3d}|BLL.dll;{3088d443-6554-4746-84ff-120bee8fb829}|BE.dll;{fe60f8da-f67f-4f24-bd33-8e198a04c26a}|TE.dll;{5739acb5-fcda-4be2-aaee-867ef1911b9c}|TLL.dll;{8fc92247-9a96-4db6-ba36-b77e3228e106}|SERVICES.dll;{b2e1b5c8-83d4-414a-afa3-623e2c8c5aac}|SECURITY.dll;&quot;" />
+      <Property Name="ProjectReferences" Value="&quot;{d61f042a-d396-4ae2-915b-670ffca54f3d}|BLL.dll;{3088d443-6554-4746-84ff-120bee8fb829}|BE.dll;{fe60f8da-f67f-4f24-bd33-8e198a04c26a}|TE.dll;{5739acb5-fcda-4be2-aaee-867ef1911b9c}|TLL.dll;{8fc92247-9a96-4db6-ba36-b77e3228e106}|SERVICES.dll;{b2e1b5c8-83d4-414a-afa3-623e2c8c5aac}|SECURITY.dll;{D7BF84CA-E746-41A1-B6D9-0D08A793DE85}|ORM.dll;{662A14ED-F8D8-434C-A7A8-1A9B6C3E2354}|DAL.dll;&quot;" />
       <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
       <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
       <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />

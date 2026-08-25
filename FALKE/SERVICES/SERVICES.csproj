@@ -41,9 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GestorIntegridad.cs" />
+    <Compile Include="InconsistenciaIntegridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ORM\ORM.csproj">
+      <Project>{d7bf84ca-e746-41a1-b6d9-0d08a793de85}</Project>
+      <Name>ORM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SECURITY\SECURITY.csproj">
       <Project>{b2e1b5c8-83d4-414a-afa3-623e2c8c5aac}</Project>
       <Name>SECURITY</Name>

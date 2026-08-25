@@ -17,8 +17,7 @@ namespace TE
 
         public Bitacora_TE() { }
 
-        public Bitacora_TE(int idUsuario, string moduloBitacora, string descripcionBitacora,
-                            int criticidadBitacora, DateTime fechaHoraBitacora, int idEventoBitacora = 0)
+        public Bitacora_TE(int idUsuario, string moduloBitacora, string descripcionBitacora, int criticidadBitacora, DateTime fechaHoraBitacora, int idEventoBitacora = 0)
         {
             IdEventoBitacora = idEventoBitacora;
             IdUsuario = idUsuario;

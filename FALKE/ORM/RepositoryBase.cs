@@ -14,11 +14,6 @@ namespace ORM
             Gestor = GestorBaseDeDatos.Instancia;
         }
 
-        internal RepositoryBase(GestorBaseDeDatos gestor)
-        {
-            Gestor = gestor ?? GestorBaseDeDatos.Instancia;
-        }
-
         public abstract void Alta(TEntity entidad);
         public abstract void Modificar(TEntity entidad);
         public abstract TEntity ObtenerPorPK(TKey pk);
@@ -28,19 +23,20 @@ namespace ORM
 
         /// <summary>
         /// Devuelve el valor de una columna del DataRow y lo convierte al tipo especificado.
-        /// Si el valor es DBNull, devuelve null para tipos nullable o el valor predeterminado para tipos no nullable.
         /// </summary>
         protected static T Valor<T>(DataRow dr, string columna)
         {
             var val = dr[columna];
 
-            if (val == DBNull.Value)
-                return default;
+            if (val == DBNull.Value) return default;
 
-            var tipoNullable = Nullable.GetUnderlyingType(typeof(T));
+            var tipoDestino = typeof(T);
+            var tipoNullable = Nullable.GetUnderlyingType(tipoDestino);
+            var tipoReal = tipoNullable ?? tipoDestino;
 
-            if (tipoNullable != null)
-                return (T)Convert.ChangeType(val, tipoNullable);
+            if (tipoReal.IsEnum) return (T)Enum.ToObject(tipoReal, val);
+
+            if (tipoNullable != null) return (T)Convert.ChangeType(val, tipoNullable);
 
             return (T)val;
         }

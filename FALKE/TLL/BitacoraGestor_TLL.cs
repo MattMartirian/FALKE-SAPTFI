@@ -10,21 +10,21 @@ namespace TLL
 {
     public class BitacoraGestor_TLL
     {
-        private readonly BitacoraRepository _repository;
+        private readonly BitacoraRepository bitacoraRepo;
 
         public BitacoraGestor_TLL()
         {
-            _repository = new BitacoraRepository();
+            bitacoraRepo = new BitacoraRepository();
         }
 
         public void Guardar(Bitacora_TE bitacora)
         {
-            _repository.Alta(bitacora);
+            bitacoraRepo.Alta(bitacora);
         }
 
         public List<Bitacora_TE> ObtenerTodas()
         {
-            return _repository.ObtenerTodos();
+            return bitacoraRepo.ObtenerTodos();
         }
     }
 }

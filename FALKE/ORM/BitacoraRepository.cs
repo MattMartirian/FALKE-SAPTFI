@@ -9,7 +9,7 @@ namespace ORM
 {
     public class BitacoraRepository : RepositoryBase<Bitacora_TE, int>
     {
-        public BitacoraRepository(): base(){}
+        public BitacoraRepository(): base() { }
 
         public override void Alta(Bitacora_TE b)
         {
