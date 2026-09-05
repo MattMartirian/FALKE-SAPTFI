@@ -54,7 +54,22 @@ namespace SECURITY
             }
         }
 
-        public string ReversibleEncrypt(string toEncode)
+        public static string GenerarSecretoUrlSafe()
+        {
+            byte[] bytes = new byte[32];
+
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(bytes);
+            }
+
+            return Convert.ToBase64String(bytes)
+                .Replace('+', '-')
+                .Replace('/', '_')
+                .TrimEnd('=');
+        }
+
+        public string EncriptadoReversible(string toEncode)
         {
             if (toEncode == null) throw new ArgumentNullException(nameof(toEncode));
 
@@ -85,7 +100,7 @@ namespace SECURITY
             }
         }
 
-        public string ReversibleDecrypt(string toDecode)
+        public string DesencriptadoReversible(string toDecode)
         {
             if (toDecode == null) throw new ArgumentNullException(nameof(toDecode));
 

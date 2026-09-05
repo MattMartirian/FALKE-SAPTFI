@@ -1,0 +1,10 @@
+Para:   mati.martirian@gmail.com
+Asunto: Restablecer contrasena de FALKE
+Fecha:  2026-09-05T19:29:52.3417207-03:00
+--------------------------------------------------
+Se solicito restablecer la contrasena de tu cuenta de FALKE.
+Si fuiste vos, entra a este enlace (vence en 2 horas):
+http://localhost:53192/EstablecerContrasena.aspx?token=vCwj0yPlaOt_edMCwMom06rwyjAfLB7xjJlE4-_r24A
+
+Si no fuiste vos, ignora este mensaje: tu contrasena actual sigue siendo valida.
+

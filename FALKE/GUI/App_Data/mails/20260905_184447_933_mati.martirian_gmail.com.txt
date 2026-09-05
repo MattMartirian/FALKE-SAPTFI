@@ -1,0 +1,10 @@
+Para:   mati.martirian@gmail.com
+Asunto: Activa tu cuenta de FALKE
+Fecha:  2026-09-05T18:44:47.9333081-03:00
+--------------------------------------------------
+Hola Matías,
+
+Un administrador creo tu cuenta en FALKE.
+Para activarla y definir tu contrasena, entra a este enlace (vence en 48 horas):
+http://localhost:53192/EstablecerContrasena.aspx?token=sMAYBeWL-5edulNvPSDdGupZ3owaUa3s93UEJGqzf1c
+

@@ -37,11 +37,6 @@ namespace ORM
             );
 
             u.IdUsuario = Convert.ToInt32(idGenerado);
-
-            //TODO : Se podría calcular el DVH aca mismo (llamar al gestor para que lo haga el desde aca), hay que revisarlo
-            // Nota: el DVH del registro recién creado NO se calcula acá.
-            // Es responsabilidad de la capa superior (TLL) llamar a
-            // GestorIntegridad.ActualizarDVHRegistro luego del alta.
         }
 
         public override void Modificar(Usuario_TE u)
@@ -106,9 +101,7 @@ namespace ORM
         public void ActualizarIntentosFallidos(int idUsuario, int intentos)
         {
             string sql = "UPDATE UsuarioTable SET intentos_fallidos_usuario = @intentos WHERE id_usuario = @id";
-            Gestor.EjecutarNonQuery(sql,
-                new SqlParameter("@id", idUsuario),
-                new SqlParameter("@intentos", intentos));
+            Gestor.EjecutarNonQuery(sql, new SqlParameter("@id", idUsuario), new SqlParameter("@intentos", intentos));
         }
 
         public void ActualizarEstado(int idUsuario, int estado)

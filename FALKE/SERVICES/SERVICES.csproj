@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="GestorIntegridad_SERVICE.cs" />
     <Compile Include="InconsistenciaIntegridad_SERVICE.cs" />
+    <Compile Include="ResultadoRecalculoIntegridad_SERVICE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

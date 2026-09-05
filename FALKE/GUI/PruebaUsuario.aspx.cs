@@ -44,11 +44,11 @@ namespace GUI
                     EsCuentaEmergencia = false
                 };
 
-                usuarioTLL.RegistrarUsuario(nuevoUsuario, "ContrasenaTemporal123");
+                string tokenActivacion = usuarioTLL.RegistrarUsuario(nuevoUsuario);
 
                 lblResultado.Text = "Usuario creado con id " + nuevoUsuario.IdUsuario +
                                      ", email " + nuevoUsuario.EmailUsuario +
-                                     ". Hash guardado: " + nuevoUsuario.ContrasenaHashUsuario;
+                                     ". Token de activacion: " + tokenActivacion;
             }
             catch (Exception ex)
             {

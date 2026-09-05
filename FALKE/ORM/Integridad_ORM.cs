@@ -17,6 +17,7 @@ namespace ORM
 
         private static string NombreTabla(TablasBD tabla) => $"{tabla}Table";
 
+        public List<string> ObtenerNombresColumnas(TablasBD tabla) => ObtenerColumnas(NombreTabla(tabla));
 
         private List<string> ObtenerColumnas(string nombreTabla)
         {
@@ -29,7 +30,10 @@ namespace ORM
             var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@tabla", nombreTabla));
             var columnas = new List<string>();
 
-            foreach (DataRow row in dt.Rows) columnas.Add(row["COLUMN_NAME"].ToString());
+            foreach (DataRow row in dt.Rows)
+            {
+                columnas.Add(row["COLUMN_NAME"].ToString());
+            }
 
             return columnas;
         }
@@ -49,7 +53,10 @@ namespace ORM
             var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@tabla", nombreTabla));
             var columnas = new List<string>();
 
-            foreach (DataRow row in dt.Rows) columnas.Add(row["COLUMN_NAME"].ToString());
+            foreach (DataRow row in dt.Rows)
+            {
+                columnas.Add(row["COLUMN_NAME"].ToString());
+            }
 
             return columnas;
         }
@@ -62,7 +69,10 @@ namespace ORM
             var dt = Gestor.EjecutarQuery(sql);
             var dvhs = new List<string>();
 
-            foreach (DataRow row in dt.Rows)  dvhs.Add(row["DVH"].ToString());
+            foreach (DataRow row in dt.Rows)
+            {
+                dvhs.Add(row["DVH"].ToString());
+            }
 
             return dvhs;
         }

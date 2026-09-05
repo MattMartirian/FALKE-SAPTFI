@@ -46,6 +46,7 @@
     <Compile Include="Repos\PermisoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\RepositoryBase.cs" />
+    <Compile Include="Repos\TokenRepository.cs" />
     <Compile Include="TablasBD.cs" />
     <Compile Include="Repos\UsuarioRepository.cs" />
   </ItemGroup>

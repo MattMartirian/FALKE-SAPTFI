@@ -36,20 +36,42 @@ namespace SERVICES
             integridadRepo.GuardarRegistroIntegridad(tabla, dvv, dvhs.Count);
         }
 
-        public void RecalcularTodasLasTablas()
+        public DetalleTablaRecalculo_SERVICE RecalcularTabla(TablasBD tabla)
         {
+            var filas = integridadRepo.ObtenerDatosTabla(tabla);
+
+            foreach (var fila in filas)
+            {
+                string dvh = CalcularDigitoVerificador(fila.Datos);
+                integridadRepo.GuardarNuevoDVH(tabla, fila.ClavePK, dvh);
+            }
+
+            GuardarIntegridadTabla(tabla);
+
+            var registro = integridadRepo.LeerRegistroIntegridad(tabla);
+
+            return new DetalleTablaRecalculo_SERVICE
+            {
+                Tabla = tabla.ToString(),
+                Registros = filas.Count,
+                Dvv = registro.HasValue ? registro.Value.DVV : null
+            };
+        }
+
+        public ResultadoRecalculoIntegridad_SERVICE RecalcularTodasLasTablas()
+        {
+            var resultado = new ResultadoRecalculoIntegridad_SERVICE();
+
             foreach (TablasBD tabla in (TablasBD[])Enum.GetValues(typeof(TablasBD)))
             {
-                var filas = integridadRepo.ObtenerDatosTabla(tabla);
+                var detalle = RecalcularTabla(tabla);
 
-                foreach (var fila in filas)
-                {
-                    string dvh = CalcularDigitoVerificador(fila.Datos);
-                    integridadRepo.GuardarNuevoDVH(tabla, fila.ClavePK, dvh);
-                }
-
-                GuardarIntegridadTabla(tabla);
+                resultado.TablasProcesadas++;
+                resultado.RegistrosProcesados += detalle.Registros;
+                resultado.Tablas.Add(detalle);
             }
+
+            return resultado;
         }
 
         public void ActualizarDVHRegistro(TablasBD tabla, string[] clavesPK)
@@ -103,9 +125,12 @@ namespace SERVICES
             }
 
             var dvhsRecalculados = new List<string>();
+            var columnas = integridadRepo.ObtenerNombresColumnas(tabla).ToArray();
+            int numeroRegistro = 0;
 
             foreach (var fila in filas)
             {
+                numeroRegistro++;
                 string dvhCalculado = CalcularDigitoVerificador(fila.Datos);
                 dvhsRecalculados.Add(dvhCalculado);
 
@@ -117,7 +142,12 @@ namespace SERVICES
                         Tabla = tabla,
                         Tipo = TipoInconsistencia.RegistroAlterado,
                         ClaveRegistro = clave,
-                        Detalle = $"El registro con clave \"{clave}\" de la tabla {tabla} fue alterado."
+                        NumeroRegistro = numeroRegistro,
+                        Columnas = columnas,
+                        Datos = fila.Datos,
+                        DvhAlmacenado = string.IsNullOrEmpty(fila.Dvh) ? "(vacio)" : fila.Dvh,
+                        DvhRecalculado = dvhCalculado,
+                        Detalle = $"El registro #{numeroRegistro} (clave \"{clave}\") de la tabla {tabla} fue alterado o agregado externamente."
                     });
                 }
             }

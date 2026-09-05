@@ -1,0 +1,10 @@
+Para:   sfssd@gmail.com
+Asunto: Activa tu cuenta de FALKE
+Fecha:  2026-09-05T19:07:30.7187473-03:00
+--------------------------------------------------
+Hola uiui,
+
+Un administrador creo tu cuenta en FALKE.
+Para activarla y definir tu contrasena, entra a este enlace (vence en 48 horas):
+http://localhost:53192/EstablecerContrasena.aspx?token=lrq2t4X10IznCJa7qvY1x0YLOz57vNF_9XiZ4EL7jKg
+
