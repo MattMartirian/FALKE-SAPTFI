@@ -36,9 +36,7 @@ namespace ORM
 
             if (tipoReal.IsEnum) return (T)Enum.ToObject(tipoReal, val);
 
-            if (tipoNullable != null) return (T)Convert.ChangeType(val, tipoNullable);
-
-            return (T)val;
+            return (T)Convert.ChangeType(val, tipoReal);
         }
 
         /// <summary>

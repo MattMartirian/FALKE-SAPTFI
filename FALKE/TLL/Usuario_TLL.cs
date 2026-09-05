@@ -1,6 +1,6 @@
 ﻿using ORM;
 using SECURITY;
-using SERVICIOS;
+using SERVICES;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -34,6 +34,13 @@ namespace TLL
                 var usuarioEmergencia = ConstruirUsuarioEmergenciaEnMemoria(email);
                 LoguearAccesoEmergenciaAArchivo(email);
                 return ResultadoLogin.Exitoso(usuarioEmergencia);
+            }
+
+            var inconsistencias = gestorIntegridad.VerificarIntegridadTodasLasTablas();
+            if (inconsistencias.Count > 0)
+            {
+                // acá se decide el nivel de detalle según el rol del usuario que intenta loguearse
+                return ResultadoLogin.IntegridadComprometida();
             }
 
             var usuario = usuarioRepo.ObtenerPorEmail(email);

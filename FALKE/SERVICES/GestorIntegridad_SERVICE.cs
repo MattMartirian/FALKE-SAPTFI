@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ORM;
 using SECURITY;
 
-namespace SERVICIOS
+namespace SERVICES
 {
     public class GestorIntegridad_SERVICE
     {

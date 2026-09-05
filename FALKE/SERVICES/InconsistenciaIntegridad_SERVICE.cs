@@ -1,6 +1,6 @@
 ﻿using ORM;
 
-namespace SERVICIOS
+namespace SERVICES
 {
     public class InconsistenciaIntegridad_SERVICE
     {

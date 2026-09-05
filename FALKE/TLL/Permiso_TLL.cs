@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ORM;
-using SERVICIOS;
 using TE;
 
 namespace TLL
@@ -81,14 +80,16 @@ namespace TLL
 
         public PermisoAbstracto_TE ObtenerPermiso(string nombre)
         {
-            return permisoRepo.ObtenerPorPK(nombre);
+            var arbol = ConstruirArbolCompleto();
+
+            return arbol.TryGetValue(nombre, out var nodo) ? nodo : null;
         }
 
         public List<PermisoAbstracto_TE> ObtenerTodos()
         {
             return permisoRepo.ObtenerTodos();
         }
-            
+
         public HashSet<string> ObtenerPermisosEfectivos(string nombrePermiso)
         {
             var arbol = ConstruirArbolCompleto();

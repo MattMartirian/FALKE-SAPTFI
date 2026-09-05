@@ -30,23 +30,7 @@ namespace ORM
 
         public override void Modificar(Bitacora_TE b)
         {
-            string sql = @"
-                UPDATE BitacoraTable SET
-                    id_usuario = @idUsuario,
-                    modulo_bitacora = @modulo,
-                    descripcion_bitacora = @descripcion,
-                    criticidad_bitacora = @criticidad,
-                    fecha_hora_bitacora = @fecha
-                WHERE id_evento_bitacora = @id";
-
-            Gestor.EjecutarNonQuery(sql,
-                new SqlParameter("@id", b.IdEventoBitacora),
-                new SqlParameter("@idUsuario", b.IdUsuario),
-                new SqlParameter("@modulo", ValorONulo(b.ModuloBitacora)),
-                new SqlParameter("@descripcion", ValorONulo(b.DescripcionBitacora)),
-                new SqlParameter("@criticidad", b.CriticidadBitacora),
-                new SqlParameter("@fecha", b.FechaHoraBitacora)
-            );
+            throw new NotSupportedException("La bitácora es de solo lectura: no se permite modificar eventos ya registrados.");
         }
 
         public override Bitacora_TE ObtenerPorPK(int pk)
