@@ -38,7 +38,7 @@
                         <asp:BoundField HeaderText="Clave (PK)" DataField="ClaveRegistro" />
                         <asp:BoundField HeaderText="DVH almacenado" DataField="DvhAlmacenado" />
                         <asp:BoundField HeaderText="DVH recalculado" DataField="DvhRecalculado" />
-                        <asp:BoundField HeaderText="Datos del registro" DataField="DatosLegibles" />
+                        <asp:BoundField HeaderText="Datos del registro" DataField="DatosFormateados" />
                         <asp:BoundField HeaderText="Detalle" DataField="Detalle" />
                     </Columns>
                 </asp:GridView>
