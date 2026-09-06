@@ -9,7 +9,12 @@ namespace ORM
 {
     public class UsuarioRepository : RepositoryBase<Usuario_TE, int>
     {
-        public UsuarioRepository() : base() { }
+        private readonly PermisoRepository permisoRepo;
+
+        public UsuarioRepository() : base()
+        {
+            permisoRepo = new PermisoRepository();
+        }
 
         public override void Alta(Usuario_TE u)
         {
@@ -72,7 +77,7 @@ namespace ORM
         {
             string sql = "SELECT * FROM UsuarioTable WHERE id_usuario = @id";
             var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@id", pk));
-            return dt.Rows.Count == 0 ? null : Map(dt.Rows[0]);
+            return dt.Rows.Count == 0 ? null : MapConRolPropio(dt.Rows[0]);
         }
 
         public override List<Usuario_TE> ObtenerTodos()
@@ -84,8 +89,8 @@ namespace ORM
         public Usuario_TE ObtenerPorEmail(string email)
         {
             string sql = "SELECT * FROM UsuarioTable WHERE email_usuario = @email";
-            var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@email", email));
-            return dt.Rows.Count == 0 ? null : Map(dt.Rows[0]);
+            var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@email", ValorONulo(email)));
+            return dt.Rows.Count == 0 ? null : MapConRolPropio(dt.Rows[0]);
         }
 
         public List<Usuario_TE> ObtenerPorEmpresa(int idEmpresa)
@@ -121,7 +126,7 @@ namespace ORM
 
         #region Mapping
 
-        private static Usuario_TE Map(DataRow dr)
+        private static Usuario_TE Map(DataRow dr, PermisoCompuesto_TE rol)
         {
             return new Usuario_TE
             {
@@ -129,9 +134,9 @@ namespace ORM
                 IdEmpresa = Valor<int>(dr, "id_empresa"),
                 NombreUsuario = Valor<string>(dr, "nombre_usuario"),
                 ApellidoUsuario = Valor<string>(dr, "apellido_usuario"),
-                EmailUsuario = Valor<string>(dr, "email_usuario"),
+                EmailUsuario = NormalizarEmail(Valor<string>(dr, "email_usuario")),
                 ContrasenaHashUsuario = Valor<string>(dr, "contrasena_hash_usuario"),
-                Rol = new PermisoCompuesto_TE(Valor<string>(dr, "rol_permiso"), true ),
+                Rol = rol,
                 Estado = Valor<EstadoUsuario>(dr, "estado_usuario"),
                 IntentosFallidosUsuario = Valor<int>(dr, "intentos_fallidos_usuario"),
                 IdIdioma = Valor<int>(dr, "id_idioma"),
@@ -139,13 +144,44 @@ namespace ORM
             };
         }
 
-        private static List<Usuario_TE> MapTodos(DataTable dt)
+        private Usuario_TE MapConRolPropio(DataRow dr)
         {
+            string nombreRol = Valor<string>(dr, "rol_permiso");
+            return Map(dr, ResolverRol(nombreRol, permisoRepo.ConstruirArbolRol(nombreRol)));
+        }
+
+        private static string NormalizarEmail(string email)
+        {
+            return email == null ? null : email.Trim().ToLowerInvariant();
+        }
+
+        private static PermisoCompuesto_TE ResolverRol(string nombreRol, PermisoCompuesto_TE nodoResuelto)
+        {
+            if (string.IsNullOrEmpty(nombreRol)) return null;
+
+            return nodoResuelto ?? new PermisoCompuesto_TE(nombreRol, true);
+        }
+
+        private static PermisoCompuesto_TE ResolverRol(string nombreRol, Dictionary<string, PermisoAbstracto_TE> arbolPermisos)
+        {
+            if (string.IsNullOrEmpty(nombreRol)) return null;
+
+            PermisoAbstracto_TE nodo = null;
+            if (arbolPermisos != null) arbolPermisos.TryGetValue(nombreRol, out nodo);
+
+            return ResolverRol(nombreRol, nodo as PermisoCompuesto_TE);
+        }
+
+        private List<Usuario_TE> MapTodos(DataTable dt)
+        {
+            var arbolPermisos = permisoRepo.ConstruirArbol();
             var lista = new List<Usuario_TE>();
+
             foreach (DataRow row in dt.Rows)
             {
-                lista.Add(Map(row));
+                lista.Add(Map(row, ResolverRol(Valor<string>(row, "rol_permiso"), arbolPermisos)));
             }
+
             return lista;
         }
 

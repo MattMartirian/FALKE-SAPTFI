@@ -20,16 +20,17 @@ namespace ORM
                     (@idUsuario, @modulo, @descripcion, @criticidad, @fecha)";
 
             Gestor.EjecutarNonQuery(sql,
-                new SqlParameter("@idUsuario", b.IdUsuario),
+                new SqlParameter("@idUsuario", b.IdUsuario > 0 ? (object)b.IdUsuario : DBNull.Value),
                 new SqlParameter("@modulo", ValorONulo(b.ModuloBitacora)),
                 new SqlParameter("@descripcion", ValorONulo(b.DescripcionBitacora)),
-                new SqlParameter("@criticidad", b.CriticidadBitacora),
+                new SqlParameter("@criticidad", (int)b.CriticidadBitacora),
                 new SqlParameter("@fecha", b.FechaHoraBitacora)
             );
         }
 
         public override void Modificar(Bitacora_TE b)
         {
+            //TODO: Traducir.
             throw new NotSupportedException("La bitácora es de solo lectura: no se permite modificar eventos ya registrados.");
         }
 
@@ -76,7 +77,7 @@ namespace ORM
                 IdUsuario = Valor<int>(dr, "id_usuario"),
                 ModuloBitacora = Valor<string>(dr, "modulo_bitacora"),
                 DescripcionBitacora = Valor<string>(dr, "descripcion_bitacora"),
-                CriticidadBitacora = Valor<int>(dr, "criticidad_bitacora"),
+                CriticidadBitacora = Valor<CriticidadBitacora>(dr, "criticidad_bitacora"),
                 FechaHoraBitacora = Valor<DateTime>(dr, "fecha_hora_bitacora")
             };
         }

@@ -16,7 +16,8 @@
                 contrasena. La cuenta queda en estado <b>Pendiente</b> hasta que la active.
             </p>
 
-            <p>Id empresa:<br /><asp:TextBox ID="txtEmpresa" runat="server" Text="1" /></p>
+            <p>Id empresa (el Gestor puede elegirla; el administrador de una empresa queda fijado a la suya):<br />
+                <asp:TextBox ID="txtEmpresa" runat="server" Text="1" /></p>
             <p>Nombre:<br /><asp:TextBox ID="txtNombre" runat="server" Width="300" /></p>
             <p>Apellido:<br /><asp:TextBox ID="txtApellido" runat="server" Width="300" /></p>
             <p>Email:<br /><asp:TextBox ID="txtEmail" runat="server" Width="300" /></p>

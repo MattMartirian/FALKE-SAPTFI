@@ -22,10 +22,13 @@ namespace TE
         {
             if (hijo == null) throw new ArgumentNullException(nameof(hijo));
 
+            //TODO: Traducir.
             if (hijo.Nombre == Nombre) throw new PermisoInvalidoException("Un permiso no puede incluirse a sí mismo.");
 
+            //TODO: Traducir.
             if (EsRolPermiso && hijo is PermisoCompuesto_TE hijoCompuesto && hijoCompuesto.EsRolPermiso) throw new PermisoInvalidoException($"El rol \"{Nombre}\" no puede incluir a otro rol (\"{hijo.Nombre}\").");
 
+            //TODO: Traducir.
             if (GeneraCiclo(hijo)) throw new PermisoInvalidoException($"Agregar \"{hijo.Nombre}\" a \"{Nombre}\" generaría un ciclo de composición.");
 
             hijos.Add(hijo);

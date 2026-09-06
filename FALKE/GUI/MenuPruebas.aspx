@@ -12,14 +12,16 @@
             <h2>Menu de pruebas - Seguridad</h2>
 
             <p><asp:Label ID="lblSesion" runat="server" Font-Bold="true" /></p>
+            <p><asp:Label ID="lblAviso" runat="server" ForeColor="Red" Font-Bold="true" /></p>
 
             <ul>
                 <li><a href="Login.aspx">Login</a></li>
                 <li><a href="Logout.aspx">Logout</a></li>
-                <li><a href="RegistrarUsuario.aspx">Registrar usuario (administrador) &ndash; requiere sesion</a></li>
+                <li id="liRegistrarEmpresa" runat="server"><a href="RegistrarEmpresa.aspx">Registrar empresa (+ administrador) &ndash; requiere permiso</a></li>
+                <li id="liRegistrarUsuario" runat="server"><a href="RegistrarUsuario.aspx">Registrar usuario &ndash; requiere permiso</a></li>
                 <li><a href="CambiarContrasena.aspx">Cambiar contrasena &ndash; requiere sesion</a></li>
                 <li><a href="RecuperarContrasena.aspx">Recuperar contrasena</a></li>
-                <li><a href="RecalcularIntegridad.aspx">Recalcular integridad (DVH / DVV) &ndash; requiere sesion</a></li>
+                <li id="liRecalcular" runat="server"><a href="RecalcularIntegridad.aspx">Recalcular integridad (DVH / DVV) &ndash; requiere permiso</a></li>
             </ul>
 
             <p>

@@ -7,11 +7,11 @@ namespace ORM
 {
     public abstract class RepositoryBase<TEntity, TKey>
     {
-        internal readonly GestorBaseDeDatos Gestor;
+        internal readonly GestorBaseDeDatos_DAL Gestor;
 
         protected RepositoryBase()
         {
-            Gestor = GestorBaseDeDatos.Instancia;
+            Gestor = GestorBaseDeDatos_DAL.Instancia;
         }
 
         public abstract void Alta(TEntity entidad);

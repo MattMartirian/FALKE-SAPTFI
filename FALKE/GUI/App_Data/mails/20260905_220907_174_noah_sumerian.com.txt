@@ -1,0 +1,10 @@
+Para:   noah@sumerian.com
+Asunto: Activa tu cuenta de administrador en FALKE
+Fecha:  2026-09-05T22:09:07.1746364-03:00
+--------------------------------------------------
+Hola Noah,
+
+Se creo la empresa "SUMERIAN RECORDS" en FALKE y sos su administrador.
+Para activar tu cuenta y definir tu contrasena, entra a este enlace (vence en 48 horas):
+http://localhost:53192/EstablecerContrasena.aspx?token=yJKAJWiq-PQrC1PBugf2bJIjJ45JJ3sy-0_KuqKYWPI
+

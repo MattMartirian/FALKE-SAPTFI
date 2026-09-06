@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using DAL;
 
 namespace ORM
 {
     public class Integridad_ORM
     {
-        private readonly GestorBaseDeDatos Gestor;
+        private readonly GestorBaseDeDatos_DAL Gestor;
 
         public Integridad_ORM()
         {
-            Gestor = GestorBaseDeDatos.Instancia;
+            Gestor = GestorBaseDeDatos_DAL.Instancia;
         }
 
         private static string NombreTabla(TablasBD tabla) => $"{tabla}Table";
@@ -98,10 +99,10 @@ namespace ORM
 
                 for (int i = 0; i < columnas.Count; i++)
                 {
-                    datos[i] = row[i] == DBNull.Value ? string.Empty : row[i].ToString();
+                    datos[i] = FormatearValor(row[i]);
                 }
 
-                string dvh = row[columnas.Count] == DBNull.Value ? string.Empty : row[columnas.Count].ToString();
+                string dvh = FormatearValor(row[columnas.Count]);
                 var clave = indicesPK.ConvertAll(idx => idx >= 0 ? datos[idx] : string.Empty).ToArray();
 
                 resultado.Add((datos, dvh, clave));
@@ -118,6 +119,7 @@ namespace ORM
 
             if (columnasPK.Count != valoresClave.Length)
             {
+                //TODO: Traducir.
                 throw new ArgumentException($"La tabla {nombreTabla} tiene {columnasPK.Count} columna(s) de PK, se pasaron {valoresClave.Length} valores.");
             }
 
@@ -139,10 +141,23 @@ namespace ORM
             var datos = new string[columnas.Count];
             for (int i = 0; i < columnas.Count; i++)
             {
-                datos[i] = dt.Rows[0][i] == DBNull.Value ? string.Empty : dt.Rows[0][i].ToString();
+                datos[i] = FormatearValor(dt.Rows[0][i]);
             }
 
             return datos;
+        }
+
+        // Formatea el valor de una celda de forma independiente de la cultura del servidor,
+        // para que el DVH/DVV sea el mismo sin importar el locale donde corra la aplicacion
+        // (una fecha o un decimal cambian de texto segun la cultura y romperian la firma).
+        private static string FormatearValor(object valor)
+        {
+            if (valor == null || valor == DBNull.Value) return string.Empty;
+
+            var formateable = valor as IFormattable;
+            if (formateable != null) return formateable.ToString(null, CultureInfo.InvariantCulture);
+
+            return valor.ToString();
         }
 
 
@@ -153,11 +168,13 @@ namespace ORM
 
             if (columnasPK.Count == 0)
             {
+                //TODO: Traducir.
                 throw new InvalidOperationException($"No se encontró clave primaria para la tabla {nombreTabla}.");
             }
 
             if (columnasPK.Count != valoresClave.Length)
             {
+                //TODO: Traducir.
                 throw new ArgumentException($"La tabla {nombreTabla} tiene {columnasPK.Count} columna(s) de PK, se pasaron {valoresClave.Length} valores.");
             }
 

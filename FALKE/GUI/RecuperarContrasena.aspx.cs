@@ -1,4 +1,5 @@
 using System;
+using SERVICES;
 using TLL;
 
 namespace GUI
@@ -14,7 +15,7 @@ namespace GUI
             try
             {
                 string email = txtEmail.Text.Trim();
-                string token = new UsuarioTLL().SolicitarRecuperacion(email);
+                string token = new Usuario_TLL().SolicitarRecuperacion(email);
 
                 // token == null  =>  el email no existe. No se revela esa diferencia.
                 if (token != null)
@@ -28,7 +29,7 @@ namespace GUI
                         link + Environment.NewLine + Environment.NewLine +
                         "Si no fuiste vos, ignora este mensaje: tu contrasena actual sigue siendo valida." + Environment.NewLine;
 
-                    MockMailer.Enviar(email, "Restablecer contrasena de FALKE", cuerpo);
+                    Email_SERVICE.Enviar(email, "Restablecer contrasena de FALKE", cuerpo);
                 }
 
                 lblMsg.Text = "Si el email esta registrado, te enviamos un enlace para definir una nueva " +
@@ -36,7 +37,7 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                ErrorLog.Registrar("RecuperarContrasena", ex);
+                LogErrores_SERVICE.Registrar("RecuperarContrasena", ex);
                 lblMsg.Text = "Ocurrio un error al procesar la solicitud. Intente nuevamente.";
             }
         }

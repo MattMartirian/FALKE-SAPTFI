@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Email_SERVICE.cs" />
     <Compile Include="GestorIntegridad_SERVICE.cs" />
     <Compile Include="InconsistenciaIntegridad_SERVICE.cs" />
+    <Compile Include="LogErrores_SERVICE.cs" />
     <Compile Include="ResultadoRecalculoIntegridad_SERVICE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

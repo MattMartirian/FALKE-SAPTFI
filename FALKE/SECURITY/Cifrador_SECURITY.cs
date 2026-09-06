@@ -6,12 +6,12 @@ using System.Configuration;
 
 namespace SECURITY
 {
-    public sealed class Cifrador
+    public sealed class Cifrador_SECURITY
     {
         #region Singleton
-        private static readonly Lazy<Cifrador> lazyInstance = new Lazy<Cifrador>(() => new Cifrador());
+        private static readonly Lazy<Cifrador_SECURITY> lazyInstance = new Lazy<Cifrador_SECURITY>(() => new Cifrador_SECURITY());
 
-        public static Cifrador CypherInstance => lazyInstance.Value;
+        public static Cifrador_SECURITY CifradorSingleton => lazyInstance.Value;
         #endregion
 
         private readonly byte[] key;
@@ -19,12 +19,13 @@ namespace SECURITY
         private const int AesKeySizeBits = 256;
         private const int AesBlockSizeBytes = 16;
 
-        private Cifrador()
+        private Cifrador_SECURITY()
         {
             string keyBase64 = ConfigurationManager.AppSettings["FALKE_AES_KEY"];
 
             if (string.IsNullOrWhiteSpace(keyBase64))
             {
+                //TODO: Traducir.
                 throw new InvalidOperationException("No se encontró la variable de entorno FALKE_AES_KEY.");
             }
 
@@ -32,6 +33,7 @@ namespace SECURITY
 
             if (key.Length * 8 != AesKeySizeBits)
             {
+                //TODO: Traducir.
                 throw new InvalidOperationException($"La clave AES configurada no tiene el tamaño esperado ({AesKeySizeBits} bits).");
             }
         }
@@ -111,11 +113,13 @@ namespace SECURITY
             }
             catch (FormatException ex)
             {
+                //TODO: Traducir.
                 throw new CryptographicException("El valor a descifrar no es Base64 válido.", ex);
             }
 
             if (fullCipher.Length <= AesBlockSizeBytes)
             {
+                //TODO: Traducir.
                 throw new CryptographicException("El valor cifrado no contiene datos suficientes.");
             }
 
@@ -143,6 +147,7 @@ namespace SECURITY
                     }
                     catch (CryptographicException ex)
                     {
+                        //TODO: Traducir.
                         throw new CryptographicException("No fue posible descifrar el valor. Puede haberse alterado o haberse cifrado con otra clave.", ex);
                     }
                 }

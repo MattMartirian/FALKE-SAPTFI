@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Empresa_BLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +60,14 @@
     <ProjectReference Include="..\SERVICES\SERVICES.csproj">
       <Project>{8fc92247-9a96-4db6-ba36-b77e3228e106}</Project>
       <Name>SERVICES</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TE\TE.csproj">
+      <Project>{fe60f8da-f67f-4f24-bd33-8e198a04c26a}</Project>
+      <Name>TE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TLL\TLL.csproj">
+      <Project>{5739acb5-fcda-4be2-aaee-867ef1911b9c}</Project>
+      <Name>TLL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

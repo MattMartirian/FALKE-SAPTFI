@@ -1,5 +1,6 @@
 using SERVICES;
 using System;
+using TE;
 using TLL;
 
 namespace GUI
@@ -8,12 +9,12 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!SesionActual.Exigir()) return;
+            if (!SesionActual_GUI.ExigirPermiso("RECALCULAR_INTEGRIDAD")) return;
         }
 
         protected void btnVerificar_Click(object sender, EventArgs e)
         {
-            if (!SesionActual.Exigir()) return;
+            if (!SesionActual_GUI.ExigirPermiso("RECALCULAR_INTEGRIDAD")) return;
 
             try
             {
@@ -27,17 +28,27 @@ namespace GUI
                 lblMsg.Text = inconsistencias.Count == 0
                     ? "Sin inconsistencias: la integridad almacenada coincide con los datos."
                     : inconsistencias.Count + " inconsistencia(s) detectada(s) (ver detalle).";
+
+                // El flujo va directo a SERVICES, no a TLL/BLL: la bitacora se registra desde aca.
+                if (inconsistencias.Count == 0)
+                {
+                    new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad", "Verificación de integridad ejecutada: sin inconsistencias", CriticidadBitacora.Baja);
+                }
+                else
+                {
+                    new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad", "Verificación de integridad ejecutada: " + inconsistencias.Count + " inconsistencia(s) detectada(s)", CriticidadBitacora.Alta);
+                }
             }
             catch (Exception ex)
             {
-                ErrorLog.Registrar("RecalcularIntegridad/Verificar", ex);
+                LogErrores_SERVICE.Registrar("RecalcularIntegridad/Verificar", ex);
                 lblMsg.Text = "Ocurrio un error al verificar la integridad.";
             }
         }
 
         protected void btnRecalcular_Click(object sender, EventArgs e)
         {
-            if (!SesionActual.Exigir()) return;
+            if (!SesionActual_GUI.ExigirPermiso("RECALCULAR_INTEGRIDAD")) return;
 
             try
             {
@@ -58,10 +69,13 @@ namespace GUI
                               (inconsistencias.Count == 0
                                   ? "Verificacion posterior: sin inconsistencias."
                                   : "Verificacion posterior: " + inconsistencias.Count + " inconsistencia(s).");
+
+                // El flujo va directo a SERVICES, no a TLL/BLL: la bitacora se registra desde aca.
+                new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad", "Recálculo y almacenamiento de DVH/DVV: " + resumen.TablasProcesadas + " tabla(s), " + resumen.RegistrosProcesados + " registro(s)", CriticidadBitacora.Alta);
             }
             catch (Exception ex)
             {
-                ErrorLog.Registrar("RecalcularIntegridad/Recalcular", ex);
+                LogErrores_SERVICE.Registrar("RecalcularIntegridad/Recalcular", ex);
                 lblMsg.Text = "Ocurrio un error al recalcular la integridad.";
             }
         }

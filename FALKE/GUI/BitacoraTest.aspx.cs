@@ -22,7 +22,7 @@ public partial class BitacoraTest : System.Web.UI.Page
             IdUsuario = 1,
             ModuloBitacora = "BitacoraTest",
             DescripcionBitacora = "Entrada generada desde la página de prueba.",
-            CriticidadBitacora = 1,
+            CriticidadBitacora = CriticidadBitacora.Baja,
             FechaHoraBitacora = DateTime.Now
         };
 

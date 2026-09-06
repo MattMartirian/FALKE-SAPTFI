@@ -1,4 +1,5 @@
 using System;
+using SERVICES;
 using TLL;
 
 namespace GUI
@@ -14,7 +15,7 @@ namespace GUI
         {
             if (IsPostBack) return;
 
-            ResultadoToken val = new UsuarioTLL().ValidarTokenContrasena(Token);
+            ResultadoToken_TLL val = new Usuario_TLL().ValidarTokenContrasena(Token);
 
             if (val.Exito)
             {
@@ -37,7 +38,7 @@ namespace GUI
 
             try
             {
-                ResultadoToken res = new UsuarioTLL().EstablecerContrasenaConToken(Token, txtNueva.Text);
+                ResultadoToken_TLL res = new Usuario_TLL().EstablecerContrasenaConToken(Token, txtNueva.Text);
 
                 if (res.Exito)
                 {
@@ -54,7 +55,7 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                ErrorLog.Registrar("EstablecerContrasena", ex);
+                LogErrores_SERVICE.Registrar("EstablecerContrasena", ex);
                 lblMsg.Text = "Ocurrio un error al procesar la solicitud. Intente nuevamente.";
             }
         }

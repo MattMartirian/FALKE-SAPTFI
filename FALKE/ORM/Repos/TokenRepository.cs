@@ -15,11 +15,11 @@ namespace ORM
 
     public class TokenRepository
     {
-        private readonly GestorBaseDeDatos Gestor;
+        private readonly GestorBaseDeDatos_DAL Gestor;
 
         public TokenRepository()
         {
-            Gestor = GestorBaseDeDatos.Instancia;
+            Gestor = GestorBaseDeDatos_DAL.Instancia;
         }
 
         public void Crear(int idUsuario, string token, string tipo, DateTime creacion, DateTime expiracion)
@@ -34,9 +34,14 @@ namespace ORM
             Gestor.EjecutarNonQuery(sql,
                 new SqlParameter("@idUsuario", idUsuario),
                 new SqlParameter("@token", token),
-                new SqlParameter("@tipo", (object)tipo ?? DBNull.Value),
+                new SqlParameter("@tipo", (object)Normalizar(tipo) ?? DBNull.Value),
                 new SqlParameter("@creacion", creacion),
                 new SqlParameter("@expiracion", expiracion));
+        }
+
+        private static string Normalizar(string tipo)
+        {
+            return tipo == null ? null : tipo.Trim().ToLowerInvariant();
         }
 
         public TokenInfo ObtenerPorToken(string token)
@@ -54,7 +59,7 @@ namespace ORM
             {
                 IdToken = Convert.ToInt32(r["id_token"]),
                 IdUsuario = Convert.ToInt32(r["id_usuario"]),
-                Tipo = r["tipo_token"] == DBNull.Value ? null : r["tipo_token"].ToString(),
+                Tipo = r["tipo_token"] == DBNull.Value ? null : Normalizar(r["tipo_token"].ToString()),
                 FechaExpiracion = r["fecha_expiracion"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(r["fecha_expiracion"]),
                 Usado = Convert.ToBoolean(r["usado"])
             };
@@ -67,7 +72,7 @@ namespace ORM
 
         public void InvalidarPendientes(int idUsuario, string tipo)
         {
-            Gestor.EjecutarNonQuery("UPDATE TokenTable SET usado = 1 WHERE id_usuario = @id AND tipo_token = @tipo AND usado = 0",new SqlParameter("@id", idUsuario),new SqlParameter("@tipo", tipo));
+            Gestor.EjecutarNonQuery("UPDATE TokenTable SET usado = 1 WHERE id_usuario = @id AND tipo_token = @tipo AND usado = 0",new SqlParameter("@id", idUsuario),new SqlParameter("@tipo", (object)Normalizar(tipo) ?? DBNull.Value));
         }
     }
 }

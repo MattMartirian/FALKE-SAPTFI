@@ -5,77 +5,112 @@ using TE;
 namespace TLL
 {
     //TODO Revisar si darle integridad a la tabla de permisos y relaciones.
-    public class PermisoTLL
+    public class Permiso_TLL
     {
         private readonly PermisoRepository permisoRepo;
         private readonly UsuarioRepository usuarioRepo;
+        private readonly BitacoraGestor_TLL bitacora;
         //private readonly GestorIntegridad gestorIntegridad;
 
-        public PermisoTLL()
+        public Permiso_TLL()
         {
             permisoRepo = new PermisoRepository();
             usuarioRepo = new UsuarioRepository();
+            bitacora = new BitacoraGestor_TLL();
             //gestorIntegridad = new GestorIntegridad();
         }
 
         public void CrearPermiso(string nombre, TipoPermiso tipo, bool esRol)
         {
+            //TODO: Traducir.
             if (tipo == TipoPermiso.Simple && esRol) throw new PermisoInvalidoException("Un permiso simple no puede ser rol.");
 
+            //TODO: Traducir.
             if (permisoRepo.Existe(nombre)) throw new PermisoInvalidoException("Ya existe un permiso con el nombre \"" + nombre + "\".");
 
-            PermisoAbstracto_TE permiso = tipo == TipoPermiso.Simple
-                ? (PermisoAbstracto_TE)new PermisoSimple_TE(nombre)
-                : new PermisoCompuesto_TE(nombre, esRol);
+            PermisoAbstracto_TE permiso = tipo == TipoPermiso.Simple ? (PermisoAbstracto_TE)new PermisoSimple_TE(nombre) : new PermisoCompuesto_TE(nombre, esRol);
 
-            permisoRepo.Alta(permiso);
-            //gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { nombre });
+            Transaccion_ORM.Ejecutar(() =>
+            {
+                permisoRepo.Alta(permiso);
+                //gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { nombre });
+
+                //TODO: Traducir.
+                bitacora.Registrar(0, "Permisos", "Alta de permiso \"" + nombre + "\" (" + tipo + (esRol ? ", rol" : "") + ")", CriticidadBitacora.Media);
+            });
         }
 
         public void AgregarPermisoAComposicion(string nombreCompuesto, string nombreIncluido)
         {
             var arbol = ConstruirArbolCompleto();
 
-            if (!arbol.TryGetValue(nombreCompuesto, out var compuestoNodo))
-                throw new PermisoInvalidoException("El permiso \"" + nombreCompuesto + "\" no existe.");
+            //TODO: Traducir.
+            if (!arbol.TryGetValue(nombreCompuesto, out var compuestoNodo)) throw new PermisoInvalidoException("El permiso \"" + nombreCompuesto + "\" no existe.");
 
-            if (!arbol.TryGetValue(nombreIncluido, out var incluidoNodo))
-                throw new PermisoInvalidoException("El permiso \"" + nombreIncluido + "\" no existe.");
+            //TODO: Traducir.
+            if (!arbol.TryGetValue(nombreIncluido, out var incluidoNodo)) throw new PermisoInvalidoException("El permiso \"" + nombreIncluido + "\" no existe.");
 
             compuestoNodo.Agregar(incluidoNodo);
 
-            permisoRepo.AgregarRelacion(nombreCompuesto, nombreIncluido);
-            //gestorIntegridad.ActualizarDVHRegistro(TablasBD.RelacionPermisos, new[] { nombreCompuesto, nombreIncluido });
+            Transaccion_ORM.Ejecutar(() =>
+            {
+                permisoRepo.AgregarRelacion(nombreCompuesto, nombreIncluido);
+                //gestorIntegridad.ActualizarDVHRegistro(TablasBD.RelacionPermisos, new[] { nombreCompuesto, nombreIncluido });
+
+                //TODO: Traducir.
+                bitacora.Registrar(0, "Permisos", "Se agregó \"" + nombreIncluido + "\" a la composición de \"" + nombreCompuesto + "\"", CriticidadBitacora.Alta);
+            });
         }
 
         public void ModificarNombrePermiso(string nombreViejo, string nombreNuevo)
         {
-            if (permisoRepo.ObtenerPorPK(nombreViejo) == null)
-                throw new PermisoInvalidoException("El permiso \"" + nombreViejo + "\" no existe.");
+            //TODO: Traducir.
+            if (permisoRepo.ObtenerPorPK(nombreViejo) == null) throw new PermisoInvalidoException("El permiso \"" + nombreViejo + "\" no existe.");
 
-            if (permisoRepo.Existe(nombreNuevo))
-                throw new PermisoInvalidoException("Ya existe un permiso con el nombre \"" + nombreNuevo + "\".");
+            //TODO: Traducir.
+            if (permisoRepo.Existe(nombreNuevo)) throw new PermisoInvalidoException("Ya existe un permiso con el nombre \"" + nombreNuevo + "\".");
 
-            permisoRepo.ModificarNombre(nombreViejo, nombreNuevo);
-            //gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { nombreNuevo });
+            Transaccion_ORM.Ejecutar(() =>
+            {
+                permisoRepo.ModificarNombre(nombreViejo, nombreNuevo);
+                //gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { nombreNuevo });
+
+                //TODO: Traducir.
+                bitacora.Registrar(0, "Permisos", "Renombrado de permiso \"" + nombreViejo + "\" a \"" + nombreNuevo + "\"", CriticidadBitacora.Media);
+            });
         }
 
         public void EliminarPermiso(string nombre)
         {
+            //TODO: Traducir.
             if (permisoRepo.ObtenerPorPK(nombre) == null) throw new PermisoInvalidoException("El permiso \"" + nombre + "\" no existe.");
 
+            //TODO: Traducir.
             if (permisoRepo.PermisoEnRelacion(nombre)) throw new PermisoInvalidoException("\"" + nombre + "\" está en uso dentro de una composición: quitalo de ahí antes de eliminarlo.");
 
+            //TODO: Traducir.
             if (usuarioRepo.ExisteUsuarioConRol(nombre)) throw new PermisoInvalidoException("\"" + nombre + "\" está asignado a uno o más usuarios: no se puede eliminar.");
 
-            permisoRepo.Eliminar(nombre);
-            //gestorIntegridad.GuardarIntegridadTabla(TablasBD.Permiso);
+            Transaccion_ORM.Ejecutar(() =>
+            {
+                permisoRepo.Eliminar(nombre);
+                //gestorIntegridad.GuardarIntegridadTabla(TablasBD.Permiso);
+
+                //TODO: Traducir.
+                bitacora.Registrar(0, "Permisos", "Baja de permiso \"" + nombre + "\"", CriticidadBitacora.Alta);
+            });
         }
 
         public void QuitarPermisoDeComposicion(string nombreCompuesto, string nombreIncluido)
         {
-            permisoRepo.EliminarRelacion(nombreCompuesto, nombreIncluido);
-            //gestorIntegridad.GuardarIntegridadTabla(TablasBD.RelacionPermisos);
+            Transaccion_ORM.Ejecutar(() =>
+            {
+                permisoRepo.EliminarRelacion(nombreCompuesto, nombreIncluido);
+                //gestorIntegridad.GuardarIntegridadTabla(TablasBD.RelacionPermisos);
+
+                //TODO: Traducir.
+                bitacora.Registrar(0, "Permisos", "Se quitó \"" + nombreIncluido + "\" de la composición de \"" + nombreCompuesto + "\"", CriticidadBitacora.Alta);
+            });
         }
 
         public PermisoAbstracto_TE ObtenerPermiso(string nombre)
@@ -90,36 +125,34 @@ namespace TLL
             return permisoRepo.ObtenerTodos();
         }
 
-        public HashSet<string> ObtenerPermisosEfectivos(string nombrePermiso)
+        /// <summary>
+        /// Devuelve los permisos de mayor rango (los marcados como rol) con su subarbol Composite
+        /// completo ya enganchado. Para pantallas de administracion de permisos / asignacion de roles.
+        /// </summary>
+        public List<PermisoAbstracto_TE> ObtenerRoles()
         {
-            var arbol = ConstruirArbolCompleto();
-
-            return arbol.TryGetValue(nombrePermiso, out var nodo)
-                ? nodo.ObtenerPermisosEfectivos()
-                : new HashSet<string>();
+            return permisoRepo.ConstruirArbolDeRoles();
         }
 
+        /// <summary>
+        /// Chequeo generico de autorizacion: recorre el arbol de permisos actual (el nodo
+        /// Composite del rol, normalmente el de la sesion) buscando el permiso pedido.
+        /// Sirve para cualquier punto donde haya que exigir un permiso.
+        /// </summary>
+        public static bool ComprobarPermiso(string permisoBuscado, PermisoAbstracto_TE permisoActual)
+        {
+            if (string.IsNullOrEmpty(permisoBuscado)) return false;
+
+            if (permisoActual == null) return false;
+
+            return permisoActual.Contiene(permisoBuscado);
+        }
+
+        // El armado del arbol Composite vive en la capa ORM (materializa un agregado desde
+        // PermisoTable + RelacionPermisosTable), asi lo comparten Permiso_TLL y UsuarioRepository.
         private Dictionary<string, PermisoAbstracto_TE> ConstruirArbolCompleto()
         {
-            var permisos = permisoRepo.ObtenerTodos();
-            var relaciones = permisoRepo.ObtenerTodasLasRelaciones();
-            var nodos = new Dictionary<string, PermisoAbstracto_TE>();
-
-            foreach (var p in permisos)
-                nodos[p.Nombre] = p;
-
-            foreach (var (nombreCompuesto, nombreIncluido) in relaciones)
-            {
-                if (!nodos.TryGetValue(nombreCompuesto, out var padreNodo) || !(padreNodo is PermisoCompuesto_TE padre))
-                    continue; // TODO: dato inconsistente en la base (ver integridad), se ignora por ahora
-
-                if (!nodos.TryGetValue(nombreIncluido, out var hijoNodo))
-                    continue;
-
-                padre.AgregarHijoPersistido(hijoNodo);
-            }
-
-            return nodos;
+            return permisoRepo.ConstruirArbol();
         }
     }
 }

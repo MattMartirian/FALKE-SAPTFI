@@ -31,7 +31,7 @@ namespace GUI
         {
             try
             {
-                var usuarioTLL = new UsuarioTLL();
+                var Usuario_TLL = new Usuario_TLL();
 
                 var nuevoUsuario = new Usuario_TE
                 {
@@ -44,7 +44,7 @@ namespace GUI
                     EsCuentaEmergencia = false
                 };
 
-                string tokenActivacion = usuarioTLL.RegistrarUsuario(nuevoUsuario);
+                string tokenActivacion = Usuario_TLL.RegistrarUsuario(nuevoUsuario);
 
                 lblResultado.Text = "Usuario creado con id " + nuevoUsuario.IdUsuario +
                                      ", email " + nuevoUsuario.EmailUsuario +
@@ -60,8 +60,8 @@ namespace GUI
         {
             try
             {
-                var usuarioTLL = new UsuarioTLL();
-                var resultado = usuarioTLL.ValidarCredenciales("juan.perez@falke.com", "ContrasenaTemporal123");
+                var Usuario_TLL = new Usuario_TLL();
+                var resultado = Usuario_TLL.ValidarCredenciales("juan.perez@falke.com", "ContrasenaTemporal123");
 
                 lblResultado.Text = resultado.Exito
                     ? "Login exitoso. Usuario: " + resultado.Usuario.NombreUsuario + " " + resultado.Usuario.ApellidoUsuario

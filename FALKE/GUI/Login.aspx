@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="GUI.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="GUI.Login" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,7 +12,7 @@
             <h2>Iniciar sesion</h2>
 
             <p>
-                Email o usuario:<br />
+                Email:<br />
                 <asp:TextBox ID="txtEmail" runat="server" Width="300" />
             </p>
             <p>
@@ -21,6 +21,7 @@
             </p>
             <p>
                 <asp:Button ID="btnIngresar" runat="server" Text="Ingresar" OnClick="btnIngresar_Click" />
+                <asp:Button ID="Button1" runat="server" Text="Ingresar" OnClick="btn1_Click" />
             </p>
 
             <p><asp:Label ID="lblMsg" runat="server" ForeColor="Red" Font-Bold="true" /></p>
@@ -31,7 +32,8 @@
                 <a href="CambiarContrasena.aspx">Cambiar contrasena</a> |
                 <a href="MenuPruebas.aspx">Menu</a>
             </p>
-            <p><small>Acceso de emergencia: usuario <b>admin</b> / contrasena <b>admin</b>.</small></p>
+            <p><small>El inicio de sesion es por <b>email</b>. Unica excepcion: acceso de emergencia
+                con usuario <b>admin</b> / contrasena <b>admin</b>.</small></p>
         </div>
     </form>
 </body>

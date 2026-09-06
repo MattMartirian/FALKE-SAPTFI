@@ -1,0 +1,10 @@
+Para:   jcm@gmail.com
+Asunto: Activa tu cuenta de administrador en FALKE
+Fecha:  2026-09-05T23:09:18.3863142-03:00
+--------------------------------------------------
+Hola Juan Cruz,
+
+Se creo la empresa "pepsi" en FALKE y sos su administrador.
+Para activar tu cuenta y definir tu contrasena, entra a este enlace (vence en 48 horas):
+http://localhost:53192/EstablecerContrasena.aspx?token=M-3nHVPqdrI45_OeMgJtMHEvDk1W__hCpvl5ozdpURE
+

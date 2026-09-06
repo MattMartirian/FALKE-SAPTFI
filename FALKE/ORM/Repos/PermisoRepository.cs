@@ -19,7 +19,7 @@ namespace ORM
 
             Gestor.EjecutarNonQuery(sql,
                 new SqlParameter("@nombre", p.Nombre),
-                new SqlParameter("@tipo", p.TipoPermiso.ToString()),
+                new SqlParameter("@tipo", p.TipoPermiso.ToString().ToLowerInvariant()),
                 new SqlParameter("@esRol", p.EsRolPermiso)
             );
         }
@@ -34,14 +34,15 @@ namespace ORM
 
             Gestor.EjecutarNonQuery(sql,
                 new SqlParameter("@nombre", p.Nombre),
-                new SqlParameter("@tipo", p.TipoPermiso.ToString()),
+                new SqlParameter("@tipo", p.TipoPermiso.ToString().ToLowerInvariant()),
                 new SqlParameter("@esRol", p.EsRolPermiso)
             );
         }
 
         public void ModificarNombre(string nombreViejo, string nombreNuevo)
         {
-            //TODO: como son dos queries separadas, si la primera se ejecuta y la segunda falla, el nombre del permiso queda modificado pero las relaciones no. Se podría usar una transacción
+            // Son dos queries, se envuelven en una transaccion para que
+            // el rename del permiso y el de sus relaciones sean atómicos
             string sqlPermiso = @"
                 UPDATE PermisoTable SET nombre_permiso = @nuevo
                 WHERE nombre_permiso = @viejo";
@@ -95,7 +96,7 @@ namespace ORM
         public List<PermisoAbstracto_TE> ObtenerPorTipo(TipoPermiso tipo)
         {
             string sql = "SELECT * FROM PermisoTable WHERE tipo_permiso = @tipo ORDER BY nombre_permiso";
-            return MapTodos(Gestor.EjecutarQuery(sql, new SqlParameter("@tipo", tipo.ToString())));
+            return MapTodos(Gestor.EjecutarQuery(sql, new SqlParameter("@tipo", tipo.ToString().ToLowerInvariant())));
         }
 
         public bool Existe(string nombre)
@@ -161,10 +162,109 @@ namespace ORM
             return hijos;
         }
 
+        public Dictionary<string, PermisoAbstracto_TE> ConstruirArbol()
+        {
+            var nodos = new Dictionary<string, PermisoAbstracto_TE>();
+
+            foreach (var permiso in ObtenerTodos())
+            {
+                nodos[permiso.Nombre] = permiso;
+            }
+
+            var hijosPorPadre = IndexarHijosDirectos();
+            var expandidos = new HashSet<string>();
+
+            foreach (var nodo in nodos.Values)
+            {
+                PermisoCompuesto_TE compuesto = nodo as PermisoCompuesto_TE;
+                if (compuesto != null) ExpandirSubarbol(compuesto, nodos, hijosPorPadre, new HashSet<string>(), expandidos);
+            }
+
+            return nodos;
+        }
+
+        public PermisoCompuesto_TE ConstruirArbolRol(string nombreRol)
+        {
+            if (string.IsNullOrEmpty(nombreRol)) return null;
+
+            var nodos = new Dictionary<string, PermisoAbstracto_TE>();
+
+            foreach (var permiso in ObtenerTodos())
+            {
+                nodos[permiso.Nombre] = permiso;
+            }
+
+            PermisoAbstracto_TE raizNodo;
+            if (!nodos.TryGetValue(nombreRol, out raizNodo)) return null;
+
+            PermisoCompuesto_TE raiz = raizNodo as PermisoCompuesto_TE;
+            if (raiz == null) return null;
+
+            ExpandirSubarbol(raiz, nodos, IndexarHijosDirectos(), new HashSet<string>(), new HashSet<string>());
+            return raiz;
+        }
+
+        public List<PermisoAbstracto_TE> ConstruirArbolDeRoles()
+        {
+            var roles = new List<PermisoAbstracto_TE>();
+
+            foreach (var nodo in ConstruirArbol().Values)
+            {
+                if (nodo.EsRolPermiso) roles.Add(nodo);
+            }
+
+            return roles;
+        }
+
+        private Dictionary<string, List<string>> IndexarHijosDirectos()
+        {
+            var indice = new Dictionary<string, List<string>>();
+
+            foreach (var relacion in ObtenerTodasLasRelaciones())
+            {
+                List<string> lista;
+                if (!indice.TryGetValue(relacion.Compuesto, out lista))
+                {
+                    lista = new List<string>();
+                    indice[relacion.Compuesto] = lista;
+                }
+
+                lista.Add(relacion.Incluido);
+            }
+
+            return indice;
+        }
+
+        private static void ExpandirSubarbol(PermisoCompuesto_TE padre, Dictionary<string, PermisoAbstracto_TE> nodos, Dictionary<string, List<string>> hijosPorPadre, HashSet<string> enCamino, HashSet<string> expandidos)
+        {
+            if (!expandidos.Add(padre.Nombre)) return;
+
+            enCamino.Add(padre.Nombre);
+
+            List<string> hijos;
+            if (hijosPorPadre.TryGetValue(padre.Nombre, out hijos))
+            {
+                foreach (var nombreHijo in hijos)
+                {
+                    if (enCamino.Contains(nombreHijo)) continue;
+
+                    PermisoAbstracto_TE hijoNodo;
+                    if (!nodos.TryGetValue(nombreHijo, out hijoNodo)) continue;
+
+                    padre.AgregarHijoPersistido(hijoNodo);
+
+                    PermisoCompuesto_TE hijoCompuesto = hijoNodo as PermisoCompuesto_TE;
+                    if (hijoCompuesto != null) ExpandirSubarbol(hijoCompuesto, nodos, hijosPorPadre, enCamino, expandidos);
+                }
+            }
+
+            enCamino.Remove(padre.Nombre);
+        }
+
         private static PermisoAbstracto_TE Map(DataRow dr)
         {
             string nombre = Valor<string>(dr, "nombre_permiso");
-            var tipo = (TipoPermiso)Enum.Parse(typeof(TipoPermiso), Valor<string>(dr, "tipo_permiso"));
+            var tipo = Valor<TipoPermiso>(dr, "tipo_permiso");
             bool esRol = Valor<bool>(dr, "es_rol_permiso");
 
             return tipo == TipoPermiso.Simple ? (PermisoAbstracto_TE)new PermisoSimple_TE(nombre) : new PermisoCompuesto_TE(nombre, esRol);

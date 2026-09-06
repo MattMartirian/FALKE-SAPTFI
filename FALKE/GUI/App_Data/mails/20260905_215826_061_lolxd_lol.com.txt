@@ -1,0 +1,10 @@
+Para:   lolxd@lol.com
+Asunto: Activa tu cuenta de administrador en FALKE
+Fecha:  2026-09-05T21:58:26.0626154-03:00
+--------------------------------------------------
+Hola Tryndamere,
+
+Se creo la empresa "riot games" en FALKE y sos su administrador.
+Para activar tu cuenta y definir tu contrasena, entra a este enlace (vence en 48 horas):
+http://localhost:53192/EstablecerContrasena.aspx?token=LBhI9FcSSb0DrPi6KwUqGeqR0gSlPPUIqarC4vFH8GE
+
