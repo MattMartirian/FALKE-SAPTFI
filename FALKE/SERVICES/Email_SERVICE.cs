@@ -3,10 +3,6 @@ using System.IO;
 
 namespace SERVICES
 {
-    /// <summary>
-    /// Envio de mails. Por ahora simula el envio escribiendo un archivo en App_Data/mails;
-    /// mas adelante va a delegar en una API externa de correo (misma firma publica).
-    /// </summary>
     public static class Email_SERVICE
     {
         public static string Enviar(string destino, string asunto, string cuerpo)

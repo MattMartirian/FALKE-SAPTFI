@@ -228,16 +228,14 @@ namespace TLL
             var validacion = EvaluarToken(info);
             if (!validacion.Exito) return validacion;
 
-            if (!EsContrasenaAceptable(contrasenaNueva))
-                return ResultadoToken_TLL.Falla("CONTRASENA_DEBIL", validacion.Email);
+            if (!EsContrasenaAceptable(contrasenaNueva)) return ResultadoToken_TLL.Falla("CONTRASENA_DEBIL", validacion.Email);
 
             var usuario = usuarioRepo.ObtenerPorPK(info.IdUsuario);
 
             usuario.ContrasenaHashUsuario = cifrador.Encoder(contrasenaNueva);
             usuario.IntentosFallidosUsuario = 0;
 
-            if (usuario.Estado == EstadoUsuario.Pendiente || usuario.Estado == EstadoUsuario.Bloqueado)
-                usuario.Estado = EstadoUsuario.Activo;
+            if (usuario.Estado == EstadoUsuario.Pendiente || usuario.Estado == EstadoUsuario.Bloqueado) usuario.Estado = EstadoUsuario.Activo;
 
             //TODO: Traducir.
             string via = info.Tipo == TOKEN_ACTIVACION ? "activación" : "recuperación";

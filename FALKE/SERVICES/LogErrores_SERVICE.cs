@@ -3,14 +3,8 @@ using System.IO;
 
 namespace SERVICES
 {
-    /// <summary>
-    /// Log de errores criticos a App_Data/logs/errores.log, disponible para cualquier capa.
-    /// Nunca propaga fallos propios: registrar un error no debe romper el flujo que lo reporto.
-    /// </summary>
     public static class LogErrores_SERVICE
     {
-        // Serializa las escrituras concurrentes: sin esto, dos hilos escribiendo a la vez
-        // chocan con IOException (archivo en uso) y el error se pierde.
         private static readonly object _candado = new object();
 
         public static void Registrar(string contexto, Exception ex)

@@ -24,11 +24,6 @@ namespace TE
 
         public abstract HashSet<string> ObtenerPermisosEfectivos();
 
-        /// <summary>
-        /// Recorre el arbol (Composite): true si este permiso es el buscado o si alguno
-        /// de sus hijos, en cualquier nivel, lo contiene. En una hoja se reduce a comparar
-        /// el nombre. Sirve para cualquier chequeo de "tengo tal permiso".
-        /// </summary>
         public bool Contiene(string nombrePermiso)
         {
             if (Nombre == nombrePermiso) return true;

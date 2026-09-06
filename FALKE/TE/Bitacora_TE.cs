@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TE
 {
-    // Escala de criticidad de los eventos de bitacora. El valor numerico es el que se guarda en la base.
     public enum CriticidadBitacora
     {
         Baja = 1,

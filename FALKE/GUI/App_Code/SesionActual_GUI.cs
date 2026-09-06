@@ -123,9 +123,6 @@ namespace GUI
             return true;
         }
 
-        /// <summary>
-        /// Para el Page_Load del Login: si ya hay sesion activa, redirige al menu y devuelve true.
-        /// </summary>
         public static bool RedirigirSiAutenticado()
         {
             if (!HayUsuario) return false;

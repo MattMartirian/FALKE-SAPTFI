@@ -147,9 +147,6 @@ namespace ORM
             return datos;
         }
 
-        // Formatea el valor de una celda de forma independiente de la cultura del servidor,
-        // para que el DVH/DVV sea el mismo sin importar el locale donde corra la aplicacion
-        // (una fecha o un decimal cambian de texto segun la cultura y romperian la firma).
         private static string FormatearValor(object valor)
         {
             if (valor == null || valor == DBNull.Value) return string.Empty;

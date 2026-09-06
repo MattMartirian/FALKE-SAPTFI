@@ -125,20 +125,11 @@ namespace TLL
             return permisoRepo.ObtenerTodos();
         }
 
-        /// <summary>
-        /// Devuelve los permisos de mayor rango (los marcados como rol) con su subarbol Composite
-        /// completo ya enganchado. Para pantallas de administracion de permisos / asignacion de roles.
-        /// </summary>
         public List<PermisoAbstracto_TE> ObtenerRoles()
         {
             return permisoRepo.ConstruirArbolDeRoles();
         }
 
-        /// <summary>
-        /// Chequeo generico de autorizacion: recorre el arbol de permisos actual (el nodo
-        /// Composite del rol, normalmente el de la sesion) buscando el permiso pedido.
-        /// Sirve para cualquier punto donde haya que exigir un permiso.
-        /// </summary>
         public static bool ComprobarPermiso(string permisoBuscado, PermisoAbstracto_TE permisoActual)
         {
             if (string.IsNullOrEmpty(permisoBuscado)) return false;
@@ -148,8 +139,6 @@ namespace TLL
             return permisoActual.Contiene(permisoBuscado);
         }
 
-        // El armado del arbol Composite vive en la capa ORM (materializa un agregado desde
-        // PermisoTable + RelacionPermisosTable), asi lo comparten Permiso_TLL y UsuarioRepository.
         private Dictionary<string, PermisoAbstracto_TE> ConstruirArbolCompleto()
         {
             return permisoRepo.ConstruirArbol();
