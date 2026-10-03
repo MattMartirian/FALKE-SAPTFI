@@ -25,7 +25,6 @@ namespace SECURITY
 
             if (string.IsNullOrWhiteSpace(keyBase64))
             {
-                //TODO: Traducir.
                 throw new InvalidOperationException("No se encontró la variable de entorno FALKE_AES_KEY.");
             }
 
@@ -33,7 +32,6 @@ namespace SECURITY
 
             if (key.Length * 8 != AesKeySizeBits)
             {
-                //TODO: Traducir.
                 throw new InvalidOperationException($"La clave AES configurada no tiene el tamaño esperado ({AesKeySizeBits} bits).");
             }
         }
@@ -91,7 +89,6 @@ namespace SECURITY
                         swEncrypt.Write(toEncode);
                     }
 
-                    // la clave iv se guarda junto al texto cifrado para poder usarlo en el descifrado y no tener q guardar el archivo
                     byte[] cipherBytes = msEncrypt.ToArray();
                     byte[] result = new byte[cipherBytes.Length + aesAlg.IV.Length];
                     Buffer.BlockCopy(cipherBytes, 0, result, 0, cipherBytes.Length);
@@ -113,13 +110,11 @@ namespace SECURITY
             }
             catch (FormatException ex)
             {
-                //TODO: Traducir.
                 throw new CryptographicException("El valor a descifrar no es Base64 válido.", ex);
             }
 
             if (fullCipher.Length <= AesBlockSizeBytes)
             {
-                //TODO: Traducir.
                 throw new CryptographicException("El valor cifrado no contiene datos suficientes.");
             }
 
@@ -147,7 +142,6 @@ namespace SECURITY
                     }
                     catch (CryptographicException ex)
                     {
-                        //TODO: Traducir.
                         throw new CryptographicException("No fue posible descifrar el valor. Puede haberse alterado o haberse cifrado con otra clave.", ex);
                     }
                 }

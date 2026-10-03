@@ -26,7 +26,6 @@ namespace SERVICES
             }
             catch
             {
-                // intencional: el logging nunca debe tirar
             }
         }
 

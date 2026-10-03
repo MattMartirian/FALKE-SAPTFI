@@ -80,7 +80,6 @@ namespace GUI
             }
             catch (InvalidOperationException ex)
             {
-                // Regla de negocio (nombre de empresa o email duplicado, email invalido): mensaje util.
                 lblMsg.Text = ex.Message;
             }
             catch (Exception ex)

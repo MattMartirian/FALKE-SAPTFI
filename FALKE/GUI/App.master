@@ -1,0 +1,219 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="App.master.cs" Inherits="GUI.AppMaster" %>
+<%@ Register Src="~/Controles/Iconos.ascx" TagPrefix="falke" TagName="Iconos" %>
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%: Page.Title %> - Falke</title>
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("falke.tema");
+                if (!t) { t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "noche" : "dia"; }
+                document.documentElement.setAttribute("data-tema", t);
+            } catch (e) { document.documentElement.setAttribute("data-tema", "dia"); }
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Manrope:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" />
+
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/falke.css") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Content/falke.css")).Ticks %>" />
+
+    <asp:ContentPlaceHolder ID="cabeza" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <falke:Iconos runat="server" ID="ucIconos" />
+
+        <a class="salto-contenido" href="#contenido-principal" data-i18n="comun.saltar">Saltar al contenido</a>
+
+        <header class="topbar">
+
+            <a class="marca" href="<%: ResolveUrl("~/Panel.aspx") %>">
+                <img src="<%: ResolveUrl("~/Content/img/falke-logo.svg") %>" alt="Falke" />
+            </a>
+
+            <h1 class="topbar-titulo"><%: Page.Title %></h1>
+
+            <div class="topbar-acciones">
+
+                <div class="desplegable">
+                    <button type="button" class="icono-boton" data-desplegable="panelAvisos"
+                            aria-expanded="false" aria-haspopup="true">
+                        <span class="solo-lectores" data-i18n="topbar.avisos">Avisos sin leer</span>
+                        <svg width="20" height="20" aria-hidden="true"><use href="#i-campana" /></svg>
+                        <asp:PlaceHolder ID="phPuntoAviso" runat="server">
+                            <span class="punto-aviso"></span>
+                        </asp:PlaceHolder>
+                    </button>
+
+                    <div class="desplegable-panel" id="panelAvisos" hidden>
+                        <div class="desplegable-cabecera">
+                            <strong data-i18n="avisos.titulo">Avisos</strong>
+                            <span class="badge badge-peligro" style="margin-left:auto">3 <span data-i18n="avisos.sinLeer">sin leer</span></span>
+                        </div>
+                        <div class="desplegable-lista">
+                            <a class="desplegable-item sin-leer" href="<%: ResolveUrl("~/Notificaciones.aspx") %>">
+                                <svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
+                                <span>
+                                    <strong data-i18n="avisos.demo1.titulo">Procesamiento terminado</strong><br />
+                                    <span class="texto-suave" data-i18n="avisos.demo1.detalle">La sesión «Checkout — App e-commerce» ya se puede auditar.</span>
+                                </span>
+                            </a>
+                            <a class="desplegable-item sin-leer" href="<%: ResolveUrl("~/Notificaciones.aspx") %>">
+                                <svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg>
+                                <span>
+                                    <strong data-i18n="avisos.demo2.titulo">Calibración vencida</strong><br />
+                                    <span class="texto-suave" data-i18n="avisos.demo2.detalle">El Tobii 4C necesita recalibrarse antes de la próxima grabación.</span>
+                                </span>
+                            </a>
+                            <a class="desplegable-item sin-leer" href="<%: ResolveUrl("~/Notificaciones.aspx") %>">
+                                <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
+                                <span>
+                                    <strong data-i18n="avisos.demo3.titulo">Mantenimiento programado</strong><br />
+                                    <span class="texto-suave" data-i18n="avisos.demo3.detalle">La plataforma entrará en mantenimiento el 20/07 a las 03:00.</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="desplegable-pie">
+                            <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Notificaciones.aspx") %>" data-i18n="avisos.verTodos">Ver todos los avisos</a>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="icono-boton" data-accion="cambiar-tema"
+                        aria-pressed="false" title="Cambiar entre modo día y modo noche">
+                    <span class="solo-lectores" data-i18n="comun.cambiar.tema">Cambiar el tema de color</span>
+                    <svg width="20" height="20" aria-hidden="true" data-icono-tema="dia"><use href="#i-sol" /></svg>
+                    <svg width="20" height="20" aria-hidden="true" data-icono-tema="noche"><use href="#i-luna" /></svg>
+                </button>
+
+                <div class="desplegable">
+                    <button type="button" class="avatar" data-desplegable="panelUsuario"
+                            aria-expanded="false" aria-haspopup="true">
+                        <span class="solo-lectores" data-i18n="topbar.miCuenta">Mi cuenta</span>
+                        <asp:Literal ID="litIniciales" runat="server" />
+                    </button>
+
+                    <div class="desplegable-panel" id="panelUsuario" hidden>
+                        <div class="desplegable-cabecera">
+                            <span class="avatar grande" aria-hidden="true"><asp:Literal ID="litIniciales2" runat="server" /></span>
+                            <span>
+                                <strong><asp:Literal ID="litNombre" runat="server" /></strong><br />
+                                <span class="texto-suave texto-chico"><asp:Literal ID="litEmail" runat="server" /></span><br />
+                                <span class="badge badge-neutro mt-8"><asp:Literal ID="litRol" runat="server" /></span>
+                            </span>
+                        </div>
+
+                        <div class="desplegable-pie">
+                            <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Usuarios.aspx?perfil=1") %>" data-i18n="usuario.verPerfil">Ver mi perfil</a>
+                            <a class="btn btn-oscuro btn-chico btn-bloque" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">Cerrar sesión</a>
+                        </div>
+
+                        <div class="vista-previa-rol">
+                            <p class="texto-chico texto-suave mb-8" data-i18n="demo.verComo">Vista previa de rol (solo demo)</p>
+                            <div class="chips">
+                                <a class="chip" href="?rol=Analista">Analista</a>
+                                <a class="chip" href="?rol=Administrador">Administrador</a>
+                                <a class="chip" href="?rol=Gestor">Gestor</a>
+                                <a class="chip" href="?rol=Webmaster">Webmaster</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <div class="app">
+
+            <aside class="sidebar">
+                <nav class="sidebar-nav" aria-label="Secciones de la aplicación">
+
+                    <div class="sidebar-grupo">
+                        <p class="sidebar-titulo" data-i18n="menu.grupo.analisis">Análisis</p>
+
+                        <a id="navPanel" runat="server" class="sidebar-item" href="~/Panel.aspx">
+                            <svg aria-hidden="true"><use href="#i-casa" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.panel">Página principal</span>
+                        </a>
+                        <a id="navVisualizaciones" runat="server" class="sidebar-item" href="~/Visualizaciones.aspx">
+                            <svg aria-hidden="true"><use href="#i-ojo" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.visualizaciones">Visualizaciones</span>
+                        </a>
+                        <a id="navNuevaGrabacion" runat="server" class="sidebar-item" href="~/NuevaGrabacion.aspx">
+                            <svg aria-hidden="true"><use href="#i-video" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.nuevaGrabacion">Nueva grabación</span>
+                        </a>
+                        <a id="navCategorias" runat="server" class="sidebar-item" href="~/Categorias.aspx">
+                            <svg aria-hidden="true"><use href="#i-carpeta" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.categorias">Categorías</span>
+                        </a>
+                        <a id="navAnalisisMultiple" runat="server" class="sidebar-item" href="~/AnalisisMultiple.aspx">
+                            <svg aria-hidden="true"><use href="#i-comparar" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.analisisMultiple">Análisis múltiple</span>
+                        </a>
+                    </div>
+
+                    <div id="grupoOrganizacion" runat="server" class="sidebar-grupo">
+                        <p class="sidebar-titulo" data-i18n="menu.grupo.organizacion">Organización</p>
+
+                        <a id="navUsuarios" runat="server" class="sidebar-item" href="~/Usuarios.aspx">
+                            <svg aria-hidden="true"><use href="#i-usuarios" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.usuarios">Usuarios</span>
+                        </a>
+                        <a id="navEmpresas" runat="server" class="sidebar-item" href="~/Empresas.aspx">
+                            <svg aria-hidden="true"><use href="#i-empresa" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.empresas">Empresas</span>
+                        </a>
+                        <a id="navDispositivos" runat="server" class="sidebar-item" href="~/Dispositivos.aspx">
+                            <svg aria-hidden="true"><use href="#i-dispositivo" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.dispositivos">Dispositivos</span>
+                        </a>
+                    </div>
+
+                    <div id="grupoSistema" runat="server" class="sidebar-grupo">
+                        <p class="sidebar-titulo" data-i18n="menu.grupo.sistema">Sistema</p>
+
+                        <a id="navBitacora" runat="server" class="sidebar-item" href="~/Bitacora.aspx">
+                            <svg aria-hidden="true"><use href="#i-libro" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.bitacora">Bitácora</span>
+                        </a>
+                        <a id="navIntegridad" runat="server" class="sidebar-item" href="~/Integridad.aspx">
+                            <svg aria-hidden="true"><use href="#i-escudo" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.integridad">Dígito verificador</span>
+                        </a>
+                        <a id="navRespaldos" runat="server" class="sidebar-item" href="~/Respaldos.aspx">
+                            <svg aria-hidden="true"><use href="#i-base" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.respaldos">Copias de seguridad</span>
+                        </a>
+                    </div>
+
+                </nav>
+
+                <div class="sidebar-pie">
+                    <button type="button" class="sidebar-item ancho-total boton-plegar" data-accion="plegar-sidebar"
+                            aria-expanded="true">
+                        <svg aria-hidden="true"><use href="#i-menu" /></svg>
+                        <span class="sidebar-texto" data-i18n="menu.plegar">Plegar el menú</span>
+                    </button>
+                </div>
+            </aside>
+
+            <main class="contenido" id="contenido-principal">
+                <asp:ContentPlaceHolder ID="cuerpo" runat="server" />
+            </main>
+
+        </div>
+
+        <script src="<%: ResolveUrl("~/Scripts/falke.js") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Scripts/falke.js")).Ticks %>"></script>
+
+        <asp:ContentPlaceHolder ID="scripts" runat="server" />
+    </form>
+</body>
+</html>

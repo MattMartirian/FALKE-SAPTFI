@@ -99,7 +99,6 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.ErrorLectura,
-                    //TODO: Traducir.
                     Detalle = $"No se encontró un registro de integridad previo para la tabla {tabla}."
                 });
                 return inconsistencias;
@@ -111,7 +110,6 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.RegistrosAgregados,
-                    //TODO: Traducir.
                     Detalle = $"Se detectaron registros agregados de forma externa en la tabla {tabla}."
                 });
             }
@@ -122,7 +120,6 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.RegistrosEliminados,
-                    //TODO: Traducir.
                     Detalle = $"Se detectaron registros eliminados de forma externa en la tabla {tabla}."
                 });
             }
@@ -148,10 +145,8 @@ namespace SERVICES
                         NumeroRegistro = numeroRegistro,
                         Columnas = columnas,
                         Datos = fila.Datos,
-                        //TODO: Traducir.
                         DvhAlmacenado = string.IsNullOrEmpty(fila.Dvh) ? "(vacio)" : fila.Dvh,
                         DvhRecalculado = dvhCalculado,
-                        //TODO: Traducir.
                         Detalle = $"El registro #{numeroRegistro} (clave \"{clave}\") de la tabla {tabla} fue alterado o agregado externamente."
                     });
                 }
@@ -165,7 +160,6 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.FirmaTablaInvalida,
-                    //TODO: Traducir.
                     Detalle = $"La tabla {tabla} posee datos corruptos (firma global inválida)."
                 });
             }

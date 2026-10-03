@@ -33,10 +33,6 @@ namespace DAL
             get { return transaccion != null; }
         }
 
-        /// <summary>
-        /// Abre una transaccion. Si ya hay una abierta incrementa el nivel (transaccion anidada)
-        /// el commit real ocurre cuando se cierra la mas externa.
-        /// </summary>
         public void IniciarTransaccion()
         {
             if (transaccion != null)
@@ -51,10 +47,8 @@ namespace DAL
             nivelTransaccion = 1;
         }
 
-        /// <summary>Confirma. Solo hace COMMIT cuando se cierra la transaccion mas externa.</summary>
         public void Confirmar()
         {
-            //TODO: Traducir.
             if (transaccion == null) throw new InvalidOperationException("No hay una transaccion activa para confirmar.");
 
             nivelTransaccion--;
@@ -70,7 +64,6 @@ namespace DAL
             }
         }
 
-        /// <summary>Revierte toda la transaccion sin importar el nivel de anidamiento.</summary>
         public void Revertir()
         {
             if (transaccion == null) return;
@@ -81,7 +74,6 @@ namespace DAL
             }
             catch
             {
-                // La conexion pudo haberse perdido: el motor ya habra descartado la transaccion.
             }
             finally
             {
@@ -110,7 +102,6 @@ namespace DAL
             }
             catch
             {
-                // La conexion pudo haberse perdido: el motor ya habra descartado la transaccion.
             }
             finally
             {

@@ -17,7 +17,6 @@ namespace GUI
                 string email = txtEmail.Text.Trim();
                 string token = new Usuario_TLL().SolicitarRecuperacion(email);
 
-                // token == null  =>  el email no existe. No se revela esa diferencia.
                 if (token != null)
                 {
                     string link = WebHelper.UrlAbsoluta(

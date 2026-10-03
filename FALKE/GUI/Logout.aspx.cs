@@ -18,7 +18,6 @@ namespace GUI
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            // No hay llamada a TLL/BLL en este flujo: la bitacora se registra desde aca.
             if (SesionActual_GUI.HayUsuario)
             {
                 new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Seguridad", "Cierre de sesión", CriticidadBitacora.Baja);

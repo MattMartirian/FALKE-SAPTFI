@@ -29,7 +29,6 @@ namespace GUI
                     ? "Sin inconsistencias: la integridad almacenada coincide con los datos."
                     : inconsistencias.Count + " inconsistencia(s) detectada(s) (ver detalle).";
 
-                // El flujo va directo a SERVICES, no a TLL/BLL: la bitacora se registra desde aca.
                 if (inconsistencias.Count == 0)
                 {
                     new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad", "Verificación de integridad ejecutada: sin inconsistencias", CriticidadBitacora.Baja);
@@ -70,7 +69,6 @@ namespace GUI
                                   ? "Verificacion posterior: sin inconsistencias."
                                   : "Verificacion posterior: " + inconsistencias.Count + " inconsistencia(s).");
 
-                // El flujo va directo a SERVICES, no a TLL/BLL: la bitacora se registra desde aca.
                 new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad", "Recálculo y almacenamiento de DVH/DVV: " + resumen.TablasProcesadas + " tabla(s), " + resumen.RegistrosProcesados + " registro(s)", CriticidadBitacora.Alta);
             }
             catch (Exception ex)

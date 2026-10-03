@@ -38,13 +38,11 @@ namespace TE
 
         public virtual void Agregar(PermisoAbstracto_TE hijo)
         {
-            //TODO: Traducir.
             throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no puede contener otros permisos.");
         }
 
         public virtual void Quitar(PermisoAbstracto_TE hijo)
         {
-            //TODO: Traducir.
             throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no tiene hijos.");
         }
 

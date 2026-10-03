@@ -1,0 +1,128 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Publico.master.cs" Inherits="GUI.PublicoMaster" %>
+<%@ Register Src="~/Controles/Iconos.ascx" TagPrefix="falke" TagName="Iconos" %>
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%: Page.Title %> - Falke</title>
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("falke.tema");
+                if (!t) { t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "noche" : "dia"; }
+                document.documentElement.setAttribute("data-tema", t);
+            } catch (e) { document.documentElement.setAttribute("data-tema", "dia"); }
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Manrope:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" />
+
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/falke.css") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Content/falke.css")).Ticks %>" />
+
+    <asp:ContentPlaceHolder ID="cabeza" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <falke:Iconos runat="server" ID="ucIconos" />
+
+        <a class="salto-contenido" href="#contenido-principal" data-i18n="comun.saltar">Saltar al contenido</a>
+
+        <header class="nav-publica">
+            <div class="contenedor">
+
+                <a class="marca" href="<%: ResolveUrl("~/Default.aspx") %>">
+                    <img src="<%: ResolveUrl("~/Content/img/falke-logo.svg") %>" alt="Falke" />
+                </a>
+
+                <nav class="nav-links" aria-label="Navegación principal">
+                    <a id="navInicio" runat="server" href="~/Default.aspx" data-i18n="nav.inicio">Inicio</a>
+                    <a id="navPlanes" runat="server" href="~/Planes.aspx" data-i18n="nav.planes">Planes</a>
+                    <a id="navFaq" runat="server" href="~/Faq.aspx" data-i18n="nav.faq">Preguntas frecuentes</a>
+                    <a id="navPanel" runat="server" href="~/Panel.aspx" data-i18n="nav.panel">Panel</a>
+                </nav>
+
+                <div class="nav-acciones">
+                    <button type="button" class="icono-boton" data-accion="cambiar-tema"
+                            aria-pressed="false" title="Cambiar entre modo día y modo noche">
+                        <span class="solo-lectores" data-i18n="comun.cambiar.tema">Cambiar el tema de color</span>
+                        <svg width="20" height="20" aria-hidden="true" data-icono-tema="dia"><use href="#i-sol" /></svg>
+                        <svg width="20" height="20" aria-hidden="true" data-icono-tema="noche"><use href="#i-luna" /></svg>
+                    </button>
+
+                    <asp:PlaceHolder ID="phAnonimo" runat="server">
+                        <a class="btn btn-secundario btn-chico" href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="nav.ingresar">Iniciar sesión</a>
+                        <a class="btn btn-primario btn-chico" href="<%: ResolveUrl("~/Registro.aspx") %>" data-i18n="nav.registro">Crear cuenta</a>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder ID="phAutenticado" runat="server" Visible="false">
+                        <a class="btn btn-secundario btn-chico" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="nav.panel">Panel</a>
+                        <a class="btn btn-primario btn-chico" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">Cerrar sesión</a>
+                    </asp:PlaceHolder>
+                </div>
+
+            </div>
+        </header>
+
+        <main id="contenido-principal">
+            <asp:ContentPlaceHolder ID="cuerpo" runat="server" />
+        </main>
+
+        <footer class="pie">
+            <div class="contenedor">
+
+                <div class="pie-grid">
+                    <div class="pie-col">
+                        <a class="marca" href="<%: ResolveUrl("~/Default.aspx") %>">
+                            <img src="<%: ResolveUrl("~/Content/img/falke-logo.svg") %>" alt="Falke" />
+                        </a>
+                        <p class="mt-16" style="max-width: 280px;" data-i18n="pie.descripcion">
+                            Analítica conductual biométrica por seguimiento ocular.
+                            Un servicio de Pattern Blue.
+                        </p>
+                    </div>
+
+                    <div class="pie-col">
+                        <h4 data-i18n="pie.producto">Producto</h4>
+                        <ul>
+                            <li><a href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="nav.planes">Planes</a></li>
+                            <li><a href="<%: ResolveUrl("~/Faq.aspx") %>" data-i18n="nav.faq">Preguntas frecuentes</a></li>
+                            <li><a href="<%: ResolveUrl("~/Registro.aspx") %>" data-i18n="pie.comoContratar">Cómo se contrata</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="pie-col">
+                        <h4 data-i18n="pie.acceso">Acceso</h4>
+                        <ul>
+                            <li><a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="nav.ingresar">Iniciar sesión</a></li>
+                            <li><a href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="nav.panel">Panel</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="pie-col">
+                        <h4 data-i18n="pie.contacto">Contacto</h4>
+                        <ul>
+                            <li>contacto@patternblue.com.ar</li>
+                            <li>+54 11 0000-0000</li>
+                            <li data-i18n="pie.ciudad">Buenos Aires, Argentina</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pie-legal">
+                    <span>&copy; <%: DateTime.Now.Year %> Pattern Blue. <span data-i18n="pie.derechos">Todos los derechos reservados.</span></span>
+                    <span data-i18n="pie.ley">Tratamiento de datos biométricos conforme a la Ley N.&deg; 25.326.</span>
+                </div>
+
+            </div>
+        </footer>
+
+        <script src="<%: ResolveUrl("~/Scripts/falke.js") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Scripts/falke.js")).Ticks %>"></script>
+
+        <asp:ContentPlaceHolder ID="scripts" runat="server" />
+    </form>
+</body>
+</html>

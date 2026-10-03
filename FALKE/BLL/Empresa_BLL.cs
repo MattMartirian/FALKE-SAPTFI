@@ -27,15 +27,12 @@ namespace BLL
 
             if (adminInicial == null) throw new ArgumentNullException(nameof(adminInicial));
 
-            //TODO: Traducir.
             if (string.IsNullOrWhiteSpace(empresa.NombreEmpresa)) throw new InvalidOperationException("El nombre de la empresa es obligatorio.");
 
-            //TODO: Traducir.
             if (empresaRepo.ExisteNombre(empresa.NombreEmpresa)) throw new InvalidOperationException("Ya existe una empresa registrada con ese nombre.");
 
             adminInicial.Rol = adminInicial.Rol ?? new PermisoCompuesto_TE(Usuario_TLL.ROL_ADMINISTRADOR, true);
 
-            // Regla de negocio: una empresa nueva nace activa.
             empresa.Estado = EstadoEmpresa.Activa;
 
             string token = Transaccion_ORM.Ejecutar(() =>
@@ -47,7 +44,6 @@ namespace BLL
 
                 string t = new Usuario_TLL().RegistrarUsuario(adminInicial);
 
-                //TODO: Traducir.
                 bitacora.Registrar(adminInicial.IdUsuario, "Empresas", "Alta de empresa \"" + empresa.NombreEmpresa + "\" (id " + empresa.IdEmpresa + ") con usuario administrador \"" + adminInicial.EmailUsuario + "\"", CriticidadBitacora.Media);
 
                 return t;

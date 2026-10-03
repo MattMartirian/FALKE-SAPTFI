@@ -21,7 +21,6 @@ namespace GUI
 
             if (Request["err"] == "permiso") lblAviso.Text = "No tenes permiso para acceder a esa seccion.";
 
-            // Se ocultan los accesos que el permiso del usuario no habilita.
             liRegistrarEmpresa.Visible = SesionActual_GUI.Puede("REGISTRAR_EMPRESA");
             liRegistrarUsuario.Visible = SesionActual_GUI.Puede("REGISTRAR_USUARIO");
             liRecalcular.Visible = SesionActual_GUI.Puede("RECALCULAR_INTEGRIDAD");

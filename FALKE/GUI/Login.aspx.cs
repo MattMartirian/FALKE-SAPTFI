@@ -26,8 +26,6 @@ namespace GUI
                     return;
                 }
 
-                // Motivo es un codigo de negocio (CREDENCIALES_INVALIDAS, USUARIO_BLOQUEADO, ...),
-                // no informacion sensible: se puede mostrar.
                 lblMsg.Text = "Login fallido. Motivo: " + resultado.Motivo;
             }
             catch (Exception ex)
@@ -42,7 +40,6 @@ namespace GUI
             string nombre = (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim();
             string rol = usuario.Rol != null ? usuario.Rol.Nombre : string.Empty;
 
-            // El rol ya viene como arbol Composite (con hijos) desde la lectura del usuario.
             SesionActual_GUI.Iniciar(usuario.IdUsuario, usuario.EmailUsuario, nombre, rol, usuario.IdEmpresa, usuario.EsCuentaEmergencia, usuario.Rol);
         }
 

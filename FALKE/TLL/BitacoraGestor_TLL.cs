@@ -27,7 +27,6 @@ namespace TLL
             }
             catch
             {
-                // intencional: la auditoria no debe romper el flujo
             }
         }
 

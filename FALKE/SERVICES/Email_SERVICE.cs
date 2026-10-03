@@ -37,8 +37,6 @@ namespace SERVICES
             return valor.Replace('@', '_');
         }
 
-        // En una app web ASP.NET DataDirectory apunta a App_Data; fuera de ese contexto
-        // (tests, tareas) se cae al directorio base del proceso.
         private static string CarpetaDatos()
         {
             string dir = AppDomain.CurrentDomain.GetData("DataDirectory") as string;

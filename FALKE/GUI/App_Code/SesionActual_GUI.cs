@@ -1,4 +1,6 @@
+using System;
 using System.Web;
+using SECURITY;
 using TE;
 using TLL;
 
@@ -14,6 +16,10 @@ namespace GUI
         private const string K_EMERGENCIA = "UsuarioEmergencia";
         private const string K_PERMISOS = "UsuarioPermisos";
 
+        private const string COOKIE_RECORDARME = "FALKE_RECORDARME";
+        private const string ITEM_RESTAURA = "FALKE_RECORDARME_RESUELTO";
+        private const int DIAS_RECORDARME = 30;
+
         private static HttpContext Ctx
         {
             get { return HttpContext.Current; }
@@ -24,7 +30,6 @@ namespace GUI
             get { return Ctx.Session[K_EMAIL] != null; }
         }
 
-        /// <summary>Id del usuario logueado. -1 para emergencia, 0 si no hay sesion.</summary>
         public static int IdUsuario
         {
             get
@@ -74,6 +79,8 @@ namespace GUI
 
         public static bool Puede(string patente)
         {
+            RestaurarDesdeCookie();
+
             if (!HayUsuario) return false;
 
             if (EsEmergencia) return true;
@@ -94,29 +101,34 @@ namespace GUI
 
         public static void Cerrar()
         {
+            OlvidarEsteEquipo();
             Ctx.Session.Clear();
             Ctx.Session.Abandon();
         }
 
         public static bool Exigir()
         {
+            RestaurarDesdeCookie();
+
             if (HayUsuario) return true;
 
-            Redirigir("Login.aspx");
+            Redirigir("Ingresar.aspx");
             return false;
         }
 
         public static bool ExigirPermiso(string patente)
         {
+            RestaurarDesdeCookie();
+
             if (!HayUsuario)
             {
-                Redirigir("Login.aspx");
+                Redirigir("Ingresar.aspx");
                 return false;
             }
 
             if (!Puede(patente))
             {
-                Redirigir("MenuPruebas.aspx?err=permiso");
+                Redirigir("SinPermiso.aspx");
                 return false;
             }
 
@@ -125,10 +137,101 @@ namespace GUI
 
         public static bool RedirigirSiAutenticado()
         {
+            RestaurarDesdeCookie();
+
             if (!HayUsuario) return false;
 
-            Redirigir("MenuPruebas.aspx");
+            Redirigir("Panel.aspx");
             return true;
+        }
+
+        public static void RecordarEnEsteEquipo(int idUsuario)
+        {
+            if (idUsuario <= 0 || Ctx == null) return;
+
+            DateTime vence = DateTime.Now.AddDays(DIAS_RECORDARME);
+            string carga = idUsuario.ToString() + "|" + vence.Ticks.ToString();
+
+            string valor;
+            try
+            {
+                valor = Cifrador_SECURITY.CifradorSingleton.EncriptadoReversible(carga);
+            }
+            catch
+            {
+                return;
+            }
+
+            HttpCookie cookie = new HttpCookie(COOKIE_RECORDARME, valor)
+            {
+                HttpOnly = true,
+                Secure = Ctx.Request.IsSecureConnection,
+                Expires = vence,
+                Path = "/"
+            };
+
+            Ctx.Response.Cookies.Add(cookie);
+        }
+
+        public static void OlvidarEsteEquipo()
+        {
+            if (Ctx == null) return;
+
+            HttpCookie cookie = new HttpCookie(COOKIE_RECORDARME, string.Empty)
+            {
+                HttpOnly = true,
+                Expires = DateTime.Now.AddDays(-1),
+                Path = "/"
+            };
+
+            Ctx.Response.Cookies.Add(cookie);
+        }
+
+        public static void RestaurarDesdeCookie()
+        {
+            if (Ctx == null) return;
+            if (Ctx.Items[ITEM_RESTAURA] != null) return;
+            Ctx.Items[ITEM_RESTAURA] = true;
+
+            if (HayUsuario) return;
+
+            HttpCookie cookie = Ctx.Request.Cookies[COOKIE_RECORDARME];
+            if (cookie == null || string.IsNullOrEmpty(cookie.Value)) return;
+
+            try
+            {
+                string carga = Cifrador_SECURITY.CifradorSingleton.DesencriptadoReversible(cookie.Value);
+                string[] partes = carga.Split('|');
+
+                int idUsuario;
+                long ticks;
+
+                if (partes.Length != 2 ||
+                    !int.TryParse(partes[0], out idUsuario) ||
+                    !long.TryParse(partes[1], out ticks) ||
+                    new DateTime(ticks) < DateTime.Now)
+                {
+                    OlvidarEsteEquipo();
+                    return;
+                }
+
+                Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(idUsuario);
+
+                if (usuario == null || usuario.EsCuentaEmergencia || usuario.Estado != EstadoUsuario.Activo)
+                {
+                    OlvidarEsteEquipo();
+                    return;
+                }
+
+                string nombre = (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim();
+                string rol = usuario.Rol != null ? usuario.Rol.Nombre : string.Empty;
+
+                Iniciar(usuario.IdUsuario, usuario.EmailUsuario, nombre, rol, usuario.IdEmpresa, usuario.EsCuentaEmergencia, usuario.Rol);
+            }
+            catch
+            {
+                OlvidarEsteEquipo();
+            }
         }
 
         private static void Redirigir(string url)

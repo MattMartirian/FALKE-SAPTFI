@@ -17,9 +17,10 @@ namespace TE
         public PermisoCompuesto_TE Rol { get; set; }
         public EstadoUsuario Estado { get; set; }
         public int IntentosFallidosUsuario { get; set; }
-        public int IdIdioma { get; set; } //TODO Cambiar por clase Idioma_TE
+        public int IdIdioma { get; set; }
         public string DVH { get; set; }
-        public bool EsCuentaEmergencia { get; set; } 
+        public bool EsCuentaEmergencia { get; set; }
+
     }
 
     public enum EstadoUsuario

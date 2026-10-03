@@ -1,0 +1,10 @@
+Para:   mati.martirian@gmail.com
+Asunto: Restablecer la contraseña de Falke
+Fecha:  2026-09-10T20:23:53.8846503-03:00
+--------------------------------------------------
+Recibimos un pedido para restablecer la contraseña de tu cuenta de Falke.
+Si fuiste vos, entrá a este enlace (vence en dos horas y se usa una sola vez):
+http://localhost:53192/DefinirClave.aspx?token=rBx-g8yNI1NfN8WkVxsGR66EwxBjtd-u938cHQluTL8
+
+Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo válida.
+

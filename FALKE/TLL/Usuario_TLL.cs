@@ -43,12 +43,10 @@ namespace TLL
 
         public ResultadoLogin_TLL ValidarCredenciales(string email, string contrasenaPlana)
         {
-            // creación del usuario de emergencia antes de pasar a consultas de BD
             if (EsCredencialDeEmergencia(email, contrasenaPlana))
             {
                 var usuarioEmergencia = ConstruirUsuarioEmergenciaEnMemoria(email);
                 LoguearAccesoEmergenciaAArchivo(email);
-                //TODO: Traducir.
                 bitacora.Registrar(0, "Seguridad", "Acceso de emergencia (break-glass) con identificador '" + email + "'", CriticidadBitacora.Alta);
                 return ResultadoLogin_TLL.Exitoso(usuarioEmergencia);
             }
@@ -61,14 +59,12 @@ namespace TLL
 
             if (usuario.Estado == EstadoUsuario.Bloqueado)
             {
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta bloqueada", CriticidadBitacora.Media);
                 return ResultadoLogin_TLL.UsuarioBloqueado();
             }
 
             if (usuario.Estado == EstadoUsuario.Pendiente)
             {
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta pendiente de activación", CriticidadBitacora.Baja);
                 return ResultadoLogin_TLL.UsuarioPendienteActivacion();
             }
@@ -82,8 +78,6 @@ namespace TLL
             var inconsistencias = gestorIntegridad.VerificarIntegridadTodasLasTablas();
             if (inconsistencias.Count > 0)
             {
-                // acá se va a decidir el nivel de detalle según el rol del usuario que intenta loguearse
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión rechazado: la integridad de los datos está comprometida (" + inconsistencias.Count + " inconsistencia/s)", CriticidadBitacora.Alta);
                 return ResultadoLogin_TLL.IntegridadComprometida();
             }
@@ -91,33 +85,23 @@ namespace TLL
             Transaccion_ORM.Ejecutar(() =>
             {
                 ResetearIntentosFallidos(usuario);
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Inicio de sesión exitoso", CriticidadBitacora.Baja);
             });
 
             return ResultadoLogin_TLL.Exitoso(usuario);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="usuario"></param>
-        /// <returns>Token para validar usuario</returns>
-        /// <exception cref="InvalidOperationException"></exception>
         public string RegistrarUsuario(Usuario_TE usuario)
         {
             usuario.EmailUsuario = NormalizarEmail(usuario.EmailUsuario);
 
-            //TODO: Traducir.
             if (!EsEmailValido(usuario.EmailUsuario)) throw new InvalidOperationException("El email no tiene un formato valido.");
 
-            //TODO: Traducir.
             if (usuarioRepo.ObtenerPorEmail(usuario.EmailUsuario) != null) throw new InvalidOperationException("Ya existe un usuario registrado con ese email.");
 
             usuario.ContrasenaHashUsuario = cifrador.Encoder(Cifrador_SECURITY.GenerarSecretoUrlSafe());
             usuario.IntentosFallidosUsuario = 0;
             usuario.Estado = EstadoUsuario.Pendiente;
 
-            //TODO: Traducir.
             string rolNombre = usuario.Rol != null ? usuario.Rol.Nombre : "(sin rol)";
 
             string token = Transaccion_ORM.Ejecutar(() =>
@@ -127,7 +111,6 @@ namespace TLL
 
                 string t = EmitirToken(usuario.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION);
 
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Usuarios", "Alta de usuario '" + usuario.EmailUsuario + "' (empresa " + usuario.IdEmpresa + ", rol " + rolNombre + "); queda pendiente de activación", CriticidadBitacora.Media);
 
                 return t;
@@ -145,7 +128,6 @@ namespace TLL
                 usuarioRepo.Modificar(usuario);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
 
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Usuarios", "Modificación de datos del usuario '" + usuario.EmailUsuario + "'", CriticidadBitacora.Baja);
             });
         }
@@ -170,14 +152,12 @@ namespace TLL
                     RegistrarIntentoFallido(usuario);
                 }
 
-                //TODO: Traducir.
                 error = "No se pudo cambiar la contrasena. Verifique los datos ingresados.";
                 return false;
             }
 
             if (!EsContrasenaAceptable(contrasenaNueva))
             {
-                //TODO: Traducir.
                 error = "La nueva contrasena debe tener al menos " + LARGO_MINIMO_CONTRASENA + " caracteres.";
                 return false;
             }
@@ -193,7 +173,6 @@ namespace TLL
                 usuarioRepo.Modificar(usuario);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
 
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Cambio de contraseña", CriticidadBitacora.Media);
             });
 
@@ -210,7 +189,6 @@ namespace TLL
             Transaccion_ORM.Ejecutar(() =>
             {
                 token = EmitirToken(usuario.IdUsuario, TOKEN_RECUPERACION, VIGENCIA_RECUPERACION);
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Solicitud de recuperación de contraseña", CriticidadBitacora.Baja);
             });
 
@@ -237,7 +215,6 @@ namespace TLL
 
             if (usuario.Estado == EstadoUsuario.Pendiente || usuario.Estado == EstadoUsuario.Bloqueado) usuario.Estado = EstadoUsuario.Activo;
 
-            //TODO: Traducir.
             string via = info.Tipo == TOKEN_ACTIVACION ? "activación" : "recuperación";
 
             Transaccion_ORM.Ejecutar(() =>
@@ -249,7 +226,6 @@ namespace TLL
                 tokenRepo.InvalidarPendientes(usuario.IdUsuario, info.Tipo);
                 gestorIntegridad.RecalcularTabla(TablasBD.Token);
 
-                //TODO: Traducir.
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Contraseña establecida mediante token de " + via + "; la cuenta queda activa", CriticidadBitacora.Media);
             });
 
@@ -337,7 +313,6 @@ namespace TLL
 
                 if (seBloqueo)
                 {
-                    //TODO: Traducir.
                     bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Cuenta bloqueada por superar el máximo de intentos fallidos", CriticidadBitacora.Alta);
                 }
             });
@@ -390,7 +365,6 @@ namespace TLL
         {
             try
             {
-                //TODO: Traducir.
                 string linea = $"{DateTime.Now:o} | ACCESO DE EMERGENCIA | {identificador}";
                 string ruta = HttpContext.Current != null ? HttpContext.Current.Server.MapPath("~/App_Data/emergencia.log") : "emergencia.log";
 
@@ -398,7 +372,6 @@ namespace TLL
             }
             catch
             {
-                // Un fallo al escribir el log de emergencia no debe impedir el acceso de emergencia en sí.
             }
         }
     }

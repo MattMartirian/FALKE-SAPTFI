@@ -7,18 +7,14 @@ namespace GUI
 {
     public partial class RegistrarUsuario : System.Web.UI.Page
     {
-        // Patente para crear usuarios en empresas distintas a la propia (rol Gestor de Pattern Blue).
         private const string PATENTE_OTRA_EMPRESA = "CREAR_USUARIO_OTRA_EMPRESA";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Alta de usuarios: requiere la patente REGISTRAR_USUARIO. Guard efectivo en el handler.
             if (!SesionActual_GUI.ExigirPermiso("REGISTRAR_USUARIO")) return;
 
             if (IsPostBack) return;
 
-            // El administrador de una empresa solo puede dar de alta usuarios de SU empresa.
-            // El Gestor puede elegir la empresa.
             if (!SesionActual_GUI.Puede(PATENTE_OTRA_EMPRESA))
             {
                 txtEmpresa.Text = SesionActual_GUI.IdEmpresa.ToString();
@@ -39,7 +35,6 @@ namespace GUI
                 return;
             }
 
-            // Salvo que tenga la patente de otra empresa, la empresa se fuerza a la del actor.
             if (!SesionActual_GUI.Puede(PATENTE_OTRA_EMPRESA)) idEmpresa = SesionActual_GUI.IdEmpresa;
 
             if (txtNombre.Text.Trim().Length == 0 ||
@@ -80,7 +75,6 @@ namespace GUI
             }
             catch (InvalidOperationException ex)
             {
-                // Regla de negocio (p. ej. email duplicado o formato invalido): mensaje util, no sensible.
                 lblMsg.Text = ex.Message;
             }
             catch (Exception ex)

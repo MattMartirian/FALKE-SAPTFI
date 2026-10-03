@@ -47,7 +47,6 @@ namespace GUI
                     return;
                 }
 
-                // Si el token dejo de ser valido, no tiene sentido reintentar: se oculta el form.
                 if (res.Motivo != "CONTRASENA_DEBIL")
                     pnlForm.Visible = false;
 
