@@ -11,6 +11,18 @@ namespace GUI
         {
             if (!IsPostBack && SesionActual_GUI.RedirigirSiAutenticado()) return;
 
+            if (!IsPostBack && Request.QueryString["cuenta"] == "empresa")
+                Avisar("Tu sesión se cerró porque la empresa de tu cuenta fue bloqueada. Comunícate con Pattern Blue para regularizar la situación.");
+
+            if (!IsPostBack && Request.QueryString["cuenta"] == "baja")
+                Avisar("Tu sesión se cerró porque la empresa de tu cuenta fue dada de baja. Si crees que es un error, comunícate con Pattern Blue.");
+
+            if (!IsPostBack && Request.QueryString["cuenta"] == "clave")
+                Avisar("Tu sesión se cerró porque se cambió la contraseña de tu cuenta. Volvé a entrar con la nueva.");
+
+            if (!IsPostBack && Request.QueryString["cuenta"] == "desactivada")
+                Avisar("Tu sesión se cerró porque la cuenta fue dada de baja, bloqueada o cambió de estado. Comunícate con el administrador de tu empresa.");
+
             if (!IsPostBack) txtEmail.Focus();
         }
 
@@ -31,7 +43,7 @@ namespace GUI
                 if (resultado.Exito)
                 {
                     IniciarSesion(resultado.Usuario);
-                    Session.Remove("RolVistaPrevia");
+                    SesionActual_GUI.FijarHuella(resultado.Usuario);
 
                     if (chkRecordarme.Checked)
                         SesionActual_GUI.RecordarEnEsteEquipo(resultado.Usuario.IdUsuario);
@@ -57,8 +69,20 @@ namespace GUI
                 case "CREDENCIALES_INVALIDAS":
                     return "El correo o la contraseña no son correctos.";
 
-                case "USUARIO_BLOQUEADO":
-                    return "La cuenta está bloqueada por intentos fallidos. Usa «Olvidé mi contraseña» para recuperar el acceso.";
+                case "USUARIO_BLOQUEADO_INTENTOS":
+                    return "La cuenta está bloqueada por contraseñas incorrectas. Usa «Olvidé mi contraseña» para recuperar el acceso.";
+
+                case Usuario_TLL.MOTIVO_EMPRESA_BLOQUEADA:
+                    return "La empresa de tu cuenta está bloqueada. Comunícate con Pattern Blue para regularizar la situación.";
+
+                case Usuario_TLL.MOTIVO_EMPRESA_DESHABILITADA:
+                    return "La empresa de tu cuenta fue dada de baja y ya no tiene acceso a Falke. Si crees que es un error, comunícate con Pattern Blue.";
+
+                case "USUARIO_BLOQUEO_ESTRICTO":
+                    return "La cuenta tiene un bloqueo estricto. Comunícate con el administrador de tu empresa: el acceso no se puede recuperar desde acá.";
+
+                case "USUARIO_INACTIVO":
+                    return "La cuenta fue dada de baja. Si crees que es un error, comunícate con el administrador de tu empresa.";
 
                 case "USUARIO_PENDIENTE":
                     return "La cuenta todavía no fue activada. Revisa el correo con el enlace de activación.";

@@ -6,6 +6,7 @@ namespace ORM
         EmpresaCliente,
         Categoria,
         CategoriaAppWeb,
+        CategoriaAppMovil,
         CategoriaPublicidad,
         CategoriaSoftware,
         CategoriaVideojuego,

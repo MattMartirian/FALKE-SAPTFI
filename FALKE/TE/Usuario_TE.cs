@@ -27,7 +27,8 @@ namespace TE
     {
         Pendiente = 0,
         Activo = 1,
-        Bloqueado = 2,
-        Inactivo = 3
+        BloqueadoPorIntentos = 2,
+        Inactivo = 3,
+        BloqueoEstricto = 4
     }
 }

@@ -14,13 +14,14 @@ namespace ORM
         public override void Alta(PermisoAbstracto_TE p)
         {
             string sql = @"
-                INSERT INTO PermisoTable (nombre_permiso, tipo_permiso, es_rol_permiso)
-                VALUES (@nombre, @tipo, @esRol)";
+                INSERT INTO PermisoTable (nombre_permiso, tipo_permiso, es_rol_permiso, descripcion_permiso)
+                VALUES (@nombre, @tipo, @esRol, @descripcion)";
 
             Gestor.EjecutarNonQuery(sql,
                 new SqlParameter("@nombre", p.Nombre),
                 new SqlParameter("@tipo", p.TipoPermiso.ToString().ToLowerInvariant()),
-                new SqlParameter("@esRol", p.EsRolPermiso)
+                new SqlParameter("@esRol", p.EsRolPermiso),
+                new SqlParameter("@descripcion", ValorONulo(p.Descripcion))
             );
         }
 
@@ -39,29 +40,26 @@ namespace ORM
             );
         }
 
-        public void ModificarNombre(string nombreViejo, string nombreNuevo)
+        // El nombre es interno y no cambia: lo que se edita es la descripción que se muestra. Vacía = se muestra el nombre.
+        public void ModificarDescripcion(string nombre, string descripcion)
         {
-            // Son dos queries, se envuelven en una transaccion para que
-            // el rename del permiso y el de sus relaciones sean atómicos
-            string sqlPermiso = @"
-                UPDATE PermisoTable SET nombre_permiso = @nuevo
-                WHERE nombre_permiso = @viejo";
+            Gestor.EjecutarNonQuery(
+                "UPDATE PermisoTable SET descripcion_permiso = @descripcion WHERE nombre_permiso = @nombre",
+                new SqlParameter("@nombre", nombre),
+                new SqlParameter("@descripcion", ValorONulo(descripcion)));
+        }
 
-            Gestor.EjecutarNonQuery(sqlPermiso,
-                new SqlParameter("@viejo", nombreViejo),
-                new SqlParameter("@nuevo", nombreNuevo)
-            );
+        public Dictionary<string, string> ObtenerDescripciones()
+        {
+            var descripciones = new Dictionary<string, string>();
 
-            string sqlRelaciones = @"
-                UPDATE RelacionPermisosTable SET
-                    nombre_permiso_compuesto = CASE WHEN nombre_permiso_compuesto = @viejo THEN @nuevo ELSE nombre_permiso_compuesto END,
-                    nombre_permiso_incluido  = CASE WHEN nombre_permiso_incluido  = @viejo THEN @nuevo ELSE nombre_permiso_incluido  END
-                WHERE nombre_permiso_compuesto = @viejo OR nombre_permiso_incluido = @viejo";
+            foreach (DataRow row in Gestor.EjecutarQuery("SELECT nombre_permiso, descripcion_permiso FROM PermisoTable WHERE descripcion_permiso IS NOT NULL").Rows)
+            {
+                string texto = Convert.ToString(row["descripcion_permiso"]);
+                if (!string.IsNullOrWhiteSpace(texto)) descripciones[Convert.ToString(row["nombre_permiso"])] = texto;
+            }
 
-            Gestor.EjecutarNonQuery(sqlRelaciones,
-                new SqlParameter("@viejo", nombreViejo),
-                new SqlParameter("@nuevo", nombreNuevo)
-            );
+            return descripciones;
         }
 
         public bool PermisoEnRelacion(string nombre)
@@ -267,7 +265,11 @@ namespace ORM
             var tipo = Valor<TipoPermiso>(dr, "tipo_permiso");
             bool esRol = Valor<bool>(dr, "es_rol_permiso");
 
-            return tipo == TipoPermiso.Simple ? (PermisoAbstracto_TE)new PermisoSimple_TE(nombre) : new PermisoCompuesto_TE(nombre, esRol);
+            PermisoAbstracto_TE permiso = tipo == TipoPermiso.Simple ? (PermisoAbstracto_TE)new PermisoSimple_TE(nombre) : new PermisoCompuesto_TE(nombre, esRol);
+
+            if (dr.Table.Columns.Contains("descripcion_permiso")) permiso.Descripcion = Valor<string>(dr, "descripcion_permiso");
+
+            return permiso;
         }
 
         private static List<PermisoAbstracto_TE> MapTodos(DataTable dt)

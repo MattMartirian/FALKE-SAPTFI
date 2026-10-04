@@ -23,11 +23,11 @@ namespace GUI
 
             try
             {
-                string token = new Usuario_TLL().SolicitarRecuperacion(email);
+                SolicitudEnlace_TLL solicitud = new Usuario_TLL().SolicitarEnlace(email);
 
-                if (token != null)
+                if (solicitud != null)
                 {
-                    string enlace = WebHelper.UrlAbsoluta("DefinirClave.aspx?token=" + Uri.EscapeDataString(token));
+                    string enlace = WebHelper.UrlAbsoluta("DefinirClave.aspx?token=" + Uri.EscapeDataString(solicitud.Token));
 
                     string cuerpo =
                         "Recibimos un pedido para restablecer la contraseña de tu cuenta de Falke." + Environment.NewLine +

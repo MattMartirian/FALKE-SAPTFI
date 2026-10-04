@@ -15,6 +15,9 @@ namespace GUI
         private const string K_EMPRESA = "UsuarioIdEmpresa";
         private const string K_EMERGENCIA = "UsuarioEmergencia";
         private const string K_PERMISOS = "UsuarioPermisos";
+        private const string K_VIGENCIA = "UsuarioVigencia";
+        private const string K_HUELLA = "UsuarioHuella";
+        private const int SEGUNDOS_ENTRE_VERIFICACIONES = 20;
 
         private const string COOKIE_RECORDARME = "FALKE_RECORDARME";
         private const string ITEM_RESTAURA = "FALKE_RECORDARME_RESUELTO";
@@ -77,6 +80,65 @@ namespace GUI
             get { return Ctx.Session[K_PERMISOS] as PermisoAbstracto_TE; }
         }
 
+        public static ActorUsuario_TLL ObtenerActor()
+        {
+            RestaurarDesdeCookie();
+
+            if (!HayUsuario) return null;
+
+            return new ActorUsuario_TLL
+            {
+                IdUsuario = IdUsuario,
+                IdEmpresa = IdEmpresa,
+                EsEmergencia = EsEmergencia,
+                Permiso = PermisoActual
+            };
+        }
+
+        // Cada tanto se relee al usuario: una baja, un bloqueo o un cambio de rol hecho por otro administrador tiene efecto sin esperar a que cierre sesión.
+        public static void VerificarVigencia()
+        {
+            if (!HayUsuario || EsEmergencia) return;
+
+            object ultima = Ctx.Session[K_VIGENCIA];
+            if (ultima != null && (DateTime.Now - (DateTime)ultima).TotalSeconds < SEGUNDOS_ENTRE_VERIFICACIONES) return;
+
+            Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(IdUsuario);
+
+            if (usuario == null || usuario.Estado != EstadoUsuario.Activo)
+            {
+                Cerrar();
+                Redirigir("Ingresar.aspx?cuenta=desactivada");
+                return;
+            }
+
+            string motivoEmpresa = new Usuario_TLL().MotivoEmpresaSinIngreso(usuario.IdEmpresa);
+            if (motivoEmpresa != null)
+            {
+                Cerrar();
+                Redirigir("Ingresar.aspx?cuenta=" + (motivoEmpresa == Usuario_TLL.MOTIVO_EMPRESA_DESHABILITADA ? "baja" : "empresa"));
+                return;
+            }
+
+            string huellaGuardada = Ctx.Session[K_HUELLA] as string;
+            string huellaActual = new Usuario_TLL().HuellaDeAcceso(usuario);
+
+            if (huellaGuardada != null && huellaGuardada != huellaActual)
+            {
+                Cerrar();
+                Redirigir("Ingresar.aspx?cuenta=clave");
+                return;
+            }
+
+            Ctx.Session[K_HUELLA] = huellaActual;
+
+            string nombre = (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim();
+            string rol = usuario.Rol != null ? usuario.Rol.Nombre : string.Empty;
+
+            Iniciar(usuario.IdUsuario, usuario.EmailUsuario, nombre, rol, usuario.IdEmpresa, false, usuario.Rol);
+            Ctx.Session[K_VIGENCIA] = DateTime.Now;
+        }
+
         public static bool Puede(string patente)
         {
             RestaurarDesdeCookie();
@@ -97,6 +159,27 @@ namespace GUI
             Ctx.Session[K_EMPRESA] = idEmpresa;
             Ctx.Session[K_EMERGENCIA] = esEmergencia;
             Ctx.Session[K_PERMISOS] = permiso;
+        }
+
+        // Se llama justo después de entrar y justo después de cambiar la contraseña desde esta sesión.
+        public static void FijarHuella(Usuario_TE usuario)
+        {
+            if (Ctx == null || usuario == null || usuario.EsCuentaEmergencia) return;
+
+            Ctx.Session[K_HUELLA] = new Usuario_TLL().HuellaDeAcceso(usuario);
+        }
+
+        // Quien cambia su contraseña conserva su propia sesión (y su "recordarme" en este equipo); las demás caen.
+        public static void ActualizarHuellaTrasCambioDeClave()
+        {
+            if (!HayUsuario || EsEmergencia) return;
+
+            Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(IdUsuario);
+            if (usuario == null) return;
+
+            FijarHuella(usuario);
+
+            if (Ctx.Request.Cookies[COOKIE_RECORDARME] != null) RecordarEnEsteEquipo(IdUsuario);
         }
 
         public static void Cerrar()
@@ -150,7 +233,10 @@ namespace GUI
             if (idUsuario <= 0 || Ctx == null) return;
 
             DateTime vence = DateTime.Now.AddDays(DIAS_RECORDARME);
-            string carga = idUsuario.ToString() + "|" + vence.Ticks.ToString();
+            string huella = Ctx.Session[K_HUELLA] as string;
+            if (string.IsNullOrEmpty(huella)) return;
+
+            string carga = idUsuario.ToString() + "|" + vence.Ticks.ToString() + "|" + huella;
 
             string valor;
             try
@@ -206,7 +292,7 @@ namespace GUI
                 int idUsuario;
                 long ticks;
 
-                if (partes.Length != 2 ||
+                if (partes.Length != 3 ||
                     !int.TryParse(partes[0], out idUsuario) ||
                     !long.TryParse(partes[1], out ticks) ||
                     new DateTime(ticks) < DateTime.Now)
@@ -217,11 +303,14 @@ namespace GUI
 
                 Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(idUsuario);
 
-                if (usuario == null || usuario.EsCuentaEmergencia || usuario.Estado != EstadoUsuario.Activo)
+                if (usuario == null || usuario.EsCuentaEmergencia || usuario.Estado != EstadoUsuario.Activo ||
+                    partes[2] != new Usuario_TLL().HuellaDeAcceso(usuario))
                 {
                     OlvidarEsteEquipo();
                     return;
                 }
+
+                FijarHuella(usuario);
 
                 string nombre = (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim();
                 string rol = usuario.Rol != null ? usuario.Rol.Nombre : string.Empty;

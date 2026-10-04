@@ -17,6 +17,7 @@ namespace TE
     {
         public int IdEventoBitacora { get; set; }
         public int IdUsuario { get; set; }
+        public int? IdEmpresa { get; set; }
         public string ModuloBitacora { get; set; }
         public string DescripcionBitacora { get; set; }
         public CriticidadBitacora CriticidadBitacora { get; set; }
@@ -32,6 +33,50 @@ namespace TE
             DescripcionBitacora = descripcionBitacora;
             CriticidadBitacora = criticidadBitacora;
             FechaHoraBitacora = fechaHoraBitacora;
+        }
+    }
+
+    public class BitacoraVista_TE
+    {
+        public int IdEventoBitacora { get; set; }
+        public DateTime FechaHoraBitacora { get; set; }
+        public string Actor { get; set; }
+        public int? IdEmpresa { get; set; }
+        public string NombreEmpresa { get; set; }
+        public string ModuloBitacora { get; set; }
+        public string DescripcionBitacora { get; set; }
+        public CriticidadBitacora CriticidadBitacora { get; set; }
+    }
+
+    public class FiltroBitacora_TE
+    {
+        public DateTime? Desde { get; set; }
+        public DateTime? Hasta { get; set; }
+
+        // Las horas filtran la hora del día en cada fecha del rango (si desde > hasta, cruza la medianoche).
+        public TimeSpan? HoraDesde { get; set; }
+        public TimeSpan? HoraHasta { get; set; }
+
+        public string Modulo { get; set; }
+        public string Accion { get; set; }
+        public string Usuario { get; set; }
+        public int? IdEmpresa { get; set; }
+        public CriticidadBitacora? Criticidad { get; set; }
+
+        public int Pagina { get; set; } = 1;
+        public int Tamano { get; set; } = 50;
+    }
+
+    public class PaginaBitacora_TE
+    {
+        public List<BitacoraVista_TE> Items { get; set; } = new List<BitacoraVista_TE>();
+        public int Total { get; set; }
+        public int Pagina { get; set; }
+        public int Tamano { get; set; }
+
+        public int TotalPaginas
+        {
+            get { return Tamano <= 0 ? 0 : (Total + Tamano - 1) / Tamano; }
         }
     }
 }

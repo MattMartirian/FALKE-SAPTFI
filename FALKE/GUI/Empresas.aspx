@@ -247,21 +247,26 @@
         </div>
     </div>
 
+    <asp:Panel ID="pnlAviso" runat="server" CssClass="aviso aviso-exito" Visible="false" role="status">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
+        <p class="sin-margen"><asp:Literal ID="litAviso" runat="server" /></p>
+    </asp:Panel>
+
     <div class="metricas mb-24">
         <div>
-            <div class="metrica-valor">14</div>
+            <div class="metrica-valor"><asp:Literal ID="litTotal" runat="server" /></div>
             <div class="metrica-nombre" data-i18n="empresas.metrica.total">Empresas cliente</div>
         </div>
         <div>
-            <div class="metrica-valor">12</div>
+            <div class="metrica-valor"><asp:Literal ID="litActivas" runat="server" /></div>
             <div class="metrica-nombre" data-i18n="empresas.metrica.activas">Activas</div>
         </div>
         <div>
-            <div class="metrica-valor">19</div>
+            <div class="metrica-valor"><asp:Literal ID="litDispositivos" runat="server" /></div>
             <div class="metrica-nombre" data-i18n="empresas.metrica.dispositivos">Dispositivos prestados</div>
         </div>
         <div>
-            <div class="metrica-valor">78</div>
+            <div class="metrica-valor"><asp:Literal ID="litUsuarios" runat="server" /></div>
             <div class="metrica-nombre" data-i18n="empresas.metrica.usuarios">Usuarios totales</div>
         </div>
     </div>
@@ -272,131 +277,52 @@
             <div class="emp-rail-cab">
                 <span class="titulo">
                     <span data-i18n="empresas.registradas">Empresas registradas</span>
-                    <span id="empCuenta">6</span>
+                    <span id="empCuenta"><asp:Literal ID="litCuenta" runat="server" /></span>
                 </span>
                 <div class="emp-buscador campo-buscar">
                     <label class="solo-lectores" for="empBuscar" data-i18n="empresas.buscar">Buscar</label>
                     <svg aria-hidden="true"><use href="#i-buscar" /></svg>
                     <input type="search" class="entrada" id="empBuscar"
-                           placeholder="Razón social o CUIT..." data-i18n-attr="placeholder:empresas.buscar.placeholder" />
+                           placeholder="Razón social, CUIT o rubro..." data-i18n-attr="placeholder:empresas.buscar.placeholder" />
                 </div>
                 <div class="chips" data-unico role="group" aria-label="Filtrar por estado">
-                    <button type="button" class="chip" aria-pressed="true" data-estado-filtro="" data-i18n="comun.todos">Todas</button>
+                    <button type="button" class="chip" aria-pressed="true" data-estado-filtro="" data-i18n="comun.todos">Clientes</button>
                     <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Activa" data-i18n="estado.activa">Activas</button>
                     <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Bloqueada" data-i18n="estado.bloqueada">Bloqueadas</button>
+                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Deshabilitada">Dadas de baja<asp:Literal ID="litBajas" runat="server" /></button>
                 </div>
             </div>
 
             <div class="emp-lista" id="empLista" role="listbox" aria-label="Empresas cliente">
 
-                <button type="button" class="emp-fila" role="option" aria-current="true"
-                        data-nombre="Ironhide Game Studio" data-razon="Ironhide Game Studio S.R.L." data-sigla="IR"
-                        data-cuit="30-71234567-8" data-rubro="Desarrollo de videojuegos" data-plan="Hunter" data-factura="Anual — USD 760 por mes"
-                        data-estado="Activa" data-alta="15 jun 2026" data-renovacion="15 jun 2027" data-pago="15 ago 2026"
-                        data-usuarios="6" data-dispositivos="1" data-sesiones="48" data-limite="10"
-                        data-contacto="Lucía Blanco" data-contactoemail="lucia.blanco@ironhide.com" data-domicilio="Av. Italia 1234, Montevideo"
-                        data-vencido="0">
-                    <span class="sigla" aria-hidden="true">IR</span>
-                    <span class="info">
-                        <span class="nombre">Ironhide Game Studio</span>
-                        <span class="rubro">Videojuegos</span>
-                        <span class="marcas">
-                            <span class="badge badge-alerta">Hunter</span>
-                            <span class="badge badge-exito" data-i18n="estado.activa">Activa</span>
-                        </span>
-                    </span>
-                </button>
-
-                <button type="button" class="emp-fila" role="option"
-                        data-nombre="Mercado Cruz S.A." data-razon="Mercado Cruz S.A." data-sigla="MC"
-                        data-cuit="30-70998877-1" data-rubro="Comercio electrónico" data-plan="Apex" data-factura="Anual — a convenir"
-                        data-estado="Activa" data-alta="3 mar 2026" data-renovacion="3 mar 2027" data-pago="3 sep 2026"
-                        data-usuarios="14" data-dispositivos="4" data-sesiones="206" data-limite="25"
-                        data-contacto="Pablo Herrera" data-contactoemail="pablo.herrera@mercadocruz.com" data-domicilio="Av. Corrientes 980, CABA"
-                        data-vencido="0">
-                    <span class="sigla" aria-hidden="true">MC</span>
-                    <span class="info">
-                        <span class="nombre">Mercado Cruz S.A.</span>
-                        <span class="rubro">Comercio electrónico</span>
-                        <span class="marcas">
-                            <span class="badge badge-info">Apex</span>
-                            <span class="badge badge-exito" data-i18n="estado.activa">Activa</span>
-                        </span>
-                    </span>
-                </button>
-
-                <button type="button" class="emp-fila" role="option"
-                        data-nombre="Nova Publicidad" data-razon="Nova Publicidad S.A.S." data-sigla="NV"
-                        data-cuit="30-71555222-4" data-rubro="Agencia de publicidad" data-plan="Scout" data-factura="Mensual — USD 590"
-                        data-estado="Activa" data-alta="20 jul 2026" data-renovacion="20 ago 2026" data-pago="20 ago 2026"
-                        data-usuarios="4" data-dispositivos="1" data-sesiones="22" data-limite="5"
-                        data-contacto="Carla Suárez" data-contactoemail="carla.suarez@novapublicidad.com" data-domicilio="Bv. Oroño 1500, Rosario"
-                        data-vencido="0">
-                    <span class="sigla" aria-hidden="true">NV</span>
-                    <span class="info">
-                        <span class="nombre">Nova Publicidad</span>
-                        <span class="rubro">Agencia de publicidad</span>
-                        <span class="marcas">
-                            <span class="badge badge-neutro">Scout</span>
-                            <span class="badge badge-exito" data-i18n="estado.activa">Activa</span>
-                        </span>
-                    </span>
-                </button>
-
-                <button type="button" class="emp-fila" role="option"
-                        data-nombre="Delta Labs" data-razon="Delta Labs S.R.L." data-sigla="DL"
-                        data-cuit="30-71778899-0" data-rubro="Software a medida" data-plan="Hunter" data-factura="Anual — USD 760 por mes"
-                        data-estado="Bloqueada" data-alta="9 nov 2025" data-renovacion="9 nov 2026" data-pago="9 jul 2026"
-                        data-usuarios="8" data-dispositivos="2" data-sesiones="164" data-limite="10"
-                        data-contacto="Ramiro Ferro" data-contactoemail="ramiro.ferro@deltalabs.com" data-domicilio="Ruta 8 Km 60, Pilar"
-                        data-vencido="1">
-                    <span class="sigla" aria-hidden="true">DL</span>
-                    <span class="info">
-                        <span class="nombre">Delta Labs</span>
-                        <span class="rubro">Software a medida</span>
-                        <span class="marcas">
-                            <span class="badge badge-alerta">Hunter</span>
-                            <span class="badge badge-peligro" data-i18n="estado.bloqueada">Bloqueada</span>
-                            <span class="senal-vencido" data-i18n="empresas.pagoVencido">Pago vencido</span>
-                        </span>
-                    </span>
-                </button>
-
-                <button type="button" class="emp-fila" role="option"
-                        data-nombre="Pixel Norte" data-razon="Pixel Norte S.A.S." data-sigla="PX"
-                        data-cuit="30-71222333-6" data-rubro="Diseño de interfaces" data-plan="Scout" data-factura="Mensual — USD 590"
-                        data-estado="Deshabilitada" data-alta="4 ene 2026" data-renovacion="&mdash;" data-pago="30 may 2026"
-                        data-usuarios="3" data-dispositivos="0" data-sesiones="41" data-limite="5"
-                        data-contacto="Inés Ledesma" data-contactoemail="ines.ledesma@pixelnorte.com" data-domicilio="San Martín 233, Salta"
-                        data-vencido="0">
-                    <span class="sigla" aria-hidden="true">PX</span>
-                    <span class="info">
-                        <span class="nombre">Pixel Norte</span>
-                        <span class="rubro">Diseño de interfaces</span>
-                        <span class="marcas">
-                            <span class="badge badge-neutro">Scout</span>
-                            <span class="badge badge-neutro" data-i18n="estado.deshabilitada">Deshabilitada</span>
-                        </span>
-                    </span>
-                </button>
-
-                <button type="button" class="emp-fila" role="option"
-                        data-nombre="Austral Seguros" data-razon="Austral Seguros S.A." data-sigla="AU"
-                        data-cuit="30-70445566-2" data-rubro="Seguros" data-plan="Apex" data-factura="Anual — a convenir"
-                        data-estado="Activa" data-alta="7 sep 2026" data-renovacion="7 sep 2027" data-pago="7 sep 2026"
-                        data-usuarios="21" data-dispositivos="6" data-sesiones="311" data-limite="40"
-                        data-contacto="Gonzalo Vidal" data-contactoemail="gonzalo.vidal@australseguros.com" data-domicilio="Av. Libertador 5000, CABA"
-                        data-vencido="0">
-                    <span class="sigla" aria-hidden="true">AU</span>
-                    <span class="info">
-                        <span class="nombre">Austral Seguros</span>
-                        <span class="rubro">Seguros</span>
-                        <span class="marcas">
-                            <span class="badge badge-info">Apex</span>
-                            <span class="badge badge-exito" data-i18n="estado.activa">Activa</span>
-                        </span>
-                    </span>
-                </button>
+                <asp:Repeater ID="rptEmpresas" runat="server">
+                    <ItemTemplate>
+                        <button type="button" class="emp-fila" role="option"
+                                data-id="<%#: Eval("IdEmpresa") %>"
+                                data-nombre="<%#: Eval("NombreEmpresa") %>" data-razon="<%#: Eval("NombreEmpresa") %>" data-sigla="<%#: Sigla((string)Eval("NombreEmpresa")) %>"
+                                data-cuit="<%#: Dato((string)Eval("Cuit")) %>" data-rubro="<%#: Dato((string)Eval("Rubro")) %>"
+                                data-plan="<%#: Eval("PlanSuscripcion") %>" data-factura="<%#: Factura(Container.DataItem) %>"
+                                data-estado="<%#: Eval("Estado") %>" data-alta="<%#: Fecha((DateTime?)Eval("FechaAlta")) %>"
+                                data-renovacion="<%#: Fecha((DateTime?)Eval("FechaRenovacion")) %>"
+                                data-usuarios="<%#: Eval("CantidadUsuarios") %>" data-dispositivos="<%#: Eval("DispositivosPrestados") %>" data-sesiones="<%#: Eval("SesionesGrabadas") %>"
+                                data-telefono="<%#: Dato((string)Eval("NumContactoEmpresa")) %>" data-domicilio="<%#: Dato((string)Eval("Domicilio")) %>"
+                                data-e-nombre="<%#: Eval("NombreEmpresa") %>" data-e-cuit="<%#: Eval("Cuit") %>" data-e-rubro="<%#: Eval("Rubro") %>"
+                                data-e-domicilio="<%#: Eval("Domicilio") %>" data-e-telefono="<%#: Eval("NumContactoEmpresa") %>"
+                                data-e-plan="<%#: Eval("PlanSuscripcion") %>" data-e-factura="<%#: Eval("Facturacion") %>"
+                                data-proveedora="<%#: (int)Eval("IdEmpresa") == TLL.BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA ? "1" : "0" %>"
+                                data-vencido="0">
+                            <span class="sigla" aria-hidden="true"><%#: Sigla((string)Eval("NombreEmpresa")) %></span>
+                            <span class="info">
+                                <span class="nombre"><%#: Eval("NombreEmpresa") %></span>
+                                <span class="rubro"><%#: Dato((string)Eval("Rubro")) %></span>
+                                <span class="marcas">
+                                    <span class="badge <%#: ClasePlan((BE.PlanSuscripcion)Eval("PlanSuscripcion")) %>"><%#: Eval("PlanSuscripcion") %></span>
+                                    <span class="badge <%#: ClaseEstado((BE.EstadoEmpresa)Eval("Estado")) %>"><%#: Eval("Estado") %></span>
+                                </span>
+                            </span>
+                        </button>
+                    </ItemTemplate>
+                </asp:Repeater>
 
             </div>
 
@@ -407,9 +333,124 @@
         </div>
 
         <div class="emp-panel">
-            <div id="empDetalle"></div>
+            <div id="empDetalle" data-puede-editar="<%= PuedeEditar ? "1" : "0" %>" data-puede-estado="<%= PuedeCambiarEstado ? "1" : "0" %>"></div>
         </div>
 
+    </div>
+
+    <asp:HiddenField ID="hfSeleccion" runat="server" ClientIDMode="Static" />
+
+    <div class="modal-fondo" id="modalEditarEmpresa" role="dialog" aria-modal="true" aria-labelledby="editarEmpresaTitulo" hidden>
+        <div class="modal ancho">
+            <div class="modal-cabecera">
+                <div>
+                    <h2 id="editarEmpresaTitulo">Editar datos de la empresa</h2>
+                    <p class="subtitulo sin-margen">Cambiar la razón social, el CUIT o el plan exige indicar el motivo. Todo queda en la bitácora.</p>
+                </div>
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                </button>
+            </div>
+            <div class="modal-cuerpo">
+                <asp:HiddenField ID="hfEdId" runat="server" ClientIDMode="Static" />
+                <div class="aviso aviso-alerta">
+                    <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+                    <div>
+                        <strong>Estás modificando los datos de un cliente: <span id="avisoEditarEmpresa"></span>.</strong>
+                        <p class="sin-margen">Lo que cambies lo ve la empresa en «Mi empresa». Cambiar el CUIT, el plan o la facturación afecta la facturación. Queda en la bitácora y la empresa lo ve como hecho por el equipo de Pattern Blue.</p>
+                    </div>
+                </div>
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label for="edRazon">Razón social</label>
+                        <asp:TextBox ID="edRazon" runat="server" CssClass="entrada" MaxLength="150" ClientIDMode="Static" />
+                    </div>
+                    <div class="campo">
+                        <label for="edCuit">CUIT</label>
+                        <asp:TextBox ID="edCuit" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" />
+                    </div>
+                </div>
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label for="edRubro">Rubro</label>
+                        <asp:TextBox ID="edRubro" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
+                    </div>
+                    <div class="campo">
+                        <label for="edContacto">Teléfono de contacto</label>
+                        <asp:TextBox ID="edContacto" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" />
+                    </div>
+                </div>
+                <div class="campo">
+                    <label for="edDomicilio">Domicilio</label>
+                    <asp:TextBox ID="edDomicilio" runat="server" CssClass="entrada" MaxLength="200" ClientIDMode="Static" />
+                </div>
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label for="edPlan">Plan de suscripción</label>
+                        <asp:DropDownList ID="edPlan" runat="server" CssClass="entrada" ClientIDMode="Static">
+                            <asp:ListItem Value="Scout">Scout</asp:ListItem>
+                            <asp:ListItem Value="Hunter">Hunter</asp:ListItem>
+                            <asp:ListItem Value="Apex">Apex</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="campo">
+                        <label for="edFactura">Facturación</label>
+                        <asp:DropDownList ID="edFactura" runat="server" CssClass="entrada" ClientIDMode="Static">
+                            <asp:ListItem Value="Mensual">Mensual</asp:ListItem>
+                            <asp:ListItem Value="Anual">Anual</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <div class="campo mb-0">
+                    <label for="edMotivo">Motivo <span class="texto-tenue">(obligatorio si cambia la razón social, el CUIT o el plan)</span></label>
+                    <asp:TextBox ID="edMotivo" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
+                </div>
+            </div>
+            <div class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
+                <asp:Button ID="btnGuardarEmpresa" runat="server" CssClass="btn btn-primario" Text="Guardar cambios" OnClick="btnGuardarEmpresa_Click" />
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-fondo" id="modalEstadoEmpresa" role="dialog" aria-modal="true" aria-labelledby="estadoEmpresaTitulo" hidden>
+        <div class="modal">
+            <div class="modal-cabecera">
+                <div>
+                    <h2 id="estadoEmpresaTitulo">Cambiar el estado de la empresa</h2>
+                    <p class="subtitulo sin-margen" id="estadoEmpresaNombre"></p>
+                </div>
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                </button>
+            </div>
+            <div class="modal-cuerpo">
+                <asp:HiddenField ID="hfEstId" runat="server" ClientIDMode="Static" />
+                <div class="aviso aviso-alerta">
+                    <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+                    <div>
+                        <strong>Esto afecta a todos los usuarios de la empresa.</strong>
+                        <p class="sin-margen">Al cambiar el estado a Bloqueada o Deshabilitada nadie de la empresa puede ingresar. Las cuentas y los datos no se alteran.</p>
+                    </div>
+                </div>
+                <div class="campo">
+                    <label for="edEstado">Estado de la empresa</label>
+                    <asp:DropDownList ID="edEstado" runat="server" CssClass="entrada" ClientIDMode="Static">
+                        <asp:ListItem Value="Activa">Activa</asp:ListItem>
+                        <asp:ListItem Value="Bloqueada">Bloqueada</asp:ListItem>
+                        <asp:ListItem Value="Deshabilitada">Deshabilitada</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="campo mb-0">
+                    <label for="edMotivoEstado">Motivo <span class="texto-tenue">(obligatorio)</span></label>
+                    <asp:TextBox ID="edMotivoEstado" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
+                </div>
+            </div>
+            <div class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
+                <asp:Button ID="btnCambiarEstadoEmpresa" runat="server" CssClass="btn btn-primario" Text="Cambiar estado" OnClick="btnCambiarEstadoEmpresa_Click" />
+            </div>
+        </div>
     </div>
 
     <script type="application/json" id="empTextos">
@@ -422,7 +463,7 @@
         "cuit": "CUIT",
         "rubro": "Rubro",
         "domicilio": "Domicilio",
-        "contacto": "Contacto comercial",
+        "contacto": "Teléfono de contacto",
         "estado": "Estado",
         "alta": "Cliente desde",
         "plan": "Plan contratado",
@@ -437,6 +478,7 @@
         "bloquear": "Bloquear empresa",
         "desbloquear": "Desbloquear empresa",
         "verUsuarios": "Ver usuarios",
+        "estadoEmpresa": "Cambiar estado",
         "vencidoAviso": "Esta empresa tiene un pago vencido. El acceso de sus usuarios está suspendido hasta la regularización."
     }
     </script>
@@ -456,12 +498,19 @@
             var detalle = document.getElementById("empDetalle");
             var cuenta = document.getElementById("empCuenta");
             var estadoFiltro = "";
+            var actual = null;
+
+            function esc(texto) {
+                var nodo = document.createElement("div");
+                nodo.textContent = texto == null ? "" : texto;
+                return nodo.innerHTML;
+            }
 
             function badgeEstado(estado) {
                 var mapa = {
                     "Activa": "badge-exito", "Bloqueada": "badge-peligro", "Deshabilitada": "badge-neutro"
                 };
-                return '<span class="badge ' + (mapa[estado] || "badge-neutro") + '">' + estado + '</span>';
+                return '<span class="badge ' + (mapa[estado] || "badge-neutro") + '">' + esc(estado) + '</span>';
             }
 
             function fila(th, td) {
@@ -470,30 +519,29 @@
 
             function panelDatos(d) {
                 return '<table class="emp-datos"><tbody>' +
-                    fila(T.razon, d.razon) +
-                    fila(T.cuit, d.cuit) +
-                    fila(T.rubro, d.rubro) +
-                    fila(T.domicilio, d.domicilio) +
-                    fila(T.contacto, d.contacto + ' &mdash; ' + d.contactoemail) +
+                    fila(T.razon, esc(d.razon)) +
+                    fila(T.cuit, esc(d.cuit)) +
+                    fila(T.rubro, esc(d.rubro)) +
+                    fila(T.domicilio, esc(d.domicilio)) +
+                    fila(T.contacto, esc(d.telefono)) +
                     fila(T.estado, badgeEstado(d.estado)) +
-                    fila(T.alta, d.alta) +
+                    fila(T.alta, esc(d.alta)) +
                     '</tbody></table>';
             }
 
             function panelPlan(d) {
                 return '<table class="emp-datos"><tbody>' +
-                    fila(T.plan, d.plan) +
-                    fila(T.factura, d.factura) +
-                    fila(T.renovacion, d.renovacion) +
-                    fila(T.pago, d.pago) +
-                    fila(T.limite, d.limite + ' (' + d.usuarios + ' en uso)') +
+                    fila(T.plan, esc(d.plan)) +
+                    fila(T.factura, esc(d.factura)) +
+                    fila(T.renovacion, esc(d.renovacion)) +
+                    fila(T.usuarios, esc(d.usuarios)) +
                     '</tbody></table>';
             }
 
             function panelEquipo(d) {
                 return '<table class="emp-datos"><tbody>' +
-                    fila(T.usuarios, d.usuarios) +
-                    fila(T.dispositivos, d.dispositivos) +
+                    fila(T.usuarios, esc(d.usuarios)) +
+                    fila(T.dispositivos, esc(d.dispositivos)) +
                     '</tbody></table>' +
                     '<div class="emp-acciones"><a class="btn btn-secundario" href="Dispositivos.aspx">' +
                     T.dispositivos + '</a></div>';
@@ -501,9 +549,9 @@
 
             function panelSesiones(d) {
                 return '<div class="metricas">' +
-                    '<div><div class="metrica-valor">' + d.sesiones + '</div><div class="metrica-nombre">' + T.sesiones + '</div></div>' +
-                    '<div><div class="metrica-valor">' + d.usuarios + '</div><div class="metrica-nombre">' + T.usuarios + '</div></div>' +
-                    '<div><div class="metrica-valor">' + d.dispositivos + '</div><div class="metrica-nombre">' + T.dispositivos + '</div></div>' +
+                    '<div><div class="metrica-valor">' + esc(d.sesiones) + '</div><div class="metrica-nombre">' + T.sesiones + '</div></div>' +
+                    '<div><div class="metrica-valor">' + esc(d.usuarios) + '</div><div class="metrica-nombre">' + T.usuarios + '</div></div>' +
+                    '<div><div class="metrica-valor">' + esc(d.dispositivos) + '</div><div class="metrica-nombre">' + T.dispositivos + '</div></div>' +
                     '</div>';
             }
 
@@ -512,20 +560,18 @@
                 f.setAttribute("aria-current", "true");
 
                 var d = f.dataset;
+                actual = d;
+                document.getElementById("hfSeleccion").value = d.id;
                 var aviso = d.vencido === "1"
                     ? '<div class="aviso aviso-peligro mb-24"><svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>' +
                       '<p class="sin-margen">' + T.vencidoAviso + '</p></div>'
                     : '';
 
-                var accionEstado = d.estado === "Bloqueada"
-                    ? '<button type="button" class="btn btn-primario">' + T.desbloquear + '</button>'
-                    : '<button type="button" class="btn btn-peligro">' + T.bloquear + '</button>';
-
                 detalle.innerHTML =
                     '<div class="emp-detalle-cab">' +
-                        '<span class="sigla" aria-hidden="true">' + d.sigla + '</span>' +
-                        '<div><h2>' + d.nombre + '</h2><span class="cuit">' + d.cuit + '</span></div>' +
-                        '<span class="marcas"><span class="badge badge-alerta">' + d.plan + '</span>' + badgeEstado(d.estado) + '</span>' +
+                        '<span class="sigla" aria-hidden="true">' + esc(d.sigla) + '</span>' +
+                        '<div><h2>' + esc(d.nombre) + '</h2><span class="cuit">' + esc(d.cuit) + '</span></div>' +
+                        '<span class="marcas"><span class="badge badge-alerta">' + esc(d.plan) + '</span>' + badgeEstado(d.estado) + '</span>' +
                     '</div>' +
                     aviso +
                     '<div class="pestanas" role="tablist">' +
@@ -539,9 +585,9 @@
                     '<div id="tabEquipo" role="tabpanel" hidden>' + panelEquipo(d) + '</div>' +
                     '<div id="tabSesiones" role="tabpanel" hidden>' + panelSesiones(d) + '</div>' +
                     '<div class="emp-acciones">' +
-                        '<a class="btn btn-secundario" href="Usuarios.aspx">' + T.verUsuarios + '</a>' +
-                        '<button type="button" class="btn btn-secundario">' + T.editar + '</button>' +
-                        accionEstado +
+                        '<a class="btn btn-secundario" href="Usuarios.aspx?empresa=' + encodeURIComponent(d.id) + '">' + T.verUsuarios + '</a>' +
+                        (detalle.dataset.puedeEditar === "1" ? '<button type="button" class="btn btn-secundario" data-abre-modal="modalEditarEmpresa" data-editar-empresa>' + T.editar + '</button>' : '') +
+                        (detalle.dataset.puedeEstado === "1" && d.proveedora !== "1" ? '<button type="button" class="btn btn-secundario" data-abre-modal="modalEstadoEmpresa" data-estado-empresa>' + T.estadoEmpresa + '</button>' : '') +
                     '</div>';
 
                 var pestanas = detalle.querySelectorAll(".pestana");
@@ -568,7 +614,7 @@
                     var f = filas[j];
                     var busca = (f.dataset.nombre + " " + f.dataset.cuit + " " + f.dataset.rubro).toLowerCase();
                     var okTexto = texto === "" || busca.indexOf(texto) !== -1;
-                    var okEstado = estadoFiltro === "" || f.dataset.estado === estadoFiltro;
+                    var okEstado = estadoFiltro === "" ? f.dataset.estado !== "Deshabilitada" : f.dataset.estado === estadoFiltro;
                     var ver = okTexto && okEstado;
                     f.hidden = !ver;
                     if (ver) visibles++;
@@ -589,7 +635,48 @@
                 });
             }
 
-            mostrar(filas[0]);
+            var pedida = document.getElementById("hfSeleccion").value || new URLSearchParams(window.location.search).get("id") || "";
+            var elegida = document.querySelector('.emp-fila[data-id="' + pedida + '"]');
+
+            document.addEventListener("click", function (e) {
+                var editar = e.target.closest ? e.target.closest("[data-editar-empresa]") : null;
+                var estado = e.target.closest ? e.target.closest("[data-estado-empresa]") : null;
+
+                if (editar && actual) {
+                    document.getElementById("hfEdId").value = actual.id;
+                    document.getElementById("avisoEditarEmpresa").textContent = actual.eNombre || actual.nombre || "";
+                    document.getElementById("edRazon").value = actual.eNombre || "";
+                    document.getElementById("edCuit").value = actual.eCuit || "";
+                    document.getElementById("edRubro").value = actual.eRubro || "";
+                    document.getElementById("edDomicilio").value = actual.eDomicilio || "";
+                    document.getElementById("edContacto").value = actual.eTelefono || "";
+                    document.getElementById("edPlan").value = actual.ePlan || "Scout";
+                    document.getElementById("edFactura").value = actual.eFactura || "Mensual";
+                    document.getElementById("edMotivo").value = "";
+                }
+
+                if (estado && actual) {
+                    document.getElementById("hfEstId").value = actual.id;
+                    document.getElementById("estadoEmpresaNombre").textContent = actual.nombre + " · estado actual: " + actual.estado;
+                    var lista = document.getElementById("edEstado");
+                    lista.value = actual.estado === "Activa" ? "Bloqueada" : "Activa";
+                    for (var o = 0; o < lista.options.length; o++) {
+                        lista.options[o].disabled = actual.estado === "Deshabilitada" && lista.options[o].value !== "Activa";
+                    }
+                    document.getElementById("edMotivoEstado").value = "";
+                }
+            });
+
+            if (elegida && elegida.dataset.estado === "Deshabilitada") {
+                var chipBaja = document.querySelector('[data-estado-filtro="Deshabilitada"]');
+                if (chipBaja) chipBaja.click();
+            } else {
+                filtrar();
+            }
+
+            var primera = elegida || [].slice.call(filas).filter(function (f) { return !f.hidden; })[0];
+            if (primera) mostrar(primera);
+            else vacio.hidden = false;
         })();
     </script>
 </asp:Content>

@@ -39,6 +39,8 @@ namespace GUI
 
                 if (ok)
                 {
+                    SesionActual_GUI.ActualizarHuellaTrasCambioDeClave();
+
                     claveActual.Text = string.Empty;
                     claveNueva.Text = string.Empty;
                     claveRepetir.Text = string.Empty;

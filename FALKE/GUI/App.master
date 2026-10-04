@@ -47,38 +47,14 @@
                             aria-expanded="false" aria-haspopup="true">
                         <span class="solo-lectores" data-i18n="topbar.avisos">Avisos sin leer</span>
                         <svg width="20" height="20" aria-hidden="true"><use href="#i-campana" /></svg>
-                        <asp:PlaceHolder ID="phPuntoAviso" runat="server">
-                            <span class="punto-aviso"></span>
-                        </asp:PlaceHolder>
                     </button>
 
                     <div class="desplegable-panel" id="panelAvisos" hidden>
                         <div class="desplegable-cabecera">
                             <strong data-i18n="avisos.titulo">Avisos</strong>
-                            <span class="badge badge-peligro" style="margin-left:auto">3 <span data-i18n="avisos.sinLeer">sin leer</span></span>
                         </div>
                         <div class="desplegable-lista">
-                            <a class="desplegable-item sin-leer" href="<%: ResolveUrl("~/Notificaciones.aspx") %>">
-                                <svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
-                                <span>
-                                    <strong data-i18n="avisos.demo1.titulo">Procesamiento terminado</strong><br />
-                                    <span class="texto-suave" data-i18n="avisos.demo1.detalle">La sesión «Checkout — App e-commerce» ya se puede auditar.</span>
-                                </span>
-                            </a>
-                            <a class="desplegable-item sin-leer" href="<%: ResolveUrl("~/Notificaciones.aspx") %>">
-                                <svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg>
-                                <span>
-                                    <strong data-i18n="avisos.demo2.titulo">Calibración vencida</strong><br />
-                                    <span class="texto-suave" data-i18n="avisos.demo2.detalle">El Tobii 4C necesita recalibrarse antes de la próxima grabación.</span>
-                                </span>
-                            </a>
-                            <a class="desplegable-item sin-leer" href="<%: ResolveUrl("~/Notificaciones.aspx") %>">
-                                <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
-                                <span>
-                                    <strong data-i18n="avisos.demo3.titulo">Mantenimiento programado</strong><br />
-                                    <span class="texto-suave" data-i18n="avisos.demo3.detalle">La plataforma entrará en mantenimiento el 20/07 a las 03:00.</span>
-                                </span>
-                            </a>
+                            <p class="texto-suave texto-chico" style="padding: 14px 16px; margin: 0" data-i18n="avisos.vacio">No tenés avisos nuevos.</p>
                         </div>
                         <div class="desplegable-pie">
                             <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Notificaciones.aspx") %>" data-i18n="avisos.verTodos">Ver todos los avisos</a>
@@ -113,16 +89,6 @@
                         <div class="desplegable-pie">
                             <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Usuarios.aspx?perfil=1") %>" data-i18n="usuario.verPerfil">Ver mi perfil</a>
                             <a class="btn btn-oscuro btn-chico btn-bloque" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">Cerrar sesión</a>
-                        </div>
-
-                        <div class="vista-previa-rol">
-                            <p class="texto-chico texto-suave mb-8" data-i18n="demo.verComo">Vista previa de rol (solo demo)</p>
-                            <div class="chips">
-                                <a class="chip" href="?rol=Analista">Analista</a>
-                                <a class="chip" href="?rol=Administrador">Administrador</a>
-                                <a class="chip" href="?rol=Gestor">Gestor</a>
-                                <a class="chip" href="?rol=Webmaster">Webmaster</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,6 +133,10 @@
                             <svg aria-hidden="true"><use href="#i-usuarios" /></svg>
                             <span class="sidebar-texto" data-i18n="menu.usuarios">Usuarios</span>
                         </a>
+                        <a id="navMiEmpresa" runat="server" class="sidebar-item" href="~/MiEmpresa.aspx">
+                            <svg aria-hidden="true"><use href="#i-empresa" /></svg>
+                            <span class="sidebar-texto">Mi empresa</span>
+                        </a>
                         <a id="navEmpresas" runat="server" class="sidebar-item" href="~/Empresas.aspx">
                             <svg aria-hidden="true"><use href="#i-empresa" /></svg>
                             <span class="sidebar-texto" data-i18n="menu.empresas">Empresas</span>
@@ -183,6 +153,10 @@
                         <a id="navBitacora" runat="server" class="sidebar-item" href="~/Bitacora.aspx">
                             <svg aria-hidden="true"><use href="#i-libro" /></svg>
                             <span class="sidebar-texto" data-i18n="menu.bitacora">Bitácora</span>
+                        </a>
+                        <a id="navRoles" runat="server" class="sidebar-item" href="~/Roles.aspx">
+                            <svg aria-hidden="true"><use href="#i-candado" /></svg>
+                            <span class="sidebar-texto">Roles y permisos</span>
                         </a>
                         <a id="navIntegridad" runat="server" class="sidebar-item" href="~/Integridad.aspx">
                             <svg aria-hidden="true"><use href="#i-escudo" /></svg>

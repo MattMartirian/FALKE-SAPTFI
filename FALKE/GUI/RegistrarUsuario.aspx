@@ -22,7 +22,7 @@
             <p>Apellido:<br /><asp:TextBox ID="txtApellido" runat="server" Width="300" /></p>
             <p>Email:<br /><asp:TextBox ID="txtEmail" runat="server" Width="300" /></p>
             <p>Rol (debe existir en PermisoTable, p. ej. Usuario o Administrador):<br />
-                <asp:TextBox ID="txtRol" runat="server" Text="Usuario" /></p>
+                <asp:TextBox ID="txtRol" runat="server" Text="Analista" /></p>
             <p>Id idioma:<br /><asp:TextBox ID="txtIdioma" runat="server" Text="1" /></p>
 
             <p>

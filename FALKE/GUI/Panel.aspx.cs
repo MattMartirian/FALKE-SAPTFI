@@ -6,14 +6,13 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!SesionActual_GUI.Exigir()) return;
 
             litNombre.Text = Server.HtmlEncode(NombreParaSaludo());
         }
 
         private static string NombreParaSaludo()
         {
-            if (!SesionActual_GUI.HayUsuario) return "María";
-
             string nombre = SesionActual_GUI.Nombre;
 
             if (string.IsNullOrWhiteSpace(nombre)) return "usuario";

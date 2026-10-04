@@ -308,28 +308,32 @@
         </div>
     </div>
 
+    <asp:Panel ID="pnlAviso" runat="server" CssClass="aviso aviso-peligro" Visible="false" role="alert">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+        <p class="sin-margen"><asp:Literal ID="litAviso" runat="server" /></p>
+    </asp:Panel>
+
     <div class="alta">
 
         <nav class="alta-rail" aria-label="Empresas registradas">
             <span class="titulo">
                 <span data-i18n="empresas.registradas">Empresas registradas</span>
-                <span>6</span>
+                <span><asp:Literal ID="litCuentaEmpresas" runat="server" /></span>
             </span>
             <ul>
                 <li class="nueva">
                     <span class="sigla" aria-hidden="true">+</span>
                     <span data-i18n="altaEmpresa.enCurso">Nueva empresa (en curso)</span>
                 </li>
-                <li><span class="sigla" aria-hidden="true">IR</span>Ironhide Game Studio</li>
-                <li><span class="sigla" aria-hidden="true">MC</span>Mercado Cruz S.A.</li>
-                <li><span class="sigla" aria-hidden="true">NV</span>Nova Publicidad</li>
-                <li><span class="sigla" aria-hidden="true">DL</span>Delta Labs</li>
-                <li><span class="sigla" aria-hidden="true">PX</span>Pixel Norte</li>
-                <li><span class="sigla" aria-hidden="true">AU</span>Austral Seguros</li>
+                <asp:Repeater ID="rptEmpresas" runat="server">
+                    <ItemTemplate>
+                        <li><span class="sigla" aria-hidden="true"><%#: Sigla((string)Eval("NombreEmpresa")) %></span><%#: Eval("NombreEmpresa") %></li>
+                    </ItemTemplate>
+                </asp:Repeater>
             </ul>
         </nav>
 
-        <form class="alta-form" onsubmit="return false">
+        <div class="alta-form">
 
             <div class="alta-bloque">
                 <h3><span class="n" aria-hidden="true">1</span><span data-i18n="altaEmpresa.bloque.empresa">Datos de la empresa</span></h3>
@@ -339,51 +343,47 @@
 
                 <div class="campo">
                     <label for="aeRazon" data-i18n="altaEmpresa.razon">Razón social</label>
-                    <input type="text" class="entrada" id="aeRazon" data-preview="nombre" data-foco-inicial />
+                    <asp:TextBox ID="aeRazon" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="150" data-preview="nombre" data-foco-inicial="si" />
                 </div>
 
                 <div class="fila-campos">
                     <div class="campo">
                         <label for="aeCuit" data-i18n="altaEmpresa.cuit">CUIT</label>
-                        <input type="text" class="entrada" id="aeCuit" placeholder="30-00000000-0" />
+                        <asp:TextBox ID="aeCuit" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="20" placeholder="30-00000000-0" />
                     </div>
                     <div class="campo">
                         <label for="aeRubro" data-i18n="altaEmpresa.rubro">Rubro</label>
-                        <input type="text" class="entrada" id="aeRubro" data-preview="rubro" />
+                        <asp:TextBox ID="aeRubro" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="100" data-preview="rubro" />
                     </div>
                 </div>
 
                 <div class="campo">
                     <label for="aeDomicilio" data-i18n="altaEmpresa.domicilio">Domicilio</label>
-                    <input type="text" class="entrada" id="aeDomicilio" />
+                    <asp:TextBox ID="aeDomicilio" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="200" />
                 </div>
 
                 <div class="fila-campos">
                     <div class="campo">
                         <label for="aePlan" data-i18n="altaEmpresa.plan">Plan de suscripción</label>
-                        <select class="entrada" id="aePlan" data-preview="plan">
-                            <option value="Scout">Scout</option>
-                            <option value="Hunter" selected>Hunter</option>
-                            <option value="Apex">Apex</option>
-                        </select>
+                        <asp:DropDownList ID="aePlan" runat="server" CssClass="entrada" ClientIDMode="Static" data-preview="plan">
+                            <asp:ListItem Value="Scout">Scout</asp:ListItem>
+                            <asp:ListItem Value="Hunter" Selected="True">Hunter</asp:ListItem>
+                            <asp:ListItem Value="Apex">Apex</asp:ListItem>
+                        </asp:DropDownList>
                     </div>
                     <div class="campo">
                         <label for="aeFacturacion" data-i18n="altaEmpresa.facturacion">Facturación</label>
-                        <select class="entrada" id="aeFacturacion">
-                            <option value="mensual" data-i18n="planes.mensual">Mensual</option>
-                            <option value="anual" selected data-i18n="planes.anual">Anual</option>
-                        </select>
+                        <asp:DropDownList ID="aeFacturacion" runat="server" CssClass="entrada" ClientIDMode="Static">
+                            <asp:ListItem Value="Mensual">Mensual</asp:ListItem>
+                            <asp:ListItem Value="Anual" Selected="True">Anual</asp:ListItem>
+                        </asp:DropDownList>
                     </div>
                 </div>
 
                 <div class="fila-campos">
                     <div class="campo">
                         <label for="aeContacto" data-i18n="altaEmpresa.contacto">Número de contacto</label>
-                        <input type="tel" class="entrada" id="aeContacto" data-preview="telefono" placeholder="+54 11 0000-0000" />
-                    </div>
-                    <div class="campo">
-                        <label for="aeDispositivos" data-i18n="altaEmpresa.dispositivos">Dispositivos a prestar</label>
-                        <input type="number" class="entrada" id="aeDispositivos" value="1" min="0" max="20" />
+                        <asp:TextBox ID="aeContacto" runat="server" CssClass="entrada" ClientIDMode="Static" TextMode="Phone" MaxLength="50" data-preview="telefono" placeholder="+54 11 0000-0000" />
                     </div>
                 </div>
             </div>
@@ -397,17 +397,17 @@
                 <div class="fila-campos">
                     <div class="campo">
                         <label for="aeAdminNombre" data-i18n="altaEmpresa.admin.nombre">Nombre</label>
-                        <input type="text" class="entrada" id="aeAdminNombre" data-preview="adminNombre" />
+                        <asp:TextBox ID="aeAdminNombre" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="100" data-preview="adminNombre" />
                     </div>
                     <div class="campo">
                         <label for="aeAdminApellido" data-i18n="altaEmpresa.admin.apellido">Apellido</label>
-                        <input type="text" class="entrada" id="aeAdminApellido" data-preview="adminApellido" />
+                        <asp:TextBox ID="aeAdminApellido" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="100" data-preview="adminApellido" />
                     </div>
                 </div>
 
                 <div class="campo">
                     <label for="aeAdminEmail" data-i18n="altaEmpresa.admin.email">Correo electrónico</label>
-                    <input type="email" class="entrada" id="aeAdminEmail" data-preview="adminEmail" />
+                    <asp:TextBox ID="aeAdminEmail" runat="server" CssClass="entrada" ClientIDMode="Static" TextMode="Email" MaxLength="255" data-preview="adminEmail" />
                     <p class="ayuda" data-i18n="altaEmpresa.admin.email.ayuda">
                         Ahí llega el enlace para que defina su contraseña. Después no se puede cambiar.
                     </p>
@@ -432,10 +432,10 @@
 
             <div class="alta-pie">
                 <a class="btn btn-secundario" href="<%: ResolveUrl("~/Empresas.aspx") %>" data-i18n="comun.cancelar">Cancelar</a>
-                <button type="submit" class="btn btn-primario" data-i18n="altaEmpresa.crear">Registrar empresa</button>
+                <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primario" Text="Registrar empresa" OnClick="btnRegistrar_Click" />
             </div>
 
-        </form>
+        </div>
 
         <aside class="alta-lado">
 

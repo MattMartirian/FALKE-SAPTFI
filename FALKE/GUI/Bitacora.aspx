@@ -34,6 +34,18 @@
             margin-bottom: 0;
         }
 
+        #modalExportarBitacora .opcion
+        {
+            align-items: center;
+            justify-content: space-between;
+            cursor: default;
+        }
+
+        #modalExportarBitacora .opcion:hover
+        {
+            background: transparent;
+        }
+
         .celda-fecha
         {
             white-space: nowrap;
@@ -67,99 +79,73 @@
         </p>
     </div>
 
-    <div class="tarjeta mb-24">
+    <asp:Panel ID="pnlAviso" runat="server" CssClass="aviso" Visible="false" role="status">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
+        <p class="sin-margen"><asp:Literal ID="litAviso" runat="server" /></p>
+    </asp:Panel>
+
+    <asp:Panel ID="pnlFiltros" runat="server" CssClass="tarjeta mb-24" DefaultButton="btnBuscar">
 
         <div class="filtros-bitacora mb-16">
 
             <div class="campo">
-                <label for="bitDesde" data-i18n="bitacora.desde">Desde</label>
-                <input type="date" class="entrada" id="bitDesde" />
+                <label for="txtDesde" data-i18n="bitacora.desde">Desde</label>
+                <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="bitHasta" data-i18n="bitacora.hasta">Hasta</label>
-                <input type="date" class="entrada" id="bitHasta" />
+                <label for="txtHasta" data-i18n="bitacora.hasta">Hasta</label>
+                <asp:TextBox ID="txtHasta" runat="server" TextMode="Date" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="bitHoraDesde" data-i18n="bitacora.horaDesde">Hora desde</label>
-                <input type="time" class="entrada" id="bitHoraDesde" />
+                <label for="txtHoraDesde" data-i18n="bitacora.horaDesde">Hora desde</label>
+                <asp:TextBox ID="txtHoraDesde" runat="server" TextMode="Time" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="bitHoraHasta" data-i18n="bitacora.horaHasta">Hora hasta</label>
-                <input type="time" class="entrada" id="bitHoraHasta" />
+                <label for="txtHoraHasta" data-i18n="bitacora.horaHasta">Hora hasta</label>
+                <asp:TextBox ID="txtHoraHasta" runat="server" TextMode="Time" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="bitModulo" data-i18n="bitacora.modulo">Módulo</label>
-                <select class="entrada" id="bitModulo">
-                    <option value="" data-i18n="comun.todos">Todos</option>
-                    <option value="Seguridad" data-i18n="bitacora.modulo.seguridad">Seguridad</option>
-                    <option value="Usuarios" data-i18n="bitacora.modulo.usuarios">Usuarios</option>
-                    <option value="Empresas" data-i18n="bitacora.modulo.empresas">Empresas</option>
-                    <option value="Sesiones" data-i18n="bitacora.modulo.sesiones">Sesiones</option>
-                    <option value="Analisis" data-i18n="bitacora.modulo.analisis">Análisis</option>
-                    <option value="Sistema" data-i18n="bitacora.modulo.sistema">Sistema</option>
-                </select>
+                <label for="ddlModulo" data-i18n="bitacora.modulo">Módulo</label>
+                <asp:DropDownList ID="ddlModulo" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="bitAccion" data-i18n="bitacora.accion">Acción</label>
-                <select class="entrada" id="bitAccion">
-                    <option value="" data-i18n="comun.todas">Todas</option>
-                    <option value="Inicio de sesion">Inicio de sesión</option>
-                    <option value="Cierre de sesion">Cierre de sesión</option>
-                    <option value="Alta">Alta</option>
-                    <option value="Modificacion">Modificación</option>
-                    <option value="Baja">Baja</option>
-                    <option value="Exportacion">Exportación</option>
-                </select>
+                <label for="ddlAccion" data-i18n="bitacora.accion">Acción</label>
+                <asp:DropDownList ID="ddlAccion" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="bitUsuario" data-i18n="bitacora.usuario">Usuario</label>
-                <input type="search" class="entrada" id="bitUsuario"
-                       placeholder="Nombre o email..."
-                       data-i18n-attr="placeholder:bitacora.usuario.placeholder" />
+                <label for="txtUsuario" data-i18n="bitacora.usuario">Usuario</label>
+                <asp:TextBox ID="txtUsuario" runat="server" CssClass="entrada" MaxLength="100" placeholder="Nombre" ClientIDMode="Static" />
             </div>
 
             <asp:PlaceHolder ID="phFiltroEmpresa" runat="server">
                 <div class="campo">
-                    <label for="bitEmpresa" data-i18n="bitacora.empresa">Empresa</label>
-                    <select class="entrada" id="bitEmpresa">
-                        <option value="" data-i18n="comun.todas">Todas</option>
-                        <option value="Pattern Blue">Pattern Blue</option>
-                        <option value="Ironhide Game Studio">Ironhide Game Studio</option>
-                        <option value="Mercado Cruz S.A.">Mercado Cruz S.A.</option>
-                        <option value="Nova Publicidad">Nova Publicidad</option>
-                        <option value="Austral Seguros">Austral Seguros</option>
-                    </select>
+                    <label for="ddlEmpresa" data-i18n="bitacora.empresa">Empresa</label>
+                    <asp:DropDownList ID="ddlEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
                 </div>
             </asp:PlaceHolder>
 
             <div class="campo">
-                <label for="bitCriticidad" data-i18n="bitacora.criticidad">Criticidad</label>
-                <select class="entrada" id="bitCriticidad">
-                    <option value="" data-i18n="comun.todas">Todas</option>
-                    <option value="Alta" data-i18n="criticidad.alta">Alta</option>
-                    <option value="Media" data-i18n="criticidad.media">Media</option>
-                    <option value="Baja" data-i18n="criticidad.baja">Baja</option>
-                </select>
+                <label for="ddlCriticidad" data-i18n="bitacora.criticidad">Criticidad</label>
+                <asp:DropDownList ID="ddlCriticidad" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
         </div>
 
         <div class="fila-entre">
-            <p class="texto-chico texto-suave sin-margen" id="bitContador" role="status">
-
-                Mostrando 10 de 10 registros.
-            </p>
-            <button type="button" class="btn btn-secundario btn-chico" id="btnLimpiarBitacora"
-                    data-i18n="comun.limpiarFiltros">Limpiar filtros</button>
+            <p class="texto-chico texto-suave sin-margen" role="status"><asp:Literal ID="litContador" runat="server" /></p>
+            <div class="fila">
+                <asp:Button ID="btnLimpiar" runat="server" CssClass="btn btn-fantasma btn-chico" Text="Limpiar filtros" OnClick="btnLimpiar_Click" CausesValidation="false" />
+                <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario btn-chico" Text="Aplicar filtros" OnClick="btnBuscar_Click" />
+            </div>
         </div>
 
-    </div>
+    </asp:Panel>
 
     <div class="tabla-scroll">
         <table class="tabla" id="tablaBitacora">
@@ -175,105 +161,36 @@
                 </tr>
             </thead>
             <tbody>
-
-                <tr class="fila-critica" data-modulo="Sistema" data-accion="Modificacion" data-empresa="Pattern Blue" data-criticidad="Alta">
-                    <td class="celda-fecha">08/09/2026 14:41</td>
-                    <td>Ramiro Diaz</td>
-                    <td class="texto-suave">Pattern Blue</td>
-                    <td><span class="badge badge-neutro">Sistema</span></td>
-                    <td>Recalculo de digitos verificadores sobre la tabla Usuario</td>
-                    <td><span class="badge badge-peligro" data-i18n="criticidad.alta">Alta</span></td>
-                </tr>
-
-                <tr class="fila-baja" data-modulo="Seguridad" data-accion="Inicio de sesion" data-empresa="Ironhide Game Studio" data-criticidad="Baja">
-                    <td class="celda-fecha">08/09/2026 14:32</td>
-                    <td>Julieta Fernandez</td>
-                    <td class="texto-suave">Ironhide Game Studio</td>
-                    <td><span class="badge badge-neutro">Seguridad</span></td>
-                    <td>Inicio de sesión correcto</td>
-                    <td><span class="badge badge-neutro" data-i18n="criticidad.baja">Baja</span></td>
-                </tr>
-
-                <tr class="fila-media" data-modulo="Analisis" data-accion="Exportacion" data-empresa="Ironhide Game Studio" data-criticidad="Media">
-                    <td class="celda-fecha">08/09/2026 14:05</td>
-                    <td>Maria Gomez</td>
-                    <td class="texto-suave">Ironhide Game Studio</td>
-                    <td><span class="badge badge-neutro">Análisis</span></td>
-                    <td>Exportación del reporte de la sesión Onboarding v3</td>
-                    <td><span class="badge badge-alerta" data-i18n="criticidad.media">Media</span></td>
-                </tr>
-
-                <tr class="fila-critica" data-modulo="Usuarios" data-accion="Modificacion" data-empresa="Ironhide Game Studio" data-criticidad="Alta">
-                    <td class="celda-fecha">08/09/2026 11:20</td>
-                    <td>Julieta Fernandez</td>
-                    <td class="texto-suave">Ironhide Game Studio</td>
-                    <td><span class="badge badge-neutro">Usuarios</span></td>
-                    <td>Bloqueo de la cuenta sofia.lopez@ironhide.com</td>
-                    <td><span class="badge badge-peligro" data-i18n="criticidad.alta">Alta</span></td>
-                </tr>
-
-                <tr class="fila-media" data-modulo="Seguridad" data-accion="Inicio de sesion" data-empresa="Ironhide Game Studio" data-criticidad="Media">
-                    <td class="celda-fecha">08/09/2026 11:02</td>
-                    <td>Sofia Lopez</td>
-                    <td class="texto-suave">Ironhide Game Studio</td>
-                    <td><span class="badge badge-neutro">Seguridad</span></td>
-                    <td>Cuenta bloqueada por 5 intentos fallidos</td>
-                    <td><span class="badge badge-alerta" data-i18n="criticidad.media">Media</span></td>
-                </tr>
-
-                <tr class="fila-baja" data-modulo="Sesiones" data-accion="Alta" data-empresa="Ironhide Game Studio" data-criticidad="Baja">
-                    <td class="celda-fecha">08/09/2026 10:47</td>
-                    <td>Maria Gomez</td>
-                    <td class="texto-suave">Ironhide Game Studio</td>
-                    <td><span class="badge badge-neutro">Sesiones</span></td>
-                    <td>Alta de la sesión Nivel 4 - tutorial (tester T-042)</td>
-                    <td><span class="badge badge-neutro" data-i18n="criticidad.baja">Baja</span></td>
-                </tr>
-
-                <tr class="fila-critica" data-modulo="Empresas" data-accion="Alta" data-empresa="Pattern Blue" data-criticidad="Alta">
-                    <td class="celda-fecha">07/09/2026 17:12</td>
-                    <td>Ramiro Diaz</td>
-                    <td class="texto-suave">Pattern Blue</td>
-                    <td><span class="badge badge-neutro">Empresas</span></td>
-                    <td>Alta de la empresa Austral Seguros y de su administrador</td>
-                    <td><span class="badge badge-peligro" data-i18n="criticidad.alta">Alta</span></td>
-                </tr>
-
-                <tr class="fila-critica" data-modulo="Sistema" data-accion="Modificacion" data-empresa="Pattern Blue" data-criticidad="Alta">
-                    <td class="celda-fecha">06/09/2026 19:00</td>
-                    <td>Ramiro Diaz</td>
-                    <td class="texto-suave">Pattern Blue</td>
-                    <td><span class="badge badge-neutro">Sistema</span></td>
-                    <td>Sistema puesto en mantenimiento (actualización 1.4)</td>
-                    <td><span class="badge badge-peligro" data-i18n="criticidad.alta">Alta</span></td>
-                </tr>
-
-                <tr class="fila-media" data-modulo="Usuarios" data-accion="Alta" data-empresa="Mercado Cruz S.A." data-criticidad="Media">
-                    <td class="celda-fecha">06/09/2026 15:33</td>
-                    <td>Pablo Herrera</td>
-                    <td class="texto-suave">Mercado Cruz S.A.</td>
-                    <td><span class="badge badge-neutro">Usuarios</span></td>
-                    <td>Invitación enviada a laura.vega@mercadocruz.com</td>
-                    <td><span class="badge badge-alerta" data-i18n="criticidad.media">Media</span></td>
-                </tr>
-
-                <tr class="fila-baja" data-modulo="Seguridad" data-accion="Cierre de sesion" data-empresa="Nova Publicidad" data-criticidad="Baja">
-                    <td class="celda-fecha">06/09/2026 12:18</td>
-                    <td>Carla Suarez</td>
-                    <td class="texto-suave">Nova Publicidad</td>
-                    <td><span class="badge badge-neutro">Seguridad</span></td>
-                    <td>Cierre de sesión</td>
-                    <td><span class="badge badge-neutro" data-i18n="criticidad.baja">Baja</span></td>
-                </tr>
-
+                <asp:Repeater ID="rptBitacora" runat="server">
+                    <ItemTemplate>
+                        <tr class="<%#: ClaseFila((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %>">
+                            <td class="celda-fecha"><%#: ((DateTime)Eval("FechaHoraBitacora")).ToString("dd/MM/yyyy HH:mm") %></td>
+                            <td><%#: Eval("Actor") %></td>
+                            <td class="texto-suave"><%#: Eval("NombreEmpresa") %></td>
+                            <td><span class="badge badge-neutro"><%#: Eval("ModuloBitacora") %></span></td>
+                            <td><%#: Eval("DescripcionBitacora") %></td>
+                            <td><span class="badge <%#: ClaseBadge((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %>"><%#: EtiquetaCriticidad((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %></span></td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
             </tbody>
         </table>
     </div>
 
-    <div class="vacio" id="bitacoraVacio" hidden>
-        <svg width="34" height="34" aria-hidden="true"><use href="#i-libro" /></svg>
-        <p class="sin-margen" data-i18n="bitacora.vacio">No hay registros que coincidan con los filtros.</p>
+    <div class="paginado-bitacora fila-entre mt-16">
+        <span class="texto-chico texto-suave"><asp:Literal ID="litPaginado" runat="server" /></span>
+        <div class="fila">
+            <asp:LinkButton ID="lnkAnterior" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkAnterior_Click" CausesValidation="false">Anterior</asp:LinkButton>
+            <asp:LinkButton ID="lnkSiguiente" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkSiguiente_Click" CausesValidation="false">Siguiente</asp:LinkButton>
+        </div>
     </div>
+
+    <asp:PlaceHolder ID="phVacio" runat="server" Visible="false">
+        <div class="vacio">
+            <svg width="34" height="34" aria-hidden="true"><use href="#i-libro" /></svg>
+            <p class="sin-margen" data-i18n="bitacora.vacio">No hay registros que coincidan con los filtros.</p>
+        </div>
+    </asp:PlaceHolder>
 
     <p class="texto-chico texto-suave mt-16" data-i18n="bitacora.retencion">
         Los registros de la bitácora no se pueden editar ni borrar. Se conservan por el
@@ -287,7 +204,7 @@
                 <div>
                     <h2 id="expBitTitulo" data-i18n="bitacora.exportar.titulo">Exportar la bitácora</h2>
                     <p class="subtitulo sin-margen" data-i18n="bitacora.exportar.subtitulo">
-                        Se exporta lo que quedó después de aplicar los filtros.
+                        Se exportan todos los registros que cumplen los filtros, no solo los de esta página.
                     </p>
                 </div>
                 <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
@@ -297,23 +214,21 @@
 
             <div class="modal-cuerpo">
 
-                <p class="etiqueta" data-i18n="bitacora.exportar.formato">Formato</p>
-
-                <label class="opcion">
-                    <input type="radio" name="formatoBitacora" value="csv" checked data-foco-inicial />
+                <div class="opcion">
                     <span>
                         <span class="opcion-titulo">CSV</span>
                         <span class="opcion-detalle" data-i18n="bitacora.exportar.csv">Para abrir en una planilla de cálculo.</span>
                     </span>
-                </label>
+                    <asp:Button ID="btnExportarCsv" runat="server" CssClass="btn btn-secundario btn-chico" Text="Descargar" OnClick="btnExportarCsv_Click" CausesValidation="false" />
+                </div>
 
-                <label class="opcion">
-                    <input type="radio" name="formatoBitacora" value="pdf" />
+                <div class="opcion">
                     <span>
                         <span class="opcion-titulo">PDF</span>
-                        <span class="opcion-detalle" data-i18n="bitacora.exportar.pdf">Para archivar o presentar como evidencia.</span>
+                        <span class="opcion-detalle" data-i18n="bitacora.exportar.pdf">Se abre una vista lista para imprimir; elegí «Guardar como PDF» en el navegador.</span>
                     </span>
-                </label>
+                    <asp:HyperLink ID="lnkImprimir" runat="server" CssClass="btn btn-secundario btn-chico" Target="_blank" Text="Abrir vista" />
+                </div>
 
                 <div class="aviso aviso-info mt-16 mb-0">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
@@ -325,68 +240,10 @@
             </div>
 
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
-                <button type="button" class="btn btn-primario" data-i18n="bitacora.exportar.confirmar">Exportar</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cerrar</button>
             </div>
 
         </div>
     </div>
 
-</asp:Content>
-
-<asp:Content ContentPlaceHolderID="scripts" runat="server">
-    <script>
-        (function () {
-            "use strict";
-
-            var modulo = document.getElementById("bitModulo");
-            var accion = document.getElementById("bitAccion");
-            var usuario = document.getElementById("bitUsuario");
-            var criticidad = document.getElementById("bitCriticidad");
-            var empresa = document.getElementById("bitEmpresa");
-            var contador = document.getElementById("bitContador");
-            var vacio = document.getElementById("bitacoraVacio");
-            var filas = document.querySelectorAll("#tablaBitacora tbody tr");
-            var botonLimpiar = document.getElementById("btnLimpiarBitacora");
-
-            function filtrar() {
-                var texto = usuario.value.trim().toLowerCase();
-                var visibles = 0;
-
-                for (var i = 0; i < filas.length; i++)
-                {
-                    var fila = filas[i];
-                    var okTexto = texto === "" || fila.cells[1].textContent.toLowerCase().indexOf(texto) !== -1;
-                    var okModulo = modulo.value === "" || fila.getAttribute("data-modulo") === modulo.value;
-                    var okAccion = accion.value === "" || fila.getAttribute("data-accion") === accion.value;
-                    var okCritic = criticidad.value === "" || fila.getAttribute("data-criticidad") === criticidad.value;
-                    var okEmpresa = !empresa || empresa.value === "" || fila.getAttribute("data-empresa") === empresa.value;
-                    var mostrar = okTexto && okModulo && okAccion && okCritic && okEmpresa;
-
-                    fila.hidden = !mostrar;
-
-                    if (mostrar) visibles++;
-                }
-
-                contador.textContent = "Mostrando " + visibles + " de " + filas.length + " registros.";
-                vacio.hidden = visibles > 0;
-            }
-
-            modulo.addEventListener("change", filtrar);
-            accion.addEventListener("change", filtrar);
-            criticidad.addEventListener("change", filtrar);
-            usuario.addEventListener("input", filtrar);
-
-            if (empresa) empresa.addEventListener("change", filtrar);
-
-            botonLimpiar.addEventListener("click", function () {
-                var campos = document.querySelectorAll(".filtros-bitacora .entrada");
-
-                for (var i = 0; i < campos.length; i++)
-                    campos[i].value = "";
-
-                filtrar();
-            });
-        })();
-    </script>
 </asp:Content>

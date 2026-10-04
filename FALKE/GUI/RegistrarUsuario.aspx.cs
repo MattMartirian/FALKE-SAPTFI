@@ -59,7 +59,7 @@ namespace GUI
                     EsCuentaEmergencia = false
                 };
 
-                string token = new Usuario_TLL().RegistrarUsuario(usuario);
+                string token = new Usuario_TLL().RegistrarUsuario(SesionActual_GUI.ObtenerActor(), usuario);
 
                 string link = WebHelper.UrlAbsoluta("EstablecerContrasena.aspx?token=" + Uri.EscapeDataString(token));
                 string cuerpo =
@@ -72,6 +72,10 @@ namespace GUI
 
                 lblMsg.Text = "Usuario registrado (id " + usuario.IdUsuario + ", empresa " + usuario.IdEmpresa +
                               ", estado Pendiente). Se envio el mail de activacion.";
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                lblMsg.Text = ex.Message;
             }
             catch (InvalidOperationException ex)
             {

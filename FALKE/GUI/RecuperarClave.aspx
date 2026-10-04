@@ -160,8 +160,8 @@
                         <a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="recuperar.volver">Volver al inicio de sesión</a>
                     </p>
                     <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="recuperar.bloqueada">
-                        Si tu cuenta está bloqueada, el enlace no alcanza: tiene que desbloquearla
-                        el administrador de tu empresa.
+                        Si tu cuenta fue dada de baja o tiene un bloqueo estricto, no se envía ningún enlace:
+                        lo resuelve el administrador de tu empresa.
                     </p>
                 </div>
 

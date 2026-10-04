@@ -39,7 +39,7 @@ namespace GUI
                     NombreUsuario = "Juan",
                     ApellidoUsuario = "Pérez",
                     EmailUsuario = "juan.perez." + DateTime.Now.Ticks + "@falke.com",
-                    Rol = new PermisoCompuesto_TE("Usuario", true),
+                    Rol = new PermisoCompuesto_TE(Usuario_TLL.ROL_ANALISTA, true),
                     IdIdioma = 1,
                     EsCuentaEmergencia = false
                 };

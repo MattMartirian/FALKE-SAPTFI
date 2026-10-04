@@ -12,6 +12,7 @@ namespace TLL
         public bool Exito { get; private set; }
         public string Motivo { get; private set; }
         public Usuario_TE Usuario { get; private set; }
+        public string Token { get; private set; }
 
         private ResultadoLogin_TLL() { }
 
@@ -19,7 +20,13 @@ namespace TLL
 
         public static ResultadoLogin_TLL CredencialesInvalidas() =>      new ResultadoLogin_TLL { Exito = false, Motivo = "CREDENCIALES_INVALIDAS" };
 
-        public static ResultadoLogin_TLL UsuarioBloqueado() =>           new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_BLOQUEADO" };
+        public static ResultadoLogin_TLL BloqueadoPorIntentos() =>       new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_BLOQUEADO_INTENTOS" };
+
+        public static ResultadoLogin_TLL Inactivo() =>                   new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_INACTIVO" };
+
+        public static ResultadoLogin_TLL EmpresaNoActiva(string motivo) => new ResultadoLogin_TLL { Exito = false, Motivo = motivo };
+
+        public static ResultadoLogin_TLL BloqueoEstricto() =>            new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_BLOQUEO_ESTRICTO" };
 
         public static ResultadoLogin_TLL UsuarioPendienteActivacion() => new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_PENDIENTE" };
 

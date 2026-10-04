@@ -40,13 +40,6 @@
             margin-top: 4px;
         }
 
-        .ficha-empresa .datos span
-        {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
         .ficha-empresa .derecha
         {
             margin-left: auto;
@@ -55,181 +48,90 @@
             align-items: center;
         }
 
-        .um
+        .filtros-usuarios
         {
             display: grid;
-            grid-template-columns: 320px minmax(0, 1fr);
-            gap: 20px;
-            align-items: start;
-        }
-
-        .um-panel
-        {
-            border: 1px solid var(--borde);
-            border-radius: var(--radio-lg);
-            background: var(--superficie);
-            overflow: hidden;
-        }
-
-        .um-lista-cab
-        {
-            padding: 14px 14px 10px;
-            border-bottom: 1px solid var(--borde);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .um-buscador
-        {
-            position: relative;
-        }
-
-        .um-lista
-        {
-            max-height: 560px;
-            overflow-y: auto;
-        }
-
-        .um-fila
-        {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            width: 100%;
-            text-align: left;
-            padding: 12px 14px;
-            border: 0;
-            border-bottom: 1px solid var(--borde);
-            background: transparent;
-            color: var(--texto);
-            font-family: inherit;
-            cursor: pointer;
-        }
-
-        .um-fila:hover
-        {
-            background: var(--superficie-2);
-        }
-
-        .um-fila[aria-current="true"]
-        {
-            background: var(--acento-suave);
-            outline: 1px solid var(--acento);
-            outline-offset: -1px;
-        }
-
-        .um-fila .avatar
-        {
-            flex: none;
-        }
-
-        .um-fila .info
-        {
-            min-width: 0;
-            flex: 1;
-        }
-
-        .um-fila .nombre
-        {
-            display: block;
-            font-weight: 600;
-            font-size: .9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .um-fila .sub
-        {
-            display: block;
-            font-size: .78rem;
-            color: var(--texto-suave);
-        }
-
-        .punto-linea
-        {
-            flex: none;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--marca-coral);
-        }
-
-        .en-linea
-        {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--fuente-mono);
-            font-size: .66rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: var(--marca-coral);
-        }
-
-        .um-detalle
-        {
-            padding: 22px 24px 24px;
-        }
-
-        .um-detalle-cab
-        {
-            display: flex;
-            align-items: center;
+            grid-template-columns: minmax(200px, 2fr) repeat(auto-fit, minmax(150px, 1fr));
             gap: 14px;
-            margin-bottom: 20px;
+            align-items: end;
         }
 
-        .um-detalle-cab h2
+        .filtros-usuarios .campo
         {
-            margin: 0 0 4px;
-            font-size: 1.2rem;
+            margin: 0;
         }
 
-        .um-datos
-        {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .um-datos th,
-        .um-datos td
-        {
-            text-align: left;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--borde);
-            font-size: .9rem;
-            vertical-align: top;
-        }
-
-        .um-datos th
-        {
-            width: 190px;
-            color: var(--texto-suave);
-            font-weight: 600;
-        }
-
-        .um-acciones
+        .paginado
         {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
+            margin-top: 14px;
+            font-size: .88rem;
+            color: var(--texto-suave);
         }
 
-        .um-form .fila-campos
+        .fila-deshabilitada > td:not(.celda-acciones)
+        {
+            opacity: .5;
+        }
+
+        .gestion-columnas
         {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0 28px;
         }
 
-        @media (max-width: 900px)
+        .gestion-columnas > .gestion-seccion + .gestion-seccion
         {
-            .um { grid-template-columns: minmax(0, 1fr); }
-            .um-lista { max-height: 320px; }
-            .um-form .fila-campos { grid-template-columns: minmax(0, 1fr); }
+            padding-left: 28px;
+            border-left: 1px solid var(--borde);
+        }
+
+        .gestion-seccion h3
+        {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .gestion-actual
+        {
+            font-size: .86rem;
+            color: var(--texto-suave);
+            margin: 0 0 12px;
+        }
+
+        .gestion-seccion .campo
+        {
+            margin-bottom: 12px;
+        }
+
+        .gestion-seccion .aviso
+        {
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            font-size: .82rem;
+        }
+
+        .gestion-seccion .aviso label
+        {
+            margin: 8px 0 0;
+            font-size: .84rem;
+        }
+
+        @media (max-width: 720px)
+        {
+            .gestion-columnas > .gestion-seccion + .gestion-seccion
+            {
+                padding-left: 0;
+                border-left: 0;
+                border-top: 1px solid var(--borde);
+                padding-top: 16px;
+                margin-top: 16px;
+            }
         }
     </style>
 </asp:Content>
@@ -244,6 +146,12 @@
             </p>
         </div>
         <div class="acciones">
+            <asp:PlaceHolder ID="phPerfil" runat="server">
+                <button type="button" class="btn btn-secundario" data-abre-modal="modalPerfil">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-persona" /></svg>
+                    <span>Mi perfil</span>
+                </button>
+            </asp:PlaceHolder>
             <asp:PlaceHolder ID="phInvitar" runat="server">
                 <button type="button" class="btn btn-primario" data-abre-modal="modalInvitar">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-mas" /></svg>
@@ -253,132 +161,327 @@
         </div>
     </div>
 
-    <section class="ficha-empresa" aria-label="Datos de tu empresa">
-        <span class="sigla" aria-hidden="true">IR</span>
-        <div>
-            <strong style="font-size:1.05rem">Ironhide Game Studio</strong>
-            <div class="datos">
-                <span><svg width="13" height="13" aria-hidden="true"><use href="#i-empresa" /></svg>Videojuegos</span>
-                <span><svg width="13" height="13" aria-hidden="true"><use href="#i-dispositivo" /></svg>1 dispositivo en préstamo</span>
-                <span><svg width="13" height="13" aria-hidden="true"><use href="#i-usuarios" /></svg>6 usuarios</span>
-                <span><svg width="13" height="13" aria-hidden="true"><use href="#i-calendario" /></svg>Cliente desde jun 2026</span>
+    <asp:Panel ID="pnlAviso" runat="server" CssClass="aviso" Visible="false" role="status">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
+        <p class="sin-margen"><asp:Literal ID="litAviso" runat="server" /></p>
+    </asp:Panel>
+
+    <asp:PlaceHolder ID="phFicha" runat="server">
+        <section class="ficha-empresa" aria-label="Datos de tu empresa">
+            <span class="sigla" aria-hidden="true"><asp:Literal ID="litSigla" runat="server" /></span>
+            <div>
+                <strong style="font-size:1.05rem"><asp:Literal ID="litEmpresaNombre" runat="server" /></strong>
+                <div class="datos">
+                    <span><asp:Literal ID="litEmpresaAlta" runat="server" /></span>
+                    <span><asp:Literal ID="litEmpresaUsuarios" runat="server" /></span>
+                </div>
             </div>
-        </div>
-        <div class="derecha">
-            <span class="badge badge-alerta">Plan Hunter</span>
-            <span class="badge badge-exito" data-i18n="estado.activa">Activa</span>
-        </div>
-    </section>
+            <div class="derecha">
+                <span class="badge badge-alerta"><asp:Literal ID="litEmpresaPlan" runat="server" /></span>
+                <span class="badge badge-exito"><asp:Literal ID="litEmpresaEstado" runat="server" /></span>
+            </div>
+        </section>
+    </asp:PlaceHolder>
 
     <asp:PlaceHolder ID="phSoloLectura" runat="server">
         <div class="aviso aviso-info mb-24">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
-            <p class="sin-margen" data-i18n="usuarios.soloLectura">
-                Como analista puedes ver a los integrantes de tu empresa y sus roles, y editar
-                tus propios datos. La gestión de las cuentas la hace el administrador.
+            <p class="sin-margen">
+                Puedes ver a los integrantes de tu empresa y sus roles, y editar tus propios datos.
+                La gestión de las cuentas la hace el administrador.
             </p>
         </div>
     </asp:PlaceHolder>
 
-    <div class="um" id="um" data-rol="<%: Master.RolActual %>">
-
-        <div class="um-panel">
-            <div class="um-lista-cab">
-                <div class="um-buscador campo-buscar">
-                    <label class="solo-lectores" for="usBuscar" data-i18n="usuarios.buscar">Buscar</label>
-                    <svg aria-hidden="true"><use href="#i-buscar" /></svg>
-                    <input type="search" class="entrada" id="usBuscar"
-                           placeholder="Nombre o correo..." data-i18n-attr="placeholder:usuarios.buscar.placeholder" />
-                </div>
-                <div class="chips" data-unico role="group" aria-label="Filtrar por rol">
-                    <button type="button" class="chip" aria-pressed="true" data-rol-filtro="" data-i18n="comun.todos">Todos</button>
-                    <button type="button" class="chip" aria-pressed="false" data-rol-filtro="Administrador">Administradores</button>
-                    <button type="button" class="chip" aria-pressed="false" data-rol-filtro="Analista">Analistas</button>
-                </div>
+    <div class="filtros filtros-usuarios">
+        <div class="campo">
+            <label for="txtBuscar">Buscar</label>
+            <asp:TextBox ID="txtBuscar" runat="server" CssClass="entrada" placeholder="Nombre o correo" MaxLength="100" ClientIDMode="Static" />
+        </div>
+        <asp:PlaceHolder ID="phFiltroEmpresa" runat="server">
+            <div class="campo">
+                <label for="ddlEmpresaFiltro">Empresa</label>
+                <asp:DropDownList ID="ddlEmpresaFiltro" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
+        </asp:PlaceHolder>
+        <div class="campo">
+            <label for="ddlRolFiltro">Rol</label>
+            <asp:DropDownList ID="ddlRolFiltro" runat="server" CssClass="entrada" ClientIDMode="Static" />
+        </div>
+        <div class="campo">
+            <label for="ddlEstadoFiltro">Estado</label>
+            <asp:DropDownList ID="ddlEstadoFiltro" runat="server" CssClass="entrada" ClientIDMode="Static" />
+        </div>
+        <div class="acciones-filtro">
+            <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario" Text="Buscar" OnClick="btnBuscar_Click" />
+        </div>
+    </div>
 
-            <div class="um-lista" id="usLista" role="listbox" aria-label="Usuarios de la empresa">
+    <div class="tabla-scroll">
+        <table class="tabla">
+            <caption class="solo-lectores">Usuarios</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Usuario</th>
+                    <asp:PlaceHolder ID="phColEmpresa" runat="server"><th scope="col">Empresa</th></asp:PlaceHolder>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Estado</th>
+                    <asp:PlaceHolder ID="phColAcciones" runat="server"><th scope="col"><span class="solo-lectores">Acciones</span></th></asp:PlaceHolder>
+                </tr>
+            </thead>
+            <tbody>
+                <asp:Repeater ID="rptUsuarios" runat="server">
+                    <ItemTemplate>
+                        <tr class="<%#: ClaseFila(Container.DataItem) %>">
+                            <td>
+                                <div class="celda-doble">
+                                    <span class="avatar" aria-hidden="true"><%#: Iniciales(Container.DataItem) %></span>
+                                    <div>
+                                        <div class="principal"><%#: Eval("NombreUsuario") %> <%#: Eval("ApellidoUsuario") %></div>
+                                        <div class="secundario"><%#: Eval("EmailUsuario") %></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <asp:PlaceHolder runat="server" Visible="<%# VeTodas %>"><td><%#: Eval("NombreEmpresa") %></td></asp:PlaceHolder>
+                            <td><%#: EtiquetaRol((string)Eval("Rol")) %></td>
+                            <td><span class="badge <%#: ClaseEstado((TE.EstadoUsuario)Eval("Estado")) %>"><%#: EtiquetaEstado((TE.EstadoUsuario)Eval("Estado")) %></span></td>
+                            <asp:PlaceHolder runat="server" Visible="<%# PuedeGestionar %>">
+                                <td class="celda-acciones">
+                                    <div class="acciones-fila">
+                                        <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeEditarDatos %>">
+                                            <button type="button" class="btn btn-secundario btn-chico" data-abre-modal="modalDatos" data-editar-datos="1"
+                                                    data-id="<%#: Eval("IdUsuario") %>"
+                                                    data-cuenta="<%#: NombreCompleto(Container.DataItem) %> · <%#: Eval("EmailUsuario") %>"
+                                                    data-n="<%#: Eval("NombreUsuario") %>"
+                                                    data-a="<%#: Eval("ApellidoUsuario") %>"
+                                                    data-email="<%#: Eval("EmailUsuario") %>"
+                                                    data-idioma="<%#: Eval("IdIdioma") %>"
+                                                    data-id-empresa="<%#: Eval("IdEmpresa") %>"
+                                                    data-empresa="<%#: Eval("NombreEmpresa") %>"
+                                                    data-otra-empresa="<%#: EsOtraEmpresa(Container.DataItem) ? "1" : "0" %>">
+                                                Editar datos
+                                            </button>
+                                        </asp:PlaceHolder>
+                                        <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeGestionarCuenta %>">
+                                            <button type="button" class="btn btn-secundario btn-chico" data-abre-modal="modalGestion" data-gestionar="1"
+                                                    data-id="<%#: Eval("IdUsuario") %>"
+                                                    data-nombre="<%#: NombreCompleto(Container.DataItem) %>"
+                                                    data-email="<%#: Eval("EmailUsuario") %>"
+                                                    data-empresa="<%#: Eval("NombreEmpresa") %>"
+                                                    data-rol="<%#: Eval("Rol") %>"
+                                                    data-rol-etiqueta="<%#: EtiquetaRol((string)Eval("Rol")) %>"
+                                                    data-estado="<%#: (int)(TE.EstadoUsuario)Eval("Estado") %>"
+                                                    data-estado-etiqueta="<%#: EtiquetaEstado((TE.EstadoUsuario)Eval("Estado")) %>"
+                                                    data-otra-empresa="<%#: EsOtraEmpresa(Container.DataItem) ? "1" : "0" %>">
+                                                Gestionar
+                                            </button>
+                                        </asp:PlaceHolder>
+                                    </div>
+                                </td>
+                            </asp:PlaceHolder>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </tbody>
+        </table>
 
-                <button type="button" class="um-fila" role="option" aria-current="true" data-yo="1"
-                        data-nombre="Julieta" data-apellido="Fernández" data-email="julieta.fernandez@ironhide.com"
-                        data-rol="Administrador" data-estado="Activo" data-idioma="Español" data-alta="18 jun 2026"
-                        data-acceso="Hoy 14:32" data-enlinea="1" data-sesiones="21" data-reportes="8" data-fallidos="0">
-                    <span class="avatar" aria-hidden="true">JF</span>
-                    <span class="info">
-                        <span class="nombre">Julieta Fernández</span>
-                        <span class="sub" data-i18n="usuarios.vos">Tú &middot; Administrador</span>
-                    </span>
-                    <span class="punto-linea" title="En línea" aria-hidden="true"></span>
-                </button>
-
-                <button type="button" class="um-fila" role="option"
-                        data-nombre="María" data-apellido="Gómez" data-email="maria.gomez@ironhide.com"
-                        data-rol="Analista" data-estado="Activo" data-idioma="Español" data-alta="18 jun 2026"
-                        data-acceso="Hoy 13:54" data-enlinea="1" data-sesiones="12" data-reportes="4" data-fallidos="0">
-                    <span class="avatar" aria-hidden="true">MG</span>
-                    <span class="info">
-                        <span class="nombre">María Gómez</span>
-                        <span class="sub">Analista</span>
-                    </span>
-                    <span class="punto-linea" title="En línea" aria-hidden="true"></span>
-                </button>
-
-                <button type="button" class="um-fila" role="option"
-                        data-nombre="Diego" data-apellido="Paz" data-email="diego.paz@ironhide.com"
-                        data-rol="Analista" data-estado="Pendiente" data-idioma="Español" data-alta="9 sep 2026"
-                        data-acceso="&mdash;" data-enlinea="0" data-sesiones="0" data-reportes="0" data-fallidos="0">
-                    <span class="avatar" aria-hidden="true">DP</span>
-                    <span class="info">
-                        <span class="nombre">Diego Paz</span>
-                        <span class="sub" data-i18n="estado.pendiente">Pendiente de activación</span>
-                    </span>
-                </button>
-
-                <button type="button" class="um-fila" role="option"
-                        data-nombre="Sofía" data-apellido="López" data-email="sofia.lopez@ironhide.com"
-                        data-rol="Analista" data-estado="Bloqueado" data-idioma="Español" data-alta="4 mar 2026"
-                        data-acceso="12 jul 2026" data-enlinea="0" data-sesiones="31" data-reportes="9" data-fallidos="5">
-                    <span class="avatar" aria-hidden="true">SL</span>
-                    <span class="info">
-                        <span class="nombre">Sofía López</span>
-                        <span class="sub" data-i18n="estado.bloqueado">Bloqueado</span>
-                    </span>
-                </button>
-
-                <button type="button" class="um-fila" role="option"
-                        data-nombre="Nicolás" data-apellido="Castro" data-email="nicolas.castro@ironhide.com"
-                        data-rol="Analista" data-estado="Activo" data-idioma="Inglés" data-alta="2 feb 2026"
-                        data-acceso="Ayer 18:10" data-enlinea="0" data-sesiones="27" data-reportes="6" data-fallidos="0">
-                    <span class="avatar" aria-hidden="true">NC</span>
-                    <span class="info">
-                        <span class="nombre">Nicolás Castro</span>
-                        <span class="sub">Analista</span>
-                    </span>
-                </button>
-
-                <button type="button" class="um-fila" role="option"
-                        data-nombre="Valentina" data-apellido="Ruiz" data-email="valentina.ruiz@ironhide.com"
-                        data-rol="Analista" data-estado="Inactivo" data-idioma="Portugués" data-alta="20 nov 2025"
-                        data-acceso="28 may 2026" data-enlinea="0" data-sesiones="14" data-reportes="3" data-fallidos="0">
-                    <span class="avatar" aria-hidden="true">VR</span>
-                    <span class="info">
-                        <span class="nombre">Valentina Ruiz</span>
-                        <span class="sub" data-i18n="estado.inactivo">Inactivo</span>
-                    </span>
-                </button>
-
-            </div>
-
-            <div class="vacio" id="usVacio" hidden>
+        <asp:PlaceHolder ID="phVacio" runat="server" Visible="false">
+            <div class="vacio">
                 <svg width="28" height="28" aria-hidden="true"><use href="#i-usuarios" /></svg>
-                <p class="sin-margen" data-i18n="usuarios.vacio">No hay usuarios que coincidan.</p>
+                <p class="sin-margen">No hay usuarios que coincidan con los filtros.</p>
+            </div>
+        </asp:PlaceHolder>
+    </div>
+
+    <div class="paginado">
+        <span><asp:Literal ID="litPaginado" runat="server" /></span>
+        <div class="fila">
+            <asp:LinkButton ID="lnkAnterior" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkAnterior_Click" CausesValidation="false">Anterior</asp:LinkButton>
+            <asp:LinkButton ID="lnkSiguiente" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkSiguiente_Click" CausesValidation="false">Siguiente</asp:LinkButton>
+        </div>
+    </div>
+
+    <div class="modal-fondo" id="modalGestion" role="dialog" aria-modal="true" aria-labelledby="gestionTitulo" hidden>
+        <div class="modal ancho">
+            <div class="modal-cabecera">
+                <div>
+                    <h2 id="gestionTitulo">Gestionar usuario</h2>
+                    <p class="subtitulo sin-margen"><span id="gestionNombre"></span> &middot; <span id="gestionEmail"></span></p>
+                </div>
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                </button>
+            </div>
+            <div class="modal-cuerpo">
+                <asp:HiddenField ID="hfIdUsuario" runat="server" ClientIDMode="Static" />
+
+                <div class="gestion-columnas">
+                <asp:PlaceHolder ID="phGestionEstado" runat="server">
+                    <section class="gestion-seccion">
+                        <h3>Estado de la cuenta</h3>
+                        <p class="gestion-actual">Estado actual: <strong id="gestionEstadoActual"></strong></p>
+                        <div class="campo">
+                            <label for="ddlNuevoEstado">Nuevo estado</label>
+                            <asp:DropDownList ID="ddlNuevoEstado" runat="server" CssClass="entrada" ClientIDMode="Static" />
+                            <p class="ayuda">Inactivo: dada de baja, no puede entrar ni recuperar la contraseña. Bloqueo estricto: no puede entrar ni pedir el cambio de contraseña. «Bloqueado» (por contraseña incorrecta) lo pone el sistema: la persona se desbloquea recuperando su contraseña.</p>
+                        </div>
+                        <div class="campo">
+                            <label for="txtMotivoEstado">Motivo <span class="texto-tenue" data-solo-otra-empresa>(obligatorio)</span></label>
+                            <asp:TextBox ID="txtMotivoEstado" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
+                        </div>
+                        <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-primario" Text="Cambiar estado" OnClick="btnCambiarEstado_Click" />
+                    </section>
+                </asp:PlaceHolder>
+
+                <asp:PlaceHolder ID="phGestionRol" runat="server">
+                    <section class="gestion-seccion">
+                        <h3>Rol</h3>
+                        <p class="gestion-actual">Rol actual: <strong id="gestionRolActual"></strong></p>
+                        <div class="campo">
+                            <label for="ddlNuevoRol">Nuevo rol</label>
+                            <asp:DropDownList ID="ddlNuevoRol" runat="server" CssClass="entrada" ClientIDMode="Static" />
+                        </div>
+                        <div class="aviso aviso-alerta" id="avisoRol" hidden>
+                            <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+                            <div>
+                                <strong>Estás modificando una cuenta de un cliente.</strong>
+                                <p class="sin-margen">Cambia los permisos de esa persona. Queda en la bitácora y los administradores de la empresa ven que lo hizo el equipo de Pattern Blue.</p>
+                                <label class="casilla-simple mt-8">
+                                    <asp:CheckBox ID="chkConfirmaRol" runat="server" ClientIDMode="Static" />
+                                    <span>Entiendo el aviso y quiero continuar</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="campo">
+                            <label for="txtMotivoRol">Motivo <span class="texto-tenue" data-solo-otra-empresa>(obligatorio)</span></label>
+                            <asp:TextBox ID="txtMotivoRol" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
+                        </div>
+                        <asp:Button ID="btnCambiarRol" runat="server" CssClass="btn btn-primario" Text="Cambiar rol" OnClick="btnCambiarRol_Click" />
+                    </section>
+                </asp:PlaceHolder>
+                </div>
+            </div>
+            <div class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cierra-modal>Cerrar</button>
             </div>
         </div>
+    </div>
 
-        <div class="um-panel">
-            <div class="um-detalle" id="usDetalle"></div>
+    <div class="modal-fondo" id="modalDatos" role="dialog" aria-modal="true" aria-labelledby="datosTitulo" hidden>
+        <div class="modal">
+            <div class="modal-cabecera">
+                <div>
+                    <h2 id="datosTitulo">Editar datos del usuario</h2>
+                    <p class="subtitulo sin-margen" id="datosCuenta"></p>
+                </div>
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                </button>
+            </div>
+            <div class="modal-cuerpo">
+                <asp:HiddenField ID="hfIdDatos" runat="server" ClientIDMode="Static" />
+
+                <div class="aviso aviso-alerta" id="avisoDatosCliente" hidden>
+                    <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+                    <div>
+                        <strong>Estás modificando una cuenta de un cliente.</strong>
+                        <p class="sin-margen">Queda en la bitácora y los administradores de la empresa ven que lo hizo el equipo de Pattern Blue.</p>
+                    </div>
+                </div>
+
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label for="txtDatosNombre">Nombre</label>
+                        <asp:TextBox ID="txtDatosNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
+                    </div>
+                    <div class="campo">
+                        <label for="txtDatosApellido">Apellido</label>
+                        <asp:TextBox ID="txtDatosApellido" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
+                    </div>
+                </div>
+                <div class="campo">
+                    <label for="ddlDatosIdioma">Idioma de la interfaz</label>
+                    <asp:DropDownList ID="ddlDatosIdioma" runat="server" CssClass="entrada" ClientIDMode="Static">
+                        <asp:ListItem Value="1">Español</asp:ListItem>
+                        <asp:ListItem Value="2">Inglés</asp:ListItem>
+                        <asp:ListItem Value="3">Portugués</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+
+                <asp:PlaceHolder ID="phDatosAvanzados" runat="server" Visible="false">
+                    <div class="campo">
+                        <label for="txtDatosEmail">Correo electrónico</label>
+                        <asp:TextBox ID="txtDatosEmail" runat="server" CssClass="entrada" TextMode="Email" MaxLength="255" ClientIDMode="Static" />
+                    </div>
+                    <div class="campo">
+                        <label for="ddlDatosEmpresa">Empresa</label>
+                        <asp:DropDownList ID="ddlDatosEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
+                    </div>
+                    <div class="aviso aviso-alerta" id="avisoDatosSensibles" hidden>
+                        <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+                        <div>
+                            <strong>Cambiar el correo o la empresa es delicado.</strong>
+                            <p class="sin-margen">El correo es con lo que la persona entra, y la empresa define a qué datos accede. Si la cuenta sigue pendiente, se envía un enlace de activación nuevo al correo nuevo.</p>
+                        </div>
+                    </div>
+                </asp:PlaceHolder>
+
+                <div class="campo">
+                    <label for="txtDatosMotivo">Motivo <span class="texto-tenue" id="datosMotivoObligatorio" hidden>(obligatorio)</span></label>
+                    <asp:TextBox ID="txtDatosMotivo" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
+                </div>
+                <label class="casilla-simple" id="datosConfirma" hidden>
+                    <asp:CheckBox ID="chkDatosConfirma" runat="server" ClientIDMode="Static" />
+                    <span>Entiendo el aviso y quiero continuar</span>
+                </label>
+            </div>
+            <div class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
+                <asp:Button ID="btnGuardarDatos" runat="server" CssClass="btn btn-primario" Text="Guardar datos" OnClick="btnGuardarDatos_Click" />
+            </div>
         </div>
+    </div>
 
+    <div class="modal-fondo" id="modalPerfil" role="dialog" aria-modal="true" aria-labelledby="perfilTitulo" hidden>
+        <div class="modal">
+            <div class="modal-cabecera">
+                <div>
+                    <h2 id="perfilTitulo">Mi perfil</h2>
+                    <p class="subtitulo sin-margen">El correo no se puede modificar: es tu identidad de acceso.</p>
+                </div>
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                </button>
+            </div>
+            <div class="modal-cuerpo">
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label for="perNombre">Nombre</label>
+                        <asp:TextBox ID="perNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
+                    </div>
+                    <div class="campo">
+                        <label for="perApellido">Apellido</label>
+                        <asp:TextBox ID="perApellido" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
+                    </div>
+                </div>
+                <div class="campo">
+                    <label for="perEmail">Correo electrónico</label>
+                    <asp:TextBox ID="perEmail" runat="server" CssClass="entrada" ReadOnly="true" ClientIDMode="Static" />
+                </div>
+                <div class="campo">
+                    <label for="perIdioma">Idioma de la interfaz</label>
+                    <asp:DropDownList ID="perIdioma" runat="server" CssClass="entrada" ClientIDMode="Static">
+                        <asp:ListItem Value="1">Español</asp:ListItem>
+                        <asp:ListItem Value="2">Inglés</asp:ListItem>
+                        <asp:ListItem Value="3">Portugués</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <div class="modal-pie">
+                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
+                <asp:Button ID="btnGuardarPerfil" runat="server" CssClass="btn btn-primario" Text="Guardar cambios" OnClick="btnGuardarPerfil_Click" />
+            </div>
+        </div>
     </div>
 
     <div class="modal-fondo" id="modalInvitar" role="dialog" aria-modal="true" aria-labelledby="invitarTitulo" hidden>
@@ -404,31 +507,32 @@
                 <div class="fila-campos">
                     <div class="campo">
                         <label for="invNombre" data-i18n="invitar.nombre">Nombre</label>
-                        <asp:TextBox ID="invNombre" runat="server" CssClass="entrada" ClientIDMode="Static" data-foco-inicial="si" />
+                        <asp:TextBox ID="invNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" data-foco-inicial="si" />
                     </div>
                     <div class="campo">
                         <label for="invApellido" data-i18n="invitar.apellido">Apellido</label>
-                        <asp:TextBox ID="invApellido" runat="server" CssClass="entrada" ClientIDMode="Static" />
+                        <asp:TextBox ID="invApellido" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
                     </div>
                 </div>
                 <div class="campo">
                     <label for="invEmail" data-i18n="invitar.email">Correo electrónico</label>
-                    <asp:TextBox ID="invEmail" runat="server" CssClass="entrada" TextMode="Email" ClientIDMode="Static"
-                                 placeholder="nombre@ironhide.com" />
+                    <asp:TextBox ID="invEmail" runat="server" CssClass="entrada" TextMode="Email" MaxLength="255" ClientIDMode="Static"
+                                 placeholder="nombre@empresa.com" />
                     <p class="ayuda" data-i18n="invitar.email.ayuda">Ahí llega el enlace de activación.</p>
                 </div>
                 <div class="campo">
                     <label for="invRol" data-i18n="invitar.rol">Rol</label>
-                    <asp:DropDownList ID="invRol" runat="server" CssClass="entrada" ClientIDMode="Static">
-                        <asp:ListItem Value="Usuario">Analista</asp:ListItem>
-                        <asp:ListItem Value="Administrador">Administrador</asp:ListItem>
-                    </asp:DropDownList>
+                    <asp:DropDownList ID="invRol" runat="server" CssClass="entrada" ClientIDMode="Static" />
                 </div>
                 <asp:PlaceHolder ID="phInvEmpresa" runat="server" Visible="false">
                     <div class="campo">
-                        <label for="invEmpresa" data-i18n="invitar.empresa">Id de empresa</label>
-                        <asp:TextBox ID="invEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
+                        <label for="invEmpresa" data-i18n="invitar.empresa">Empresa</label>
+                        <asp:DropDownList ID="invEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
                         <p class="ayuda" data-i18n="invitar.empresa.ayuda">Como gestor podés dar de alta usuarios en otra empresa.</p>
+                    </div>
+                    <div class="aviso aviso-alerta" id="avisoInvEmpresa" hidden>
+                        <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
+                        <p class="sin-margen"><strong>Cuidado:</strong> estás creando un usuario en la empresa <strong id="invEmpresaNombre"></strong>, que no es la tuya.</p>
                     </div>
                 </asp:PlaceHolder>
                 <div class="aviso aviso-info mb-0">
@@ -447,29 +551,6 @@
         </div>
     </div>
 
-    <script type="application/json" id="usTextos">
-    {
-        "rol": "Rol",
-        "estado": "Estado",
-        "idioma": "Idioma de la interfaz",
-        "alta": "Fecha de alta",
-        "acceso": "Último acceso",
-        "email": "Correo electrónico",
-        "sesiones": "Sesiones grabadas",
-        "reportes": "Reportes exportados",
-        "fallidos": "Intentos fallidos",
-        "guardar": "Guardar cambios",
-        "cambiarClave": "Cambiar mi contraseña",
-        "emailFijo": "El correo no se puede modificar: es tu identidad de acceso.",
-        "bloquear": "Bloquear cuenta",
-        "desbloquear": "Desbloquear cuenta",
-        "reactivar": "Reactivar cuenta",
-        "reenviar": "Reenviar invitación",
-        "enLinea": "En línea ahora",
-        "tuCuenta": "Esta es tu cuenta"
-    }
-    </script>
-
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">
@@ -477,150 +558,116 @@
         (function () {
             "use strict";
 
-            var um = document.getElementById("um");
-            var rolPagina = um.getAttribute("data-rol") || "Gestor";
-            var esAnalista = rolPagina === "Analista";
-            var T = JSON.parse(document.getElementById("usTextos").textContent);
-
-            var filas = document.querySelectorAll(".um-fila");
-            var buscar = document.getElementById("usBuscar");
-            var chips = document.querySelectorAll(".chips [data-rol-filtro]");
-            var vacio = document.getElementById("usVacio");
-            var detalle = document.getElementById("usDetalle");
-            var rolFiltro = "";
-
-            function badgeEstado(estado) {
-                var mapa = {
-                    "Activo": ["badge-exito", "Activo"],
-                    "Pendiente": ["badge-alerta", "Pendiente de activación"],
-                    "Bloqueado": ["badge-peligro", "Bloqueado"],
-                    "Inactivo": ["badge-neutro", "Inactivo"]
-                };
-                var d = mapa[estado] || ["badge-neutro", estado];
-                return '<span class="badge ' + d[0] + '">' + d[1] + '</span>';
+            function poner(id, texto) {
+                var el = document.getElementById(id);
+                if (el) el.textContent = texto;
             }
 
-            function iniciales(n, a) {
-                return (n.charAt(0) + a.charAt(0)).toUpperCase();
+            function actualizarAviso() {
+                var modal = document.getElementById("modalGestion");
+                var aviso = document.getElementById("avisoRol");
+                var rol = document.getElementById("ddlNuevoRol");
+                if (!modal || !aviso) return;
+
+                var otra = modal.getAttribute("data-otra-empresa") === "1";
+                var esGestor = rol && rol.value === "Gestor";
+                aviso.hidden = !(otra || esGestor);
+
+                var marcas = modal.querySelectorAll("[data-solo-otra-empresa]");
+                for (var i = 0; i < marcas.length; i++) marcas[i].hidden = !otra;
             }
 
-            function fichaLectura(f, completo) {
-                var d = f.dataset;
-                var filasTabla =
-                    '<tr><th>' + T.rol + '</th><td>' + d.rol + '</td></tr>' +
-                    '<tr><th>' + T.estado + '</th><td>' + badgeEstado(d.estado) + '</td></tr>' +
-                    '<tr><th>' + T.idioma + '</th><td>' + d.idioma + '</td></tr>' +
-                    '<tr><th>' + T.alta + '</th><td>' + d.alta + '</td></tr>';
+            document.addEventListener("click", function (e) {
+                var boton = e.target.closest ? e.target.closest("[data-gestionar]") : null;
+                if (!boton) return;
 
-                if (completo) {
-                    filasTabla =
-                        '<tr><th>' + T.email + '</th><td>' + d.email + '</td></tr>' +
-                        filasTabla +
-                        '<tr><th>' + T.acceso + '</th><td>' + d.acceso + '</td></tr>' +
-                        '<tr><th>' + T.sesiones + '</th><td>' + d.sesiones + '</td></tr>' +
-                        '<tr><th>' + T.reportes + '</th><td>' + d.reportes + '</td></tr>' +
-                        '<tr><th>' + T.fallidos + '</th><td>' + d.fallidos + '</td></tr>';
-                }
+                var modal = document.getElementById("modalGestion");
+                modal.setAttribute("data-otra-empresa", boton.getAttribute("data-otra-empresa"));
 
-                var enlinea = d.enlinea === "1"
-                    ? '<span class="en-linea"><span class="punto-linea" aria-hidden="true"></span>' + T.enLinea + '</span>'
-                    : '';
+                document.getElementById("hfIdUsuario").value = boton.getAttribute("data-id");
+                poner("gestionNombre", boton.getAttribute("data-nombre"));
+                poner("gestionEmail", boton.getAttribute("data-email"));
+                poner("gestionEstadoActual", boton.getAttribute("data-estado-etiqueta"));
+                poner("gestionRolActual", boton.getAttribute("data-rol-etiqueta"));
 
-                var acciones = "";
-                if (completo && !esAnalista) {
-                    var boton;
-                    if (d.estado === "Bloqueado") boton = '<button type="button" class="btn btn-primario">' + T.desbloquear + '</button>';
-                    else if (d.estado === "Inactivo") boton = '<button type="button" class="btn btn-primario">' + T.reactivar + '</button>';
-                    else if (d.estado === "Pendiente") boton = '<button type="button" class="btn btn-secundario">' + T.reenviar + '</button>';
-                    else boton = '<button type="button" class="btn btn-peligro">' + T.bloquear + '</button>';
-                    acciones = '<div class="um-acciones">' + boton + '</div>';
-                }
+                var motivoE = document.getElementById("txtMotivoEstado");
+                var motivoR = document.getElementById("txtMotivoRol");
+                var confirma = document.getElementById("chkConfirmaRol");
+                if (motivoE) motivoE.value = "";
+                if (motivoR) motivoR.value = "";
+                if (confirma) confirma.checked = false;
 
-                return '' +
-                    '<div class="um-detalle-cab">' +
-                        '<span class="avatar grande" aria-hidden="true">' + iniciales(d.nombre, d.apellido) + '</span>' +
-                        '<div><h2>' + d.nombre + ' ' + d.apellido + '</h2>' +
-                        '<span class="badge badge-neutro">' + d.rol + '</span> ' + enlinea + '</div>' +
-                    '</div>' +
-                    '<table class="um-datos"><tbody>' + filasTabla + '</tbody></table>' +
-                    acciones;
+                actualizarAviso();
+            });
+
+            document.addEventListener("change", function (e) {
+                if (e.target && e.target.id === "ddlNuevoRol") actualizarAviso();
+                if (e.target && (e.target.id === "ddlDatosEmpresa" || e.target.id === "txtDatosEmail")) actualizarAvisoDatos();
+                if (e.target && e.target.id === "invEmpresa") actualizarAvisoInvitacion();
+            });
+
+            document.addEventListener("input", function (e) {
+                if (e.target && e.target.id === "txtDatosEmail") actualizarAvisoDatos();
+            });
+
+            // Invitar: el gestor ve un aviso mientras la empresa elegida no sea la suya.
+            function actualizarAvisoInvitacion() {
+                var lista = document.getElementById("invEmpresa");
+                var aviso = document.getElementById("avisoInvEmpresa");
+                if (!lista || !aviso) return;
+
+                var otra = lista.value !== lista.getAttribute("data-propia");
+                aviso.hidden = !otra;
+                poner("invEmpresaNombre", lista.options[lista.selectedIndex] ? lista.options[lista.selectedIndex].text : "");
             }
 
-            function opcionIdioma(valor, actual) {
-                return '<option' + (valor === actual ? ' selected' : '') + '>' + valor + '</option>';
+            // Editar datos: avisos y confirmación según a quién se edita y qué se cambia.
+            function actualizarAvisoDatos() {
+                var modal = document.getElementById("modalDatos");
+                if (!modal) return;
+
+                var otra = modal.getAttribute("data-otra-empresa") === "1";
+                var email = document.getElementById("txtDatosEmail");
+                var empresa = document.getElementById("ddlDatosEmpresa");
+                var sensible = (email && email.value.trim().toLowerCase() !== modal.getAttribute("data-email-original")) ||
+                               (empresa && empresa.value !== modal.getAttribute("data-empresa-original"));
+
+                var avisoCliente = document.getElementById("avisoDatosCliente");
+                var avisoSensible = document.getElementById("avisoDatosSensibles");
+                if (avisoCliente) avisoCliente.hidden = !otra;
+                if (avisoSensible) avisoSensible.hidden = !sensible;
+
+                document.getElementById("datosConfirma").hidden = !(otra || sensible);
+                document.getElementById("datosMotivoObligatorio").hidden = !(otra || sensible);
             }
 
-            function fichaPropia(f) {
-                var d = f.dataset;
-                return '' +
-                    '<div class="um-detalle-cab">' +
-                        '<span class="avatar grande" aria-hidden="true">' + iniciales(d.nombre, d.apellido) + '</span>' +
-                        '<div><h2>' + d.nombre + ' ' + d.apellido + '</h2>' +
-                        '<span class="badge badge-info">' + T.tuCuenta + '</span></div>' +
-                    '</div>' +
-                    '<form class="um-form" onsubmit="return false">' +
-                        '<div class="fila-campos">' +
-                            '<div class="campo"><label for="pfNombre">Nombre</label>' +
-                                '<input type="text" class="entrada" id="pfNombre" value="' + d.nombre + '" /></div>' +
-                            '<div class="campo"><label for="pfApellido">Apellido</label>' +
-                                '<input type="text" class="entrada" id="pfApellido" value="' + d.apellido + '" /></div>' +
-                        '</div>' +
-                        '<div class="campo"><label for="pfEmail">' + T.email + '</label>' +
-                            '<input type="email" class="entrada" id="pfEmail" value="' + d.email + '" readonly />' +
-                            '<p class="ayuda">' + T.emailFijo + '</p></div>' +
-                        '<div class="campo"><label for="pfIdioma">' + T.idioma + '</label>' +
-                            '<select class="entrada" id="pfIdioma">' +
-                                opcionIdioma("Español", d.idioma) + opcionIdioma("Inglés", d.idioma) + opcionIdioma("Portugués", d.idioma) +
-                            '</select></div>' +
-                        '<div class="um-acciones">' +
-                            '<button type="submit" class="btn btn-primario">' + T.guardar + '</button>' +
-                            '<a class="btn btn-secundario" href="MiClave.aspx">' + T.cambiarClave + '</a>' +
-                        '</div>' +
-                    '</form>';
-            }
+            document.addEventListener("click", function (e) {
+                var boton = e.target.closest ? e.target.closest("[data-editar-datos]") : null;
+                if (!boton) return;
 
-            function mostrar(f) {
-                for (var i = 0; i < filas.length; i++) filas[i].removeAttribute("aria-current");
-                f.setAttribute("aria-current", "true");
+                var modal = document.getElementById("modalDatos");
+                modal.setAttribute("data-otra-empresa", boton.getAttribute("data-otra-empresa"));
+                modal.setAttribute("data-email-original", (boton.getAttribute("data-email") || "").toLowerCase());
+                modal.setAttribute("data-empresa-original", boton.getAttribute("data-id-empresa"));
 
-                if (f.dataset.yo === "1") detalle.innerHTML = fichaPropia(f);
-                else detalle.innerHTML = fichaLectura(f, !esAnalista);
-            }
+                document.getElementById("hfIdDatos").value = boton.getAttribute("data-id");
+                poner("datosCuenta", boton.getAttribute("data-cuenta"));
+                document.getElementById("txtDatosNombre").value = boton.getAttribute("data-n");
+                document.getElementById("txtDatosApellido").value = boton.getAttribute("data-a");
+                document.getElementById("ddlDatosIdioma").value = boton.getAttribute("data-idioma");
 
-            for (var i = 0; i < filas.length; i++) {
-                filas[i].addEventListener("click", function () { mostrar(this); });
-            }
+                var email = document.getElementById("txtDatosEmail");
+                var empresa = document.getElementById("ddlDatosEmpresa");
+                if (email) email.value = boton.getAttribute("data-email");
+                if (empresa) empresa.value = boton.getAttribute("data-id-empresa");
 
-            function filtrar() {
-                var texto = buscar.value.trim().toLowerCase();
-                var visibles = 0;
-                for (var j = 0; j < filas.length; j++) {
-                    var f = filas[j];
-                    var busca = (f.dataset.nombre + " " + f.dataset.apellido + " " + f.dataset.email).toLowerCase();
-                    var okTexto = texto === "" || busca.indexOf(texto) !== -1;
-                    var okRol = rolFiltro === "" || f.dataset.rol === rolFiltro;
-                    var ver = okTexto && okRol;
-                    f.hidden = !ver;
-                    if (ver) visibles++;
-                }
-                vacio.hidden = visibles > 0;
-            }
+                document.getElementById("txtDatosMotivo").value = "";
+                document.getElementById("chkDatosConfirma").checked = false;
 
-            buscar.addEventListener("input", filtrar);
+                actualizarAvisoDatos();
+            });
 
-            for (i = 0; i < chips.length; i++) {
-                chips[i].addEventListener("click", function () {
-                    for (var k = 0; k < chips.length; k++) {
-                        chips[k].setAttribute("aria-pressed", chips[k] === this ? "true" : "false");
-                    }
-                    rolFiltro = this.getAttribute("data-rol-filtro");
-                    filtrar();
-                });
-            }
-
-            var abrirPerfil = window.location.search.indexOf("perfil=1") !== -1;
-            var inicial = abrirPerfil ? document.querySelector('.um-fila[data-yo="1"]') : filas[0];
-            mostrar(inicial || filas[0]);
+            actualizarAvisoInvitacion();
         })();
     </script>
 </asp:Content>

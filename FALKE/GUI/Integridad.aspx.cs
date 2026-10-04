@@ -21,6 +21,8 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!SesionActual_GUI.ExigirPermiso(PATENTE_RECALCULO)) return;
+
             if (!IsPostBack) CargarEstado();
         }
 

@@ -13,6 +13,9 @@ namespace TE
     {
         public string Nombre { get; }
 
+        // Lo que se muestra en pantalla. Si está vacío se muestra el nombre, que es interno y no se cambia.
+        public string Descripcion { get; set; }
+
         public abstract TipoPermiso TipoPermiso { get; }
 
         public virtual bool EsRolPermiso => false;

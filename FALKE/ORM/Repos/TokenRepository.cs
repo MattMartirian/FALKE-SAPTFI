@@ -26,10 +26,9 @@ namespace ORM
         {
             const string sql = @"
                 INSERT INTO TokenTable
-                    (id_token, id_usuario, token, tipo_token, fecha_creacion, fecha_expiracion, usado)
-                SELECT
-                    ISNULL(MAX(id_token), 0) + 1, @idUsuario, @token, @tipo, @creacion, @expiracion, 0
-                FROM TokenTable";
+                    (id_usuario, token, tipo_token, fecha_creacion, fecha_expiracion, usado)
+                VALUES
+                    (@idUsuario, @token, @tipo, @creacion, @expiracion, 0)";
 
             Gestor.EjecutarNonQuery(sql,
                 new SqlParameter("@idUsuario", idUsuario),

@@ -6,6 +6,7 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!SesionActual_GUI.Exigir()) return;
         }
     }
 }
