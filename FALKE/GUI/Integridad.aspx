@@ -140,6 +140,12 @@
             font-weight: 600;
         }
 
+        .int-dvh
+        {
+            word-break: break-all;
+            font-size: .78rem;
+        }
+
         .int-detalle.mal
         {
             color: var(--peligro);
@@ -308,7 +314,7 @@
     </div>
 
     <div class="modal-fondo" id="modalDetalleTabla" role="dialog" aria-modal="true" aria-labelledby="detIntTitulo" hidden>
-        <div class="modal">
+        <div class="modal ancho">
             <div class="modal-cabecera">
                 <div>
                     <h2 id="detIntTitulo" data-i18n="integridad.detalle.titulo">Registros observados por el control de integridad</h2>
@@ -320,6 +326,7 @@
             </div>
             <div class="modal-cuerpo">
                 <p class="texto-suave" id="detIntResumen"></p>
+                <ul class="texto-chico texto-suave" id="detIntMotivos"></ul>
                 <div class="tabla-scroll">
                     <table class="tabla">
                         <caption class="solo-lectores" data-i18n="integridad.detalle.caption">Registros con dígito verificador incorrecto</caption>
@@ -329,7 +336,6 @@
                                 <th scope="col" data-i18n="integridad.col.clave">Clave (PK)</th>
                                 <th scope="col" data-i18n="integridad.col.dvhGuardado">DVH guardado</th>
                                 <th scope="col" data-i18n="integridad.col.dvhCalculado">DVH calculado</th>
-                                <th scope="col" data-i18n="integridad.col.datos">Datos del registro</th>
                             </tr>
                         </thead>
                         <tbody id="detIntCuerpo"></tbody>
@@ -402,6 +408,7 @@
             var rotulo = document.getElementById("detIntTabla");
             var resumen = document.getElementById("detIntResumen");
             var cuerpo = document.getElementById("detIntCuerpo");
+            var motivos = document.getElementById("detIntMotivos");
             var botones = document.querySelectorAll(".js-ver-detalle");
 
             function esc(valor) {
@@ -410,22 +417,24 @@
                             .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
             }
 
-            function recorta(valor) {
-                valor = valor == null ? "" : String(valor);
-                return valor.length > 18 ? valor.slice(0, 18) + "…" : valor;
-            }
-
             function pintar(tabla) {
                 var info = datos[tabla];
                 rotulo.textContent = tabla;
 
                 if (!info) {
                     resumen.textContent = "";
+                    motivos.innerHTML = "";
                     cuerpo.innerHTML = "";
                     return;
                 }
 
                 resumen.textContent = info.resumen || "";
+
+                // Si hay registros puntuales, ellos explican la diferencia; si no, se aclara de qué tipo es.
+                var generales = (info.registros || []).length === 0 ? (info.motivos || []) : [];
+                var lista = "";
+                for (var m = 0; m < generales.length; m++) lista += "<li>" + esc(generales[m]) + "</li>";
+                motivos.innerHTML = lista;
 
                 var filas = info.registros || [];
                 var html = "";
@@ -435,9 +444,8 @@
                     html += "<tr>" +
                         "<td class='mono'>" + (f.n == null ? "" : esc(f.n)) + "</td>" +
                         "<td class='mono'>" + esc(f.clave) + "</td>" +
-                        "<td><span class='mono' title='" + esc(f.guardado) + "'>" + esc(recorta(f.guardado)) + "</span></td>" +
-                        "<td><span class='mono texto-peligro' title='" + esc(f.calculado) + "'>" + esc(recorta(f.calculado)) + "</span></td>" +
-                        "<td>" + esc(f.datos) + "</td>" +
+                        "<td class='int-dvh mono'>" + esc(f.guardado) + "</td>" +
+                        "<td class='int-dvh mono texto-peligro'>" + esc(f.calculado) + "</td>" +
                         "</tr>";
                 }
 

@@ -287,7 +287,7 @@
 
                 <asp:Panel ID="pnlFijo" runat="server" CssClass="aviso aviso-info" Visible="false">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-candado" /></svg>
-                    <p class="sin-margen">El rol Gestor es fijo: no se edita su composición ni se elimina, para que Pattern Blue nunca quede sin acceso. Sí se le puede cambiar el nombre.</p>
+                    <p class="sin-margen">Los roles Gestor y Webmaster son fijos: no se edita su composición ni se eliminan, para que Pattern Blue nunca quede sin acceso a lo que cada uno cuida. Sí se les puede cambiar el nombre.</p>
                 </asp:Panel>
 
                 <asp:PlaceHolder ID="phComposicion" runat="server">
@@ -357,6 +357,14 @@
                     <asp:TextBox ID="txtNombreNuevo" runat="server" CssClass="entrada" MaxLength="60" ClientIDMode="Static" data-foco-inicial="si" />
                     <p class="ayuda">Entre 3 y 60 caracteres: letras, números, espacios, guiones y puntos.</p>
                 </div>
+                <div class="campo mt-16 mb-0" id="campoAmbito">
+                    <label for="selAmbitoNuevo">Tipo de rol</label>
+                    <select id="selAmbitoNuevo" name="ambitoNuevo" class="entrada">
+                        <option value="general">General: para usuarios de cualquier empresa</option>
+                        <option value="gestion">De gestión: solo para usuarios de Pattern Blue</option>
+                    </select>
+                    <p class="ayuda">Solo un rol de gestión puede incluir permisos reservados a Pattern Blue. No se puede cambiar después.</p>
+                </div>
             </div>
             <div class="modal-pie">
                 <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
@@ -407,6 +415,8 @@
                     ? "Un rol es lo que se le asigna a un usuario. Después le marcás qué incluye."
                     : "Un grupo ordena permisos y puede contener otros grupos. Después lo incluís en un rol.";
                 document.getElementById("txtNombreNuevo").value = "";
+                document.getElementById("selAmbitoNuevo").value = "general";
+                document.getElementById("campoAmbito").hidden = tipo !== "rol";
             });
         })();
     </script>

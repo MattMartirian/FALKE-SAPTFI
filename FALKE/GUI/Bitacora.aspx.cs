@@ -128,14 +128,14 @@ namespace GUI
             ddlCriticidad.Items.Add(new ListItem("Media", ((int)CriticidadBitacora.Media).ToString()));
             ddlCriticidad.Items.Add(new ListItem("Baja", ((int)CriticidadBitacora.Baja).ToString()));
 
-            phFiltroEmpresa.Visible = actor.VeTodasLasEmpresas;
+            phFiltroEmpresa.Visible = actor.VeBitacoraCompleta;
 
-            if (actor.VeTodasLasEmpresas)
+            if (actor.VeBitacoraCompleta)
             {
                 ddlEmpresa.Items.Clear();
                 ddlEmpresa.Items.Add(new ListItem("Todas", string.Empty));
 
-                foreach (Empresa_BE empresa in new Empresa_BLL().ObtenerTodas())
+                foreach (Empresa_BE empresa in new Empresa_BLL().ObtenerParaFiltroDeBitacora(actor))
                     ddlEmpresa.Items.Add(new ListItem(empresa.NombreEmpresa, empresa.IdEmpresa.ToString()));
             }
         }
@@ -144,7 +144,7 @@ namespace GUI
         {
             return FiltroBitacora_GUI.Parsear(txtDesde.Text, txtHasta.Text, txtHoraDesde.Text, txtHoraHasta.Text,
                 ddlModulo.SelectedValue, ddlAccion.SelectedValue, txtUsuario.Text,
-                actor.VeTodasLasEmpresas ? ddlEmpresa.SelectedValue : null, ddlCriticidad.SelectedValue);
+                actor.VeBitacoraCompleta ? ddlEmpresa.SelectedValue : null, ddlCriticidad.SelectedValue);
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -162,7 +162,7 @@ namespace GUI
             ddlModulo.SelectedIndex = 0;
             ddlAccion.SelectedIndex = 0;
             ddlCriticidad.SelectedIndex = 0;
-            if (actor.VeTodasLasEmpresas) ddlEmpresa.SelectedIndex = 0;
+            if (actor.VeBitacoraCompleta) ddlEmpresa.SelectedIndex = 0;
 
             PaginaActual = 1;
         }
@@ -252,10 +252,10 @@ namespace GUI
 
         private void MostrarAlcance()
         {
-            if (actor.VeTodasLasEmpresas)
+            if (actor.VeBitacoraCompleta)
             {
                 litBajada.Text = "Todos los movimientos registrados en el sistema.";
-                litAlcance.Text = "Como gestor ves la bitácora completa de todas las empresas " +
+                litAlcance.Text = "Ves la bitácora completa de todas las empresas " +
                                   "cliente y de Pattern Blue.";
                 return;
             }

@@ -20,21 +20,9 @@ namespace TLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        public PermisoAbstracto_TE ObtenerPermiso(string nombre)
-        {
-            var arbol = ConstruirArbolCompleto();
-
-            return arbol.TryGetValue(nombre, out var nodo) ? nodo : null;
-        }
-
         public List<PermisoAbstracto_TE> ObtenerTodos()
         {
             return permisoRepo.ObtenerTodos();
-        }
-
-        public List<PermisoAbstracto_TE> ObtenerRoles()
-        {
-            return permisoRepo.ConstruirArbolDeRoles();
         }
 
         // ---- Gestión de roles y grupos (solo con GESTIONAR_ROLES). Los permisos (patentes) los define el desarrollador.
@@ -43,17 +31,15 @@ namespace TLL
         {
             ExigirGestionar(actor);
 
-            var todos = permisoRepo.ObtenerTodos();
-            var relaciones = permisoRepo.ObtenerTodasLasRelaciones();
-            var hijos = IndexarHijos(relaciones);
-            var padres = IndexarPadres(relaciones);
-            var simples = new HashSet<string>(todos.Where(p => p.TipoPermiso == TipoPermiso.Simple).Select(p => p.Nombre));
+            // Todo sale del Composite: qué incluye cada nodo, en qué está incluido y qué patentes da.
+            var arbol = permisoRepo.ConstruirArbol();
+            var padres = IndexarPadres(arbol.Values);
             var usuarios = usuarioRepo.ContarUsuariosPorRol();
-            var descripciones = permisoRepo.ObtenerDescripciones();
+            var descripciones = arbol.Values.Where(p => !string.IsNullOrWhiteSpace(p.Descripcion)).ToDictionary(p => p.Nombre, p => p.Descripcion);
 
             var catalogo = new CatalogoPermisos_TE();
 
-            foreach (var permiso in todos)
+            foreach (var permiso in arbol.Values)
             {
                 var vista = new PermisoVista_TE
                 {
@@ -62,10 +48,11 @@ namespace TLL
                     Etiqueta = Etiqueta(descripciones, permiso.Nombre),
                     Clase = permiso.TipoPermiso == TipoPermiso.Simple ? ClasePermiso.Patente : permiso.EsRolPermiso ? ClasePermiso.Rol : ClasePermiso.Grupo,
                     EsBase = EsRolBase(permiso.Nombre),
-                    EsFijo = permiso.Nombre == Usuario_TLL.ROL_GESTOR,
-                    Incluye = Ordenado(hijos, permiso.Nombre),
-                    IncluidoEn = Ordenado(padres, permiso.Nombre),
-                    PatentesEfectivas = Efectivas(permiso.Nombre, hijos, simples).OrderBy(p => Etiqueta(descripciones, p)).ToList()
+                    EsFijo = EsRolFijo(permiso.Nombre) && !actor.EsEmergencia,
+                    EsDeGestion = permiso.EsRolPermiso && permiso.EsDeGestion,
+                    Incluye = permiso.ObtenerHijos().Select(h => h.Nombre).OrderBy(n => n).ToList(),
+                    IncluidoEn = padres.ContainsKey(permiso.Nombre) ? padres[permiso.Nombre].OrderBy(n => n).ToList() : new List<string>(),
+                    PatentesEfectivas = permiso.ObtenerPatentes().OrderBy(p => Etiqueta(descripciones, p)).ToList()
                 };
 
                 int cantidad;
@@ -86,14 +73,16 @@ namespace TLL
             return catalogo;
         }
 
-        public void CrearRol(ActorUsuario_TLL actor, string nombre, string descripcion = null)
+        // Un rol de gestión es del personal de Pattern Blue: solo se asigna a usuarios de la empresa proveedora y es el único que puede
+        // incluir permisos reservados. Un rol general se asigna a cualquier empresa y no puede incluirlos. Se elige al crearlo.
+        public void CrearRol(ActorUsuario_TLL actor, string nombre, string descripcion = null, bool deGestion = false)
         {
-            Crear(actor, nombre, true, descripcion);
+            Crear(actor, nombre, true, descripcion, deGestion);
         }
 
         public void CrearGrupo(ActorUsuario_TLL actor, string nombre, string descripcion = null)
         {
-            Crear(actor, nombre, false, descripcion);
+            Crear(actor, nombre, false, descripcion, false);
         }
 
         // Lo que se muestra de cada permiso: su descripción o, si no tiene, el nombre interno.
@@ -133,7 +122,8 @@ namespace TLL
 
             Transaccion_ORM.Ejecutar(() =>
             {
-                permisoRepo.ModificarDescripcion(permiso.Nombre, nueva);
+                permiso.Descripcion = nueva;
+                permisoRepo.Modificar(permiso);
 
                 Auditar(actor, "Cambio de descripción del " + clase + " \"" + permiso.Nombre + "\": " +
                     (anterior == null ? "(sin descripción)" : "\"" + anterior + "\"") + " → " + (nueva == null ? "(sin descripción)" : "\"" + nueva + "\""),
@@ -154,76 +144,69 @@ namespace TLL
             return descripcion;
         }
 
+        // Cambia lo que incluye un rol o un grupo. Se carga el árbol, se aplican los cambios con Agregar y Quitar del Composite (que cuida la
+        // estructura: a sí mismo, duplicados, ciclos), se validan las reglas del negocio y la ORM deja la base igual que el árbol.
+        // Todo va en una transacción con un bloqueo, así dos ediciones simultáneas no pueden crear un ciclo entre las dos.
         public void GuardarComposicion(ActorUsuario_TLL actor, string nombre, IEnumerable<string> incluidos)
         {
             ExigirGestionar(actor);
 
-            var todos = permisoRepo.ObtenerTodos().ToDictionary(p => p.Nombre);
-
-            PermisoAbstracto_TE objetivo;
-            if (!todos.TryGetValue(nombre ?? string.Empty, out objetivo) || objetivo.TipoPermiso != TipoPermiso.Compuesto)
-                throw new PermisoInvalidoException("Solo los roles y los grupos pueden contener permisos.");
-
-            if (nombre == Usuario_TLL.ROL_GESTOR) throw new PermisoInvalidoException("El rol Gestor es fijo: su composición no se modifica.");
-
             var nuevos = new HashSet<string>((incluidos ?? new string[0]).Select(x => (x ?? string.Empty).Trim()).Where(x => x.Length > 0));
-
-            foreach (string inc in nuevos)
-            {
-                PermisoAbstracto_TE hijo;
-                if (!todos.TryGetValue(inc, out hijo)) throw new PermisoInvalidoException("El permiso \"" + inc + "\" no existe.");
-
-                if (inc == nombre) throw new PermisoInvalidoException("Un permiso no puede incluirse a sí mismo.");
-
-                if (hijo.EsRolPermiso) throw new PermisoInvalidoException("\"" + inc + "\" es un rol: ni un rol ni un grupo pueden incluir roles.");
-            }
-
-            var relaciones = permisoRepo.ObtenerTodasLasRelaciones();
-            var hijosAntes = IndexarHijos(relaciones);
-            var hijosDespues = IndexarHijos(relaciones.Where(r => r.Compuesto != nombre));
-            hijosDespues[nombre] = nuevos.OrderBy(x => x).ToList();
-
-            foreach (string inc in nuevos)
-            {
-                if (Alcanza(inc, nombre, hijosDespues)) throw new PermisoInvalidoException("Agregar \"" + inc + "\" a \"" + nombre + "\" generaría un ciclo de composición.");
-            }
-
-            var simplesTodos = new HashSet<string>(todos.Values.Where(p => p.TipoPermiso == TipoPermiso.Simple).Select(p => p.Nombre));
-
-            foreach (var rol in todos.Values.Where(p => p.EsRolPermiso))
-            {
-                var nuevosReservados = Efectivas(rol.Nombre, hijosDespues, simplesTodos)
-                    .Except(Efectivas(rol.Nombre, hijosAntes, simplesTodos))
-                    .Where(Patentes_TLL.EsDeProveedor)
-                    .OrderBy(x => x).ToList();
-
-                if (nuevosReservados.Count > 0 && usuarioRepo.ExisteUsuarioConRolFueraDeEmpresa(rol.Nombre, BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA))
-                {
-                    var etiquetas = permisoRepo.ObtenerDescripciones();
-
-                    throw new PermisoInvalidoException("El rol \"" + Etiqueta(etiquetas, rol.Nombre) + "\" lo usan usuarios de empresas cliente y quedaría con permisos reservados a Pattern Blue (" +
-                        string.Join(", ", nuevosReservados.Select(p => Etiqueta(etiquetas, p))) + ").");
-                }
-            }
-
-            var actuales = new HashSet<string>(hijosAntes.ContainsKey(nombre) ? hijosAntes[nombre] : new List<string>());
-            var aQuitar = actuales.Except(nuevos).OrderBy(x => x).ToList();
-            var aAgregar = nuevos.Except(actuales).OrderBy(x => x).ToList();
-
-            if (aQuitar.Count == 0 && aAgregar.Count == 0) throw new PermisoInvalidoException("No hay cambios para guardar.");
-
-            var simples = new HashSet<string>(todos.Values.Where(p => p.TipoPermiso == TipoPermiso.Simple).Select(p => p.Nombre));
-            var efectivosAntes = Efectivas(nombre, hijosAntes, simples);
-            var efectivosDespues = Efectivas(nombre, hijosDespues, simples);
-            var ganados = efectivosDespues.Except(efectivosAntes).OrderBy(x => x).ToList();
-            var perdidos = efectivosAntes.Except(efectivosDespues).OrderBy(x => x).ToList();
-
-            string tipo = objetivo.EsRolPermiso ? "rol" : "grupo";
 
             Transaccion_ORM.Ejecutar(() =>
             {
-                foreach (string q in aQuitar) permisoRepo.EliminarRelacion(nombre, q);
-                foreach (string a in aAgregar) permisoRepo.AgregarRelacion(nombre, a);
+                permisoRepo.BloquearComposicion();
+
+                var arbol = permisoRepo.ConstruirArbol();
+
+                PermisoAbstracto_TE nodo;
+                PermisoCompuesto_TE objetivo = arbol.TryGetValue(nombre ?? string.Empty, out nodo) ? nodo as PermisoCompuesto_TE : null;
+
+                if (objetivo == null) throw new PermisoInvalidoException("Solo los roles y los grupos pueden contener permisos.");
+
+                if (EsRolFijo(nombre) && !actor.EsEmergencia) throw new PermisoInvalidoException("El rol " + nombre + " es fijo: su composición no se modifica.");
+
+                foreach (string inc in nuevos)
+                {
+                    if (!arbol.ContainsKey(inc)) throw new PermisoInvalidoException("El permiso \"" + inc + "\" no existe.");
+
+                    // Regla del negocio (no de la estructura): los roles son el nivel superior y nada los incluye.
+                    if (inc != nombre && arbol[inc].EsRolPermiso) throw new PermisoInvalidoException("\"" + inc + "\" es un rol: ni un rol ni un grupo pueden incluir roles.");
+                }
+
+                var actuales = new HashSet<string>(objetivo.ObtenerHijos().Select(h => h.Nombre));
+                var aQuitar = actuales.Except(nuevos).OrderBy(x => x).ToList();
+                var aAgregar = nuevos.Except(actuales).OrderBy(x => x).ToList();
+
+                if (aQuitar.Count == 0 && aAgregar.Count == 0) throw new PermisoInvalidoException("No hay cambios para guardar.");
+
+                var roles = arbol.Values.Where(p => p.EsRolPermiso).ToList();
+                var patentesDeRolesAntes = roles.ToDictionary(r => r.Nombre, r => r.ObtenerPatentes());
+                var efectivosAntes = objetivo.ObtenerPatentes();
+
+                foreach (string q in aQuitar) objetivo.Quitar(arbol[q]);
+                foreach (string a in aAgregar) objetivo.Agregar(arbol[a]);
+
+                // Los permisos reservados a Pattern Blue solo van en roles de gestión (también a través de grupos).
+                foreach (var rol in roles.Where(r => !r.EsDeGestion))
+                {
+                    var nuevosReservados = rol.ObtenerPatentes().Except(patentesDeRolesAntes[rol.Nombre]).Where(Patentes_TLL.EsDeProveedor).OrderBy(x => x).ToList();
+
+                    if (nuevosReservados.Count > 0)
+                    {
+                        var etiquetas = permisoRepo.ObtenerDescripciones();
+
+                        throw new PermisoInvalidoException("El rol \"" + Etiqueta(etiquetas, rol.Nombre) + "\" es un rol general y quedaría con permisos reservados a Pattern Blue (" +
+                            string.Join(", ", nuevosReservados.Select(p => Etiqueta(etiquetas, p))) + "). Esos permisos solo van en roles de gestión.");
+                    }
+                }
+
+                var efectivosDespues = objetivo.ObtenerPatentes();
+                var ganados = efectivosDespues.Except(efectivosAntes).OrderBy(x => x).ToList();
+                var perdidos = efectivosAntes.Except(efectivosDespues).OrderBy(x => x).ToList();
+                string tipo = objetivo.EsRolPermiso ? "rol" : "grupo";
+
+                permisoRepo.Modificar(objetivo);
 
                 Auditar(actor, "Cambio de composición del " + tipo + " \"" + nombre + "\"" +
                     (aAgregar.Count > 0 ? ". Agrega: " + string.Join(", ", aAgregar) : string.Empty) +
@@ -233,58 +216,51 @@ namespace TLL
             });
         }
 
+        // La baja de un rol o un grupo también pasa por el Composite: primero se le quitan todos los hijos (Quitar), la ORM deja la base igual
+        // que el árbol (sin relaciones) y después se borra el nodo.
         public void EliminarRolOGrupo(ActorUsuario_TLL actor, string nombre)
         {
             ExigirGestionar(actor);
 
-            PermisoAbstracto_TE permiso = permisoRepo.ObtenerPorPK(nombre ?? string.Empty);
-            if (permiso == null) throw new PermisoInvalidoException("\"" + nombre + "\" no existe.");
-
-            ExigirEditable(permiso, "eliminar");
-
-            if (permiso.EsRolPermiso && usuarioRepo.ExisteUsuarioConRol(nombre))
-                throw new PermisoInvalidoException("El rol \"" + nombre + "\" está asignado a usuarios: reasignalos antes de eliminarlo.");
-
-            var relaciones = permisoRepo.ObtenerTodasLasRelaciones();
-            var enUso = relaciones.Where(r => r.Incluido == nombre).Select(r => r.Compuesto).OrderBy(x => x).ToList();
-
-            if (enUso.Count > 0) throw new PermisoInvalidoException("\"" + nombre + "\" está incluido en: " + string.Join(", ", enUso) + ". Quitalo de ahí antes de eliminarlo.");
-
-            var propios = relaciones.Where(r => r.Compuesto == nombre).Select(r => r.Incluido).ToList();
-            string tipo = permiso.EsRolPermiso ? "rol" : "grupo";
-
             Transaccion_ORM.Ejecutar(() =>
             {
-                foreach (string hijo in propios) permisoRepo.EliminarRelacion(nombre, hijo);
+                permisoRepo.BloquearComposicion();
 
+                var arbol = permisoRepo.ConstruirArbol();
+
+                PermisoAbstracto_TE permiso;
+                if (!arbol.TryGetValue(nombre ?? string.Empty, out permiso)) throw new PermisoInvalidoException("\"" + nombre + "\" no existe.");
+
+                ExigirEditable(permiso, "eliminar");
+
+                if (permiso.EsRolPermiso && usuarioRepo.ExisteUsuarioConRol(nombre))
+                    throw new PermisoInvalidoException("El rol \"" + nombre + "\" está asignado a usuarios: reasignalos antes de eliminarlo.");
+
+                var padres = IndexarPadres(arbol.Values);
+                var enUso = padres.ContainsKey(nombre) ? padres[nombre].OrderBy(x => x).ToList() : new List<string>();
+
+                if (enUso.Count > 0) throw new PermisoInvalidoException("\"" + nombre + "\" está incluido en: " + string.Join(", ", enUso) + ". Quitalo de ahí antes de eliminarlo.");
+
+                var compuesto = (PermisoCompuesto_TE)permiso;
+                var propios = compuesto.ObtenerHijos().Select(h => h.Nombre).OrderBy(x => x).ToList();
+                string tipo = permiso.EsRolPermiso ? "rol" : "grupo";
+
+                foreach (PermisoAbstracto_TE hijo in compuesto.ObtenerHijos().ToList()) compuesto.Quitar(hijo);
+
+                permisoRepo.Modificar(compuesto);
                 permisoRepo.Eliminar(nombre);
 
-                Auditar(actor, "Baja del " + tipo + " \"" + nombre + "\"" + (propios.Count > 0 ? " (incluía: " + string.Join(", ", propios.OrderBy(x => x)) + ")" : string.Empty), CriticidadBitacora.Alta);
+                Auditar(actor, "Baja del " + tipo + " \"" + nombre + "\"" + (propios.Count > 0 ? " (incluía: " + string.Join(", ", propios) + ")" : string.Empty), CriticidadBitacora.Alta);
             });
         }
 
-        // Las patentes simples que alcanza un rol o grupo, sin contar los nombres de los grupos intermedios.
+        // Las patentes que da un rol o un grupo (sin los nombres de los grupos intermedios). Sin permiso, ninguna.
         public static HashSet<string> ObtenerPatentes(PermisoAbstracto_TE permiso)
         {
-            var patentes = new HashSet<string>();
-
-            if (permiso != null) RecolectarPatentes(permiso, patentes);
-
-            return patentes;
+            return permiso == null ? new HashSet<string>() : permiso.ObtenerPatentes();
         }
 
-        private static void RecolectarPatentes(PermisoAbstracto_TE nodo, HashSet<string> patentes)
-        {
-            if (nodo.TipoPermiso == TipoPermiso.Simple)
-            {
-                patentes.Add(nodo.Nombre);
-                return;
-            }
-
-            foreach (var hijo in nodo.ObtenerHijos()) RecolectarPatentes(hijo, patentes);
-        }
-
-        private void Crear(ActorUsuario_TLL actor, string nombre, bool esRol, string descripcion)
+        private void Crear(ActorUsuario_TLL actor, string nombre, bool esRol, string descripcion, bool deGestion)
         {
             ExigirGestionar(actor);
 
@@ -295,9 +271,9 @@ namespace TLL
 
             Transaccion_ORM.Ejecutar(() =>
             {
-                permisoRepo.Alta(new PermisoCompuesto_TE(nombre, esRol) { Descripcion = descripcion });
+                permisoRepo.Alta(new PermisoCompuesto_TE(nombre, esRol) { Descripcion = descripcion, EsDeGestion = esRol && deGestion });
 
-                Auditar(actor, "Alta del " + (esRol ? "rol" : "grupo") + " \"" + nombre + "\"" + (descripcion == null ? string.Empty : " (descripción: \"" + descripcion + "\")"), CriticidadBitacora.Media);
+                Auditar(actor, "Alta del " + (esRol ? (deGestion ? "rol de gestión" : "rol general") : "grupo") + " \"" + nombre + "\"" + (descripcion == null ? string.Empty : " (descripción: \"" + descripcion + "\")"), CriticidadBitacora.Media);
             });
         }
 
@@ -313,7 +289,14 @@ namespace TLL
 
         private static bool EsRolBase(string nombre)
         {
-            return nombre == Usuario_TLL.ROL_GESTOR || nombre == Usuario_TLL.ROL_ADMINISTRADOR || nombre == Usuario_TLL.ROL_ANALISTA;
+            return nombre == Usuario_TLL.ROL_GESTOR || nombre == Usuario_TLL.ROL_WEBMASTER || nombre == Usuario_TLL.ROL_ADMINISTRADOR || nombre == Usuario_TLL.ROL_ANALISTA;
+        }
+
+        // Gestor y Webmaster son fijos: su composición no se edita, para que Pattern Blue nunca quede sin acceso a lo que cada uno cuida.
+        // Solo la cuenta de emergencia puede cambiarla (es la que queda para arreglar un error de configuración).
+        private static bool EsRolFijo(string nombre)
+        {
+            return nombre == Usuario_TLL.ROL_GESTOR || nombre == Usuario_TLL.ROL_WEBMASTER;
         }
 
         private static void ExigirEditable(PermisoAbstracto_TE permiso, string accion)
@@ -339,82 +322,22 @@ namespace TLL
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Roles", descripcion, criticidad, DateTime.Now));
         }
 
-        private static Dictionary<string, List<string>> IndexarHijos(IEnumerable<(string Compuesto, string Incluido)> relaciones)
+        // Para cada permiso, los roles y grupos que lo incluyen directamente.
+        private static Dictionary<string, List<string>> IndexarPadres(IEnumerable<PermisoAbstracto_TE> permisos)
         {
             var indice = new Dictionary<string, List<string>>();
 
-            foreach (var r in relaciones)
+            foreach (PermisoAbstracto_TE padre in permisos)
             {
-                List<string> lista;
-                if (!indice.TryGetValue(r.Compuesto, out lista)) indice[r.Compuesto] = lista = new List<string>();
-                lista.Add(r.Incluido);
+                foreach (PermisoAbstracto_TE hijo in padre.ObtenerHijos())
+                {
+                    List<string> lista;
+                    if (!indice.TryGetValue(hijo.Nombre, out lista)) indice[hijo.Nombre] = lista = new List<string>();
+                    lista.Add(padre.Nombre);
+                }
             }
 
             return indice;
-        }
-
-        private static Dictionary<string, List<string>> IndexarPadres(IEnumerable<(string Compuesto, string Incluido)> relaciones)
-        {
-            var indice = new Dictionary<string, List<string>>();
-
-            foreach (var r in relaciones)
-            {
-                List<string> lista;
-                if (!indice.TryGetValue(r.Incluido, out lista)) indice[r.Incluido] = lista = new List<string>();
-                lista.Add(r.Compuesto);
-            }
-
-            return indice;
-        }
-
-        private static List<string> Ordenado(Dictionary<string, List<string>> indice, string clave)
-        {
-            List<string> lista;
-
-            return indice.TryGetValue(clave, out lista) ? lista.OrderBy(x => x).ToList() : new List<string>();
-        }
-
-        private static bool Alcanza(string desde, string objetivo, Dictionary<string, List<string>> hijos)
-        {
-            var visitados = new HashSet<string>();
-            var pendientes = new Stack<string>();
-            pendientes.Push(desde);
-
-            while (pendientes.Count > 0)
-            {
-                string actual = pendientes.Pop();
-
-                if (actual == objetivo) return true;
-                if (!visitados.Add(actual)) continue;
-
-                List<string> siguientes;
-                if (hijos.TryGetValue(actual, out siguientes))
-                    foreach (string s in siguientes) pendientes.Push(s);
-            }
-
-            return false;
-        }
-
-        private static HashSet<string> Efectivas(string nombre, Dictionary<string, List<string>> hijos, HashSet<string> simples)
-        {
-            var resultado = new HashSet<string>();
-            var visitados = new HashSet<string>();
-            var pendientes = new Stack<string>();
-            pendientes.Push(nombre);
-
-            while (pendientes.Count > 0)
-            {
-                string actual = pendientes.Pop();
-
-                if (!visitados.Add(actual)) continue;
-                if (simples.Contains(actual)) resultado.Add(actual);
-
-                List<string> siguientes;
-                if (hijos.TryGetValue(actual, out siguientes))
-                    foreach (string s in siguientes) pendientes.Push(s);
-            }
-
-            return resultado;
         }
 
         public static bool ComprobarPermiso(string permisoBuscado, PermisoAbstracto_TE permisoActual)
@@ -426,9 +349,5 @@ namespace TLL
             return permisoActual.Contiene(permisoBuscado);
         }
 
-        private Dictionary<string, PermisoAbstracto_TE> ConstruirArbolCompleto()
-        {
-            return permisoRepo.ConstruirArbol();
-        }
     }
 }

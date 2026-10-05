@@ -117,6 +117,20 @@ html
     scrollbar-width: thin;
 }
 
+/* Páginas públicas: el pie queda siempre pegado al borde de abajo, aunque el contenido sea corto. */
+.sitio-publico
+{
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sitio-publico > main
+{
+    flex: 1 0 auto;
+}
+
 table,
 .metrica-valor,
 .mono
@@ -142,7 +156,6 @@ body
 
 h1, h2, h3, h4, h5
 {
-    margin: 0 0 .5em;
     line-height: 1.25;
     font-family: var(--fuente-titulo);
     font-weight: 700;
@@ -195,7 +208,6 @@ small,
     color: var(--texto-suave);
 }
 .texto-tenue { color: var(--texto-tenue); }
-.texto-acento { color: var(--acento-texto); }
 .texto-peligro { color: var(--peligro); }
 .texto-exito { color: var(--exito); }
 .mono { font-family: var(--fuente-mono); font-size: .85em; }
@@ -548,6 +560,11 @@ small,
     cursor: pointer;
 }
 
+a.icono-boton
+{
+    text-decoration: none;
+}
+
 .icono-boton:hover
 {
     background: rgba(255, 255, 255, .12);
@@ -580,13 +597,6 @@ small,
     border: 0;
     cursor: pointer;
     flex: none;
-}
-
-.avatar.grande
-{
-    width: 46px;
-    height: 46px;
-    font-size: .95rem;
 }
 
 .contenido
@@ -817,8 +827,6 @@ small,
 }
 
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
 .metricas
 {
@@ -1224,6 +1232,12 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
     font-size: .88rem;
 }
 
+/* El atributo hidden siempre oculta, aunque la clase del elemento defina display (flex, grid...). */
+[hidden]
+{
+    display: none !important;
+}
+
 .aviso[hidden]
 {
     display: none;
@@ -1490,138 +1504,6 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
     flex: none;
 }
 
-.desplegable
-{
-    position: relative;
-}
-
-.desplegable-panel
-{
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    z-index: 60;
-    min-width: 290px;
-    background: var(--superficie);
-    color: var(--texto);
-    border: 1px solid var(--borde);
-    border-radius: var(--radio-lg);
-    box-shadow: var(--sombra-lg);
-    overflow: hidden;
-}
-
-.desplegable-panel[hidden]
-{
-    display: none;
-}
-
-.desplegable-cabecera
-{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px;
-    border-bottom: 1px solid var(--borde);
-}
-
-.desplegable-lista
-{
-    max-height: 320px;
-    overflow-y: auto;
-}
-
-.desplegable-item
-{
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 16px;
-    border: 0;
-    border-bottom: 1px solid var(--borde);
-    background: transparent;
-    color: var(--texto);
-    font-family: inherit;
-    font-size: .86rem;
-    text-align: left;
-    cursor: pointer;
-}
-
-.desplegable-item:hover
-{
-    background: var(--superficie-2);
-    text-decoration: none;
-}
-
-.desplegable-item.sin-leer
-{
-    background: var(--acento-suave);
-}
-
-.desplegable-pie
-{
-    padding: 10px;
-    display: grid;
-    gap: 6px;
-}
-
-.interruptor
-{
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    font-size: .88rem;
-}
-
-.interruptor input
-{
-
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.interruptor .pista
-{
-    width: 42px;
-    height: 24px;
-    border-radius: var(--radio-full);
-    background: var(--borde-fuerte);
-    position: relative;
-    transition: background-color .15s ease;
-    flex: none;
-}
-
-.interruptor .pista::after
-{
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    transition: transform .15s ease;
-}
-
-.interruptor input:checked + .pista
-{
-    background: var(--exito);
-}
-
-.interruptor input:checked + .pista::after
-{
-    transform: translateX(18px);
-}
-
-.interruptor input:focus-visible + .pista
-{
-    outline: 3px solid var(--acento);
-    outline-offset: 2px;
-}
-
 .grafico
 {
     position: relative;
@@ -1729,51 +1611,6 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
 .barra.peligro > span { background: var(--peligro); }
 .barra.exito > span   { background: var(--exito); }
 
-.lista-lateral
-{
-    display: grid;
-    gap: 6px;
-}
-
-.item-lista
-{
-    display: block;
-    width: 100%;
-    padding: 11px 13px;
-    border: 1px solid transparent;
-    border-radius: var(--radio);
-    background: transparent;
-    color: var(--texto);
-    font-family: inherit;
-    font-size: .87rem;
-    text-align: left;
-    cursor: pointer;
-}
-
-.item-lista:hover
-{
-    background: var(--superficie-2);
-    text-decoration: none;
-}
-
-.item-lista[aria-current="true"]
-{
-    background: var(--acento-suave);
-    border-color: var(--acento);
-}
-
-.item-lista .titulo
-{
-    font-weight: 600;
-    display: block;
-}
-
-.item-lista .meta
-{
-    font-size: .76rem;
-    color: var(--texto-suave);
-}
-
 .marco-pieza
 {
     position: relative;
@@ -1793,19 +1630,6 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
 .marco-pieza .esquina-sd { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
 .marco-pieza .esquina-ii { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
 .marco-pieza .esquina-id { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-
-.etiqueta-registro
-{
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    font-family: var(--fuente-mono);
-    font-size: .66rem;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    color: rgba(252, 252, 247, .5);
-    pointer-events: none;
-}
 
 .fila
 {
@@ -1830,11 +1654,9 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
     gap: 10px;
 }
 
-.centrado { text-align: center; }
 .derecha  { text-align: right; }
 .ancho-total { width: 100%; }
 .sin-margen  { margin: 0; }
-.mt-0  { margin-top: 0; }
 .mt-8  { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }
 .mt-24 { margin-top: 24px; }
@@ -1842,7 +1664,6 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
 .mb-8  { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mb-24 { margin-bottom: 24px; }
-.ml-8  { margin-left: 8px; }
 
 .medida
 {

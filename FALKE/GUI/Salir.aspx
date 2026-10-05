@@ -2,11 +2,31 @@
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
+        /* El mensaje queda en el medio de la página, entre la barra de arriba y el pie. */
+        #contenido-principal
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #contenido-principal > .contenedor
+        {
+            width: 100%;
+        }
+
+        /* Sin separación entre el mensaje y el pie: el centrado se mide contra la zona real. */
+        .pie
+        {
+            margin-top: 0;
+        }
+
         .salida
         {
             max-width: 520px;
             margin: 0 auto;
-            padding: 76px 0 96px;
+            padding: 56px 0;
+            text-align: center;
         }
 
         .salida-icono

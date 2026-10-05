@@ -42,26 +42,6 @@
 
             <div class="topbar-acciones">
 
-                <div class="desplegable">
-                    <button type="button" class="icono-boton" data-desplegable="panelAvisos"
-                            aria-expanded="false" aria-haspopup="true">
-                        <span class="solo-lectores" data-i18n="topbar.avisos">Avisos sin leer</span>
-                        <svg width="20" height="20" aria-hidden="true"><use href="#i-campana" /></svg>
-                    </button>
-
-                    <div class="desplegable-panel" id="panelAvisos" hidden>
-                        <div class="desplegable-cabecera">
-                            <strong data-i18n="avisos.titulo">Avisos</strong>
-                        </div>
-                        <div class="desplegable-lista">
-                            <p class="texto-suave texto-chico" style="padding: 14px 16px; margin: 0" data-i18n="avisos.vacio">No tenés avisos nuevos.</p>
-                        </div>
-                        <div class="desplegable-pie">
-                            <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Notificaciones.aspx") %>" data-i18n="avisos.verTodos">Ver todos los avisos</a>
-                        </div>
-                    </div>
-                </div>
-
                 <button type="button" class="icono-boton" data-accion="cambiar-tema"
                         aria-pressed="false" title="Cambiar entre modo día y modo noche">
                     <span class="solo-lectores" data-i18n="comun.cambiar.tema">Cambiar el tema de color</span>
@@ -69,29 +49,15 @@
                     <svg width="20" height="20" aria-hidden="true" data-icono-tema="noche"><use href="#i-luna" /></svg>
                 </button>
 
-                <div class="desplegable">
-                    <button type="button" class="avatar" data-desplegable="panelUsuario"
-                            aria-expanded="false" aria-haspopup="true">
-                        <span class="solo-lectores" data-i18n="topbar.miCuenta">Mi cuenta</span>
-                        <asp:Literal ID="litIniciales" runat="server" />
-                    </button>
+                <a id="lnkPerfil" runat="server" class="icono-boton" href="~/MiPerfil.aspx" title="Mi perfil">
+                    <span class="solo-lectores" data-i18n="usuario.verPerfil">Ver mi perfil</span>
+                    <svg width="20" height="20" aria-hidden="true"><use href="#i-persona" /></svg>
+                </a>
 
-                    <div class="desplegable-panel" id="panelUsuario" hidden>
-                        <div class="desplegable-cabecera">
-                            <span class="avatar grande" aria-hidden="true"><asp:Literal ID="litIniciales2" runat="server" /></span>
-                            <span>
-                                <strong><asp:Literal ID="litNombre" runat="server" /></strong><br />
-                                <span class="texto-suave texto-chico"><asp:Literal ID="litEmail" runat="server" /></span><br />
-                                <span class="badge badge-neutro mt-8"><asp:Literal ID="litRol" runat="server" /></span>
-                            </span>
-                        </div>
-
-                        <div class="desplegable-pie">
-                            <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Usuarios.aspx?perfil=1") %>" data-i18n="usuario.verPerfil">Ver mi perfil</a>
-                            <a class="btn btn-oscuro btn-chico btn-bloque" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">Cerrar sesión</a>
-                        </div>
-                    </div>
-                </div>
+                <a class="icono-boton" href="<%: ResolveUrl("~/Salir.aspx") %>" title="Cerrar sesión">
+                    <span class="solo-lectores" data-i18n="usuario.salir">Cerrar sesión</span>
+                    <svg width="20" height="20" aria-hidden="true"><use href="#i-salir" /></svg>
+                </a>
 
             </div>
         </header>

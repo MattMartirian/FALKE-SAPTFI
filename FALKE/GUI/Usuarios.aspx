@@ -146,12 +146,6 @@
             </p>
         </div>
         <div class="acciones">
-            <asp:PlaceHolder ID="phPerfil" runat="server">
-                <button type="button" class="btn btn-secundario" data-abre-modal="modalPerfil">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-persona" /></svg>
-                    <span>Mi perfil</span>
-                </button>
-            </asp:PlaceHolder>
             <asp:PlaceHolder ID="phInvitar" runat="server">
                 <button type="button" class="btn btn-primario" data-abre-modal="modalInvitar">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-mas" /></svg>
@@ -442,48 +436,6 @@
         </div>
     </div>
 
-    <div class="modal-fondo" id="modalPerfil" role="dialog" aria-modal="true" aria-labelledby="perfilTitulo" hidden>
-        <div class="modal">
-            <div class="modal-cabecera">
-                <div>
-                    <h2 id="perfilTitulo">Mi perfil</h2>
-                    <p class="subtitulo sin-margen">El correo no se puede modificar: es tu identidad de acceso.</p>
-                </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
-                </button>
-            </div>
-            <div class="modal-cuerpo">
-                <div class="fila-campos">
-                    <div class="campo">
-                        <label for="perNombre">Nombre</label>
-                        <asp:TextBox ID="perNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
-                    </div>
-                    <div class="campo">
-                        <label for="perApellido">Apellido</label>
-                        <asp:TextBox ID="perApellido" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
-                    </div>
-                </div>
-                <div class="campo">
-                    <label for="perEmail">Correo electrónico</label>
-                    <asp:TextBox ID="perEmail" runat="server" CssClass="entrada" ReadOnly="true" ClientIDMode="Static" />
-                </div>
-                <div class="campo">
-                    <label for="perIdioma">Idioma de la interfaz</label>
-                    <asp:DropDownList ID="perIdioma" runat="server" CssClass="entrada" ClientIDMode="Static">
-                        <asp:ListItem Value="1">Español</asp:ListItem>
-                        <asp:ListItem Value="2">Inglés</asp:ListItem>
-                        <asp:ListItem Value="3">Portugués</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-            </div>
-            <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnGuardarPerfil" runat="server" CssClass="btn btn-primario" Text="Guardar cambios" OnClick="btnGuardarPerfil_Click" />
-            </div>
-        </div>
-    </div>
-
     <div class="modal-fondo" id="modalInvitar" role="dialog" aria-modal="true" aria-labelledby="invitarTitulo" hidden>
         <div class="modal">
             <div class="modal-cabecera">
@@ -570,7 +522,7 @@
                 if (!modal || !aviso) return;
 
                 var otra = modal.getAttribute("data-otra-empresa") === "1";
-                var esGestor = rol && rol.value === "Gestor";
+                var esGestor = rol && rol.selectedOptions.length > 0 && rol.selectedOptions[0].getAttribute("data-gestion") === "1";
                 aviso.hidden = !(otra || esGestor);
 
                 var marcas = modal.querySelectorAll("[data-solo-otra-empresa]");

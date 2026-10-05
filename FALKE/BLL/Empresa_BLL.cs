@@ -27,37 +27,6 @@ namespace BLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        public string RegistrarEmpresa(Empresa_BE empresa, Usuario_TE adminInicial)
-        {
-            if (empresa == null) throw new ArgumentNullException(nameof(empresa));
-
-            if (adminInicial == null) throw new ArgumentNullException(nameof(adminInicial));
-
-            if (string.IsNullOrWhiteSpace(empresa.NombreEmpresa)) throw new InvalidOperationException("El nombre de la empresa es obligatorio.");
-
-            if (empresaRepo.ExisteNombre(empresa.NombreEmpresa)) throw new InvalidOperationException("Ya existe una empresa registrada con ese nombre.");
-
-            adminInicial.Rol = adminInicial.Rol ?? new PermisoCompuesto_TE(Usuario_TLL.ROL_ADMINISTRADOR, true);
-
-            empresa.Estado = EstadoEmpresa.Activa;
-
-            string token = Transaccion_ORM.Ejecutar(() =>
-            {
-                empresaRepo.Alta(empresa);
-                gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { empresa.IdEmpresa.ToString() });
-
-                adminInicial.IdEmpresa = empresa.IdEmpresa;
-
-                string t = new Usuario_TLL().RegistrarUsuario(adminInicial);
-
-                bitacora.Registrar(adminInicial.IdUsuario, "Empresas", "Alta de empresa \"" + empresa.NombreEmpresa + "\" (id " + empresa.IdEmpresa + ") con usuario administrador \"" + adminInicial.EmailUsuario + "\"", CriticidadBitacora.Media);
-
-                return t;
-            });
-
-            return token;
-        }
-
         // Alta completa de una empresa cliente con su administrador inicial, en una sola transacción:
         // si algo falla (por ejemplo, el email del administrador ya existe) no queda ni la empresa ni el usuario.
         public string RegistrarEmpresa(ActorUsuario_TLL actor, Empresa_BE empresa, Usuario_TE adminInicial)
@@ -115,7 +84,7 @@ namespace BLL
 
             Empresa_BE actual = ObtenerExistente(idEmpresa);
 
-            ValidarYNormalizar(nuevos, idEmpresa);
+            ValidarYNormalizar(nuevos, idEmpresa, actual.Cuit);
 
             var cambios = new List<string>();
             bool critico = false;
@@ -287,6 +256,14 @@ namespace BLL
 
         public Empresa_BE ObtenerPorId(int idEmpresa) => empresaRepo.ObtenerPorPK(idEmpresa);
 
+        // Solo el nombre de cada empresa: es lo que necesita quien ve la bitácora completa para filtrar por empresa.
+        public List<Empresa_BE> ObtenerParaFiltroDeBitacora(ActorUsuario_TLL actor)
+        {
+            if (actor == null || !actor.VeBitacoraCompleta) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora de todas las empresas.");
+
+            return empresaRepo.ObtenerTodos().Select(e => new Empresa_BE { IdEmpresa = e.IdEmpresa, NombreEmpresa = e.NombreEmpresa }).OrderBy(e => e.NombreEmpresa).ToList();
+        }
+
         // Listado de la cartera: solo para quien ve todas las empresas.
         public List<Empresa_BE> ObtenerCartera(ActorUsuario_TLL actor)
         {
@@ -295,7 +272,9 @@ namespace BLL
             return empresaRepo.ObtenerResumen();
         }
 
-        private void ValidarYNormalizar(Empresa_BE empresa, int idEmpresaPropia = 0)
+        // cuitActual es el CUIT guardado cuando se modifica una empresa existente: si no se toca, no se vuelve a validar. Así se pueden editar
+        // los demás datos de una empresa cuyo CUIT se cargó antes de que existiera esta validación (o quedó en blanco).
+        private void ValidarYNormalizar(Empresa_BE empresa, int idEmpresaPropia = 0, string cuitActual = null)
         {
             empresa.NombreEmpresa = (empresa.NombreEmpresa ?? string.Empty).Trim();
             empresa.NumContactoEmpresa = Recortar(empresa.NumContactoEmpresa);
@@ -311,12 +290,24 @@ namespace BLL
             if (!Enum.IsDefined(typeof(PlanSuscripcion), empresa.PlanSuscripcion)) throw new InvalidOperationException("El plan de suscripción no es válido.");
             if (!empresa.Facturacion.HasValue || !Enum.IsDefined(typeof(CicloFacturacion), empresa.Facturacion.Value)) throw new InvalidOperationException("El tipo de facturación no es válido.");
 
-            empresa.Cuit = NormalizarCuit(empresa.Cuit);
-            if (empresa.Cuit == null) throw new InvalidOperationException("El CUIT debe tener 11 dígitos (por ejemplo 30-12345678-9).");
-            if (!TieneDigitoVerificadorValido(empresa.Cuit)) throw new InvalidOperationException("El CUIT no es válido: el dígito verificador no coincide.");
+            string cuitIngresado = NormalizarCuit(empresa.Cuit);
+            bool cuitSinCambios = idEmpresaPropia > 0 && (cuitIngresado != null ? cuitIngresado == NormalizarCuit(cuitActual) : string.IsNullOrWhiteSpace(empresa.Cuit) && string.IsNullOrWhiteSpace(cuitActual));
+
+            if (cuitSinCambios)
+            {
+                empresa.Cuit = cuitIngresado ?? cuitActual;
+            }
+            else
+            {
+                empresa.Cuit = cuitIngresado;
+                if (empresa.Cuit == null) throw new InvalidOperationException("El CUIT debe tener 11 dígitos (por ejemplo 30-12345678-9).");
+
+                // Es el último número del propio CUIT, que se calcula con los anteriores (regla de AFIP): sirve para detectar un error de tipeo.
+                if (!TieneDigitoVerificadorValido(empresa.Cuit)) throw new InvalidOperationException("El CUIT no es válido: revisá que esté bien escrito.");
+            }
 
             if (empresaRepo.ExisteNombre(empresa.NombreEmpresa, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con esa razón social.");
-            if (empresaRepo.ExisteCuit(empresa.Cuit, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con ese CUIT.");
+            if (empresa.Cuit != null && empresaRepo.ExisteCuit(empresa.Cuit, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con ese CUIT.");
         }
 
         private static string Recortar(string texto)

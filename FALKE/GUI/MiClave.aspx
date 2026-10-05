@@ -83,7 +83,7 @@
             </p>
         </div>
         <div class="acciones">
-            <a class="btn btn-secundario" href="<%: ResolveUrl("~/Usuarios.aspx?perfil=1") %>">
+            <a class="btn btn-secundario" href="<%: ResolveUrl("~/MiPerfil.aspx") %>">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-persona" /></svg>
                 <span data-i18n="miClave.volverPerfil">Volver a mi perfil</span>
             </a>

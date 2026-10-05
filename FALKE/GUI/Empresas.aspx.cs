@@ -46,14 +46,14 @@ namespace GUI
             {
                 List<Empresa_BE> empresas = new Empresa_BLL().ObtenerCartera(actor);
 
-                // Las dadas de baja ya no son clientes: no cuentan en los totales y el listado las oculta salvo con su filtro.
+                // Las dadas de baja ya no son clientes: no cuentan en los totales de arriba, pero el listado las incluye en «Todas».
                 var clientes = empresas.Where(x => x.Estado != EstadoEmpresa.Deshabilitada).ToList();
 
                 litTotal.Text = clientes.Count.ToString();
                 litActivas.Text = clientes.Count(x => x.Estado == EstadoEmpresa.Activa).ToString();
                 litDispositivos.Text = clientes.Sum(x => x.DispositivosPrestados).ToString();
                 litUsuarios.Text = clientes.Sum(x => x.CantidadUsuarios).ToString();
-                litCuenta.Text = clientes.Count.ToString();
+                litCuenta.Text = empresas.Count.ToString();
                 litBajas.Text = empresas.Count - clientes.Count > 0 ? " (" + (empresas.Count - clientes.Count) + ")" : string.Empty;
 
                 rptEmpresas.DataSource = empresas;

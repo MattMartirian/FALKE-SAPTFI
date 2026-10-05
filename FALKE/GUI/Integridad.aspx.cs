@@ -129,8 +129,9 @@ namespace GUI
                     var registro = integridadRepo.LeerRegistroIntegridad(tabla);
                     string registros = registro.HasValue ? registro.Value.Item2.ToString("#,0", FormatoMiles) : "—";
 
+                    // La columna Detalle solo dice si la tabla está bien o no; qué registros son los que no cierran se ve en «Ver detalle».
                     string detalle = inconsistente
-                        ? string.Join("  ", lista.ConvertAll(x => x.Detalle))
+                        ? "La tabla se encuentra corrupta"
                         : "El DVV coincide y los DVH de todos los registros son válidos.";
 
                     filas.Add(new FilaIntegridad
@@ -152,7 +153,17 @@ namespace GUI
                     AppendJsonString(json, nombre);
                     json.Append(":{\"resumen\":");
                     AppendJsonString(json, detalle);
-                    json.Append(",\"registros\":[");
+                    json.Append(",\"motivos\":[");
+
+                    // Diferencias que no son de un registro puntual (registros agregados o eliminados, firma global).
+                    var generales = lista.FindAll(x => x.Tipo != TipoInconsistencia.RegistroAlterado);
+                    for (int k = 0; k < generales.Count; k++)
+                    {
+                        if (k > 0) json.Append(',');
+                        AppendJsonString(json, generales[k].Detalle);
+                    }
+
+                    json.Append("],\"registros\":[");
 
                     for (int k = 0; k < alterados.Count; k++)
                     {
@@ -167,8 +178,6 @@ namespace GUI
                         AppendJsonString(json, a.DvhAlmacenado);
                         json.Append(",\"calculado\":");
                         AppendJsonString(json, a.DvhRecalculado);
-                        json.Append(",\"datos\":");
-                        AppendJsonString(json, a.DatosFormateados);
                         json.Append('}');
                     }
 

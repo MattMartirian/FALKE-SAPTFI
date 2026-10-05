@@ -134,36 +134,6 @@
         }
     }
 
-    function cerrarDesplegables(excepto)
-    {
-        var abiertos = document.querySelectorAll("[data-desplegable]");
-
-        for (var i = 0; i < abiertos.length; i++)
-        {
-            if (abiertos[i] === excepto) continue;
-
-            var panel = document.getElementById(abiertos[i].getAttribute("data-desplegable"));
-
-            if (panel) panel.hidden = true;
-
-            abiertos[i].setAttribute("aria-expanded", "false");
-        }
-    }
-
-    function alternarDesplegable(boton)
-    {
-        var panel = document.getElementById(boton.getAttribute("data-desplegable"));
-
-        if (!panel) return;
-
-        var abrir = panel.hidden;
-
-        cerrarDesplegables(boton);
-
-        panel.hidden = !abrir;
-        boton.setAttribute("aria-expanded", abrir ? "true" : "false");
-    }
-
     var modalAbierto = null;
     var elementoQueAbrio = null;
 
@@ -361,13 +331,6 @@
             return;
         }
 
-        boton = destino.closest("[data-desplegable]");
-        if (boton)
-        {
-            alternarDesplegable(boton);
-            return;
-        }
-
         boton = destino.closest("[data-abre-modal]");
         if (boton)
         {
@@ -390,7 +353,7 @@
             return;
         }
 
-        boton = destino.closest(".acordeon-boton");
+        boton = destino.closest(".acordeon-boton, [data-acordeon]");
         if (boton)
         {
             alternarAcordeon(boton);
@@ -417,8 +380,6 @@
             alternarClave(boton);
             return;
         }
-
-        if (!destino.closest(".desplegable-panel")) cerrarDesplegables(null);
     }
 
     function alPresionarTecla(evento)
@@ -431,7 +392,6 @@
                 return;
             }
 
-            cerrarDesplegables(null);
             return;
         }
 
@@ -484,11 +444,24 @@
         }
     }
 
+    // Para buscar sin distinguir mayúsculas ni tildes: "razon" encuentra "Razón".
+    function normalizar(texto)
+    {
+        return String(texto == null ? "" : texto).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    }
+
+    // Los buscadores en vivo filtran mientras se escribe: Enter no tiene que enviar la página.
+    document.addEventListener("keydown", function (e)
+    {
+        if (e.key === "Enter" && e.target && e.target.tagName === "INPUT" && e.target.type === "search") e.preventDefault();
+    });
+
     window.Falke = {
         abrirModal: abrirModal,
         cerrarModal: cerrarModal,
         alternarTema: alternarTema,
-        traducir: traducir
+        traducir: traducir,
+        normalizar: normalizar
     };
 
     if (document.readyState === "loading")

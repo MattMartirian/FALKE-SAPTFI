@@ -13,6 +13,11 @@
             color: var(--texto-suave);
         }
 
+        tr[data-activa="0"]
+        {
+            opacity: .55;
+        }
+
         .campos-tipo[hidden]
         {
             display: none;
@@ -47,13 +52,18 @@
                 sesiones que se graben sobre el.
             </p>
         </div>
-        <div class="acciones">
-            <button type="button" class="btn btn-primario" data-abre-modal="modalCategoria">
+        <div class="acciones" id="phNuevaCategoria" runat="server">
+            <button type="button" class="btn btn-primario" data-abre-modal="modalCategoria" data-nueva-categoria>
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-mas" /></svg>
                 <span data-i18n="categorias.nueva">Nueva categoría</span>
             </button>
         </div>
     </div>
+
+    <asp:Panel ID="pnlAviso" runat="server" CssClass="aviso aviso-exito" Visible="false" role="status">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
+        <p class="sin-margen"><asp:Literal ID="litAviso" runat="server" /></p>
+    </asp:Panel>
 
     <div class="filtros">
         <div class="campo">
@@ -66,11 +76,17 @@
             <select class="entrada" id="catTipo">
                 <option value="" data-i18n="comun.todos">Todos</option>
                 <option value="Software">Software</option>
-                <option value="App web">App web</option>
-                <option value="App movil">App móvil</option>
+                <option value="AppWeb">App web</option>
+                <option value="AppMovil">App móvil</option>
                 <option value="Videojuego">Videojuego</option>
                 <option value="Publicidad">Publicidad</option>
             </select>
+        </div>
+        <div class="campo">
+            <label class="casilla-simple">
+                <input type="checkbox" id="catMostrarInactivas" />
+                <span data-i18n="categorias.mostrarInactivas">Mostrar desactivadas</span>
+            </label>
         </div>
     </div>
 
@@ -88,81 +104,40 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-tipo="Software">
-                    <td><strong>Checkout flow v2</strong></td>
-                    <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg>Software</span></td>
-                    <td class="texto-suave">Panel de administración interno</td>
-                    <td>3</td>
-                    <td class="texto-suave">17 jul 2026</td>
-                    <td>
-                        <div class="acciones-fila">
-                            <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">Ver sesiones</a>
-                            <button type="button" class="icono-boton" aria-label="Editar la categoría Checkout flow v2">
-                                <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-tipo="Videojuego">
-                    <td><strong>Onboarding RPG</strong></td>
-                    <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg>Videojuego</span></td>
-                    <td class="texto-suave">Tutorial de la primera partida</td>
-                    <td>1</td>
-                    <td class="texto-suave">10 jul 2026</td>
-                    <td>
-                        <div class="acciones-fila">
-                            <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">Ver sesiones</a>
-                            <button type="button" class="icono-boton" aria-label="Editar la categoría Onboarding RPG">
-                                <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-tipo="Publicidad">
-                    <td><strong>Campaña Q3</strong></td>
-                    <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg>Publicidad</span></td>
-                    <td class="texto-suave">Banner display 970x250</td>
-                    <td>1</td>
-                    <td class="texto-suave">08 jul 2026</td>
-                    <td>
-                        <div class="acciones-fila">
-                            <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">Ver sesiones</a>
-                            <button type="button" class="icono-boton" aria-label="Editar la categoría Campana Q3">
-                                <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-tipo="App web">
-                    <td><strong>Panel interno</strong></td>
-                    <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg>App web</span></td>
-                    <td class="texto-suave">app.ironhide.com/panel</td>
-                    <td>2</td>
-                    <td class="texto-suave">02 jul 2026</td>
-                    <td>
-                        <div class="acciones-fila">
-                            <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">Ver sesiones</a>
-                            <button type="button" class="icono-boton" aria-label="Editar la categoría Panel interno">
-                                <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-tipo="App movil">
-                    <td><strong>Alta de cuenta</strong></td>
-                    <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg>App móvil</span></td>
-                    <td class="texto-suave">App Android 3.4.0</td>
-                    <td>1</td>
-                    <td class="texto-suave">27 jun 2026</td>
-                    <td>
-                        <div class="acciones-fila">
-                            <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">Ver sesiones</a>
-                            <button type="button" class="icono-boton" aria-label="Editar la categoría Alta de cuenta">
-                                <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <asp:Repeater ID="rptCategorias" runat="server" OnItemCommand="rptCategorias_ItemCommand">
+                    <ItemTemplate>
+                        <tr data-tipo="<%#: Eval("Tipo") %>" data-activa="<%#: (bool)Eval("Activa") ? "1" : "0" %>"
+                            data-id="<%#: Eval("IdCategoria") %>" data-nombre="<%#: Eval("NombreCategoria") %>"
+                            data-e-nombre="<%#: Eval("NombreCategoria") %>" data-e-tipo="<%#: Eval("Tipo") %>"
+                            data-e-activo="<%#: Eval("NombreActivo") %>" data-e-flujo="<%#: Eval("FlujoEsperado") %>"
+                            data-e-so="<%#: Eval("SistemaOperativoSoftware") %>" data-e-versionsw="<%#: Eval("VersionSoftware") %>"
+                            data-e-url="<%#: Eval("UrlAppWeb") %>" data-e-dispositivo="<%#: Eval("DispositivoAppWeb") %>"
+                            data-e-somovil="<%#: Eval("SoAppMovil") %>" data-e-versionapp="<%#: Eval("VersionAppMovil") %>"
+                            data-e-plataforma="<%#: Eval("Plataforma") %>" data-e-versionjuego="<%#: Eval("VersionVideojuego") %>"
+                            data-e-formato="<%#: Eval("FormatoPublicidad") %>" data-e-canal="<%#: Eval("CanalPublicidad") %>">
+                            <td><strong><%#: Eval("NombreCategoria") %></strong></td>
+                            <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg><%#: EtiquetaTipo((BE.TipoActivoCategoria)Eval("Tipo")) %></span></td>
+                            <td class="texto-suave"><%#: Dato((string)Eval("NombreActivo")) %></td>
+                            <td><%#: Eval("CantidadSesiones") %></td>
+                            <td class="texto-suave"><%#: Fecha((DateTime)Eval("FechaCreacion")) %></td>
+                            <td>
+                                <div class="acciones-fila">
+                                    <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">Ver sesiones</a>
+                                    <asp:PlaceHolder runat="server" Visible="<%# PuedeGestionar %>">
+                                        <button type="button" class="icono-boton" aria-label="Editar la categoría" data-editar-categoria>
+                                            <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
+                                        </button>
+                                        <asp:LinkButton ID="btnEliminarCategoria" runat="server" CssClass="icono-boton" ToolTip="Eliminar la categoría"
+                                            CommandName="Eliminar" CommandArgument='<%# Eval("IdCategoria") %>'
+                                            OnClientClick="return confirm('¿Eliminar esta categoría? Si tiene sesiones grabadas, se va a desactivar en lugar de borrarse.');">
+                                            <svg width="17" height="17" aria-hidden="true"><use href="#i-tacho" /></svg>
+                                        </asp:LinkButton>
+                                    </asp:PlaceHolder>
+                                </div>
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
             </tbody>
         </table>
     </div>
@@ -171,6 +146,8 @@
         <svg width="34" height="34" aria-hidden="true"><use href="#i-carpeta" /></svg>
         <p class="sin-margen" data-i18n="categorias.vacio">No hay categorías que coincidan con el filtro.</p>
     </div>
+
+    <asp:HiddenField ID="hfCatId" runat="server" ClientIDMode="Static" Value="0" />
 
     <div class="modal-fondo" id="modalCategoria" role="dialog" aria-modal="true" aria-labelledby="catTitulo" hidden>
         <div class="modal ancho">
@@ -190,118 +167,111 @@
             <div class="modal-cuerpo">
 
                 <div class="campo">
-                    <label for="mcEmpresa" data-i18n="categorias.modal.empresa">Empresa</label>
-
-                    <input type="text" class="entrada" id="mcEmpresa" value="Ironhide Game Studio" readonly />
-                </div>
-
-                <div class="campo">
                     <label for="mcNombre" data-i18n="categorias.modal.nombre">Nombre de la categoría</label>
-                    <input type="text" class="entrada" id="mcNombre" data-foco-inicial
-                           placeholder="Checkout flow v2" data-i18n-attr="placeholder:categorias.modal.nombre.placeholder" />
+                    <asp:TextBox ID="mcNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static"
+                        placeholder="Checkout flow v2" />
                 </div>
 
                 <div class="campo">
                     <label for="mcTipo" data-i18n="categorias.modal.tipo">Tipo de activo digital</label>
-                    <select class="entrada" id="mcTipo">
-                        <option value="software">Software</option>
-                        <option value="appweb">Aplicación web</option>
-                        <option value="appmovil">Aplicación móvil</option>
-                        <option value="videojuego">Videojuego</option>
-                        <option value="publicidad">Publicidad digital</option>
-                    </select>
+                    <asp:DropDownList ID="mcTipo" runat="server" CssClass="entrada" ClientIDMode="Static">
+                        <asp:ListItem Value="Software" Text="Software" />
+                        <asp:ListItem Value="AppWeb" Text="Aplicación web" />
+                        <asp:ListItem Value="AppMovil" Text="Aplicación móvil" />
+                        <asp:ListItem Value="Videojuego" Text="Videojuego" />
+                        <asp:ListItem Value="Publicidad" Text="Publicidad digital" />
+                    </asp:DropDownList>
                 </div>
 
                 <div class="campo">
                     <label for="mcActivo" data-i18n="categorias.modal.activo">Nombre del activo evaluado</label>
-                    <input type="text" class="entrada" id="mcActivo"
-                           placeholder="Panel de administración interno" data-i18n-attr="placeholder:categorias.modal.activo.placeholder" />
+                    <asp:TextBox ID="mcActivo" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static"
+                        placeholder="Panel de administración interno" />
                 </div>
 
                 <div class="campo">
                     <label for="mcFlujo" data-i18n="categorias.modal.flujo">Flujo o proceso a analizar</label>
-                    <textarea class="entrada" id="mcFlujo" rows="2"
-                              placeholder="Que parte del activo se va a evaluar"
-                              data-i18n-attr="placeholder:categorias.modal.flujo.placeholder"></textarea>
+                    <asp:TextBox ID="mcFlujo" runat="server" CssClass="entrada" TextMode="MultiLine" Rows="2" MaxLength="500" ClientIDMode="Static"
+                        placeholder="Que parte del activo se va a evaluar" />
                 </div>
 
-                <div class="campos-tipo" data-tipo="software">
+                <div class="campos-tipo" data-tipo="Software">
                     <p class="etiqueta-grupo" data-i18n="categorias.modal.especificos">Campos específicos del tipo seleccionado</p>
                     <div class="fila-campos">
                         <div class="campo">
                             <label for="mcSo" data-i18n="categorias.campo.so">Sistema operativo</label>
-                            <input type="text" class="entrada" id="mcSo" placeholder="Windows 11" />
+                            <asp:TextBox ID="mcSo" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" placeholder="Windows 11" />
                         </div>
                         <div class="campo">
                             <label for="mcVersionSw" data-i18n="categorias.campo.version">Versión del software</label>
-                            <input type="text" class="entrada" id="mcVersionSw" placeholder="1.4.2" />
+                            <asp:TextBox ID="mcVersionSw" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" placeholder="1.4.2" />
                         </div>
                     </div>
                 </div>
 
-                <div class="campos-tipo" data-tipo="appweb" hidden>
+                <div class="campos-tipo" data-tipo="AppWeb" hidden>
                     <p class="etiqueta-grupo" data-i18n="categorias.modal.especificos">Campos específicos del tipo seleccionado</p>
                     <div class="fila-campos">
                         <div class="campo">
                             <label for="mcUrl" data-i18n="categorias.campo.url">URL (opcional)</label>
-                            <input type="text" class="entrada" id="mcUrl" placeholder="app.empresa.com/panel" />
+                            <asp:TextBox ID="mcUrl" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" placeholder="app.empresa.com/panel" />
                         </div>
                         <div class="campo">
                             <label for="mcDispositivo" data-i18n="categorias.campo.dispositivo">Dispositivo objetivo</label>
-                            <select class="entrada" id="mcDispositivo">
-                                <option>Escritorio</option>
-                                <option>Tablet</option>
-                                <option>Móvil</option>
-                            </select>
+                            <asp:DropDownList ID="mcDispositivo" runat="server" CssClass="entrada" ClientIDMode="Static">
+                                <asp:ListItem Value="Escritorio" Text="Escritorio" />
+                                <asp:ListItem Value="Tablet" Text="Tablet" />
+                                <asp:ListItem Value="Movil" Text="Móvil" />
+                            </asp:DropDownList>
                         </div>
                     </div>
                 </div>
 
-                <div class="campos-tipo" data-tipo="appmovil" hidden>
+                <div class="campos-tipo" data-tipo="AppMovil" hidden>
                     <p class="etiqueta-grupo" data-i18n="categorias.modal.especificos">Campos específicos del tipo seleccionado</p>
                     <div class="fila-campos">
                         <div class="campo">
                             <label for="mcSoMovil" data-i18n="categorias.campo.soMovil">Sistema operativo objetivo</label>
-                            <select class="entrada" id="mcSoMovil">
-                                <option>Android</option>
-                                <option>iOS</option>
-                            </select>
+                            <asp:DropDownList ID="mcSoMovil" runat="server" CssClass="entrada" ClientIDMode="Static">
+                                <asp:ListItem Value="Android" Text="Android" />
+                                <asp:ListItem Value="Ios" Text="iOS" />
+                            </asp:DropDownList>
                         </div>
                         <div class="campo">
                             <label for="mcVersionApp" data-i18n="categorias.campo.versionApp">Versión de la aplicación</label>
-                            <input type="text" class="entrada" id="mcVersionApp" placeholder="3.4.0" />
+                            <asp:TextBox ID="mcVersionApp" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" placeholder="3.4.0" />
                         </div>
                     </div>
                 </div>
 
-                <div class="campos-tipo" data-tipo="videojuego" hidden>
+                <div class="campos-tipo" data-tipo="Videojuego" hidden>
                     <p class="etiqueta-grupo" data-i18n="categorias.modal.especificos">Campos específicos del tipo seleccionado</p>
                     <div class="fila-campos">
                         <div class="campo">
                             <label for="mcPlataforma" data-i18n="categorias.campo.plataforma">Plataforma</label>
-                            <select class="entrada" id="mcPlataforma">
-                                <option>PC</option>
-                                <option>Consola</option>
-                                <option>Móvil</option>
-                            </select>
+                            <asp:DropDownList ID="mcPlataforma" runat="server" CssClass="entrada" ClientIDMode="Static">
+                                <asp:ListItem Value="Pc" Text="PC" />
+                                <asp:ListItem Value="Consola" Text="Consola" />
+                                <asp:ListItem Value="Movil" Text="Móvil" />
+                            </asp:DropDownList>
                         </div>
                         <div class="campo">
                             <label for="mcVersionJuego" data-i18n="categorias.campo.version">Versión del juego</label>
-                            <input type="text" class="entrada" id="mcVersionJuego" placeholder="0.9.3 beta" />
+                            <asp:TextBox ID="mcVersionJuego" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" placeholder="0.9.3 beta" />
                         </div>
                     </div>
                 </div>
 
-                <div class="campos-tipo" data-tipo="publicidad" hidden>
+                <div class="campos-tipo" data-tipo="Publicidad" hidden>
                     <p class="etiqueta-grupo" data-i18n="categorias.modal.especificos">Campos específicos del tipo seleccionado</p>
                     <div class="fila-campos">
                         <div class="campo">
                             <label for="mcFormato" data-i18n="categorias.campo.formato">Formato</label>
-                            <input type="text" class="entrada" id="mcFormato" placeholder="Banner 970x250" />
+                            <asp:TextBox ID="mcFormato" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" placeholder="Banner 970x250" />
                         </div>
                         <div class="campo">
                             <label for="mcCanal" data-i18n="categorias.campo.canal">Canal de distribución</label>
-                            <input type="text" class="entrada" id="mcCanal" placeholder="Display / redes" />
+                            <asp:TextBox ID="mcCanal" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" placeholder="Display / redes" />
                         </div>
                     </div>
                 </div>
@@ -310,7 +280,7 @@
 
             <div class="modal-pie">
                 <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
-                <button type="button" class="btn btn-primario" data-i18n="categorias.modal.registrar">Registrar categoría</button>
+                <asp:Button ID="btnGuardarCategoria" runat="server" CssClass="btn btn-primario" Text="Registrar categoría" OnClick="btnGuardarCategoria_Click" ClientIDMode="Static" />
             </div>
 
         </div>
@@ -325,20 +295,27 @@
 
             var buscar = document.getElementById("catBuscar");
             var tipo = document.getElementById("catTipo");
+            var mostrarInactivas = document.getElementById("catMostrarInactivas");
             var filas = document.querySelectorAll("#tablaCategorias tbody tr");
             var vacio = document.getElementById("categoriasVacio");
 
+            function normalizar(texto) {
+                return window.Falke && window.Falke.normalizar ? window.Falke.normalizar(texto) : String(texto || "").toLowerCase().trim();
+            }
+
             function filtrar() {
-                var texto = buscar.value.trim().toLowerCase();
+                var texto = normalizar(buscar.value);
                 var tipoElegido = tipo.value;
                 var visibles = 0;
 
                 for (var i = 0; i < filas.length; i++) {
-                    var okTexto = texto === "" || filas[i].textContent.toLowerCase().indexOf(texto) !== -1;
-                    var okTipo = tipoElegido === "" || filas[i].getAttribute("data-tipo") === tipoElegido;
-                    var mostrar = okTexto && okTipo;
+                    var f = filas[i];
+                    var okTexto = texto === "" || normalizar(f.textContent).indexOf(texto) !== -1;
+                    var okTipo = tipoElegido === "" || f.getAttribute("data-tipo") === tipoElegido;
+                    var okActiva = mostrarInactivas.checked || f.getAttribute("data-activa") === "1";
+                    var mostrar = okTexto && okTipo && okActiva;
 
-                    filas[i].hidden = !mostrar;
+                    f.hidden = !mostrar;
 
                     if (mostrar) visibles++;
                 }
@@ -348,6 +325,8 @@
 
             buscar.addEventListener("input", filtrar);
             tipo.addEventListener("change", filtrar);
+            mostrarInactivas.addEventListener("change", filtrar);
+            filtrar();
 
             var selectorTipo = document.getElementById("mcTipo");
             var bloques = document.querySelectorAll(".campos-tipo");
@@ -359,7 +338,61 @@
             }
 
             selectorTipo.addEventListener("change", mostrarCamposDelTipo);
-            mostrarCamposDelTipo();
+
+            function limpiarModal() {
+                document.getElementById("hfCatId").value = "0";
+                document.getElementById("catTitulo").textContent = "Registrar nueva categoría";
+                document.getElementById("btnGuardarCategoria").value = "Registrar categoría";
+                document.getElementById("mcNombre").value = "";
+                selectorTipo.value = "Software";
+                document.getElementById("mcActivo").value = "";
+                document.getElementById("mcFlujo").value = "";
+                document.getElementById("mcSo").value = "";
+                document.getElementById("mcVersionSw").value = "";
+                document.getElementById("mcUrl").value = "";
+                document.getElementById("mcDispositivo").value = "Escritorio";
+                document.getElementById("mcSoMovil").value = "Android";
+                document.getElementById("mcVersionApp").value = "";
+                document.getElementById("mcPlataforma").value = "Pc";
+                document.getElementById("mcVersionJuego").value = "";
+                document.getElementById("mcFormato").value = "";
+                document.getElementById("mcCanal").value = "";
+                mostrarCamposDelTipo();
+            }
+
+            document.addEventListener("click", function (e) {
+                var nueva = e.target.closest ? e.target.closest("[data-nueva-categoria]") : null;
+                var editar = e.target.closest ? e.target.closest("[data-editar-categoria]") : null;
+
+                if (nueva) {
+                    limpiarModal();
+                }
+
+                if (editar) {
+                    var fila = editar.closest("tr");
+                    if (!fila) return;
+                    var d = fila.dataset;
+
+                    document.getElementById("hfCatId").value = d.id;
+                    document.getElementById("catTitulo").textContent = "Editar categoría";
+                    document.getElementById("btnGuardarCategoria").value = "Guardar cambios";
+                    document.getElementById("mcNombre").value = d.eNombre || "";
+                    selectorTipo.value = d.eTipo || "Software";
+                    document.getElementById("mcActivo").value = d.eActivo || "";
+                    document.getElementById("mcFlujo").value = d.eFlujo || "";
+                    document.getElementById("mcSo").value = d.eSo || "";
+                    document.getElementById("mcVersionSw").value = d.eVersionsw || "";
+                    document.getElementById("mcUrl").value = d.eUrl || "";
+                    document.getElementById("mcDispositivo").value = d.eDispositivo || "Escritorio";
+                    document.getElementById("mcSoMovil").value = d.eSomovil || "Android";
+                    document.getElementById("mcVersionApp").value = d.eVersionapp || "";
+                    document.getElementById("mcPlataforma").value = d.ePlataforma || "Pc";
+                    document.getElementById("mcVersionJuego").value = d.eVersionjuego || "";
+                    document.getElementById("mcFormato").value = d.eFormato || "";
+                    document.getElementById("mcCanal").value = d.eCanal || "";
+                    mostrarCamposDelTipo();
+                }
+            });
         })();
     </script>
 </asp:Content>

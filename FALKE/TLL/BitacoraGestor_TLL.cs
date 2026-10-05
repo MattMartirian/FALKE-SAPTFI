@@ -23,6 +23,14 @@ namespace TLL
             bitacoraRepo.Alta(bitacora);
         }
 
+        // Cada usuario ve su propia actividad (lo que hizo él), sin necesitar permiso sobre la bitácora general.
+        public List<Bitacora_TE> ObtenerMiActividad(ActorUsuario_TLL actor, int cantidad = 10)
+        {
+            if (actor == null || actor.IdUsuario <= 0) return new List<Bitacora_TE>();
+
+            return bitacoraRepo.ObtenerPorUsuario(actor.IdUsuario, Math.Max(1, Math.Min(cantidad, 50)));
+        }
+
         public void Registrar(int idUsuario, string modulo, string descripcion, CriticidadBitacora criticidad, int? idEmpresa = null)
         {
             try
@@ -46,7 +54,7 @@ namespace TLL
         {
             if (actor == null || !actor.Puede(Patentes_TLL.VER_BITACORA)) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora.");
 
-            if (actor.VeTodasLasEmpresas)
+            if (actor.VeBitacoraCompleta)
                 return bitacoraRepo.ObtenerVista(null, false, ID_EMPRESA_PROVEEDORA, Usuario_TLL.ROL_GESTOR, ETIQUETA_PROVEEDOR);
 
             if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
@@ -90,8 +98,11 @@ namespace TLL
                 if (modulo.Length > 0 && !string.Equals(r.ModuloBitacora, modulo, StringComparison.OrdinalIgnoreCase)) continue;
                 if (accion.Length > 0 && ClasificarAccion(r.DescripcionBitacora) != accion) continue;
                 if (filtro.Criticidad.HasValue && r.CriticidadBitacora != filtro.Criticidad.Value) continue;
-                if (actor.VeTodasLasEmpresas && filtro.IdEmpresa.HasValue && r.IdEmpresa != filtro.IdEmpresa.Value) continue;
-                if (texto.Length > 0 && (r.Actor ?? string.Empty).IndexOf(texto, StringComparison.CurrentCultureIgnoreCase) < 0) continue;
+                if (actor.VeBitacoraCompleta && filtro.IdEmpresa.HasValue && r.IdEmpresa != filtro.IdEmpresa.Value) continue;
+                // Por nombre o por correo. El correo de un actor enmascarado no llega acá, así que no se puede descubrir buscándolo.
+                if (texto.Length > 0 &&
+                    (r.Actor ?? string.Empty).IndexOf(texto, StringComparison.CurrentCultureIgnoreCase) < 0 &&
+                    (r.EmailActor ?? string.Empty).IndexOf(texto, StringComparison.CurrentCultureIgnoreCase) < 0) continue;
 
                 resultado.Add(r);
             }

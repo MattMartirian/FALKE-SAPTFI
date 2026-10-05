@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TE
 {
@@ -41,6 +38,9 @@ namespace TE
         public int IdEventoBitacora { get; set; }
         public DateTime FechaHoraBitacora { get; set; }
         public string Actor { get; set; }
+
+        // El correo de quien hizo el evento. Es null cuando el actor está enmascarado (el equipo de Pattern Blue visto por una empresa cliente) o no hay usuario.
+        public string EmailActor { get; set; }
         public int? IdEmpresa { get; set; }
         public string NombreEmpresa { get; set; }
         public string ModuloBitacora { get; set; }

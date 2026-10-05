@@ -168,6 +168,38 @@
 
         </div>
 
+        <section class="tarjeta mt-24">
+            <div class="tarjeta-cabecera">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg>
+                <span>Dispositivos en préstamo</span>
+            </div>
+            <div class="tabla-scroll">
+                <table class="tabla">
+                    <caption class="solo-lectores">Dispositivos que la empresa tiene en préstamo</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Número de serie</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Entregado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater ID="rptDispositivos" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td class="mono"><%#: Eval("NumeroSerie") %></td>
+                                    <td><%#: Eval("Modelo") %></td>
+                                    <td class="texto-suave"><%#: FechaDispositivo((DateTime?)Eval("FechaEntregaActual")) %></td>                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
+            </div>
+            <asp:PlaceHolder ID="phSinDispositivos" runat="server" Visible="false">
+                <p class="texto-chico texto-suave mt-8 sin-margen">Todavía no tenés dispositivos en préstamo. Pattern Blue te los entrega con tu suscripción.</p>
+            </asp:PlaceHolder>
+        </section>
+
     </asp:PlaceHolder>
 
     <div class="modal-fondo" id="modalContacto" role="dialog" aria-modal="true" aria-labelledby="contactoTitulo" hidden>

@@ -286,3 +286,6 @@ $RECYCLE.BIN/
 
 
 _program files_git/
+# Correos de la aplicacion (se guardan como archivos mientras no haya SMTP)
+FALKE/GUI/App_Data/mails/
+FALKE/Pruebas

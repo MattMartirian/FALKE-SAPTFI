@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Web;
 using SECURITY;
 using TE;
@@ -17,11 +18,15 @@ namespace GUI
         private const string K_PERMISOS = "UsuarioPermisos";
         private const string K_VIGENCIA = "UsuarioVigencia";
         private const string K_HUELLA = "UsuarioHuella";
+        private const string K_EPOCA = "UsuarioEpoca";
         private const int SEGUNDOS_ENTRE_VERIFICACIONES = 20;
 
         private const string COOKIE_RECORDARME = "FALKE_RECORDARME";
         private const string ITEM_RESTAURA = "FALKE_RECORDARME_RESUELTO";
         private const int DIAS_RECORDARME = 30;
+
+        // Cada sesión guarda la época en que se inició. Al restaurar la base se pasa a la siguiente, y las sesiones de la anterior caen.
+        private static int epocaSesiones;
 
         private static HttpContext Ctx
         {
@@ -98,6 +103,13 @@ namespace GUI
         // Cada tanto se relee al usuario: una baja, un bloqueo o un cambio de rol hecho por otro administrador tiene efecto sin esperar a que cierre sesión.
         public static void VerificarVigencia()
         {
+            if (HayUsuario && !object.Equals(Ctx.Session[K_EPOCA], Volatile.Read(ref epocaSesiones)))
+            {
+                Cerrar();
+                Redirigir("Ingresar.aspx?cuenta=respaldo");
+                return;
+            }
+
             if (!HayUsuario || EsEmergencia) return;
 
             object ultima = Ctx.Session[K_VIGENCIA];
@@ -159,6 +171,13 @@ namespace GUI
             Ctx.Session[K_EMPRESA] = idEmpresa;
             Ctx.Session[K_EMERGENCIA] = esEmergencia;
             Ctx.Session[K_PERMISOS] = permiso;
+            Ctx.Session[K_EPOCA] = Volatile.Read(ref epocaSesiones);
+        }
+
+        // Después de restaurar la base: todas las sesiones abiertas dejan de valer y quienes estaban conectados tienen que volver a entrar.
+        public static void CerrarTodasLasSesiones()
+        {
+            Interlocked.Increment(ref epocaSesiones);
         }
 
         // Se llama justo después de entrar y justo después de cambiar la contraseña desde esta sesión.
@@ -180,6 +199,22 @@ namespace GUI
             FijarHuella(usuario);
 
             if (Ctx.Request.Cookies[COOKIE_RECORDARME] != null) RecordarEnEsteEquipo(IdUsuario);
+        }
+
+        // Descarta la sesión actual y le quita la cookie al navegador: el próximo pedido arranca con una sesión nueva, de otro identificador.
+        public static void DescartarSesionActual()
+        {
+            if (Ctx == null) return;
+
+            Ctx.Session.Clear();
+            Ctx.Session.Abandon();
+
+            Ctx.Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", string.Empty)
+            {
+                HttpOnly = true,
+                Expires = DateTime.Now.AddDays(-1),
+                Path = "/"
+            });
         }
 
         public static void Cerrar()

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 using SERVICES;
@@ -121,7 +120,7 @@ namespace GUI
             litNombre.Text = Server.HtmlEncode(actual.Etiqueta);
             litNombre2.Text = Server.HtmlEncode(actual.Etiqueta);
             litNombreInterno.Text = Server.HtmlEncode(actual.Nombre);
-            litClase.Text = esRol ? "Rol" : "Grupo";
+            litClase.Text = esRol ? (actual.EsDeGestion ? "Rol de gestión" : "Rol general") : "Grupo";
             badgeClase.Attributes["class"] = "badge " + (esRol ? "badge-info" : "badge-neutro");
             phEtiquetas.Visible = !esPatente;
             litMeta.Text = Server.HtmlEncode(Meta(actual));
@@ -195,13 +194,14 @@ namespace GUI
             if (actor == null) return;
 
             bool esRol = hfTipoNuevo.Value != "grupo";
+            bool deGestion = esRol && Request.Form["ambitoNuevo"] == "gestion";
             string nombre = txtNombreNuevo.Text.Trim();
 
-            Ejecutar("Roles.Crear", (esRol ? "Rol" : "Grupo") + " «" + nombre + "» creado. Ahora marcá qué incluye.",
+            Ejecutar("Roles.Crear", (esRol ? (deGestion ? "Rol de gestión" : "Rol") : "Grupo") + " «" + nombre + "» creado. Ahora marcá qué incluye.",
                 () =>
                 {
                     var bll = new Permiso_TLL();
-                    if (esRol) bll.CrearRol(actor, nombre); else bll.CrearGrupo(actor, nombre);
+                    if (esRol) bll.CrearRol(actor, nombre, null, deGestion); else bll.CrearGrupo(actor, nombre);
                 },
                 nombre, "modalNuevo");
         }
@@ -287,7 +287,7 @@ namespace GUI
             {
                 case ClasePermiso.Rol:
                     string usuarios = p.UsuariosAsignados == 1 ? "1 usuario" : p.UsuariosAsignados + " usuarios";
-                    resto = p.EsFijo ? usuarios + " · fijo" : usuarios;
+                    resto = usuarios + (p.EsDeGestion ? " · de gestión" : string.Empty) + (p.EsFijo ? " · fijo" : string.Empty);
                     break;
 
                 case ClasePermiso.Grupo:

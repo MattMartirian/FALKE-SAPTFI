@@ -32,6 +32,7 @@
     </Properties>
   </Project>
   <Project Path="ORM/ORM.csproj" Id="d7bf84ca-e746-41a1-b6d9-0d08a793de85" />
+  <Project Path="Pruebas/Pruebas.csproj" Id="6d1c0a52-5b7e-4f0b-9c2a-3e8a4b7d1f90" />
   <Project Path="SECURITY/SECURITY.csproj" Id="b2e1b5c8-83d4-414a-afa3-623e2c8c5aac" />
   <Project Path="SERVICES/SERVICES.csproj" Id="8fc92247-9a96-4db6-ba36-b77e3228e106" />
   <Project Path="TE/TE.csproj" Id="fe60f8da-f67f-4f24-bd33-8e198a04c26a" />

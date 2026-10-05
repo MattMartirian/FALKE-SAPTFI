@@ -24,6 +24,7 @@ namespace TLL
         public const string MOTIVO_EMPRESA_DESHABILITADA = "EMPRESA_DESHABILITADA";
 
         public const string ROL_GESTOR = "Gestor";
+        public const string ROL_WEBMASTER = "Webmaster";
         public const string ROL_ADMINISTRADOR = "Administrador";
         public const string ROL_ANALISTA = "Analista";
 
@@ -52,7 +53,7 @@ namespace TLL
                 var usuarioEmergencia = ConstruirUsuarioEmergenciaEnMemoria(email);
                 LoguearAccesoEmergenciaAArchivo(email);
                 bitacora.Registrar(0, "Seguridad", "Acceso de emergencia (break-glass) con identificador '" + email + "'", CriticidadBitacora.Alta);
-                return ResultadoLogin_TLL.Exitoso(usuarioEmergencia);
+                return ResultadoLogin_TLL.Exitoso(usuarioEmergencia, HayInconsistenciasDeIntegridad());
             }
 
             email = NormalizarEmail(email);
@@ -100,11 +101,20 @@ namespace TLL
                 return ResultadoLogin_TLL.EmpresaNoActiva(motivoEmpresa);
             }
 
+            // Con la integridad comprometida nadie entra, salvo quien puede repararla (recalcular el dígito verificador): ese entra y se lo lleva directo
+            // a la pantalla de Dígito verificador.
             var inconsistencias = gestorIntegridad.VerificarIntegridadTodasLasTablas();
-            if (inconsistencias.Count > 0)
+            bool revisarIntegridad = inconsistencias.Count > 0;
+
+            if (revisarIntegridad)
             {
-                bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión rechazado: la integridad de los datos está comprometida (" + inconsistencias.Count + " inconsistencia/s)", CriticidadBitacora.Alta);
-                return ResultadoLogin_TLL.IntegridadComprometida();
+                if (!Permiso_TLL.ComprobarPermiso(Patentes_TLL.RECALCULAR_INTEGRIDAD, usuario.Rol))
+                {
+                    bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión rechazado: la integridad de los datos está comprometida (" + inconsistencias.Count + " inconsistencia/s)", CriticidadBitacora.Alta);
+                    return ResultadoLogin_TLL.IntegridadComprometida();
+                }
+
+                bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión con la integridad de los datos comprometida (" + inconsistencias.Count + " inconsistencia/s): se lo lleva a Dígito verificador para revisarla", CriticidadBitacora.Alta);
             }
 
             Transaccion_ORM.Ejecutar(() =>
@@ -113,11 +123,7 @@ namespace TLL
                 bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Inicio de sesión exitoso", CriticidadBitacora.Baja);
             });
 
-            return ResultadoLogin_TLL.Exitoso(usuario);
-        }
-        public string RegistrarUsuario(Usuario_TE usuario)
-        {
-            return RegistrarUsuarioInterno(usuario, 0);
+            return ResultadoLogin_TLL.Exitoso(usuario, revisarIntegridad);
         }
 
         public string RegistrarUsuario(ActorUsuario_TLL actor, Usuario_TE usuario)
@@ -255,7 +261,7 @@ namespace TLL
             ExigirRolCompatibleConEmpresa(nuevoRol, objetivo.IdEmpresa);
 
             bool tocaOtraEmpresa = actor.IdEmpresa != objetivo.IdEmpresa;
-            if ((tocaOtraEmpresa || nuevoRol == ROL_GESTOR) && !confirmado)
+            if ((tocaOtraEmpresa || EsRolDeGestion(nuevoRol)) && !confirmado)
                 throw new InvalidOperationException("Tenés que confirmar el aviso antes de cambiar el rol.");
 
             string motivoLimpio = ValidarMotivo(actor, objetivo.IdEmpresa, motivo);
@@ -276,23 +282,30 @@ namespace TLL
             });
         }
 
-        // Un rol con permisos reservados a Pattern Blue no se asigna a usuarios de una empresa cliente.
+        // Un rol de gestión es del personal de Pattern Blue: no se asigna a usuarios de una empresa cliente.
         private static void ExigirRolCompatibleConEmpresa(string nombreRol, int idEmpresaDelUsuario)
         {
             if (idEmpresaDelUsuario == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) return;
 
-            var rol = new PermisoRepository().ConstruirArbolDeRoles().FirstOrDefault(r => r.Nombre == nombreRol);
-            if (rol == null) return;
-
-            var reservados = Permiso_TLL.ObtenerPatentes(rol).Where(Patentes_TLL.EsDeProveedor).OrderBy(p => p).ToList();
-
-            if (reservados.Count > 0)
+            if (EsRolDeGestion(nombreRol))
             {
                 var etiquetas = new Permiso_TLL().ObtenerEtiquetas();
 
-                throw new InvalidOperationException("El rol \"" + Permiso_TLL.Etiqueta(etiquetas, nombreRol) + "\" incluye permisos reservados a Pattern Blue (" +
-                    string.Join(", ", reservados.Select(p => Permiso_TLL.Etiqueta(etiquetas, p))) + ") y no se puede asignar a usuarios de empresas cliente.");
+                throw new InvalidOperationException("El rol \"" + Permiso_TLL.Etiqueta(etiquetas, nombreRol) + "\" es un rol de gestión, solo para usuarios de Pattern Blue: no se puede asignar a usuarios de empresas cliente.");
             }
+        }
+
+        // Los roles de gestión (solo para usuarios de Pattern Blue).
+        public HashSet<string> RolesDeGestion()
+        {
+            return new HashSet<string>(new PermisoRepository().ConstruirArbolDeRoles().Where(r => r.EsDeGestion).Select(r => r.Nombre));
+        }
+
+        private static bool EsRolDeGestion(string nombreRol)
+        {
+            var rol = new PermisoRepository().ConstruirArbolDeRoles().FirstOrDefault(r => r.Nombre == nombreRol);
+
+            return rol != null && rol.EsDeGestion;
         }
 
         public void ActualizarPerfil(int idUsuario, string nombre, string apellido, int idIdioma)
@@ -315,13 +328,14 @@ namespace TLL
         }
 
         // Nadie modifica a alguien con más permisos que él: un administrador no puede bloquear ni degradar al Gestor.
+        // Los permisos de infraestructura (integridad y respaldos, del Webmaster) no cuentan: el Gestor administra también a los Webmasters.
         private void ExigirJerarquia(ActorUsuario_TLL actor, Usuario_TE objetivo, string accion)
         {
             if (actor.EsEmergencia || objetivo.Rol == null) return;
 
             var propios = Permiso_TLL.ObtenerPatentes(actor.Permiso);
 
-            if (Permiso_TLL.ObtenerPatentes(objetivo.Rol).IsSubsetOf(propios)) return;
+            if (Permiso_TLL.ObtenerPatentes(objetivo.Rol).Where(p => !Patentes_TLL.EsDeInfraestructura(p)).All(propios.Contains)) return;
 
             bitacora.Registrar(actor.IdUsuario, "Seguridad", "Intento de " + accion + " un usuario con más permisos que el suyo (usuario " + objetivo.IdUsuario + ")", CriticidadBitacora.Alta, objetivo.IdEmpresa);
             throw new UnauthorizedAccessException("No podés modificar a un usuario con más permisos que vos.");
@@ -408,12 +422,6 @@ namespace TLL
             });
         }
 
-        // Solo nombre, apellido e idioma: el email, la contraseña, el rol y el estado no se tocan desde acá.
-        public void ActualizarDatosUsuario(Usuario_TE usuario)
-        {
-            ActualizarPerfil(usuario.IdUsuario, usuario.NombreUsuario, usuario.ApellidoUsuario, usuario.IdIdioma);
-        }
-
         private Usuario_TE ObtenerObjetivo(int idUsuario)
         {
             var usuario = usuarioRepo.ObtenerPorPK(idUsuario);
@@ -493,8 +501,6 @@ namespace TLL
             return cifrador.Encoder(usuario.ContrasenaHashUsuario ?? string.Empty).Substring(0, 16);
         }
 
-        public List<Usuario_TE> ObtenerPorEmpresa(int idEmpresa) => usuarioRepo.ObtenerPorEmpresa(idEmpresa);
-
         public Usuario_TE ObtenerPorId(int idUsuario) => usuarioRepo.ObtenerPorPK(idUsuario);
 
         public Usuario_TE ObtenerPorEmail(string email) => usuarioRepo.ObtenerPorEmail(NormalizarEmail(email));
@@ -544,13 +550,6 @@ namespace TLL
             });
 
             return true;
-        }
-
-        public string SolicitarRecuperacion(string email)
-        {
-            var solicitud = SolicitarEnlace(email);
-
-            return solicitud == null ? null : solicitud.Token;
         }
 
         public SolicitudEnlace_TLL SolicitarEnlace(string email)
@@ -743,6 +742,19 @@ namespace TLL
         private bool VerificarContrasena(string contrasenaPlana, string hashAlmacenado)
         {
             return cifrador.Encoder(contrasenaPlana) == hashAlmacenado;
+        }
+
+        // La cuenta de emergencia siempre entra; si la integridad está comprometida, también se la lleva a Dígito verificador.
+        private bool HayInconsistenciasDeIntegridad()
+        {
+            try
+            {
+                return gestorIntegridad.VerificarIntegridadTodasLasTablas().Count > 0;
+            }
+            catch
+            {
+                return true;
+            }
         }
 
         private bool EsCredencialDeEmergencia(string identificador, string contrasenaPlana)

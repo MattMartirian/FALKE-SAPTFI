@@ -280,13 +280,6 @@ namespace ORM
             return cuentas;
         }
 
-        public bool ExisteUsuarioConRolFueraDeEmpresa(string nombrePermiso, int idEmpresa)
-        {
-            string sql = "SELECT COUNT(1) FROM UsuarioTable WHERE rol_permiso = @nombre AND id_empresa <> @empresa";
-            var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@nombre", nombrePermiso), new SqlParameter("@empresa", idEmpresa));
-            return Convert.ToInt32(dt.Rows[0][0]) > 0;
-        }
-
         public bool ExisteUsuarioConRol(string nombrePermiso)
         {
             string sql = "SELECT COUNT(1) FROM UsuarioTable WHERE rol_permiso = @nombre";

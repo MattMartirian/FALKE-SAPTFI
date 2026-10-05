@@ -286,7 +286,7 @@
                            placeholder="Razón social, CUIT o rubro..." data-i18n-attr="placeholder:empresas.buscar.placeholder" />
                 </div>
                 <div class="chips" data-unico role="group" aria-label="Filtrar por estado">
-                    <button type="button" class="chip" aria-pressed="true" data-estado-filtro="" data-i18n="comun.todos">Clientes</button>
+                    <button type="button" class="chip" aria-pressed="true" data-estado-filtro="" data-i18n="comun.todos">Todas</button>
                     <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Activa" data-i18n="estado.activa">Activas</button>
                     <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Bloqueada" data-i18n="estado.bloqueada">Bloqueadas</button>
                     <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Deshabilitada">Dadas de baja<asp:Literal ID="litBajas" runat="server" /></button>
@@ -500,6 +500,10 @@
             var estadoFiltro = "";
             var actual = null;
 
+            function normalizar(texto) {
+                return window.Falke && window.Falke.normalizar ? window.Falke.normalizar(texto) : String(texto || "").toLowerCase().trim();
+            }
+
             function esc(texto) {
                 var nodo = document.createElement("div");
                 nodo.textContent = texto == null ? "" : texto;
@@ -608,13 +612,13 @@
             }
 
             function filtrar() {
-                var texto = buscar.value.trim().toLowerCase();
+                var texto = normalizar(buscar.value);
                 var visibles = 0;
                 for (var j = 0; j < filas.length; j++) {
                     var f = filas[j];
-                    var busca = (f.dataset.nombre + " " + f.dataset.cuit + " " + f.dataset.rubro).toLowerCase();
+                    var busca = normalizar(f.dataset.nombre + " " + f.dataset.cuit + " " + f.dataset.rubro + " " + f.dataset.domicilio);
                     var okTexto = texto === "" || busca.indexOf(texto) !== -1;
-                    var okEstado = estadoFiltro === "" ? f.dataset.estado !== "Deshabilitada" : f.dataset.estado === estadoFiltro;
+                    var okEstado = estadoFiltro === "" || f.dataset.estado === estadoFiltro;
                     var ver = okTexto && okEstado;
                     f.hidden = !ver;
                     if (ver) visibles++;
@@ -667,12 +671,7 @@
                 }
             });
 
-            if (elegida && elegida.dataset.estado === "Deshabilitada") {
-                var chipBaja = document.querySelector('[data-estado-filtro="Deshabilitada"]');
-                if (chipBaja) chipBaja.click();
-            } else {
-                filtrar();
-            }
+            filtrar();
 
             var primera = elegida || [].slice.call(filas).filter(function (f) { return !f.hidden; })[0];
             if (primera) mostrar(primera);

@@ -27,6 +27,14 @@ namespace GUI
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
 
+            // Mientras se restaura la base nadie puede usar la aplicación: se desvía a la pantalla de mantenimiento.
+            if (Respaldo_TLL.RestauracionEnCurso)
+            {
+                Response.Redirect("Mantenimiento.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+
             SesionActual_GUI.RestaurarDesdeCookie();
             SesionActual_GUI.VerificarVigencia();
 
@@ -35,36 +43,13 @@ namespace GUI
             MarcarPaginaActual();
         }
 
+        // El botón de perfil dice, al pasar el mouse, de quién es la sesión.
         private void MostrarUsuario()
         {
-            string nombre = string.Empty;
-            string email = string.Empty;
+            string nombre = SesionActual_GUI.HayUsuario ? (SesionActual_GUI.Nombre ?? string.Empty) : string.Empty;
+            string email = SesionActual_GUI.HayUsuario ? (SesionActual_GUI.Email ?? string.Empty) : string.Empty;
 
-            if (SesionActual_GUI.HayUsuario)
-            {
-                nombre = SesionActual_GUI.Nombre ?? string.Empty;
-                email = SesionActual_GUI.Email ?? string.Empty;
-            }
-
-            litNombre.Text = Server.HtmlEncode(nombre);
-            litEmail.Text = Server.HtmlEncode(email);
-            litRol.Text = Server.HtmlEncode(RolActual);
-
-            string iniciales = CalcularIniciales(nombre);
-
-            litIniciales.Text = iniciales;
-            litIniciales2.Text = iniciales;
-        }
-
-        private static string CalcularIniciales(string nombreCompleto)
-        {
-            if (string.IsNullOrWhiteSpace(nombreCompleto)) return "?";
-
-            string[] partes = nombreCompleto.Trim().Split(' ');
-
-            if (partes.Length == 1) return partes[0].Substring(0, 1).ToUpper();
-
-            return (partes[0].Substring(0, 1) + partes[partes.Length - 1].Substring(0, 1)).ToUpper();
+            lnkPerfil.Attributes["title"] = "Mi perfil" + (nombre.Length > 0 ? " — " + nombre + " (" + email + ") · " + RolActual : string.Empty);
         }
 
         private void AplicarPermisosDeMenu()
@@ -80,12 +65,12 @@ namespace GUI
             // Quien ve todas las empresas ya tiene su pantalla de Empresas: "Mi empresa" es para el administrador de un cliente.
             navMiEmpresa.Visible = Puede(Patentes_TLL.VER_DATOS_EMPRESA) && SesionActual_GUI.IdEmpresa > 0 && !Puede(Patentes_TLL.VER_USUARIOS_TODAS_EMPRESAS);
             navEmpresas.Visible = Puede(Patentes_TLL.VER_USUARIOS_TODAS_EMPRESAS);
-            navDispositivos.Visible = Puede(Patentes_TLL.GESTIONAR_DISPOSITIVOS);
+            navDispositivos.Visible = Puede(Patentes_TLL.VER_DISPOSITIVOS);
 
             navBitacora.Visible = Puede(Patentes_TLL.VER_BITACORA);
             navIntegridad.Visible = Puede(Patentes_TLL.RECALCULAR_INTEGRIDAD);
             navRoles.Visible = Puede(Patentes_TLL.GESTIONAR_ROLES);
-            navRespaldos.Visible = Puede(Patentes_TLL.GESTIONAR_RESPALDOS);
+            navRespaldos.Visible = Puede(Patentes_TLL.VER_RESPALDOS);
 
             grupoOrganizacion.Visible = navUsuarios.Visible || navMiEmpresa.Visible || navEmpresas.Visible || navDispositivos.Visible;
             grupoSistema.Visible = navBitacora.Visible || navIntegridad.Visible || navRoles.Visible || navRespaldos.Visible;
@@ -100,7 +85,6 @@ namespace GUI
         {
             string archivo = System.IO.Path.GetFileName(Request.CurrentExecutionFilePath);
 
-            if (archivo == "MiClave.aspx") archivo = "Usuarios.aspx";
             if (archivo == "EmpresaNueva.aspx") archivo = "Empresas.aspx";
 
             Marcar(navPanel, archivo, "Panel.aspx");

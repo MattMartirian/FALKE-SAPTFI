@@ -28,11 +28,6 @@ namespace DAL
 
         #region Transaccion
 
-        public bool HayTransaccionActiva
-        {
-            get { return transaccion != null; }
-        }
-
         public void IniciarTransaccion()
         {
             if (transaccion != null)
@@ -106,6 +101,67 @@ namespace DAL
             finally
             {
                 LimpiarTransaccion();
+            }
+        }
+
+        #endregion
+
+        #region Servidor (respaldos)
+
+        // Copiar y restaurar la base se hace desde "master", en conexiones propias y fuera de cualquier transacción:
+        // BACKUP y RESTORE no pueden correr dentro de una, y la restauración desconecta a todos los que usan la base.
+        public string NombreBaseDeDatos
+        {
+            get { return new SqlConnectionStringBuilder(connectionString).InitialCatalog; }
+        }
+
+        public DataTable EjecutarQueryEnMaster(string sql, params SqlParameter[] parametros)
+        {
+            using (var conexion = CrearConexionMaster())
+            using (var cmd = new SqlCommand(sql, conexion))
+            using (var da = new SqlDataAdapter(cmd))
+            {
+                if (parametros != null && parametros.Length > 0) cmd.Parameters.AddRange(parametros);
+
+                var dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
+        // timeoutSegundos = 0 espera sin límite (una copia o una restauración grande puede tardar).
+        public void EjecutarNonQueryEnMaster(string sql, int timeoutSegundos, params SqlParameter[] parametros)
+        {
+            using (var conexion = CrearConexionMaster())
+            using (var cmd = new SqlCommand(sql, conexion))
+            {
+                cmd.CommandTimeout = timeoutSegundos;
+                if (parametros != null && parametros.Length > 0) cmd.Parameters.AddRange(parametros);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Las conexiones que quedaron abiertas en el pool apuntan a sesiones que la restauración cerró.
+        public void LimpiarConexiones()
+        {
+            SqlConnection.ClearAllPools();
+        }
+
+        private SqlConnection CrearConexionMaster()
+        {
+            var datos = new SqlConnectionStringBuilder(connectionString) { InitialCatalog = "master", Pooling = false };
+            var conexion = new SqlConnection(datos.ConnectionString);
+
+            try
+            {
+                conexion.Open();
+                return conexion;
+            }
+            catch
+            {
+                conexion.Dispose();
+                throw;
             }
         }
 

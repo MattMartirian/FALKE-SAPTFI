@@ -761,14 +761,18 @@
             var subtituloSesion = document.getElementById("subtituloSesion");
             var visorSubtitulo = document.getElementById("visorSubtitulo");
 
+            function normalizar(texto) {
+                return window.Falke && window.Falke.normalizar ? window.Falke.normalizar(texto) : String(texto || "").toLowerCase().trim();
+            }
+
             function filtrar() {
-                var texto = buscar.value.trim().toLowerCase();
+                var texto = normalizar(buscar.value);
                 var visibles = 0;
 
                 for (var i = 0; i < sesiones.length; i++) {
                     var s = sesiones[i];
                     var okCategoria = categoriaActiva === "todas" || s.getAttribute("data-categoria") === categoriaActiva;
-                    var okTexto = texto === "" || s.getAttribute("data-nombre").toLowerCase().indexOf(texto) !== -1;
+                    var okTexto = texto === "" || normalizar(s.getAttribute("data-nombre")).indexOf(texto) !== -1;
                     var mostrar = okCategoria && okTexto;
 
                     s.hidden = !mostrar;

@@ -9,6 +9,9 @@ namespace GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Segundo paso del inicio de sesión: ya con una sesión de identificador nuevo, se completa la sesión con el ticket de un solo uso.
+            if (!IsPostBack && !string.IsNullOrEmpty(Request.QueryString["inicio"]) && CompletarInicioDeSesion()) return;
+
             if (!IsPostBack && SesionActual_GUI.RedirigirSiAutenticado()) return;
 
             if (!IsPostBack && Request.QueryString["cuenta"] == "empresa")
@@ -19,6 +22,9 @@ namespace GUI
 
             if (!IsPostBack && Request.QueryString["cuenta"] == "clave")
                 Avisar("Tu sesión se cerró porque se cambió la contraseña de tu cuenta. Volvé a entrar con la nueva.");
+
+            if (!IsPostBack && Request.QueryString["cuenta"] == "respaldo")
+                Avisar("Se restauró la base de datos desde una copia de seguridad y se cerraron todas las sesiones. Volvé a entrar.");
 
             if (!IsPostBack && Request.QueryString["cuenta"] == "desactivada")
                 Avisar("Tu sesión se cerró porque la cuenta fue dada de baja, bloqueada o cambió de estado. Comunícate con el administrador de tu empresa.");
@@ -42,13 +48,12 @@ namespace GUI
 
                 if (resultado.Exito)
                 {
-                    IniciarSesion(resultado.Usuario);
-                    SesionActual_GUI.FijarHuella(resultado.Usuario);
+                    // Se renueva el identificador de la sesión: se descarta la anterior y la sesión nueva se arma en el pedido siguiente.
+                    string ticket = InicioDeSesion_GUI.Preparar(resultado.Usuario, chkRecordarme.Checked, resultado.RequiereRevisarIntegridad, Request.UserHostAddress);
 
-                    if (chkRecordarme.Checked)
-                        SesionActual_GUI.RecordarEnEsteEquipo(resultado.Usuario.IdUsuario);
+                    SesionActual_GUI.DescartarSesionActual();
 
-                    Response.Redirect("Panel.aspx", false);
+                    Response.Redirect("Ingresar.aspx?inicio=" + Uri.EscapeDataString(ticket), false);
                     Context.ApplicationInstance.CompleteRequest();
                     return;
                 }
@@ -60,6 +65,26 @@ namespace GUI
                 LogErrores_SERVICE.Registrar("Ingresar", ex);
                 Avisar("Ocurrió un error al procesar la solicitud. Vuelve a intentarlo.");
             }
+        }
+
+        // Devuelve true si inició la sesión (y ya redirigió). Un ticket vencido, repetido o de otra dirección no hace nada: se muestra el formulario.
+        private bool CompletarInicioDeSesion()
+        {
+            InicioDeSesion_GUI.Pendiente pendiente = InicioDeSesion_GUI.Consumir(Request.QueryString["inicio"], Request.UserHostAddress);
+
+            if (pendiente == null) return false;
+
+            IniciarSesion(pendiente.Usuario);
+            SesionActual_GUI.FijarHuella(pendiente.Usuario);
+
+            if (pendiente.Recordarme)
+                SesionActual_GUI.RecordarEnEsteEquipo(pendiente.Usuario.IdUsuario);
+
+            // Si la integridad de los datos está comprometida y esta cuenta puede repararla, entra directo a Dígito verificador.
+            Response.Redirect(pendiente.IrAIntegridad ? "Integridad.aspx" : "Panel.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+
+            return true;
         }
 
         private static string TextoDelMotivo(string motivo)

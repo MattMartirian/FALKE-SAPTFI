@@ -1,8 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TE
 {
+    // Composite: un rol o un grupo. Guarda sus hijos y delega en ellos cada operación.
+    // Agregar solo cuida la integridad de la estructura (no se incluye a sí mismo, no repite hijos, no genera un ciclo). Las reglas del
+    // negocio (por ejemplo, que un rol no incluya roles) las aplica la capa de negocio, no la entidad.
     public class PermisoCompuesto_TE : PermisoAbstracto_TE
     {
         public override TipoPermiso TipoPermiso => TipoPermiso.Compuesto;
@@ -23,38 +27,53 @@ namespace TE
 
             if (hijo.Nombre == Nombre) throw new PermisoInvalidoException("Un permiso no puede incluirse a sí mismo.");
 
-            if (EsRolPermiso && hijo is PermisoCompuesto_TE hijoCompuesto && hijoCompuesto.EsRolPermiso) throw new PermisoInvalidoException($"El rol \"{Nombre}\" no puede incluir a otro rol (\"{hijo.Nombre}\").");
+            if (hijos.Any(h => h.Nombre == hijo.Nombre)) throw new PermisoInvalidoException($"\"{Nombre}\" ya incluye a \"{hijo.Nombre}\".");
 
-            if (GeneraCiclo(hijo)) throw new PermisoInvalidoException($"Agregar \"{hijo.Nombre}\" a \"{Nombre}\" generaría un ciclo de composición.");
+            // Hay ciclo si el candidato ya contiene, directa o indirectamente, a este permiso.
+            if (hijo.Contiene(Nombre)) throw new PermisoInvalidoException($"Agregar \"{hijo.Nombre}\" a \"{Nombre}\" generaría un ciclo de composición.");
 
             hijos.Add(hijo);
         }
 
         public override void Quitar(PermisoAbstracto_TE hijo)
         {
-            hijos.Remove(hijo);
+            if (hijo == null) throw new ArgumentNullException(nameof(hijo));
+
+            PermisoAbstracto_TE actual = hijos.FirstOrDefault(h => h.Nombre == hijo.Nombre);
+
+            if (actual == null) throw new PermisoInvalidoException($"\"{Nombre}\" no incluye a \"{hijo.Nombre}\".");
+
+            hijos.Remove(actual);
         }
 
-        public override HashSet<string> ObtenerPermisosEfectivos()
+        internal override bool Contiene(string nombrePermiso, HashSet<PermisoAbstracto_TE> visitados)
         {
-            var efectivos = new HashSet<string> { Nombre };
+            if (Nombre == nombrePermiso) return true;
 
-            foreach (var hijo in hijos)
+            if (!visitados.Add(this)) return false;
+
+            foreach (PermisoAbstracto_TE hijo in hijos)
             {
-                efectivos.UnionWith(hijo.ObtenerPermisosEfectivos());
+                if (hijo.Contiene(nombrePermiso, visitados)) return true;
             }
 
-            return efectivos;
+            return false;
         }
 
-        private bool GeneraCiclo(PermisoAbstracto_TE candidato)
+        internal override void AcumularEfectivos(HashSet<string> resultado, HashSet<PermisoAbstracto_TE> visitados)
         {
-            return candidato.ObtenerPermisosEfectivos().Contains(Nombre);
+            if (!visitados.Add(this)) return;
+
+            resultado.Add(Nombre);
+
+            foreach (PermisoAbstracto_TE hijo in hijos) hijo.AcumularEfectivos(resultado, visitados);
         }
 
-        public void AgregarHijoPersistido(PermisoAbstracto_TE hijo)
+        internal override void AcumularPatentes(HashSet<string> resultado, HashSet<PermisoAbstracto_TE> visitados)
         {
-            hijos.Add(hijo);
+            if (!visitados.Add(this)) return;
+
+            foreach (PermisoAbstracto_TE hijo in hijos) hijo.AcumularPatentes(resultado, visitados);
         }
     }
 }

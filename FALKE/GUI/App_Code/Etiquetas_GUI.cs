@@ -30,10 +30,5 @@ namespace GUI
             return guardadas;
         }
 
-        // Para que un cambio de descripción hecho en este mismo pedido se vea enseguida.
-        public static void Olvidar()
-        {
-            if (HttpContext.Current != null) HttpContext.Current.Items.Remove(CLAVE);
-        }
     }
 }

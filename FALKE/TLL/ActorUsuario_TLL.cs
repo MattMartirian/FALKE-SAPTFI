@@ -16,6 +16,12 @@ namespace TLL
             return Permiso_TLL.ComprobarPermiso(patente, Permiso);
         }
 
+        // La bitácora de todas las empresas (la del Gestor y la del Webmaster). Los demás ven solo la de su empresa.
+        public bool VeBitacoraCompleta
+        {
+            get { return Puede(Patentes_TLL.VER_BITACORA_COMPLETA); }
+        }
+
         public bool VeTodasLasEmpresas
         {
             get { return Puede(Patentes_TLL.VER_USUARIOS_TODAS_EMPRESAS); }

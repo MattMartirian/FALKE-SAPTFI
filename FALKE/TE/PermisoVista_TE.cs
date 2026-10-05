@@ -22,6 +22,9 @@ namespace TE
         public bool EsBase { get; set; }
         public bool EsFijo { get; set; }
 
+        // Rol de gestión: solo para usuarios de Pattern Blue.
+        public bool EsDeGestion { get; set; }
+
         public int UsuariosAsignados { get; set; }
         public List<string> Incluye { get; set; } = new List<string>();
         public List<string> IncluidoEn { get; set; } = new List<string>();

@@ -152,8 +152,6 @@ día fue, en `falke.css` y las master pages:
   aparato de señalización completo.
 - Se revisó el vocabulario de toda la fachada contra la lista de palabras a evitar.
 
-Ver `FACHADA-GUI.md` sección 3 para el detalle de cómo quedaron los tokens.
-
 ### 9.1 Revisión "menos plantilla, más instrumento"
 
 Segunda pasada sobre la fachada para sacar los rasgos que hacen que una interfaz parezca

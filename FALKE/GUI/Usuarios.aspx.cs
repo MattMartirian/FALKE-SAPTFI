@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using BE;
@@ -36,6 +35,15 @@ namespace GUI
 
             if (actor == null) return;
 
+            // El perfil ya no vive acá: los enlaces viejos (?perfil=1) llevan a la pantalla propia.
+            if (Request.QueryString["perfil"] == "1")
+            {
+                Response.Redirect("MiPerfil.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+                actor = null;
+                return;
+            }
+
             if (!actor.Puede(Patentes_TLL.VER_USUARIOS))
             {
                 Response.Redirect("SinPermiso.aspx", false);
@@ -62,7 +70,6 @@ namespace GUI
             phGestionEstado.Visible = puedeEstado;
             phGestionRol.Visible = puedeRol;
             phDatosAvanzados.Visible = actor.Puede(Patentes_TLL.CAMBIAR_EMAIL_EMPRESA_USUARIO);
-            phPerfil.Visible = !actor.EsEmergencia;
 
             litBajada.Text = VeTodas
                 ? "Usuarios de todas las empresas. Los cambios de estado y de rol quedan registrados en la bitácora."
@@ -84,9 +91,6 @@ namespace GUI
             if (!IsPostBack)
             {
                 CargarFiltros();
-                CargarPerfil();
-
-                if (Request.QueryString["perfil"] == "1" && phPerfil.Visible) AbrirModal("modalPerfil");
             }
         }
 
@@ -125,9 +129,16 @@ namespace GUI
             ddlNuevoRol.Items.Clear();
             invRol.Items.Clear();
 
+            var deGestion = bll.RolesDeGestion();
+
             foreach (string rol in bll.RolesAsignables(actor))
             {
-                ddlNuevoRol.Items.Add(new ListItem(EtiquetaRol(rol), rol));
+                var item = new ListItem(EtiquetaRol(rol), rol);
+
+                // Cambiar a un rol de gestión pide confirmar el aviso (la pantalla lo muestra según esta marca).
+                if (deGestion.Contains(rol)) item.Attributes["data-gestion"] = "1";
+
+                ddlNuevoRol.Items.Add(item);
                 invRol.Items.Add(new ListItem(EtiquetaRol(rol), rol));
             }
 
@@ -229,21 +240,6 @@ namespace GUI
             litEmpresaEstado.Text = empresa.Estado.ToString();
         }
 
-        private void CargarPerfil()
-        {
-            if (actor.EsEmergencia) return;
-
-            Usuario_TE yo = new Usuario_TLL().ObtenerPorId(actor.IdUsuario);
-            if (yo == null) return;
-
-            perNombre.Text = yo.NombreUsuario;
-            perApellido.Text = yo.ApellidoUsuario;
-            perEmail.Text = yo.EmailUsuario;
-
-            ListItem idioma = perIdioma.Items.FindByValue(yo.IdIdioma.ToString());
-            if (idioma != null) perIdioma.SelectedValue = idioma.Value;
-        }
-
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             PaginaActual = 1;
@@ -286,20 +282,6 @@ namespace GUI
 
             Ejecutar("Usuarios.CambiarRol", "El rol se actualizó.", () =>
                 new Usuario_TLL().CambiarRol(actor, idUsuario, ddlNuevoRol.SelectedValue, txtMotivoRol.Text, chkConfirmaRol.Checked));
-        }
-
-        protected void btnGuardarPerfil_Click(object sender, EventArgs e)
-        {
-            int idioma;
-
-            if (actor == null || actor.EsEmergencia || !int.TryParse(perIdioma.SelectedValue, out idioma))
-            {
-                Avisar("aviso-peligro", "No se pudo guardar el perfil.");
-                return;
-            }
-
-            Ejecutar("Usuarios.Perfil", "Tus datos se guardaron.", () =>
-                new Usuario_TLL().ActualizarPerfil(actor.IdUsuario, perNombre.Text, perApellido.Text, idioma));
         }
 
         protected void btnGuardarDatos_Click(object sender, EventArgs e)

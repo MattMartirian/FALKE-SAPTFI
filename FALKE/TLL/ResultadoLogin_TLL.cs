@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TE;
 
 namespace TLL
@@ -14,9 +10,12 @@ namespace TLL
         public Usuario_TE Usuario { get; private set; }
         public string Token { get; private set; }
 
+        // Entró, pero la integridad de los datos está comprometida y esta cuenta puede repararla: hay que llevarla a la pantalla de Dígito verificador.
+        public bool RequiereRevisarIntegridad { get; private set; }
+
         private ResultadoLogin_TLL() { }
 
-        public static ResultadoLogin_TLL Exitoso(Usuario_TE u) =>        new ResultadoLogin_TLL { Exito = true, Usuario = u };
+        public static ResultadoLogin_TLL Exitoso(Usuario_TE u, bool requiereRevisarIntegridad = false) => new ResultadoLogin_TLL { Exito = true, Usuario = u, RequiereRevisarIntegridad = requiereRevisarIntegridad };
 
         public static ResultadoLogin_TLL CredencialesInvalidas() =>      new ResultadoLogin_TLL { Exito = false, Motivo = "CREDENCIALES_INVALIDAS" };
 

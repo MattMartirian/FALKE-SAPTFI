@@ -20,6 +20,15 @@ namespace GUI
 
             actor = SesionActual_GUI.ObtenerActor();
 
+            // Quien ve todas las empresas (el Gestor, la cuenta de emergencia) tiene su pantalla de Empresas: "Mi empresa" es para el administrador de un cliente.
+            if (actor.VeTodasLasEmpresas)
+            {
+                Response.Redirect("Empresas.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+                actor = null;
+                return;
+            }
+
             if (actor.EsEmergencia || actor.IdEmpresa <= 0)
             {
                 actor = null;
@@ -71,6 +80,11 @@ namespace GUI
                 litFacturacion.Text = empresa.Facturacion.HasValue ? empresa.Facturacion.Value.ToString() : "—";
                 litRenovacion.Text = empresa.FechaRenovacion.HasValue ? Fecha(empresa.FechaRenovacion.Value) : "—";
                 litEstado.Text = empresa.Estado.ToString();
+
+                var dispositivos = new Dispositivo_BLL().ObtenerDeMiEmpresa(actor);
+                rptDispositivos.DataSource = dispositivos;
+                rptDispositivos.DataBind();
+                phSinDispositivos.Visible = dispositivos.Count == 0;
 
                 // Si el guardado falló se conserva lo que la persona escribió; si no, el formulario arranca con los datos actuales.
                 if (!edicionEnCurso)
@@ -129,6 +143,11 @@ namespace GUI
             phDatos.Visible = false;
             litError.Text = Server.HtmlEncode(texto);
             pnlError.Visible = true;
+        }
+
+        protected static string FechaDispositivo(DateTime? fecha)
+        {
+            return fecha.HasValue ? Fecha(fecha.Value) : "—";
         }
 
         private static string Dato(string valor)

@@ -13,6 +13,10 @@ namespace ORM
         SesionGrabada,
         AnalisisMultiple,
         AnalisisMultiple_Sesion,
-        Token
+        Token,
+        Dispositivo,
+        Prestamo,
+        ModeloDispositivo,
+        Backup
     }
 }

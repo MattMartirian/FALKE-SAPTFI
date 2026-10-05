@@ -120,7 +120,8 @@
 
             <div class="campo">
                 <label for="txtUsuario" data-i18n="bitacora.usuario">Usuario</label>
-                <asp:TextBox ID="txtUsuario" runat="server" CssClass="entrada" MaxLength="100" placeholder="Nombre" ClientIDMode="Static" />
+                <asp:TextBox ID="txtUsuario" runat="server" CssClass="entrada" MaxLength="100" placeholder="Nombre o correo" autocomplete="off" ClientIDMode="Static" />
+                <p class="ayuda">La lista se filtra mientras escribís.</p>
             </div>
 
             <asp:PlaceHolder ID="phFiltroEmpresa" runat="server">
@@ -138,7 +139,7 @@
         </div>
 
         <div class="fila-entre">
-            <p class="texto-chico texto-suave sin-margen" role="status"><asp:Literal ID="litContador" runat="server" /></p>
+            <p class="texto-chico texto-suave sin-margen" role="status" id="contadorBitacora"><asp:Literal ID="litContador" runat="server" /></p>
             <div class="fila">
                 <asp:Button ID="btnLimpiar" runat="server" CssClass="btn btn-fantasma btn-chico" Text="Limpiar filtros" OnClick="btnLimpiar_Click" CausesValidation="false" />
                 <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario btn-chico" Text="Aplicar filtros" OnClick="btnBuscar_Click" />
@@ -147,6 +148,7 @@
 
     </asp:Panel>
 
+    <div id="resultadosBitacora">
     <div class="tabla-scroll">
         <table class="tabla" id="tablaBitacora">
             <caption class="solo-lectores">Registros de la bitácora</caption>
@@ -165,7 +167,7 @@
                     <ItemTemplate>
                         <tr class="<%#: ClaseFila((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %>">
                             <td class="celda-fecha"><%#: ((DateTime)Eval("FechaHoraBitacora")).ToString("dd/MM/yyyy HH:mm") %></td>
-                            <td><%#: Eval("Actor") %></td>
+                            <td><%#: Eval("Actor") %><%# string.IsNullOrEmpty((string)Eval("EmailActor")) ? "" : "<br /><span class=\"texto-chico texto-suave\">" + HttpUtility.HtmlEncode((string)Eval("EmailActor")) + "</span>" %></td>
                             <td class="texto-suave"><%#: Eval("NombreEmpresa") %></td>
                             <td><span class="badge badge-neutro"><%#: Eval("ModuloBitacora") %></span></td>
                             <td><%#: Eval("DescripcionBitacora") %></td>
@@ -191,6 +193,7 @@
             <p class="sin-margen" data-i18n="bitacora.vacio">No hay registros que coincidan con los filtros.</p>
         </div>
     </asp:PlaceHolder>
+    </div>
 
     <p class="texto-chico texto-suave mt-16" data-i18n="bitacora.retencion">
         Los registros de la bitácora no se pueden editar ni borrar. Se conservan por el
@@ -246,4 +249,68 @@
         </div>
     </div>
 
+</asp:Content>
+
+<asp:Content ContentPlaceHolderID="scripts" runat="server">
+    <script>
+        (function () {
+            "use strict";
+
+            var caja = document.getElementById("txtUsuario");
+            if (!caja || !window.fetch || !window.FormData || !window.DOMParser) return;
+
+            var formulario = caja.form;
+            var espera = null;
+            var pedido = null;
+
+            // Pide la página con los filtros actuales (como si se apretara "Aplicar filtros") y cambia solo la tabla y el contador:
+            // así se puede seguir escribiendo. El servidor siempre aplica el alcance de la cuenta: cada uno ve solo lo suyo.
+            function filtrar() {
+                var boton = formulario.querySelector('[name$="btnBuscar"]');
+                if (!boton) return;
+
+                if (pedido) pedido.abort();
+                pedido = window.AbortController ? new AbortController() : null;
+
+                var datos = new FormData(formulario);
+                datos.append(boton.name, boton.value);
+
+                var opciones = { method: "POST", body: datos, credentials: "same-origin" };
+                if (pedido) opciones.signal = pedido.signal;
+
+                fetch(formulario.getAttribute("action") || window.location.href, opciones)
+                    .then(function (respuesta) { return respuesta.text(); })
+                    .then(function (html) {
+                        var doc = new DOMParser().parseFromString(html, "text/html");
+                        var resultados = doc.getElementById("resultadosBitacora");
+                        var contador = doc.getElementById("contadorBitacora");
+
+                        // Si la sesión venció la respuesta es otra página: se envía el formulario de la forma común.
+                        if (!resultados || !contador) { boton.click(); return; }
+
+                        document.getElementById("resultadosBitacora").innerHTML = resultados.innerHTML;
+                        document.getElementById("contadorBitacora").innerHTML = contador.innerHTML;
+
+                        ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"].forEach(function (nombre) {
+                            var nuevo = doc.querySelector('input[name="' + nombre + '"]');
+                            var actual = formulario.querySelector('input[name="' + nombre + '"]');
+                            if (nuevo && actual) actual.value = nuevo.value;
+                        });
+
+                        var enlaceNuevo = doc.querySelector('a[id$="lnkImprimir"]');
+                        var enlaceActual = document.querySelector('a[id$="lnkImprimir"]');
+                        if (enlaceNuevo && enlaceActual) enlaceActual.setAttribute("href", enlaceNuevo.getAttribute("href"));
+                    })
+                    .catch(function (error) {
+                        if (error && error.name === "AbortError") return;
+                        boton.click();
+                    });
+            }
+
+            caja.addEventListener("input", function () {
+                window.clearTimeout(espera);
+                espera = window.setTimeout(filtrar, 350);
+            });
+        })();
+    </script>
 </asp:Content>
