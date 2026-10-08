@@ -58,7 +58,7 @@ namespace GUI
                     return;
                 }
 
-                Avisar(TextoDelMotivo(resultado.Motivo));
+                Avisar(TextoDelMotivo(resultado.Motivo, resultado.IntentosRestantes));
             }
             catch (Exception ex)
             {
@@ -87,12 +87,15 @@ namespace GUI
             return true;
         }
 
-        private static string TextoDelMotivo(string motivo)
+        private static string TextoDelMotivo(string motivo, int? intentosRestantes = null)
         {
             switch (motivo)
             {
                 case "CREDENCIALES_INVALIDAS":
-                    return "El correo o la contraseña no son correctos.";
+                    // Los intentos restantes solo llegan si el correo existe: con uno inexistente el mensaje es el genérico.
+                    return "El correo o la contraseña no son correctos." + (intentosRestantes.HasValue
+                        ? " Te " + (intentosRestantes.Value == 1 ? "queda 1 intento" : "quedan " + intentosRestantes.Value + " intentos") + " antes de que se bloquee la cuenta."
+                        : string.Empty);
 
                 case "USUARIO_BLOQUEADO_INTENTOS":
                     return "La cuenta está bloqueada por contraseñas incorrectas. Usa «Olvidé mi contraseña» para recuperar el acceso.";

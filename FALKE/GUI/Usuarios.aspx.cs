@@ -14,13 +14,14 @@ namespace GUI
         private const int ID_IDIOMA_ESPANOL = 1;
         private const int TAMANO_PAGINA = 25;
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
         private PaginaUsuarios_TE pagina;
 
         protected bool VeTodas { get; private set; }
         protected bool PuedeGestionar { get; private set; }
         protected bool PuedeGestionarCuenta { get; private set; }
         protected bool PuedeEditarDatos { get; private set; }
+        protected bool PuedeInvitar { get; private set; }
 
         private int PaginaActual
         {
@@ -52,7 +53,7 @@ namespace GUI
                 return;
             }
 
-            VeTodas = actor.VeTodasLasEmpresas;
+            VeTodas = actor.VeTodasLasEmpresas();
             bool puedeAlta = actor.Puede(Patentes_TLL.REGISTRAR_USUARIO);
             bool puedeEstado = actor.Puede(Patentes_TLL.CAMBIAR_ESTADO_USUARIO);
             bool puedeRol = actor.Puede(Patentes_TLL.CAMBIAR_ROL_USUARIO);
@@ -66,7 +67,8 @@ namespace GUI
             phSoloLectura.Visible = !PuedeGestionar && !puedeAlta;
             phFiltroEmpresa.Visible = VeTodas;
             phColEmpresa.Visible = VeTodas;
-            phColAcciones.Visible = PuedeGestionar;
+            PuedeInvitar = puedeAlta;
+            phColAcciones.Visible = PuedeGestionar || PuedeInvitar;
             phGestionEstado.Visible = puedeEstado;
             phGestionRol.Visible = puedeRol;
             phDatosAvanzados.Visible = actor.Puede(Patentes_TLL.CAMBIAR_EMAIL_EMPRESA_USUARIO);
@@ -341,6 +343,45 @@ namespace GUI
             }
         }
 
+        // "Reenviar invitación": una cuenta que sigue pendiente recibe un enlace de activación nuevo por correo.
+        protected void rptUsuarios_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (actor == null || e.CommandName != "reenviar") return;
+
+            pnlAviso.Visible = false;
+
+            int idUsuario;
+            if (!int.TryParse(Convert.ToString(e.CommandArgument, CultureInfo.InvariantCulture), out idUsuario))
+            {
+                Avisar("aviso-peligro", "No se pudo identificar al usuario. Volvé a intentarlo.");
+                return;
+            }
+
+            try
+            {
+                SolicitudEnlace_TLL solicitud = new Usuario_TLL().ReenviarInvitacion(actor, idUsuario);
+
+                CorreosCuenta_GUI.EnviarActivacion(solicitud.Email, solicitud.Nombre, solicitud.Token,
+                    "Te enviamos de nuevo la invitación a tu cuenta de Falke.");
+
+                // Sin aviso: el botón de esa fila pasa a verse gris, con un check.
+                InvitacionesEnviadas()[idUsuario] = DateTime.Now;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Avisar("aviso-peligro", ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Avisar("aviso-peligro", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("Usuarios.ReenviarInvitacion", ex);
+                Avisar("aviso-peligro", "No se pudo reenviar la invitación. Volvé a intentarlo.");
+            }
+        }
+
         protected void btnInvitar_Click(object sender, EventArgs e)
         {
             if (actor == null) return;
@@ -463,6 +504,31 @@ namespace GUI
             var u = (UsuarioListado_TE)item;
 
             return (u.NombreUsuario + " " + u.ApellidoUsuario).Trim();
+        }
+
+        // Las invitaciones reenviadas se recuerdan un rato en la sesión: el botón queda gris, con un check, en lugar de dar un aviso.
+        private const string CLAVE_INVITACIONES = "usuarios.invitacionesEnviadas";
+        private static readonly TimeSpan MEMORIA_DE_INVITACIONES = TimeSpan.FromMinutes(15);
+
+        private System.Collections.Generic.Dictionary<int, DateTime> InvitacionesEnviadas()
+        {
+            var enviadas = Session[CLAVE_INVITACIONES] as System.Collections.Generic.Dictionary<int, DateTime>;
+
+            if (enviadas == null) Session[CLAVE_INVITACIONES] = enviadas = new System.Collections.Generic.Dictionary<int, DateTime>();
+
+            return enviadas;
+        }
+
+        protected bool InvitacionEnviada(object item)
+        {
+            DateTime cuando;
+
+            return InvitacionesEnviadas().TryGetValue(((UsuarioListado_TE)item).IdUsuario, out cuando) && DateTime.Now - cuando < MEMORIA_DE_INVITACIONES;
+        }
+
+        protected bool EsPendiente(object item)
+        {
+            return ((UsuarioListado_TE)item).Estado == EstadoUsuario.Pendiente;
         }
 
         protected bool EsOtro(object item)

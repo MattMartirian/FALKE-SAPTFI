@@ -4,7 +4,6 @@ using TLL;
 
 namespace GUI
 {
-    // Lo que se muestra de cada rol, grupo o permiso: su descripción (PermisoTable.descripcion_permiso) o, si no tiene, el nombre interno.
     public static class Etiquetas_GUI
     {
         private const string CLAVE = "FALKE_ETIQUETAS_PERMISOS";
@@ -16,7 +15,6 @@ namespace GUI
             return Permiso_TLL.Etiqueta(Cargar(), nombre);
         }
 
-        // Se lee una sola vez por pedido.
         private static Dictionary<string, string> Cargar()
         {
             HttpContext contexto = HttpContext.Current;

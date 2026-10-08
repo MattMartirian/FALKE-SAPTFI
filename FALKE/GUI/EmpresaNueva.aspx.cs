@@ -11,7 +11,7 @@ namespace GUI
     {
         private const int ID_IDIOMA_ESPANOL = 1;
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
 
         protected void Page_Load(object sender, EventArgs e)
         {

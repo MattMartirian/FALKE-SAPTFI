@@ -34,18 +34,6 @@
             margin-bottom: 0;
         }
 
-        #modalExportarBitacora .opcion
-        {
-            align-items: center;
-            justify-content: space-between;
-            cursor: default;
-        }
-
-        #modalExportarBitacora .opcion:hover
-        {
-            background: transparent;
-        }
-
         .celda-fecha
         {
             white-space: nowrap;
@@ -62,13 +50,6 @@
             <p class="texto-suave sin-margen">
                 <asp:Literal ID="litBajada" runat="server" />
             </p>
-        </div>
-        <div class="acciones">
-
-            <button type="button" class="btn btn-secundario" data-abre-modal="modalExportarBitacora">
-                <svg width="17" height="17" aria-hidden="true"><use href="#i-descarga" /></svg>
-                <span data-i18n="bitacora.exportar">Exportar</span>
-            </button>
         </div>
     </div>
 
@@ -200,54 +181,6 @@
         plazo que fije la política de retención del sistema.
     </p>
 
-    <div class="modal-fondo" id="modalExportarBitacora" role="dialog" aria-modal="true" aria-labelledby="expBitTitulo" hidden>
-        <div class="modal">
-
-            <div class="modal-cabecera">
-                <div>
-                    <h2 id="expBitTitulo" data-i18n="bitacora.exportar.titulo">Exportar la bitácora</h2>
-                    <p class="subtitulo sin-margen" data-i18n="bitacora.exportar.subtitulo">
-                        Se exportan todos los registros que cumplen los filtros, no solo los de esta página.
-                    </p>
-                </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
-                </button>
-            </div>
-
-            <div class="modal-cuerpo">
-
-                <div class="opcion">
-                    <span>
-                        <span class="opcion-titulo">CSV</span>
-                        <span class="opcion-detalle" data-i18n="bitacora.exportar.csv">Para abrir en una planilla de cálculo.</span>
-                    </span>
-                    <asp:Button ID="btnExportarCsv" runat="server" CssClass="btn btn-secundario btn-chico" Text="Descargar" OnClick="btnExportarCsv_Click" CausesValidation="false" />
-                </div>
-
-                <div class="opcion">
-                    <span>
-                        <span class="opcion-titulo">PDF</span>
-                        <span class="opcion-detalle" data-i18n="bitacora.exportar.pdf">Se abre una vista lista para imprimir; elegí «Guardar como PDF» en el navegador.</span>
-                    </span>
-                    <asp:HyperLink ID="lnkImprimir" runat="server" CssClass="btn btn-secundario btn-chico" Target="_blank" Text="Abrir vista" />
-                </div>
-
-                <div class="aviso aviso-info mt-16 mb-0">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
-                    <p class="sin-margen" data-i18n="bitacora.exportar.aviso">
-                        La exportación también queda registrada en la bitácora.
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cerrar</button>
-            </div>
-
-        </div>
-    </div>
 
 </asp:Content>
 
@@ -296,10 +229,6 @@
                             var actual = formulario.querySelector('input[name="' + nombre + '"]');
                             if (nuevo && actual) actual.value = nuevo.value;
                         });
-
-                        var enlaceNuevo = doc.querySelector('a[id$="lnkImprimir"]');
-                        var enlaceActual = document.querySelector('a[id$="lnkImprimir"]');
-                        if (enlaceNuevo && enlaceActual) enlaceActual.setAttribute("href", enlaceNuevo.getAttribute("href"));
                     })
                     .catch(function (error) {
                         if (error && error.name === "AbortError") return;

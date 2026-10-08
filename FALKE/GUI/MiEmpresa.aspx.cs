@@ -4,6 +4,7 @@ using BE;
 using BLL;
 using SERVICES;
 using TLL;
+using TE;
 
 namespace GUI
 {
@@ -11,7 +12,7 @@ namespace GUI
     {
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
         private bool edicionEnCurso;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +22,7 @@ namespace GUI
             actor = SesionActual_GUI.ObtenerActor();
 
             // Quien ve todas las empresas (el Gestor, la cuenta de emergencia) tiene su pantalla de Empresas: "Mi empresa" es para el administrador de un cliente.
-            if (actor.VeTodasLasEmpresas)
+            if (actor.VeTodasLasEmpresas())
             {
                 Response.Redirect("Empresas.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();

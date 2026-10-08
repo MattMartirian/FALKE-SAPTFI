@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Web.UI.WebControls;
 using BE;
 using BLL;
@@ -15,7 +13,7 @@ namespace GUI
     {
         private const int TAMANO_PAGINA = 50;
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
 
         private int PaginaActual
         {
@@ -23,7 +21,6 @@ namespace GUI
             set { ViewState["pagina"] = value; }
         }
 
-        // Las listas se arman en Init: así reciben lo que se eligió antes de que corra el evento del botón.
         protected void Page_Init(object sender, EventArgs e)
         {
             actor = SesionActual_GUI.ObtenerActor();
@@ -87,7 +84,6 @@ namespace GUI
                 lnkAnterior.Visible = pagina.Pagina > 1;
                 lnkSiguiente.Visible = pagina.Pagina < pagina.TotalPaginas;
 
-                lnkImprimir.NavigateUrl = "BitacoraImprimir.aspx?" + FiltroBitacora_GUI.AQuery(filtro);
             }
             catch (InvalidOperationException ex)
             {
@@ -120,7 +116,6 @@ namespace GUI
             ddlAccion.Items.Add(new ListItem("Alta", BitacoraGestor_TLL.ACCION_ALTA));
             ddlAccion.Items.Add(new ListItem("Modificación", BitacoraGestor_TLL.ACCION_MODIFICACION));
             ddlAccion.Items.Add(new ListItem("Baja", BitacoraGestor_TLL.ACCION_BAJA));
-            ddlAccion.Items.Add(new ListItem("Exportación", BitacoraGestor_TLL.ACCION_EXPORTACION));
 
             ddlCriticidad.Items.Clear();
             ddlCriticidad.Items.Add(new ListItem("Todas", string.Empty));
@@ -128,9 +123,9 @@ namespace GUI
             ddlCriticidad.Items.Add(new ListItem("Media", ((int)CriticidadBitacora.Media).ToString()));
             ddlCriticidad.Items.Add(new ListItem("Baja", ((int)CriticidadBitacora.Baja).ToString()));
 
-            phFiltroEmpresa.Visible = actor.VeBitacoraCompleta;
+            phFiltroEmpresa.Visible = actor.VeBitacoraCompleta();
 
-            if (actor.VeBitacoraCompleta)
+            if (actor.VeBitacoraCompleta())
             {
                 ddlEmpresa.Items.Clear();
                 ddlEmpresa.Items.Add(new ListItem("Todas", string.Empty));
@@ -144,7 +139,7 @@ namespace GUI
         {
             return FiltroBitacora_GUI.Parsear(txtDesde.Text, txtHasta.Text, txtHoraDesde.Text, txtHoraHasta.Text,
                 ddlModulo.SelectedValue, ddlAccion.SelectedValue, txtUsuario.Text,
-                actor.VeBitacoraCompleta ? ddlEmpresa.SelectedValue : null, ddlCriticidad.SelectedValue);
+                actor.VeBitacoraCompleta() ? ddlEmpresa.SelectedValue : null, ddlCriticidad.SelectedValue);
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -162,7 +157,7 @@ namespace GUI
             ddlModulo.SelectedIndex = 0;
             ddlAccion.SelectedIndex = 0;
             ddlCriticidad.SelectedIndex = 0;
-            if (actor.VeBitacoraCompleta) ddlEmpresa.SelectedIndex = 0;
+            if (actor.VeBitacoraCompleta()) ddlEmpresa.SelectedIndex = 0;
 
             PaginaActual = 1;
         }
@@ -177,72 +172,6 @@ namespace GUI
             PaginaActual = PaginaActual + 1;
         }
 
-        protected void btnExportarCsv_Click(object sender, EventArgs e)
-        {
-            if (actor == null) return;
-
-            List<BitacoraVista_TE> registros;
-
-            try
-            {
-                registros = new BitacoraGestor_TLL().Exportar(actor, ArmarFiltro(), "CSV");
-            }
-            catch (InvalidOperationException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-                return;
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-                return;
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar("Bitacora.Exportar", ex);
-                Avisar("aviso-peligro", "No se pudo exportar la bitácora. Volvé a intentarlo.");
-                return;
-            }
-
-            Response.Clear();
-            Response.ContentType = "text/csv";
-            Response.ContentEncoding = new UTF8Encoding(true);
-            Response.Charset = "utf-8";
-            Response.AddHeader("Content-Disposition", "attachment; filename=bitacora_" + DateTime.Now.ToString("yyyyMMdd_HHmm", CultureInfo.InvariantCulture) + ".csv");
-            Response.BinaryWrite(new UTF8Encoding(true).GetPreamble());
-            Response.Write(ArmarCsv(registros));
-            Response.End();
-        }
-
-        // Separador ";" (lo que espera Excel en configuración regional argentina). Las celdas que arrancan con
-        // =, +, - o @ se prefijan para que una planilla no las interprete como fórmula.
-        private static string ArmarCsv(List<BitacoraVista_TE> registros)
-        {
-            var sb = new StringBuilder();
-            sb.Append("Fecha y hora;Usuario;Empresa;Módulo;Descripción;Criticidad\r\n");
-
-            foreach (var r in registros)
-            {
-                sb.Append(Celda(r.FechaHoraBitacora.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture))).Append(';')
-                  .Append(Celda(r.Actor)).Append(';')
-                  .Append(Celda(r.NombreEmpresa)).Append(';')
-                  .Append(Celda(r.ModuloBitacora)).Append(';')
-                  .Append(Celda(r.DescripcionBitacora)).Append(';')
-                  .Append(Celda(r.CriticidadBitacora.ToString())).Append("\r\n");
-            }
-
-            return sb.ToString();
-        }
-
-        private static string Celda(string valor)
-        {
-            valor = (valor ?? string.Empty).Replace("\r", " ").Replace("\n", " ");
-
-            if (valor.Length > 0 && "=+-@\t".IndexOf(valor[0]) >= 0) valor = "'" + valor;
-
-            return "\"" + valor.Replace("\"", "\"\"") + "\"";
-        }
-
         private void Avisar(string variante, string texto)
         {
             pnlAviso.CssClass = "aviso " + variante;
@@ -252,7 +181,7 @@ namespace GUI
 
         private void MostrarAlcance()
         {
-            if (actor.VeBitacoraCompleta)
+            if (actor.VeBitacoraCompleta())
             {
                 litBajada.Text = "Todos los movimientos registrados en el sistema.";
                 litAlcance.Text = "Ves la bitácora completa de todas las empresas " +

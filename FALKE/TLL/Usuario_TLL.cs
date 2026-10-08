@@ -17,6 +17,9 @@ namespace TLL
         private const int MAX_INTENTOS_FALLIDOS = 5;
         private const int LARGO_MINIMO_CONTRASENA = 8;
 
+        // Lo que se le dice al usuario cuando la contraseña no cumple. Es el mismo texto en todas las pantallas.
+        public const string POLITICA_CONTRASENA = "La contraseña debe tener al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).";
+
         public const string TOKEN_ACTIVACION = "activacion";
         public const string TOKEN_RECUPERACION = "recuperacion";
 
@@ -89,7 +92,11 @@ namespace TLL
             if (!VerificarContrasena(contrasenaPlana, usuario.ContrasenaHashUsuario))
             {
                 RegistrarIntentoFallido(usuario);
-                return ResultadoLogin_TLL.CredencialesInvalidas();
+
+                // El intento que agota el cupo bloquea la cuenta en ese momento: se le avisa enseguida.
+                if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos) return ResultadoLogin_TLL.BloqueadoPorIntentos();
+
+                return ResultadoLogin_TLL.CredencialesInvalidas(Math.Max(0, MAX_INTENTOS_FALLIDOS - usuario.IntentosFallidosUsuario));
             }
 
             string motivoEmpresa = MotivoEmpresaSinIngreso(usuario.IdEmpresa);
@@ -126,7 +133,7 @@ namespace TLL
             return ResultadoLogin_TLL.Exitoso(usuario, revisarIntegridad);
         }
 
-        public string RegistrarUsuario(ActorUsuario_TLL actor, Usuario_TE usuario)
+        public string RegistrarUsuario(ActorUsuario_TE actor, Usuario_TE usuario)
         {
             ExigirPatente(actor, Patentes_TLL.REGISTRAR_USUARIO);
 
@@ -173,13 +180,44 @@ namespace TLL
             return token;
         }
 
-        public PaginaUsuarios_TE ListarUsuarios(ActorUsuario_TLL actor, FiltroUsuarios_TE filtro)
+        // Para una cuenta que sigue pendiente de activación (el enlace venció, se perdió o el correo estaba mal): emite un enlace nuevo. El
+        // anterior no se anula (sigue valiendo hasta que venza o se use). Lo hace quien puede dar de alta usuarios, solo dentro de su alcance.
+        // El correo lo manda quien llama.
+        public SolicitudEnlace_TLL ReenviarInvitacion(ActorUsuario_TE actor, int idUsuario)
+        {
+            ExigirPatente(actor, Patentes_TLL.REGISTRAR_USUARIO);
+
+            var objetivo = ObtenerObjetivo(idUsuario);
+            ExigirAlcance(actor, objetivo.IdEmpresa, "reenviar una invitación");
+            ExigirJerarquia(actor, objetivo, "reenviar la invitación a");
+
+            if (objetivo.IdUsuario == actor.IdUsuario) throw new InvalidOperationException("No podés reenviarte una invitación a vos mismo.");
+
+            if (objetivo.Estado != EstadoUsuario.Pendiente) throw new InvalidOperationException("La invitación solo se reenvía a una cuenta que sigue pendiente de activación.");
+
+            string empresa = usuarioRepo.ObtenerNombreEmpresa(objetivo.IdEmpresa);
+
+            string token = Transaccion_ORM.Ejecutar(() =>
+            {
+                string t = EmitirToken(objetivo.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION, false);
+
+                Auditar(actor.IdUsuario, objetivo.IdEmpresa,
+                    "Reenvío de la invitación al usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): se emitió un enlace de activación nuevo",
+                    CriticidadBitacora.Media);
+
+                return t;
+            });
+
+            return new SolicitudEnlace_TLL { Token = token, Nombre = objetivo.NombreUsuario, Email = objetivo.EmailUsuario };
+        }
+
+        public PaginaUsuarios_TE ListarUsuarios(ActorUsuario_TE actor, FiltroUsuarios_TE filtro)
         {
             ExigirPatente(actor, Patentes_TLL.VER_USUARIOS);
 
             var f = (filtro ?? new FiltroUsuarios_TE()).Copiar();
 
-            if (!actor.VeTodasLasEmpresas)
+            if (!actor.VeTodasLasEmpresas())
             {
                 if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
 
@@ -191,18 +229,18 @@ namespace TLL
 
         // Quien ve todas las empresas asigna cualquier rol. Los demás, solo los que no tienen más permisos que ellos
         // (así nadie puede darse ni dar un permiso que no tiene).
-        public List<string> RolesAsignables(ActorUsuario_TLL actor)
+        public List<string> RolesAsignables(ActorUsuario_TE actor)
         {
             var roles = new PermisoRepository().ConstruirArbolDeRoles();
 
-            if (actor.VeTodasLasEmpresas) return roles.Select(r => r.Nombre).OrderBy(n => n).ToList();
+            if (actor.VeTodasLasEmpresas()) return roles.Select(r => r.Nombre).OrderBy(n => n).ToList();
 
             HashSet<string> propios = Permiso_TLL.ObtenerPatentes(actor.Permiso);
 
             return roles.Where(r => Permiso_TLL.ObtenerPatentes(r).IsSubsetOf(propios)).Select(r => r.Nombre).OrderBy(n => n).ToList();
         }
 
-        public void CambiarEstado(ActorUsuario_TLL actor, int idUsuario, EstadoUsuario nuevoEstado, string motivo)
+        public void CambiarEstado(ActorUsuario_TE actor, int idUsuario, EstadoUsuario nuevoEstado, string motivo)
         {
             ExigirPatente(actor, Patentes_TLL.CAMBIAR_ESTADO_USUARIO);
 
@@ -242,7 +280,7 @@ namespace TLL
             });
         }
 
-        public void CambiarRol(ActorUsuario_TLL actor, int idUsuario, string nuevoRol, string motivo, bool confirmado)
+        public void CambiarRol(ActorUsuario_TE actor, int idUsuario, string nuevoRol, string motivo, bool confirmado)
         {
             ExigirPatente(actor, Patentes_TLL.CAMBIAR_ROL_USUARIO);
 
@@ -329,7 +367,7 @@ namespace TLL
 
         // Nadie modifica a alguien con más permisos que él: un administrador no puede bloquear ni degradar al Gestor.
         // Los permisos de infraestructura (integridad y respaldos, del Webmaster) no cuentan: el Gestor administra también a los Webmasters.
-        private void ExigirJerarquia(ActorUsuario_TLL actor, Usuario_TE objetivo, string accion)
+        private void ExigirJerarquia(ActorUsuario_TE actor, Usuario_TE objetivo, string accion)
         {
             if (actor.EsEmergencia || objetivo.Rol == null) return;
 
@@ -344,7 +382,7 @@ namespace TLL
         // Datos de otro usuario. El administrador cambia nombre, apellido e idioma de la gente de su empresa.
         // Cambiar el correo o la empresa es solo de quien tenga CAMBIAR_EMAIL_EMPRESA_USUARIO (el Gestor).
         // Devuelve un token de activación nuevo cuando el usuario sigue pendiente y cambió su correo (hay que mandárselo a la dirección nueva).
-        public string ModificarDatosUsuario(ActorUsuario_TLL actor, int idUsuario, string nombre, string apellido, int idIdioma, string email, int idEmpresa, string motivo, bool confirmado)
+        public string ModificarDatosUsuario(ActorUsuario_TE actor, int idUsuario, string nombre, string apellido, int idIdioma, string email, int idEmpresa, string motivo, bool confirmado)
         {
             ExigirPatente(actor, Patentes_TLL.MODIFICAR_USUARIO);
 
@@ -431,7 +469,7 @@ namespace TLL
             return usuario;
         }
 
-        private void ExigirPatente(ActorUsuario_TLL actor, string patente)
+        private void ExigirPatente(ActorUsuario_TE actor, string patente)
         {
             if (actor == null || !actor.Puede(patente))
             {
@@ -440,16 +478,16 @@ namespace TLL
             }
         }
 
-        private void ExigirAlcance(ActorUsuario_TLL actor, int idEmpresaObjetivo, string accion)
+        private void ExigirAlcance(ActorUsuario_TE actor, int idEmpresaObjetivo, string accion)
         {
-            if (actor.VeTodasLasEmpresas) return;
+            if (actor.VeTodasLasEmpresas()) return;
             if (actor.IdEmpresa > 0 && actor.IdEmpresa == idEmpresaObjetivo) return;
 
             bitacora.Registrar(actor.IdUsuario, "Seguridad", "Intento de " + accion + " en otra empresa (empresa " + idEmpresaObjetivo + ")", CriticidadBitacora.Alta, idEmpresaObjetivo);
             throw new UnauthorizedAccessException("No tenés permiso sobre ese usuario.");
         }
 
-        private static string ValidarMotivo(ActorUsuario_TLL actor, int idEmpresaObjetivo, string motivo)
+        private static string ValidarMotivo(ActorUsuario_TE actor, int idEmpresaObjetivo, string motivo)
         {
             motivo = (motivo ?? string.Empty).Trim();
 
@@ -525,7 +563,7 @@ namespace TLL
 
             if (!EsContrasenaAceptable(contrasenaNueva))
             {
-                error = "La nueva contraseña debe tener al menos " + LARGO_MINIMO_CONTRASENA + " caracteres.";
+                error = POLITICA_CONTRASENA;
                 return false;
             }
 
@@ -665,14 +703,14 @@ namespace TLL
             return ResultadoToken_TLL.Ok(usuario.EmailUsuario);
         }
 
-        private string EmitirToken(int idUsuario, string tipo, TimeSpan vigencia)
+        private string EmitirToken(int idUsuario, string tipo, TimeSpan vigencia, bool invalidarAnteriores = true)
         {
             string token = Cifrador_SECURITY.GenerarSecretoUrlSafe();
             var ahora = DateTime.Now;
 
             Transaccion_ORM.Ejecutar(() =>
             {
-                tokenRepo.InvalidarPendientes(idUsuario, tipo);
+                if (invalidarAnteriores) tokenRepo.InvalidarPendientes(idUsuario, tipo);
                 tokenRepo.Crear(idUsuario, token, tipo, ahora, ahora.Add(vigencia));
                 gestorIntegridad.RecalcularTabla(TablasBD.Token);
             });
@@ -680,9 +718,15 @@ namespace TLL
             return token;
         }
 
-        private static bool EsContrasenaAceptable(string contrasena)
+        // Mínimo 8 caracteres, con mayúscula, minúscula, número y un carácter especial (ni letra, ni número, ni espacio).
+        public static bool EsContrasenaAceptable(string contrasena)
         {
-            return !string.IsNullOrWhiteSpace(contrasena) && contrasena.Length >= LARGO_MINIMO_CONTRASENA;
+            return !string.IsNullOrWhiteSpace(contrasena)
+                && contrasena.Length >= LARGO_MINIMO_CONTRASENA
+                && contrasena.Any(char.IsUpper)
+                && contrasena.Any(char.IsLower)
+                && contrasena.Any(char.IsDigit)
+                && contrasena.Any(c => !char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c));
         }
 
         private static string NormalizarEmail(string email)

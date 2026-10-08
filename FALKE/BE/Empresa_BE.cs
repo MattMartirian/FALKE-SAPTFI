@@ -16,8 +16,6 @@ namespace BE
         public CicloFacturacion? Facturacion { get; set; }
         public DateTime? FechaRenovacion { get; set; }
         public string DVH { get; set; }
-
-        // Solo los llena el listado; no se guardan en la tabla.
         public int CantidadUsuarios { get; set; }
         public int DispositivosPrestados { get; set; }
         public int SesionesGrabadas { get; set; }
@@ -33,9 +31,7 @@ namespace BE
     public enum EstadoEmpresa
     {
         Activa,
-        // Sigue siendo cliente pero no puede acceder (por ejemplo, falta de pago): se levanta pasando a Activa.
         Bloqueada,
-        // Dada de baja: ya no es cliente. Solo puede volver a Activa si retoma el servicio.
         Deshabilitada
     }
 

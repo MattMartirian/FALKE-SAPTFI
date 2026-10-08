@@ -224,7 +224,7 @@
                 </tr>
             </thead>
             <tbody>
-                <asp:Repeater ID="rptUsuarios" runat="server">
+                <asp:Repeater ID="rptUsuarios" runat="server" OnItemCommand="rptUsuarios_ItemCommand">
                     <ItemTemplate>
                         <tr class="<%#: ClaseFila(Container.DataItem) %>">
                             <td>
@@ -239,7 +239,7 @@
                             <asp:PlaceHolder runat="server" Visible="<%# VeTodas %>"><td><%#: Eval("NombreEmpresa") %></td></asp:PlaceHolder>
                             <td><%#: EtiquetaRol((string)Eval("Rol")) %></td>
                             <td><span class="badge <%#: ClaseEstado((TE.EstadoUsuario)Eval("Estado")) %>"><%#: EtiquetaEstado((TE.EstadoUsuario)Eval("Estado")) %></span></td>
-                            <asp:PlaceHolder runat="server" Visible="<%# PuedeGestionar %>">
+                            <asp:PlaceHolder runat="server" Visible="<%# PuedeGestionar || PuedeInvitar %>">
                                 <td class="celda-acciones">
                                     <div class="acciones-fila">
                                         <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeEditarDatos %>">
@@ -269,6 +269,17 @@
                                                     data-otra-empresa="<%#: EsOtraEmpresa(Container.DataItem) ? "1" : "0" %>">
                                                 Gestionar
                                             </button>
+                                        </asp:PlaceHolder>
+                                        <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeInvitar && EsPendiente(Container.DataItem) && !InvitacionEnviada(Container.DataItem) %>">
+                                            <asp:LinkButton runat="server" CssClass="btn btn-secundario btn-chico" CommandName="reenviar" CommandArgument='<%# Eval("IdUsuario") %>'
+                                                            CausesValidation="false" ToolTip="Genera un enlace de activación nuevo y lo envía por correo"
+                                                            OnClientClick="if (this.getAttribute('data-enviando')) return false; this.setAttribute('data-enviando', '1'); return true;">Reenviar invitación</asp:LinkButton>
+                                        </asp:PlaceHolder>
+                                        <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeInvitar && EsPendiente(Container.DataItem) && InvitacionEnviada(Container.DataItem) %>">
+                                            <span class="btn btn-secundario btn-chico" aria-disabled="true" title="La invitación ya se envió">
+                                                <svg width="15" height="15" aria-hidden="true"><use href="#i-tilde" /></svg>
+                                                Invitación enviada
+                                            </span>
                                         </asp:PlaceHolder>
                                     </div>
                                 </td>

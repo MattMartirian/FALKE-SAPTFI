@@ -38,7 +38,7 @@ namespace TLL
         }
 
         // Del más reciente al más antiguo. ArchivoDisponible dice si el archivo sigue en el servidor.
-        public List<Respaldo_TE> Listar(ActorUsuario_TLL actor)
+        public List<Respaldo_TE> Listar(ActorUsuario_TE actor)
         {
             Exigir(actor, Patentes_TLL.VER_RESPALDOS);
 
@@ -55,7 +55,7 @@ namespace TLL
         }
 
         // Copia completa de la base, verificada al terminar. Devuelve el registro de la copia.
-        public Respaldo_TE Generar(ActorUsuario_TLL actor)
+        public Respaldo_TE Generar(ActorUsuario_TE actor)
         {
             Exigir(actor, Patentes_TLL.HACER_RESPALDO);
 
@@ -98,7 +98,7 @@ namespace TLL
         }
 
         // Reemplaza toda la base por la de la copia elegida. Quien llama debe cerrar las sesiones al terminar.
-        public void Restaurar(ActorUsuario_TLL actor, int idRespaldo, string confirmacion)
+        public void Restaurar(ActorUsuario_TE actor, int idRespaldo, string confirmacion)
         {
             Exigir(actor, Patentes_TLL.RESTAURAR_RESPALDO);
 
@@ -171,7 +171,7 @@ namespace TLL
         }
 
         // El evento se escribe en la base ya restaurada. Si el usuario no existía cuando se hizo la copia, el evento queda sin usuario y se nombra en el texto.
-        private void AuditarRestauracion(ActorUsuario_TLL actor, string quien, Respaldo_TE respaldo)
+        private void AuditarRestauracion(ActorUsuario_TE actor, string quien, Respaldo_TE respaldo)
         {
             try
             {
@@ -188,7 +188,7 @@ namespace TLL
             }
         }
 
-        private static string DescribirActor(ActorUsuario_TLL actor)
+        private static string DescribirActor(ActorUsuario_TE actor)
         {
             if (actor.EsEmergencia || actor.IdUsuario <= 0) return "la cuenta de emergencia";
 
@@ -197,7 +197,7 @@ namespace TLL
             return usuario == null ? "el usuario " + actor.IdUsuario : (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim() + " (" + usuario.EmailUsuario + ")";
         }
 
-        private void Exigir(ActorUsuario_TLL actor, string patente)
+        private void Exigir(ActorUsuario_TE actor, string patente)
         {
             if (actor != null && actor.Puede(patente)) return;
 

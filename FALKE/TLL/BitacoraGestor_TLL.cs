@@ -24,7 +24,7 @@ namespace TLL
         }
 
         // Cada usuario ve su propia actividad (lo que hizo él), sin necesitar permiso sobre la bitácora general.
-        public List<Bitacora_TE> ObtenerMiActividad(ActorUsuario_TLL actor, int cantidad = 10)
+        public List<Bitacora_TE> ObtenerMiActividad(ActorUsuario_TE actor, int cantidad = 10)
         {
             if (actor == null || actor.IdUsuario <= 0) return new List<Bitacora_TE>();
 
@@ -47,14 +47,13 @@ namespace TLL
         public const string ACCION_ALTA = "Alta";
         public const string ACCION_MODIFICACION = "Modificacion";
         public const string ACCION_BAJA = "Baja";
-        public const string ACCION_EXPORTACION = "Exportacion";
 
         // El Gestor ve todo con nombres; el administrador solo los eventos de su empresa y el equipo de Pattern Blue sin nombre.
-        private List<BitacoraVista_TE> ObtenerAlcance(ActorUsuario_TLL actor)
+        private List<BitacoraVista_TE> ObtenerAlcance(ActorUsuario_TE actor)
         {
             if (actor == null || !actor.Puede(Patentes_TLL.VER_BITACORA)) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora.");
 
-            if (actor.VeBitacoraCompleta)
+            if (actor.VeBitacoraCompleta())
                 return bitacoraRepo.ObtenerVista(null, false, ID_EMPRESA_PROVEEDORA, Usuario_TLL.ROL_GESTOR, ETIQUETA_PROVEEDOR);
 
             if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
@@ -63,7 +62,7 @@ namespace TLL
         }
 
         // Los filtros se aplican acá, sobre lo que el alcance del actor permite ver (el filtro por empresa solo rige para quien ve todas).
-        private static List<BitacoraVista_TE> Filtrar(List<BitacoraVista_TE> registros, FiltroBitacora_TE filtro, ActorUsuario_TLL actor)
+        private static List<BitacoraVista_TE> Filtrar(List<BitacoraVista_TE> registros, FiltroBitacora_TE filtro, ActorUsuario_TE actor)
         {
             if (filtro == null) return registros;
 
@@ -98,7 +97,7 @@ namespace TLL
                 if (modulo.Length > 0 && !string.Equals(r.ModuloBitacora, modulo, StringComparison.OrdinalIgnoreCase)) continue;
                 if (accion.Length > 0 && ClasificarAccion(r.DescripcionBitacora) != accion) continue;
                 if (filtro.Criticidad.HasValue && r.CriticidadBitacora != filtro.Criticidad.Value) continue;
-                if (actor.VeBitacoraCompleta && filtro.IdEmpresa.HasValue && r.IdEmpresa != filtro.IdEmpresa.Value) continue;
+                if (actor.VeBitacoraCompleta() && filtro.IdEmpresa.HasValue && r.IdEmpresa != filtro.IdEmpresa.Value) continue;
                 // Por nombre o por correo. El correo de un actor enmascarado no llega acá, así que no se puede descubrir buscándolo.
                 if (texto.Length > 0 &&
                     (r.Actor ?? string.Empty).IndexOf(texto, StringComparison.CurrentCultureIgnoreCase) < 0 &&
@@ -110,7 +109,7 @@ namespace TLL
             return resultado;
         }
 
-        public PaginaBitacora_TE ObtenerVista(ActorUsuario_TLL actor, FiltroBitacora_TE filtro)
+        public PaginaBitacora_TE ObtenerVista(ActorUsuario_TE actor, FiltroBitacora_TE filtro)
         {
             filtro = filtro ?? new FiltroBitacora_TE();
 
@@ -129,7 +128,7 @@ namespace TLL
             };
         }
 
-        public List<string> ObtenerModulos(ActorUsuario_TLL actor)
+        public List<string> ObtenerModulos(ActorUsuario_TE actor)
         {
             return ObtenerAlcance(actor)
                 .Select(r => r.ModuloBitacora)
@@ -137,18 +136,6 @@ namespace TLL
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(m => m)
                 .ToList();
-        }
-
-        // La exportación queda registrada con el mismo rigor que un cambio: si no se puede auditar, no se entrega nada.
-        public List<BitacoraVista_TE> Exportar(ActorUsuario_TLL actor, FiltroBitacora_TE filtro, string formato)
-        {
-            var registros = Filtrar(ObtenerAlcance(actor), filtro, actor);
-
-            Guardar(new Bitacora_TE(actor.IdUsuario, "Seguridad",
-                "Exportación de la bitácora (" + formato + ", " + registros.Count + " registros)",
-                CriticidadBitacora.Media, DateTime.Now));
-
-            return registros;
         }
 
         public static string ClasificarAccion(string descripcion)
@@ -161,7 +148,6 @@ namespace TLL
             if (d.StartsWith("cierre de sesi")) return ACCION_CIERRE_SESION;
             if (d.StartsWith("alta")) return ACCION_ALTA;
             if (d.StartsWith("baja")) return ACCION_BAJA;
-            if (d.StartsWith("exportaci")) return ACCION_EXPORTACION;
             if (d.StartsWith("cambio") || d.StartsWith("modificaci") || d.StartsWith("renombrado")) return ACCION_MODIFICACION;
 
             return string.Empty;

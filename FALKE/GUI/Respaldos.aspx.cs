@@ -14,7 +14,7 @@ namespace GUI
         private const string CLAVE_AVISO = "respaldos.aviso";
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
 
         // Entrar y ver es VER_RESPALDOS; generar y restaurar piden cada uno el suyo.
         protected bool PuedeGenerar { get; private set; }

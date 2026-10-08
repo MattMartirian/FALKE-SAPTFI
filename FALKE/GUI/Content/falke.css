@@ -570,18 +570,6 @@ a.icono-boton
     background: rgba(255, 255, 255, .12);
 }
 
-.punto-aviso
-{
-    position: absolute;
-    top: 7px;
-    right: 7px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--marca-coral);
-    border: 2px solid var(--marca-azul);
-}
-
 .avatar
 {
     display: inline-flex;
@@ -697,17 +685,6 @@ a.icono-boton
 {
     background: var(--superficie-2);
     border-color: var(--texto-suave);
-}
-
-.btn-oscuro
-{
-    background: var(--marca-azul);
-    color: var(--marca-perla);
-}
-
-.btn-oscuro:hover
-{
-    background: var(--primario-hover);
 }
 
 .btn-peligro

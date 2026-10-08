@@ -73,7 +73,7 @@ namespace GUI
             switch (motivo)
             {
                 case "CONTRASENA_DEBIL":
-                    return "La contraseña tiene que tener al menos 8 caracteres.";
+                    return Usuario_TLL.POLITICA_CONTRASENA;
 
                 case "TOKEN_EXPIRADO":
                     return "El enlace venció. Pedí uno nuevo desde «Recuperar mi contraseña».";

@@ -349,7 +349,8 @@
                 <div class="fila-campos">
                     <div class="campo">
                         <label for="aeCuit" data-i18n="altaEmpresa.cuit">CUIT</label>
-                        <asp:TextBox ID="aeCuit" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="20" placeholder="30-00000000-0" />
+                        <asp:TextBox ID="aeCuit" runat="server" CssClass="entrada" ClientIDMode="Static" MaxLength="20" placeholder="30-12345678-1" />
+                        <p class="ayuda">11 dígitos, con o sin guiones. Empieza con 20, 23, 24, 27, 30, 33 o 34.</p>
                     </div>
                     <div class="campo">
                         <label for="aeRubro" data-i18n="altaEmpresa.rubro">Rubro</label>

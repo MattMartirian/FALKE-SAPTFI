@@ -7,6 +7,7 @@ using BE;
 using BLL;
 using SERVICES;
 using TLL;
+using TE;
 
 namespace GUI
 {
@@ -16,7 +17,7 @@ namespace GUI
         private const string CLAVE_AVISO_MODELOS = "dispositivos.aviso.modelos";
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
         private Dictionary<int, List<Prestamo_BE>> historiales = new Dictionary<int, List<Prestamo_BE>>();
         private int idAbierto;
 

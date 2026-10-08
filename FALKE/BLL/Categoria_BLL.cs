@@ -10,7 +10,6 @@ namespace BLL
 {
     public class Categoria_BLL
     {
-        // Coinciden con el tamaño de las columnas de la base (CategoriaTable.nombre_categoria es nvarchar(100); las tablas por tipo, varchar(50)).
         private const int LARGO_NOMBRE = 100;
         private const int LARGO_NOMBRE_ACTIVO = 100;
         private const int LARGO_FLUJO = 500;
@@ -28,8 +27,7 @@ namespace BLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        // Cada empresa ve y administra únicamente sus propias categorías.
-        public List<Categoria_BE> ObtenerPorEmpresa(ActorUsuario_TLL actor)
+        public List<Categoria_BE> ObtenerPorEmpresa(ActorUsuario_TE actor)
         {
             ExigirPatente(actor, Patentes_TLL.OPERAR_ANALISIS);
 
@@ -38,14 +36,14 @@ namespace BLL
             return categoriaRepo.ObtenerPorEmpresa(actor.IdEmpresa);
         }
 
-        public Categoria_BE ObtenerPorId(ActorUsuario_TLL actor, int idCategoria)
+        public Categoria_BE ObtenerPorId(ActorUsuario_TE actor, int idCategoria)
         {
             ExigirPatente(actor, Patentes_TLL.OPERAR_ANALISIS);
 
             return ObtenerPropia(actor, idCategoria);
         }
 
-        public void Crear(ActorUsuario_TLL actor, Categoria_BE categoria)
+        public void Crear(ActorUsuario_TE actor, Categoria_BE categoria)
         {
             ExigirPatente(actor, Patentes_TLL.GESTIONAR_CATEGORIAS);
 
@@ -70,7 +68,7 @@ namespace BLL
             });
         }
 
-        public void Modificar(ActorUsuario_TLL actor, int idCategoria, Categoria_BE nuevos)
+        public void Modificar(ActorUsuario_TE actor, int idCategoria, Categoria_BE nuevos)
         {
             ExigirPatente(actor, Patentes_TLL.GESTIONAR_CATEGORIAS);
 
@@ -100,8 +98,7 @@ namespace BLL
             });
         }
 
-        // Una categoría con sesiones grabadas no se puede perder: se desactiva en vez de eliminarla.
-        public void Eliminar(ActorUsuario_TLL actor, int idCategoria)
+        public void Eliminar(ActorUsuario_TE actor, int idCategoria)
         {
             ExigirPatente(actor, Patentes_TLL.GESTIONAR_CATEGORIAS);
 
@@ -137,7 +134,7 @@ namespace BLL
             });
         }
 
-        private Categoria_BE ObtenerPropia(ActorUsuario_TLL actor, int idCategoria)
+        private Categoria_BE ObtenerPropia(ActorUsuario_TE actor, int idCategoria)
         {
             Categoria_BE categoria = categoriaRepo.ObtenerPorPK(idCategoria);
 
@@ -149,7 +146,7 @@ namespace BLL
             return categoria;
         }
 
-        private void ExigirPatente(ActorUsuario_TLL actor, string patente)
+        private void ExigirPatente(ActorUsuario_TE actor, string patente)
         {
             if (actor != null && actor.Puede(patente)) return;
 
@@ -157,7 +154,7 @@ namespace BLL
             throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
         }
 
-        private void Auditar(ActorUsuario_TLL actor, string descripcion, CriticidadBitacora criticidad)
+        private void Auditar(ActorUsuario_TE actor, string descripcion, CriticidadBitacora criticidad)
         {
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Categorías", descripcion, criticidad, DateTime.Now) { IdEmpresa = actor.IdEmpresa });
         }

@@ -148,6 +148,10 @@
                     <span class="marca-req" aria-hidden="true"></span>
                     <span data-i18n="miClave.req.numero">Un número</span>
                 </li>
+                <li data-requisito="especial">
+                    <span class="marca-req" aria-hidden="true"></span>
+                    <span data-i18n="miClave.req.especial">Un carácter especial (por ejemplo # ! @ $ %)</span>
+                </li>
             </ul>
         </div>
 
@@ -192,15 +196,16 @@
             var avisoRepetir = document.getElementById("avisoRepetir");
             var items = document.querySelectorAll("#listaRequisitos li");
 
-            var TEXTOS = ["Muy débil", "Débil", "Aceptable", "Buena"];
-            var COLORES = ["var(--peligro)", "var(--alerta)", "var(--info)", "var(--exito)"];
+            var TEXTOS = ["Muy débil", "Débil", "Aceptable", "Buena", "Fuerte"];
+            var COLORES = ["var(--peligro)", "var(--alerta)", "var(--info)", "var(--exito)", "var(--exito)"];
 
             function requisitosCumplidos(clave) {
                 return {
                     largo: clave.length >= 8,
-                    mayuscula: /[A-Z]/.test(clave),
-                    minuscula: /[a-z]/.test(clave),
-                    numero: /[0-9]/.test(clave)
+                    mayuscula: /\p{Lu}/u.test(clave),
+                    minuscula: /\p{Ll}/u.test(clave),
+                    numero: /\p{Nd}/u.test(clave),
+                    especial: /[^\p{L}\p{Nd}\s]/u.test(clave)
                 };
             }
 
@@ -219,7 +224,7 @@
                     if (ok) cuantos++;
                 }
 
-                barra.style.width = (cuantos * 25) + "%";
+                barra.style.width = (cuantos * 20) + "%";
 
                 if (clave === "")
                 {
@@ -240,7 +245,7 @@
                 else
                     avisoRepetir.textContent = "Todavía no coinciden.";
 
-                boton.disabled = !(actual.value !== "" && clave.length >= 8 && coinciden);
+                boton.disabled = !(actual.value !== "" && cuantos === items.length && coinciden);
             }
 
             actual.addEventListener("input", revisar);

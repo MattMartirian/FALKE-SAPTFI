@@ -26,10 +26,7 @@ namespace BLL
             gestorIntegridad = new GestorIntegridad_SERVICE();
             bitacora = new BitacoraGestor_TLL();
         }
-
-        // Alta completa de una empresa cliente con su administrador inicial, en una sola transacción:
-        // si algo falla (por ejemplo, el email del administrador ya existe) no queda ni la empresa ni el usuario.
-        public string RegistrarEmpresa(ActorUsuario_TLL actor, Empresa_BE empresa, Usuario_TE adminInicial)
+        public string RegistrarEmpresa(ActorUsuario_TE actor, Empresa_BE empresa, Usuario_TE adminInicial)
         {
             if (actor == null || !actor.Puede(Patentes_TLL.REGISTRAR_EMPRESA))
             {
@@ -69,8 +66,7 @@ namespace BLL
             return token;
         }
 
-        // Solo lectura: el administrador ve los datos de su empresa pero no los modifica.
-        public Empresa_BE ObtenerMiEmpresa(ActorUsuario_TLL actor)
+        public Empresa_BE ObtenerMiEmpresa(ActorUsuario_TE actor)
         {
             if (actor == null || actor.IdEmpresa <= 0 || !actor.Puede(Patentes_TLL.VER_DATOS_EMPRESA))
                 throw new UnauthorizedAccessException("No tenés permiso para ver los datos de la empresa.");
@@ -78,7 +74,7 @@ namespace BLL
             return empresaRepo.ObtenerResumenPorId(actor.IdEmpresa);
         }
 
-        public void ModificarDatos(ActorUsuario_TLL actor, int idEmpresa, Empresa_BE nuevos, string motivo)
+        public void ModificarDatos(ActorUsuario_TE actor, int idEmpresa, Empresa_BE nuevos, string motivo)
         {
             ExigirPatente(actor, Patentes_TLL.MODIFICAR_EMPRESA);
 
@@ -123,8 +119,7 @@ namespace BLL
             });
         }
 
-        // El administrador de una empresa cambia solo rubro, domicilio y teléfono de la suya: razón social, CUIT, plan, facturación y estado son de Pattern Blue.
-        public void ModificarContacto(ActorUsuario_TLL actor, string rubro, string domicilio, string telefono)
+        public void ModificarContacto(ActorUsuario_TE actor, string rubro, string domicilio, string telefono)
         {
             ExigirPatente(actor, Patentes_TLL.MODIFICAR_CONTACTO_EMPRESA);
 
@@ -162,7 +157,7 @@ namespace BLL
             });
         }
 
-        public void CambiarEstado(ActorUsuario_TLL actor, int idEmpresa, EstadoEmpresa nuevoEstado, string motivo)
+        public void CambiarEstado(ActorUsuario_TE actor, int idEmpresa, EstadoEmpresa nuevoEstado, string motivo)
         {
             ExigirPatente(actor, Patentes_TLL.CAMBIAR_ESTADO_EMPRESA);
 
@@ -202,7 +197,7 @@ namespace BLL
             return empresa;
         }
 
-        private void ExigirPatente(ActorUsuario_TLL actor, string patente)
+        private void ExigirPatente(ActorUsuario_TE actor, string patente)
         {
             if (actor != null && actor.Puede(patente)) return;
 
@@ -211,7 +206,7 @@ namespace BLL
         }
 
         // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
-        private void Auditar(ActorUsuario_TLL actor, int idEmpresa, string descripcion, CriticidadBitacora criticidad)
+        private void Auditar(ActorUsuario_TE actor, int idEmpresa, string descripcion, CriticidadBitacora criticidad)
         {
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Empresas", descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
         }
@@ -257,17 +252,17 @@ namespace BLL
         public Empresa_BE ObtenerPorId(int idEmpresa) => empresaRepo.ObtenerPorPK(idEmpresa);
 
         // Solo el nombre de cada empresa: es lo que necesita quien ve la bitácora completa para filtrar por empresa.
-        public List<Empresa_BE> ObtenerParaFiltroDeBitacora(ActorUsuario_TLL actor)
+        public List<Empresa_BE> ObtenerParaFiltroDeBitacora(ActorUsuario_TE actor)
         {
-            if (actor == null || !actor.VeBitacoraCompleta) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora de todas las empresas.");
+            if (actor == null || !actor.VeBitacoraCompleta()) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora de todas las empresas.");
 
             return empresaRepo.ObtenerTodos().Select(e => new Empresa_BE { IdEmpresa = e.IdEmpresa, NombreEmpresa = e.NombreEmpresa }).OrderBy(e => e.NombreEmpresa).ToList();
         }
 
         // Listado de la cartera: solo para quien ve todas las empresas.
-        public List<Empresa_BE> ObtenerCartera(ActorUsuario_TLL actor)
+        public List<Empresa_BE> ObtenerCartera(ActorUsuario_TE actor)
         {
-            if (actor == null || !actor.VeTodasLasEmpresas) throw new UnauthorizedAccessException("No tenés permiso para ver todas las empresas.");
+            if (actor == null || !actor.VeTodasLasEmpresas()) throw new UnauthorizedAccessException("No tenés permiso para ver todas las empresas.");
 
             return empresaRepo.ObtenerResumen();
         }
@@ -300,10 +295,10 @@ namespace BLL
             else
             {
                 empresa.Cuit = cuitIngresado;
-                if (empresa.Cuit == null) throw new InvalidOperationException("El CUIT debe tener 11 dígitos (por ejemplo 30-12345678-9).");
+                if (empresa.Cuit == null) throw new InvalidOperationException("El CUIT debe tener 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).");
 
-                // Es el último número del propio CUIT, que se calcula con los anteriores (regla de AFIP): sirve para detectar un error de tipeo.
-                if (!TieneDigitoVerificadorValido(empresa.Cuit)) throw new InvalidOperationException("El CUIT no es válido: revisá que esté bien escrito.");
+                string motivoInvalido = MotivoCuitInvalido(empresa.Cuit);
+                if (motivoInvalido != null) throw new InvalidOperationException(motivoInvalido);
             }
 
             if (empresaRepo.ExisteNombre(empresa.NombreEmpresa, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con esa razón social.");
@@ -325,6 +320,20 @@ namespace BLL
         // Prefijos que asigna AFIP a personas humanas (20, 23, 24, 27) y jurídicas (30, 33, 34); el último dígito se calcula módulo 11.
         private static readonly int[] PrefijosCuit = { 20, 23, 24, 27, 30, 33, 34 };
         private static readonly int[] PesosCuit = { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
+
+        // Dice qué le pasa a un CUIT de 11 dígitos, con el formato esperado, o devuelve null si es válido.
+        private static string MotivoCuitInvalido(string cuitNormalizado)
+        {
+            const string FORMATO = " El formato es 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).";
+            string digitos = cuitNormalizado.Replace("-", string.Empty);
+
+            if (!PrefijosCuit.Contains(int.Parse(digitos.Substring(0, 2))))
+                return "El CUIT tiene que empezar con 20, 23, 24, 27, 30, 33 o 34, y el tuyo empieza con " + digitos.Substring(0, 2) + "." + FORMATO;
+
+            return TieneDigitoVerificadorValido(cuitNormalizado)
+                ? null
+                : "El último dígito del CUIT no coincide con los anteriores (es un número de control): revisá que no haya un error de tipeo." + FORMATO;
+        }
 
         private static bool TieneDigitoVerificadorValido(string cuitNormalizado)
         {

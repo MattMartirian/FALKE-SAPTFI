@@ -11,7 +11,7 @@ namespace GUI
     {
         private const string CLAVE_AVISO = "roles.aviso";
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
         private CatalogoPermisos_TE catalogo;
 
         private string Seleccionado

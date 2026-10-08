@@ -101,7 +101,7 @@
                         <label for="txtNueva" data-i18n="definir.nueva">Contraseña nueva</label>
                         <asp:TextBox ID="txtNueva" runat="server" CssClass="entrada" TextMode="Password"
                                      ClientIDMode="Static" autocomplete="new-password" />
-                        <p class="ayuda" data-i18n="definir.requisito">Al menos 8 caracteres.</p>
+                        <p class="ayuda" data-i18n="definir.requisito">Al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).</p>
                     </div>
 
                     <div class="campo">

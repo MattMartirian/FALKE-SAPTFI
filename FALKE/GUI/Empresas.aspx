@@ -367,7 +367,8 @@
                     </div>
                     <div class="campo">
                         <label for="edCuit">CUIT</label>
-                        <asp:TextBox ID="edCuit" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" />
+                        <asp:TextBox ID="edCuit" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" placeholder="30-12345678-1" />
+                        <p class="ayuda">11 dígitos, con o sin guiones. Empieza con 20, 23, 24, 27, 30, 33 o 34.</p>
                     </div>
                 </div>
                 <div class="fila-campos">

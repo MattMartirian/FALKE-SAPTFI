@@ -25,7 +25,6 @@ namespace GUI
         private const string ITEM_RESTAURA = "FALKE_RECORDARME_RESUELTO";
         private const int DIAS_RECORDARME = 30;
 
-        // Cada sesión guarda la época en que se inició. Al restaurar la base se pasa a la siguiente, y las sesiones de la anterior caen.
         private static int epocaSesiones;
 
         private static HttpContext Ctx
@@ -85,13 +84,13 @@ namespace GUI
             get { return Ctx.Session[K_PERMISOS] as PermisoAbstracto_TE; }
         }
 
-        public static ActorUsuario_TLL ObtenerActor()
+        public static ActorUsuario_TE ObtenerActor()
         {
             RestaurarDesdeCookie();
 
             if (!HayUsuario) return null;
 
-            return new ActorUsuario_TLL
+            return new ActorUsuario_TE
             {
                 IdUsuario = IdUsuario,
                 IdEmpresa = IdEmpresa,

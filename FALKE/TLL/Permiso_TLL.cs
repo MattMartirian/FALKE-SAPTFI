@@ -27,7 +27,7 @@ namespace TLL
 
         // ---- Gestión de roles y grupos (solo con GESTIONAR_ROLES). Los permisos (patentes) los define el desarrollador.
 
-        public CatalogoPermisos_TE ObtenerCatalogo(ActorUsuario_TLL actor)
+        public CatalogoPermisos_TE ObtenerCatalogo(ActorUsuario_TE actor)
         {
             ExigirGestionar(actor);
 
@@ -75,12 +75,12 @@ namespace TLL
 
         // Un rol de gestión es del personal de Pattern Blue: solo se asigna a usuarios de la empresa proveedora y es el único que puede
         // incluir permisos reservados. Un rol general se asigna a cualquier empresa y no puede incluirlos. Se elige al crearlo.
-        public void CrearRol(ActorUsuario_TLL actor, string nombre, string descripcion = null, bool deGestion = false)
+        public void CrearRol(ActorUsuario_TE actor, string nombre, string descripcion = null, bool deGestion = false)
         {
             Crear(actor, nombre, true, descripcion, deGestion);
         }
 
-        public void CrearGrupo(ActorUsuario_TLL actor, string nombre, string descripcion = null)
+        public void CrearGrupo(ActorUsuario_TE actor, string nombre, string descripcion = null)
         {
             Crear(actor, nombre, false, descripcion, false);
         }
@@ -101,7 +101,7 @@ namespace TLL
         }
 
         // El nombre es interno y no se cambia; lo que se edita es la descripción que se muestra. Vacía = vuelve a mostrarse el nombre.
-        public void CambiarDescripcion(ActorUsuario_TLL actor, string nombre, string descripcion)
+        public void CambiarDescripcion(ActorUsuario_TE actor, string nombre, string descripcion)
         {
             if (actor == null || !actor.Puede(Patentes_TLL.CAMBIAR_DESCRIPCION_PERMISO))
             {
@@ -147,7 +147,7 @@ namespace TLL
         // Cambia lo que incluye un rol o un grupo. Se carga el árbol, se aplican los cambios con Agregar y Quitar del Composite (que cuida la
         // estructura: a sí mismo, duplicados, ciclos), se validan las reglas del negocio y la ORM deja la base igual que el árbol.
         // Todo va en una transacción con un bloqueo, así dos ediciones simultáneas no pueden crear un ciclo entre las dos.
-        public void GuardarComposicion(ActorUsuario_TLL actor, string nombre, IEnumerable<string> incluidos)
+        public void GuardarComposicion(ActorUsuario_TE actor, string nombre, IEnumerable<string> incluidos)
         {
             ExigirGestionar(actor);
 
@@ -218,7 +218,7 @@ namespace TLL
 
         // La baja de un rol o un grupo también pasa por el Composite: primero se le quitan todos los hijos (Quitar), la ORM deja la base igual
         // que el árbol (sin relaciones) y después se borra el nodo.
-        public void EliminarRolOGrupo(ActorUsuario_TLL actor, string nombre)
+        public void EliminarRolOGrupo(ActorUsuario_TE actor, string nombre)
         {
             ExigirGestionar(actor);
 
@@ -260,7 +260,7 @@ namespace TLL
             return permiso == null ? new HashSet<string>() : permiso.ObtenerPatentes();
         }
 
-        private void Crear(ActorUsuario_TLL actor, string nombre, bool esRol, string descripcion, bool deGestion)
+        private void Crear(ActorUsuario_TE actor, string nombre, bool esRol, string descripcion, bool deGestion)
         {
             ExigirGestionar(actor);
 
@@ -308,7 +308,7 @@ namespace TLL
                 throw new PermisoInvalidoException("\"" + permiso.Nombre + "\" es un rol base del sistema: no se puede " + accion + ".");
         }
 
-        private void ExigirGestionar(ActorUsuario_TLL actor)
+        private void ExigirGestionar(ActorUsuario_TE actor)
         {
             if (actor != null && actor.Puede(Patentes_TLL.GESTIONAR_ROLES)) return;
 
@@ -317,7 +317,7 @@ namespace TLL
         }
 
         // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
-        private void Auditar(ActorUsuario_TLL actor, string descripcion, CriticidadBitacora criticidad)
+        private void Auditar(ActorUsuario_TE actor, string descripcion, CriticidadBitacora criticidad)
         {
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Roles", descripcion, criticidad, DateTime.Now));
         }

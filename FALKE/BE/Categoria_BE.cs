@@ -14,26 +14,26 @@ namespace BE
         public bool Activa { get; set; }
         public string DVH { get; set; }
 
-        // Solo lo llena el listado; no se guarda en la tabla.
         public int CantidadSesiones { get; set; }
 
-        // Específicos de "software": solo se usan si Tipo == Software.
+        // TODO: Cuando este realizado correctamente el flujo de Categorias, dividir en subclases con herencia.
+        // Específicos de software
         public string SistemaOperativoSoftware { get; set; }
         public string VersionSoftware { get; set; }
 
-        // Específicos de "app web": solo se usan si Tipo == AppWeb.
+        // Específicos de app web
         public string UrlAppWeb { get; set; }
         public DispositivoObjetivo DispositivoAppWeb { get; set; }
 
-        // Específicos de "app móvil": solo se usan si Tipo == AppMovil.
+        // Específicos de app móvil
         public SistemaOperativoMovil SoAppMovil { get; set; }
         public string VersionAppMovil { get; set; }
 
-        // Específicos de "videojuego": solo se usan si Tipo == Videojuego.
+        // Específicos de videojuego
         public PlataformaVideojuego Plataforma { get; set; }
         public string VersionVideojuego { get; set; }
 
-        // Específicos de "publicidad": solo se usan si Tipo == Publicidad.
+        // Específicos de publicidad
         public string FormatoPublicidad { get; set; }
         public string CanalPublicidad { get; set; }
     }

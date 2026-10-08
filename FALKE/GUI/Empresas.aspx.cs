@@ -6,6 +6,7 @@ using BE;
 using BLL;
 using SERVICES;
 using TLL;
+using TE;
 
 namespace GUI
 {
@@ -13,7 +14,7 @@ namespace GUI
     {
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
 
         protected bool PuedeEditar { get; private set; }
         protected bool PuedeCambiarEstado { get; private set; }

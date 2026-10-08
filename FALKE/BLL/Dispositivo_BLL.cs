@@ -10,8 +10,6 @@ using TLL;
 
 namespace BLL
 {
-    // Inventario de eye trackers de Pattern Blue y préstamos a las empresas cliente.
-    // El aparato se identifica por su número de serie de fábrica (único); el id interno es solo la clave de las tablas.
     public class Dispositivo_BLL
     {
         private const int LARGO_SERIE = 30;
@@ -38,7 +36,6 @@ namespace BLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        // Cuántos dispositivos incluye cada plan (ver Planes.aspx). Apex es "a convenir": sin tope fijo.
         public static int? LimiteDelPlan(PlanSuscripcion plan)
         {
             switch (plan)
@@ -49,9 +46,7 @@ namespace BLL
             }
         }
 
-        // ---- Consultas
-
-        public List<Dispositivo_BE> Listar(ActorUsuario_TLL actor, string texto = null, EstadoDispositivo? estado = null, int? idModelo = null)
+        public List<Dispositivo_BE> Listar(ActorUsuario_TE actor, string texto = null, EstadoDispositivo? estado = null, int? idModelo = null)
         {
             Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
 
@@ -65,30 +60,28 @@ namespace BLL
                 .ToList();
         }
 
-        public Dispositivo_BE ObtenerPorId(ActorUsuario_TLL actor, int idDispositivo)
+        public Dispositivo_BE ObtenerPorId(ActorUsuario_TE actor, int idDispositivo)
         {
             Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
 
             return dispositivoRepo.ObtenerPorPK(idDispositivo);
         }
 
-        public List<Prestamo_BE> ObtenerHistorial(ActorUsuario_TLL actor, int idDispositivo)
+        public List<Prestamo_BE> ObtenerHistorial(ActorUsuario_TE actor, int idDispositivo)
         {
             Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
 
             return prestamoRepo.ObtenerHistorial(idDispositivo);
         }
 
-        // Los préstamos de todos los dispositivos, del más reciente al más antiguo (la pantalla los reparte en el detalle de cada uno).
-        public List<Prestamo_BE> ObtenerHistorialCompleto(ActorUsuario_TLL actor)
+        public List<Prestamo_BE> ObtenerHistorialCompleto(ActorUsuario_TE actor)
         {
             Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
 
             return prestamoRepo.ObtenerTodos();
         }
 
-        // Las empresas activas a las que se puede prestar, con cuántos dispositivos tienen hoy (para elegir al asignar).
-        public List<Empresa_BE> EmpresasParaPrestar(ActorUsuario_TLL actor)
+        public List<Empresa_BE> EmpresasParaPrestar(ActorUsuario_TE actor)
         {
             Exigir(actor, Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
@@ -98,8 +91,7 @@ namespace BLL
                 .ToList();
         }
 
-        // La propia empresa ve los dispositivos que tiene en préstamo, y solo esos.
-        public List<Dispositivo_BE> ObtenerDeMiEmpresa(ActorUsuario_TLL actor)
+        public List<Dispositivo_BE> ObtenerDeMiEmpresa(ActorUsuario_TE actor)
         {
             if (actor == null || actor.IdEmpresa <= 0 || !actor.Puede(Patentes_TLL.VER_DATOS_EMPRESA))
                 throw new UnauthorizedAccessException("No tenés permiso para ver los dispositivos de la empresa.");
@@ -107,9 +99,7 @@ namespace BLL
             return dispositivoRepo.ObtenerDeEmpresa(actor.IdEmpresa);
         }
 
-        // ---- Inventario
-
-        public void Crear(ActorUsuario_TLL actor, Dispositivo_BE dispositivo)
+        public void Crear(ActorUsuario_TE actor, Dispositivo_BE dispositivo)
         {
             Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
 
@@ -117,7 +107,7 @@ namespace BLL
 
             ValidarYNormalizar(dispositivo);
 
-            // Para un dispositivo nuevo solo se ofrecen los modelos activos.
+
             ModeloDispositivo_BE modelo = ObtenerModelo(dispositivo.IdModelo);
             if (!modelo.Activo) throw new InvalidOperationException("El modelo \"" + modelo.Nombre + "\" está dado de baja: elegí otro.");
             dispositivo.Modelo = modelo.Nombre;
@@ -136,9 +126,7 @@ namespace BLL
             });
         }
 
-        // Modelo, firmware y driver. El número de serie y el estado no se editan desde acá.
-        // Se puede conservar el modelo actual aunque esté dado de baja, pero no cambiar a uno dado de baja.
-        public void Modificar(ActorUsuario_TLL actor, int idDispositivo, Dispositivo_BE nuevos)
+        public void Modificar(ActorUsuario_TE actor, int idDispositivo, Dispositivo_BE nuevos)
         {
             Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
 
@@ -174,10 +162,7 @@ namespace BLL
             });
         }
 
-        // ---- Préstamos
-
-        // Presta un dispositivo disponible a una empresa activa, dentro de lo que incluye su plan.
-        public void AsignarAEmpresa(ActorUsuario_TLL actor, int idDispositivo, int idEmpresa)
+        public void AsignarAEmpresa(ActorUsuario_TE actor, int idDispositivo, int idEmpresa)
         {
             Exigir(actor, Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
@@ -214,8 +199,7 @@ namespace BLL
             });
         }
 
-        // Cierra el préstamo abierto. El dispositivo vuelve a estar disponible, o pasa a mantenimiento si vuelve con problemas.
-        public void RegistrarDevolucion(ActorUsuario_TLL actor, int idDispositivo, bool requiereMantenimiento)
+        public void RegistrarDevolucion(ActorUsuario_TE actor, int idDispositivo, bool requiereMantenimiento)
         {
             Exigir(actor, Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
@@ -243,9 +227,7 @@ namespace BLL
             });
         }
 
-        // ---- Estado
-
-        public void EnviarAMantenimiento(ActorUsuario_TLL actor, int idDispositivo)
+        public void EnviarAMantenimiento(ActorUsuario_TE actor, int idDispositivo)
         {
             Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
 
@@ -257,8 +239,7 @@ namespace BLL
             CambiarEstado(actor, dispositivo, EstadoDispositivo.EnMantenimiento, "Se envió el dispositivo " + dispositivo.NumeroSerie + " a mantenimiento.", CriticidadBitacora.Media);
         }
 
-        // Vuelve a estar disponible. La calibración no se registra acá: la hace la empresa en su puesto.
-        public void TerminarMantenimiento(ActorUsuario_TLL actor, int idDispositivo)
+        public void TerminarMantenimiento(ActorUsuario_TE actor, int idDispositivo)
         {
             Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
 
@@ -270,8 +251,7 @@ namespace BLL
                 "El dispositivo " + dispositivo.NumeroSerie + " terminó el mantenimiento y vuelve a estar disponible.", CriticidadBitacora.Media);
         }
 
-        // La baja es definitiva y exige motivo.
-        public void DarDeBaja(ActorUsuario_TLL actor, int idDispositivo, string motivo)
+        public void DarDeBaja(ActorUsuario_TE actor, int idDispositivo, string motivo)
         {
             Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
 
@@ -298,9 +278,7 @@ namespace BLL
             }
         }
 
-        // ---- Internos
-
-        private void CambiarEstado(ActorUsuario_TLL actor, Dispositivo_BE dispositivo, EstadoDispositivo nuevo, string descripcion, CriticidadBitacora criticidad)
+        private void CambiarEstado(ActorUsuario_TE actor, Dispositivo_BE dispositivo, EstadoDispositivo nuevo, string descripcion, CriticidadBitacora criticidad)
         {
             dispositivo.Estado = nuevo;
 
@@ -336,7 +314,7 @@ namespace BLL
             if (dispositivo.Estado == EstadoDispositivo.DeBaja) throw new InvalidOperationException("El dispositivo está dado de baja.");
         }
 
-        private void Exigir(ActorUsuario_TLL actor, string patente)
+        private void Exigir(ActorUsuario_TE actor, string patente)
         {
             if (actor != null && actor.Puede(patente)) return;
 
@@ -344,9 +322,7 @@ namespace BLL
             throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
         }
 
-        // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
-        // Los préstamos y devoluciones quedan atribuidos a la empresa afectada: ella los ve en su propia bitácora.
-        private void Auditar(ActorUsuario_TLL actor, int? idEmpresa, string descripcion, CriticidadBitacora criticidad)
+        private void Auditar(ActorUsuario_TE actor, int? idEmpresa, string descripcion, CriticidadBitacora criticidad)
         {
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Dispositivos", descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
         }

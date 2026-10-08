@@ -8,8 +8,6 @@ using TLL;
 
 namespace BLL
 {
-    // Catálogo de modelos de dispositivo. Un modelo solo lleva su nombre; no se borra: se da de baja (baja lógica)
-    // y deja de ofrecerse para dispositivos nuevos, pero los que ya lo tienen lo conservan.
     public class ModeloDispositivo_BLL
     {
         private const int LARGO_NOMBRE = 50;
@@ -25,15 +23,14 @@ namespace BLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        // Quien ve el inventario ve los modelos (para filtrar). Dar de alta un dispositivo elige solo entre los activos.
-        public List<ModeloDispositivo_BE> Listar(ActorUsuario_TLL actor)
+        public List<ModeloDispositivo_BE> Listar(ActorUsuario_TE actor)
         {
             Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
 
             return modeloRepo.ObtenerTodos();
         }
 
-        public void Crear(ActorUsuario_TLL actor, string nombre)
+        public void Crear(ActorUsuario_TE actor, string nombre)
         {
             Exigir(actor, Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
@@ -53,7 +50,7 @@ namespace BLL
             });
         }
 
-        public void Renombrar(ActorUsuario_TLL actor, int idModelo, string nombre)
+        public void Renombrar(ActorUsuario_TE actor, int idModelo, string nombre)
         {
             Exigir(actor, Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
@@ -77,18 +74,17 @@ namespace BLL
             });
         }
 
-        // Baja lógica: deja de ofrecerse para dispositivos nuevos. Los dispositivos que ya lo tienen no cambian.
-        public void DarDeBaja(ActorUsuario_TLL actor, int idModelo)
+        public void DarDeBaja(ActorUsuario_TE actor, int idModelo)
         {
             CambiarActivo(actor, idModelo, false, "Baja del modelo de dispositivo \"{0}\".");
         }
 
-        public void Reactivar(ActorUsuario_TLL actor, int idModelo)
+        public void Reactivar(ActorUsuario_TE actor, int idModelo)
         {
             CambiarActivo(actor, idModelo, true, "Se reactivó el modelo de dispositivo \"{0}\".");
         }
 
-        private void CambiarActivo(ActorUsuario_TLL actor, int idModelo, bool activo, string descripcion)
+        private void CambiarActivo(ActorUsuario_TE actor, int idModelo, bool activo, string descripcion)
         {
             Exigir(actor, Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
@@ -116,7 +112,6 @@ namespace BLL
             return modelo;
         }
 
-        // Los espacios repetidos se juntan en uno: "Tobii  Eye" y "Tobii Eye" son el mismo modelo.
         private static string Normalizar(string nombre)
         {
             return string.Join(" ", (nombre ?? string.Empty).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
@@ -128,7 +123,7 @@ namespace BLL
             if (nombre.Length > LARGO_NOMBRE) throw new InvalidOperationException("El nombre del modelo no puede superar los " + LARGO_NOMBRE + " caracteres.");
         }
 
-        private void Exigir(ActorUsuario_TLL actor, string patente)
+        private void Exigir(ActorUsuario_TE actor, string patente)
         {
             if (actor != null && actor.Puede(patente)) return;
 
@@ -136,8 +131,7 @@ namespace BLL
             throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
         }
 
-        // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
-        private void Auditar(ActorUsuario_TLL actor, string descripcion, CriticidadBitacora criticidad)
+        private void Auditar(ActorUsuario_TE actor, string descripcion, CriticidadBitacora criticidad)
         {
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Dispositivos", descripcion, criticidad, DateTime.Now));
         }

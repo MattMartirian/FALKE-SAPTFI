@@ -14,7 +14,7 @@ namespace GUI
     {
         private const string CLAVE_AVISO = "perfil.aviso";
 
-        private ActorUsuario_TLL actor;
+        private ActorUsuario_TE actor;
         private Usuario_TE yo;
 
         protected void Page_Load(object sender, EventArgs e)
