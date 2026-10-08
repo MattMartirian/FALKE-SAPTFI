@@ -44,7 +44,7 @@ namespace GUI
 
             try
             {
-                var resultado = new Usuario_TLL().ValidarCredenciales(email, txtPass.Text);
+                var resultado = new Autenticacion_TLL().ValidarCredenciales(email, txtPass.Text);
 
                 if (resultado.Exito)
                 {
@@ -100,10 +100,10 @@ namespace GUI
                 case "USUARIO_BLOQUEADO_INTENTOS":
                     return "La cuenta está bloqueada por contraseñas incorrectas. Usa «Olvidé mi contraseña» para recuperar el acceso.";
 
-                case Usuario_TLL.MOTIVO_EMPRESA_BLOQUEADA:
+                case Autenticacion_TLL.MOTIVO_EMPRESA_BLOQUEADA:
                     return "La empresa de tu cuenta está bloqueada. Comunícate con Pattern Blue para regularizar la situación.";
 
-                case Usuario_TLL.MOTIVO_EMPRESA_DESHABILITADA:
+                case Autenticacion_TLL.MOTIVO_EMPRESA_DESHABILITADA:
                     return "La empresa de tu cuenta fue dada de baja y ya no tiene acceso a Falke. Si crees que es un error, comunícate con Pattern Blue.";
 
                 case "USUARIO_BLOQUEO_ESTRICTO":

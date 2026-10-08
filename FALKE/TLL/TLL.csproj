@@ -44,7 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraGestor_TLL.cs" />
+    <Compile Include="AccesoEmergencia_TLL.cs" />
     <Compile Include="ActorUsuarioAlcance_TLL.cs" />
+    <Compile Include="Autenticacion_TLL.cs" />
+    <Compile Include="Contrasena_TLL.cs" />
+    <Compile Include="TokenCuenta_TLL.cs" />
     <Compile Include="Patentes_TLL.cs" />
     <Compile Include="TextoHelper_TLL.cs" />
     <Compile Include="SolicitudEnlace_TLL.cs" />

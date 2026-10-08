@@ -15,7 +15,7 @@ namespace GUI
         {
             if (IsPostBack) return;
 
-            ResultadoToken_TLL validacion = new Usuario_TLL().ValidarTokenContrasena(Token);
+            ResultadoToken_TLL validacion = new Contrasena_TLL().ValidarTokenContrasena(Token);
 
             if (validacion.Exito)
             {
@@ -38,7 +38,7 @@ namespace GUI
 
             try
             {
-                ResultadoToken_TLL resultado = new Usuario_TLL().EstablecerContrasenaConToken(Token, txtNueva.Text);
+                ResultadoToken_TLL resultado = new Contrasena_TLL().EstablecerContrasenaConToken(Token, txtNueva.Text);
 
                 if (resultado.Exito)
                 {
@@ -73,7 +73,7 @@ namespace GUI
             switch (motivo)
             {
                 case "CONTRASENA_DEBIL":
-                    return Usuario_TLL.POLITICA_CONTRASENA;
+                    return Contrasena_TLL.POLITICA_CONTRASENA;
 
                 case "TOKEN_EXPIRADO":
                     return "El enlace venció. Pedí uno nuevo desde «Recuperar mi contraseña».";

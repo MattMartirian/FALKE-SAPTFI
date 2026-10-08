@@ -35,7 +35,7 @@ namespace GUI
             try
             {
                 string error;
-                bool ok = new Usuario_TLL().CambiarContrasena(SesionActual_GUI.Email, claveActual.Text, claveNueva.Text, out error);
+                bool ok = new Contrasena_TLL().CambiarContrasena(SesionActual_GUI.Email, claveActual.Text, claveNueva.Text, out error);
 
                 if (ok)
                 {

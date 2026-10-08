@@ -4,128 +4,33 @@ using SERVICES;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Configuration;
-using System.IO;
-using System.Net.Http;
-using System.Web;
 using TE;
 
 namespace TLL
 {
+    // ABM de usuarios: alta por invitación, reenvío de la invitación, listado, cambio de estado, de rol y de datos, y el perfil propio.
+    // Las demás responsabilidades están en Autenticacion_TLL (inicio de sesión), Contrasena_TLL (cambio y recuperación de contraseña),
+    // TokenCuenta_TLL (enlaces por correo) y AccesoEmergencia_TLL (cuenta de emergencia).
     public class Usuario_TLL
     {
-        private const int MAX_INTENTOS_FALLIDOS = 5;
-        private const int LARGO_MINIMO_CONTRASENA = 8;
-        public const string POLITICA_CONTRASENA = "La contraseña debe tener al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).";
-
-        public const string TOKEN_ACTIVACION = "activacion";
-        public const string TOKEN_RECUPERACION = "recuperacion";
-
-        public const string MOTIVO_EMPRESA_BLOQUEADA = "EMPRESA_BLOQUEADA";
-        public const string MOTIVO_EMPRESA_DESHABILITADA = "EMPRESA_DESHABILITADA";
-
         public const string ROL_GESTOR = "Gestor";
         public const string ROL_WEBMASTER = "Webmaster";
         public const string ROL_ADMINISTRADOR = "Administrador";
         public const string ROL_ANALISTA = "Analista";
 
-        private static readonly TimeSpan VIGENCIA_ACTIVACION = TimeSpan.FromHours(48);
-        private static readonly TimeSpan VIGENCIA_RECUPERACION = TimeSpan.FromHours(2);
-
         private readonly UsuarioRepository usuarioRepo;
-        private readonly TokenRepository tokenRepo;
         private readonly Cifrador_SECURITY cifrador;
         private readonly GestorIntegridad_SERVICE gestorIntegridad;
         private readonly BitacoraGestor_TLL bitacora;
+        private readonly TokenCuenta_TLL tokens;
 
         public Usuario_TLL()
         {
             usuarioRepo = new UsuarioRepository();
-            tokenRepo = new TokenRepository();
             cifrador = Cifrador_SECURITY.CifradorSingleton;
             gestorIntegridad = new GestorIntegridad_SERVICE();
             bitacora = new BitacoraGestor_TLL();
-        }
-
-        public ResultadoLogin_TLL ValidarCredenciales(string email, string contrasenaPlana)
-        {
-            if (EsCredencialDeEmergencia(email, contrasenaPlana))
-            {
-                var usuarioEmergencia = ConstruirUsuarioEmergenciaEnMemoria(email);
-                LoguearAccesoEmergenciaAArchivo(email);
-                bitacora.Registrar(0, "Seguridad", "Acceso de emergencia (break-glass) con identificador '" + email + "'", CriticidadBitacora.Alta);
-                return ResultadoLogin_TLL.Exitoso(usuarioEmergencia, HayInconsistenciasDeIntegridad());
-            }
-
-            email = NormalizarEmail(email);
-
-            var usuario = usuarioRepo.ObtenerPorEmail(email);
-
-            if (usuario == null) return ResultadoLogin_TLL.CredencialesInvalidas();
-
-            if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos)
-            {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta bloqueada por intentos fallidos", CriticidadBitacora.Media);
-                return ResultadoLogin_TLL.BloqueadoPorIntentos();
-            }
-
-            if (usuario.Estado == EstadoUsuario.Pendiente)
-            {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta pendiente de activación", CriticidadBitacora.Baja);
-                return ResultadoLogin_TLL.UsuarioPendienteActivacion();
-            }
-
-            if (usuario.Estado == EstadoUsuario.Inactivo)
-            {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta inactiva (dada de baja)", CriticidadBitacora.Baja, usuario.IdEmpresa);
-                return ResultadoLogin_TLL.Inactivo();
-            }
-
-            if (usuario.Estado == EstadoUsuario.BloqueoEstricto)
-            {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta con bloqueo estricto", CriticidadBitacora.Media, usuario.IdEmpresa);
-                return ResultadoLogin_TLL.BloqueoEstricto();
-            }
-
-            if (!VerificarContrasena(contrasenaPlana, usuario.ContrasenaHashUsuario))
-            {
-                RegistrarIntentoFallido(usuario);
-
-                if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos) return ResultadoLogin_TLL.BloqueadoPorIntentos();
-
-                return ResultadoLogin_TLL.CredencialesInvalidas(Math.Max(0, MAX_INTENTOS_FALLIDOS - usuario.IntentosFallidosUsuario));
-            }
-
-            string motivoEmpresa = MotivoEmpresaSinIngreso(usuario.IdEmpresa);
-            if (motivoEmpresa != null)
-            {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad",
-                    "Inicio de sesión rechazado: la empresa del usuario está " + (motivoEmpresa == MOTIVO_EMPRESA_DESHABILITADA ? "dada de baja" : "bloqueada"),
-                    CriticidadBitacora.Media, usuario.IdEmpresa);
-                return ResultadoLogin_TLL.EmpresaNoActiva(motivoEmpresa);
-            }
-
-            var inconsistencias = gestorIntegridad.VerificarIntegridadTodasLasTablas();
-            bool revisarIntegridad = inconsistencias.Count > 0;
-
-            if (revisarIntegridad)
-            {
-                if (!Permiso_TLL.ComprobarPermiso(Patentes_TLL.RECALCULAR_INTEGRIDAD, usuario.Rol))
-                {
-                    bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión rechazado: la integridad de los datos está comprometida (" + inconsistencias.Count + " inconsistencia/s)", CriticidadBitacora.Alta);
-                    return ResultadoLogin_TLL.IntegridadComprometida();
-                }
-
-                bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión con la integridad de los datos comprometida (" + inconsistencias.Count + " inconsistencia/s): se lo lleva a Dígito verificador para revisarla", CriticidadBitacora.Alta);
-            }
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                ResetearIntentosFallidos(usuario);
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Inicio de sesión exitoso", CriticidadBitacora.Baja);
-            });
-
-            return ResultadoLogin_TLL.Exitoso(usuario, revisarIntegridad);
+            tokens = new TokenCuenta_TLL();
         }
 
         public string RegistrarUsuario(ActorUsuario_TE actor, Usuario_TE usuario)
@@ -147,9 +52,9 @@ namespace TLL
 
         private string RegistrarUsuarioInterno(Usuario_TE usuario, int idActor)
         {
-            usuario.EmailUsuario = NormalizarEmail(usuario.EmailUsuario);
+            usuario.EmailUsuario = TextoHelper_TLL.NormalizarEmail(usuario.EmailUsuario);
 
-            if (!EsEmailValido(usuario.EmailUsuario)) throw new InvalidOperationException("El email no tiene un formato valido.");
+            if (!TextoHelper_TLL.EsEmailValido(usuario.EmailUsuario)) throw new InvalidOperationException("El email no tiene un formato valido.");
 
             if (usuarioRepo.ObtenerPorEmail(usuario.EmailUsuario) != null) throw new InvalidOperationException("Ya existe un usuario registrado con ese email.");
 
@@ -164,7 +69,7 @@ namespace TLL
                 usuarioRepo.Alta(usuario);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
 
-                string t = EmitirToken(usuario.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION);
+                string t = tokens.EmitirActivacion(usuario.IdUsuario);
 
                 bitacora.Auditar(idActor > 0 ? idActor : usuario.IdUsuario, "Usuarios", usuario.IdEmpresa,
                     "Alta de usuario '" + usuario.EmailUsuario + "' (rol " + rolNombre + "); queda pendiente de activación", CriticidadBitacora.Media);
@@ -174,6 +79,7 @@ namespace TLL
 
             return token;
         }
+
         public SolicitudEnlace_TLL ReenviarInvitacion(ActorUsuario_TE actor, int idUsuario)
         {
             actor.Exigir(Patentes_TLL.REGISTRAR_USUARIO);
@@ -190,7 +96,7 @@ namespace TLL
 
             string token = Transaccion_ORM.Ejecutar(() =>
             {
-                string t = EmitirToken(objetivo.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION, false);
+                string t = tokens.EmitirActivacion(objetivo.IdUsuario, false);
 
                 bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
                     "Reenvío de la invitación al usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): se emitió un enlace de activación nuevo",
@@ -381,7 +287,7 @@ namespace TLL
             if (nombre.Length == 0 || apellido.Length == 0) throw new InvalidOperationException("El nombre y el apellido son obligatorios.");
             if (nombre.Length > 100 || apellido.Length > 100) throw new InvalidOperationException("El nombre y el apellido no pueden superar los 100 caracteres.");
 
-            string emailNuevo = NormalizarEmail(email);
+            string emailNuevo = TextoHelper_TLL.NormalizarEmail(email);
             bool cambiaEmail = emailNuevo != objetivo.EmailUsuario;
             bool cambiaEmpresa = idEmpresa != objetivo.IdEmpresa;
             bool sensible = cambiaEmail || cambiaEmpresa;
@@ -390,7 +296,7 @@ namespace TLL
 
             if (cambiaEmail)
             {
-                if (!EsEmailValido(emailNuevo)) throw new InvalidOperationException("El email no tiene un formato valido.");
+                if (!TextoHelper_TLL.EsEmailValido(emailNuevo)) throw new InvalidOperationException("El email no tiene un formato valido.");
                 if (usuarioRepo.ObtenerPorEmail(emailNuevo) != null) throw new InvalidOperationException("Ya existe un usuario registrado con ese email.");
             }
 
@@ -429,7 +335,7 @@ namespace TLL
                 usuarioRepo.ActualizarDatos(objetivo.IdUsuario, nombre, apellido, idIdioma, emailNuevo, idEmpresa);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { objetivo.IdUsuario.ToString() });
 
-                string token = reemitirActivacion ? EmitirToken(objetivo.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION) : null;
+                string token = reemitirActivacion ? tokens.EmitirActivacion(objetivo.IdUsuario) : null;
 
                 string detalle = "Modificación de datos del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresaAnterior + "): " + string.Join("; ", cambios) + ConMotivo(motivoLimpio);
 
@@ -500,309 +406,6 @@ namespace TLL
             }
         }
 
-        // Marca que cambia cuando cambia la contraseña: las sesiones y las cookies de "recordarme" que la llevan dejan de valer.
-        public string HuellaDeAcceso(Usuario_TE usuario)
-        {
-            return cifrador.Encoder(usuario.ContrasenaHashUsuario ?? string.Empty).Substring(0, 16);
-        }
-
         public Usuario_TE ObtenerPorId(int idUsuario) => usuarioRepo.ObtenerPorPK(idUsuario);
-
-        public bool CambiarContrasena(string email, string contrasenaActual, string contrasenaNueva, out string error)
-        {
-            error = null;
-            email = NormalizarEmail(email);
-
-            var usuario = usuarioRepo.ObtenerPorEmail(email);
-
-            if (usuario == null|| EstaBloqueado(usuario)|| string.IsNullOrEmpty(contrasenaActual)|| !VerificarContrasena(contrasenaActual, usuario.ContrasenaHashUsuario))
-            {
-                if (usuario != null && !EstaBloqueado(usuario))
-                {
-                    RegistrarIntentoFallido(usuario, "cambio de contraseña");
-                }
-
-                error = "No se pudo cambiar la contraseña. Verificá los datos ingresados.";
-                return false;
-            }
-
-            if (!EsContrasenaAceptable(contrasenaNueva))
-            {
-                error = POLITICA_CONTRASENA;
-                return false;
-            }
-
-            if (contrasenaNueva == contrasenaActual)
-            {
-                error = "La nueva contraseña no puede ser igual a la actual.";
-                return false;
-            }
-
-            usuario.ContrasenaHashUsuario = cifrador.Encoder(contrasenaNueva);
-            usuario.IntentosFallidosUsuario = 0;
-
-            if (usuario.Estado == EstadoUsuario.Pendiente)
-                usuario.Estado = EstadoUsuario.Activo;
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                usuarioRepo.Modificar(usuario);
-                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
-
-                bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Cambio de contraseña", CriticidadBitacora.Media, DateTime.Now));
-            });
-
-            return true;
-        }
-
-        public SolicitudEnlace_TLL SolicitarEnlace(string email)
-        {
-            var usuario = usuarioRepo.ObtenerPorEmail(NormalizarEmail(email));
-            if (usuario == null) return null;
-
-            if (usuario.Estado == EstadoUsuario.BloqueoEstricto || usuario.Estado == EstadoUsuario.Inactivo) return null;
-
-            if (!EmpresaPermiteIngreso(usuario.IdEmpresa)) return null;
-
-            string token = null;
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                token = EmitirToken(usuario.IdUsuario, TOKEN_RECUPERACION, VIGENCIA_RECUPERACION);
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Solicitud de recuperación de contraseña", CriticidadBitacora.Baja);
-            });
-
-            return new SolicitudEnlace_TLL { Token = token, Nombre = usuario.NombreUsuario };
-        }
-
-        // Pattern Blue (la empresa proveedora) nunca se bloquea: desde ahí se administra todo.
-        public bool EmpresaPermiteIngreso(int idEmpresa)
-        {
-            return MotivoEmpresaSinIngreso(idEmpresa) == null;
-        }
-
-        // null si la empresa deja entrar; si no, por qué no: bloqueada (sigue siendo cliente) o deshabilitada (dada de baja).
-        public string MotivoEmpresaSinIngreso(int idEmpresa)
-        {
-            if (idEmpresa <= 0 || idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) return null;
-
-            string estado = usuarioRepo.ObtenerEstadoEmpresa(idEmpresa);
-
-            if (estado == null || string.Equals(estado, "activa", StringComparison.OrdinalIgnoreCase)) return null;
-
-            return string.Equals(estado, "deshabilitada", StringComparison.OrdinalIgnoreCase) ? MOTIVO_EMPRESA_DESHABILITADA : MOTIVO_EMPRESA_BLOQUEADA;
-        }
-
-        private static bool EstaBloqueado(Usuario_TE usuario)
-        {
-            return usuario.Estado == EstadoUsuario.BloqueadoPorIntentos || usuario.Estado == EstadoUsuario.BloqueoEstricto;
-        }
-
-        public ResultadoToken_TLL ValidarTokenContrasena(string token)
-        {
-            return EvaluarToken(LeerToken(token));
-        }
-
-        public ResultadoToken_TLL EstablecerContrasenaConToken(string token, string contrasenaNueva)
-        {
-            var info = LeerToken(token);
-            var validacion = EvaluarToken(info);
-            if (!validacion.Exito) return validacion;
-
-            if (!EsContrasenaAceptable(contrasenaNueva)) return ResultadoToken_TLL.Falla("CONTRASENA_DEBIL", validacion.Email);
-
-            var usuario = usuarioRepo.ObtenerPorPK(info.IdUsuario);
-
-            usuario.ContrasenaHashUsuario = cifrador.Encoder(contrasenaNueva);
-            usuario.IntentosFallidosUsuario = 0;
-
-            if (usuario.Estado == EstadoUsuario.Pendiente || usuario.Estado == EstadoUsuario.BloqueadoPorIntentos)
-                usuario.Estado = EstadoUsuario.Activo;
-
-            string via = info.Tipo == TOKEN_ACTIVACION ? "activación" : "recuperación";
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                usuarioRepo.Modificar(usuario);
-                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
-
-                tokenRepo.MarcarUsado(info.IdToken);
-                tokenRepo.InvalidarPendientes(usuario.IdUsuario, info.Tipo);
-                gestorIntegridad.RecalcularTabla(TablasBD.Token);
-
-                bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Contraseña establecida mediante token de " + via + "; la cuenta queda activa", CriticidadBitacora.Media, DateTime.Now));
-            });
-
-            return ResultadoToken_TLL.Ok(usuario.EmailUsuario);
-        }
-
-        private TokenInfo LeerToken(string token)
-        {
-            if (string.IsNullOrWhiteSpace(token)) return null;
-            return tokenRepo.ObtenerPorToken(token);
-        }
-
-        private ResultadoToken_TLL EvaluarToken(TokenInfo info)
-        {
-            if (info == null || (info.Tipo != TOKEN_ACTIVACION && info.Tipo != TOKEN_RECUPERACION))
-            {
-                return ResultadoToken_TLL.Falla("TOKEN_INVALIDO");
-            }
-
-            if (info.Usado)
-            {
-                return ResultadoToken_TLL.Falla("TOKEN_USADO");
-            }
-
-            if (info.FechaExpiracion.HasValue && info.FechaExpiracion.Value < DateTime.Now)
-            {
-                return ResultadoToken_TLL.Falla("TOKEN_EXPIRADO");
-            }
-
-            var usuario = usuarioRepo.ObtenerPorPK(info.IdUsuario);
-            if (usuario == null) return ResultadoToken_TLL.Falla("TOKEN_INVALIDO");
-
-            // Un enlace que se mandó antes de dar de baja o bloquear la cuenta ya no sirve.
-            if (usuario.Estado == EstadoUsuario.Inactivo || usuario.Estado == EstadoUsuario.BloqueoEstricto) return ResultadoToken_TLL.Falla("TOKEN_INVALIDO");
-
-            return ResultadoToken_TLL.Ok(usuario.EmailUsuario);
-        }
-
-        private string EmitirToken(int idUsuario, string tipo, TimeSpan vigencia, bool invalidarAnteriores = true)
-        {
-            string token = Cifrador_SECURITY.GenerarSecretoUrlSafe();
-            var ahora = DateTime.Now;
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                if (invalidarAnteriores) tokenRepo.InvalidarPendientes(idUsuario, tipo);
-                tokenRepo.Crear(idUsuario, token, tipo, ahora, ahora.Add(vigencia));
-                gestorIntegridad.RecalcularTabla(TablasBD.Token);
-            });
-
-            return token;
-        }
-
-        // Mínimo 8 caracteres, con mayúscula, minúscula, número y un carácter especial (ni letra, ni número, ni espacio).
-        public static bool EsContrasenaAceptable(string contrasena)
-        {
-            return !string.IsNullOrWhiteSpace(contrasena)
-                && contrasena.Length >= LARGO_MINIMO_CONTRASENA
-                && contrasena.Any(char.IsUpper)
-                && contrasena.Any(char.IsLower)
-                && contrasena.Any(char.IsDigit)
-                && contrasena.Any(c => !char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c));
-        }
-
-        private static string NormalizarEmail(string email)
-        {
-            return email == null ? null : email.Trim().ToLowerInvariant();
-        }
-
-        private static bool EsEmailValido(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email)) return false;
-
-            int arroba = email.IndexOf('@');
-            if (arroba <= 0 || arroba != email.LastIndexOf('@')) return false;
-
-            int punto = email.IndexOf('.', arroba);
-            return punto > arroba + 1 && punto < email.Length - 1;
-        }
-
-        private void RegistrarIntentoFallido(Usuario_TE usuario, string contexto = "inicio de sesión")
-        {
-            usuario.IntentosFallidosUsuario++;
-
-            bool seBloqueo = usuario.IntentosFallidosUsuario >= MAX_INTENTOS_FALLIDOS;
-            if (seBloqueo) usuario.Estado = EstadoUsuario.BloqueadoPorIntentos;
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                if (seBloqueo) usuarioRepo.ActualizarEstado(usuario.IdUsuario, (int)usuario.Estado);
-
-                usuarioRepo.ActualizarIntentosFallidos(usuario.IdUsuario, usuario.IntentosFallidosUsuario);
-                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
-
-                if (seBloqueo)
-                {
-                    bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Cuenta bloqueada por superar el máximo de intentos fallidos", CriticidadBitacora.Alta, DateTime.Now));
-                }
-                else
-                {
-                    bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Intento fallido de " + contexto + " (" + usuario.IntentosFallidosUsuario + " de " + MAX_INTENTOS_FALLIDOS + ")", CriticidadBitacora.Baja, DateTime.Now));
-                }
-            });
-        }
-
-        private void ResetearIntentosFallidos(Usuario_TE usuario)
-        {
-            if (usuario.IntentosFallidosUsuario == 0) return;
-
-            usuario.IntentosFallidosUsuario = 0;
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                usuarioRepo.ActualizarIntentosFallidos(usuario.IdUsuario, 0);
-                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
-            });
-        }
-
-        private bool VerificarContrasena(string contrasenaPlana, string hashAlmacenado)
-        {
-            return cifrador.Encoder(contrasenaPlana) == hashAlmacenado;
-        }
-
-        // La cuenta de emergencia siempre entra; si la integridad está comprometida, también se la lleva a Dígito verificador.
-        private bool HayInconsistenciasDeIntegridad()
-        {
-            try
-            {
-                return gestorIntegridad.VerificarIntegridadTodasLasTablas().Count > 0;
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-        private bool EsCredencialDeEmergencia(string identificador, string contrasenaPlana)
-        {
-            string usuarioConfigurado = ConfigurationManager.AppSettings["FALKE_EMERGENCY_USER"];
-            string hashConfigurado = ConfigurationManager.AppSettings["FALKE_EMERGENCY_HASH"];
-
-            if (string.IsNullOrEmpty(usuarioConfigurado) || string.IsNullOrEmpty(hashConfigurado)) return false;
-
-            if (identificador != usuarioConfigurado) return false;
-
-            return cifrador.Encoder(contrasenaPlana) == hashConfigurado;
-        }
-
-        private Usuario_TE ConstruirUsuarioEmergenciaEnMemoria(string identificador)
-        {
-            return new Usuario_TE
-            {
-                IdUsuario = -1,
-                NombreUsuario = "EMERGENCIA",
-                ApellidoUsuario = string.Empty,
-                EmailUsuario = identificador,
-                Estado = EstadoUsuario.Activo,
-                EsCuentaEmergencia = true
-            };
-        }
-
-        private void LoguearAccesoEmergenciaAArchivo(string identificador)
-        {
-            try
-            {
-                string linea = $"{DateTime.Now:o} | ACCESO DE EMERGENCIA | {identificador}";
-                string ruta = HttpContext.Current != null ? HttpContext.Current.Server.MapPath("~/App_Data/emergencia.log") : "emergencia.log";
-
-                File.AppendAllText(ruta, linea + Environment.NewLine);
-            }
-            catch
-            {
-            }
-        }
     }
 }

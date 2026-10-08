@@ -122,16 +122,16 @@ namespace GUI
                 return;
             }
 
-            string motivoEmpresa = new Usuario_TLL().MotivoEmpresaSinIngreso(usuario.IdEmpresa);
+            string motivoEmpresa = new Autenticacion_TLL().MotivoEmpresaSinIngreso(usuario.IdEmpresa);
             if (motivoEmpresa != null)
             {
                 Cerrar();
-                Redirigir("Ingresar.aspx?cuenta=" + (motivoEmpresa == Usuario_TLL.MOTIVO_EMPRESA_DESHABILITADA ? "baja" : "empresa"));
+                Redirigir("Ingresar.aspx?cuenta=" + (motivoEmpresa == Autenticacion_TLL.MOTIVO_EMPRESA_DESHABILITADA ? "baja" : "empresa"));
                 return;
             }
 
             string huellaGuardada = Ctx.Session[K_HUELLA] as string;
-            string huellaActual = new Usuario_TLL().HuellaDeAcceso(usuario);
+            string huellaActual = new Autenticacion_TLL().HuellaDeAcceso(usuario);
 
             if (huellaGuardada != null && huellaGuardada != huellaActual)
             {
@@ -183,7 +183,7 @@ namespace GUI
         {
             if (Ctx == null || usuario == null || usuario.EsCuentaEmergencia) return;
 
-            Ctx.Session[K_HUELLA] = new Usuario_TLL().HuellaDeAcceso(usuario);
+            Ctx.Session[K_HUELLA] = new Autenticacion_TLL().HuellaDeAcceso(usuario);
         }
 
         // Quien cambia su contraseña conserva su propia sesión (y su "recordarme" en este equipo); las demás caen.
@@ -337,7 +337,7 @@ namespace GUI
                 Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(idUsuario);
 
                 if (usuario == null || usuario.EsCuentaEmergencia || usuario.Estado != EstadoUsuario.Activo ||
-                    partes[2] != new Usuario_TLL().HuellaDeAcceso(usuario))
+                    partes[2] != new Autenticacion_TLL().HuellaDeAcceso(usuario))
                 {
                     OlvidarEsteEquipo();
                     return;

@@ -23,7 +23,7 @@ namespace GUI
 
             try
             {
-                SolicitudEnlace_TLL solicitud = new Usuario_TLL().SolicitarEnlace(email);
+                SolicitudEnlace_TLL solicitud = new Contrasena_TLL().SolicitarEnlace(email);
 
                 if (solicitud != null)
                 {
