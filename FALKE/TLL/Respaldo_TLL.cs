@@ -9,14 +9,10 @@ using TE;
 
 namespace TLL
 {
-    // Copias de seguridad de la base de datos. Los archivos quedan en el servidor de base de datos: acá no se descargan,
-    // solo se generan, se listan y se restauran, y cada paso queda en la bitácora.
     public class Respaldo_TLL
     {
         public const string MODULO = "Respaldos";
         public const string PALABRA_CONFIRMACION = "RESTAURAR";
-
-        // Mientras se restaura, el resto de las pantallas se desvía a "Mantenimiento".
         private static int restauracionEnCurso;
 
         public static bool RestauracionEnCurso
@@ -37,7 +33,6 @@ namespace TLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        // Del más reciente al más antiguo. ArchivoDisponible dice si el archivo sigue en el servidor.
         public List<Respaldo_TE> Listar(ActorUsuario_TE actor)
         {
             Exigir(actor, Patentes_TLL.VER_RESPALDOS);

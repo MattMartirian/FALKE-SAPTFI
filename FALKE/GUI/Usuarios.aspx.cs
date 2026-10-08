@@ -29,14 +29,13 @@ namespace GUI
             set { ViewState["pagina"] = value; }
         }
 
-        // Las listas se arman en Init: así reciben lo que el usuario eligió antes de que corra el evento del botón.
         protected void Page_Init(object sender, EventArgs e)
         {
             actor = SesionActual_GUI.ObtenerActor();
 
             if (actor == null) return;
 
-            // El perfil ya no vive acá: los enlaces viejos (?perfil=1) llevan a la pantalla propia.
+
             if (Request.QueryString["perfil"] == "1")
             {
                 Response.Redirect("MiPerfil.aspx", false);
@@ -137,7 +136,6 @@ namespace GUI
             {
                 var item = new ListItem(EtiquetaRol(rol), rol);
 
-                // Cambiar a un rol de gestión pide confirmar el aviso (la pantalla lo muestra según esta marca).
                 if (deGestion.Contains(rol)) item.Attributes["data-gestion"] = "1";
 
                 ddlNuevoRol.Items.Add(item);
@@ -154,7 +152,6 @@ namespace GUI
                 CargarEmpresas(invEmpresa, false);
                 invEmpresa.Attributes["data-propia"] = actor.IdEmpresa.ToString();
 
-                // Arranca en la empresa del propio gestor: elegir otra es una decisión con aviso.
                 if (!IsPostBack && invEmpresa.Items.FindByValue(actor.IdEmpresa.ToString()) != null)
                     invEmpresa.SelectedValue = actor.IdEmpresa.ToString();
             }
@@ -306,7 +303,6 @@ namespace GUI
                 return;
             }
 
-            // Lo que esta cuenta no puede cambiar (correo y empresa) se conserva tal cual.
             string email = actual.EmailUsuario;
             int idEmpresa = actual.IdEmpresa;
 
@@ -343,7 +339,6 @@ namespace GUI
             }
         }
 
-        // "Reenviar invitación": una cuenta que sigue pendiente recibe un enlace de activación nuevo por correo.
         protected void rptUsuarios_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (actor == null || e.CommandName != "reenviar") return;
@@ -364,7 +359,6 @@ namespace GUI
                 CorreosCuenta_GUI.EnviarActivacion(solicitud.Email, solicitud.Nombre, solicitud.Token,
                     "Te enviamos de nuevo la invitación a tu cuenta de Falke.");
 
-                // Sin aviso: el botón de esa fila pasa a verse gris, con un check.
                 InvitacionesEnviadas()[idUsuario] = DateTime.Now;
             }
             catch (UnauthorizedAccessException ex)

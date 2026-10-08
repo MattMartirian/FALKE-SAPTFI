@@ -129,7 +129,6 @@ namespace DAL
             }
         }
 
-        // timeoutSegundos = 0 espera sin límite (una copia o una restauración grande puede tardar).
         public void EjecutarNonQueryEnMaster(string sql, int timeoutSegundos, params SqlParameter[] parametros)
         {
             using (var conexion = CrearConexionMaster())
@@ -142,7 +141,6 @@ namespace DAL
             }
         }
 
-        // Las conexiones que quedaron abiertas en el pool apuntan a sesiones que la restauración cerró.
         public void LimpiarConexiones()
         {
             SqlConnection.ClearAllPools();

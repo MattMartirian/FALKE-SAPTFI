@@ -448,12 +448,6 @@
                     12 jul 2026 &middot; 18:42 min &middot; Analista: María Gómez &middot; App e-commerce
                 </p>
             </div>
-            <div class="acciones">
-                <button type="button" class="btn btn-primario" data-abre-modal="modalExportar">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-descarga" /></svg>
-                    <span data-i18n="vis.exportar">Descargar reporte</span>
-                </button>
-            </div>
         </div>
 
         <div class="tablero">
@@ -651,98 +645,6 @@
     </div>
 </div>
 
-<div class="modal-fondo" id="modalExportar" role="dialog" aria-modal="true" aria-labelledby="exportarTitulo" hidden>
-    <div class="modal">
-
-        <div class="modal-cabecera">
-            <div>
-                <h2 id="exportarTitulo" data-i18n="vis.exportar.titulo">Exportar análisis</h2>
-                <p class="subtitulo sin-margen" data-i18n="vis.exportar.subtitulo">
-                    Elige qué incluir en el reporte PDF.
-                </p>
-            </div>
-            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
-                <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
-            </button>
-        </div>
-
-        <div class="modal-cuerpo">
-
-            <p class="etiqueta" data-i18n="vis.exportar.contenido">Contenido del reporte</p>
-
-            <label class="opcion">
-                <input type="checkbox" checked disabled />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.exportar.portada">Nombre, fecha y métricas generales</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.portada.detalle">Siempre se incluye en el reporte.</span>
-                </span>
-            </label>
-
-            <p class="etiqueta mt-16" data-i18n="vis.exportar.visualizaciones">Visualizaciones a incluir</p>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="grabacion" />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.grabacion">Grabación con seguimiento</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.grabacion.detalle">Se incluye como cuadro representativo.</span>
-                </span>
-            </label>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="calor" checked />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.calor">Mapa de calor</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.calor.detalle">Concentración de la atención visual.</span>
-                </span>
-            </label>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="zonas" checked />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.zonas">Zonas de interés y ciegas</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.zonas.detalle">Áreas miradas y áreas ignoradas.</span>
-                </span>
-            </label>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="dispersion" />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.dispersion">Dispersión de mirada</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.dispersion.detalle">Qué tan estable fue la atención.</span>
-                </span>
-            </label>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="atencion" />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.atencion">Atención frente a distracción</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.atencion.detalle">Fijación activa frente a movimiento sacádico.</span>
-                </span>
-            </label>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="recorrido" checked />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.recorrido">Recorrido de mirada</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.recorrido.detalle">Trayecto secuencial sobre el activo.</span>
-                </span>
-            </label>
-
-            <p class="ayuda" id="exportarAviso" role="status"></p>
-
-        </div>
-
-        <div class="modal-pie">
-            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
-            <button type="button" class="btn btn-primario" id="btnExportar">
-                <svg width="17" height="17" aria-hidden="true"><use href="#i-descarga" /></svg>
-                <span data-i18n="vis.exportar.boton">Exportar reporte</span>
-            </button>
-        </div>
-
-    </div>
-</div>
-
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">
@@ -917,20 +819,6 @@
                 visorTiempo.textContent = aMinutos(actual) + " / " + aMinutos(DURACION_DEMO);
             });
 
-            var btnExportar = document.getElementById("btnExportar");
-            var exportarAviso = document.getElementById("exportarAviso");
-
-            btnExportar.addEventListener("click", function () {
-                var elegidas = document.querySelectorAll("input[name='expVisual']:checked");
-
-                if (elegidas.length === 0) {
-                    exportarAviso.className = "ayuda texto-peligro";
-                    exportarAviso.textContent = "Elige al menos una visualización para incluir en el reporte.";
-                    return;
-                }
-
-                exportarAviso.className = "ayuda texto-suave";
-                exportarAviso.textContent = "Se generaría un PDF con " + elegidas.length + " visualización(es).";
             });
         })();
     </script>

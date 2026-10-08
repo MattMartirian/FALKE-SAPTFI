@@ -340,13 +340,6 @@
                         </span>
                     </li>
                     <li>
-                        <svg width="17" height="17" aria-hidden="true"><use href="#i-descarga" /></svg>
-                        <span>
-                            <span data-i18n="panel.actividad3">Se exportó el reporte PDF del análisis n.&deg; 2398</span>
-                            <span class="cuando">Ayer</span>
-                        </span>
-                    </li>
-                    <li>
                         <svg width="17" height="17" aria-hidden="true"><use href="#i-usuarios" /></svg>
                         <span>
                             <span data-i18n="panel.actividad4">Se invitó a diego.paz@ironhide.com</span>

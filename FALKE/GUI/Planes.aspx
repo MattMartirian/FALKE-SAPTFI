@@ -232,7 +232,7 @@
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item1">Un dispositivo Tobii Eye Tracker en préstamo</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item2">Sesiones de análisis individuales ilimitadas</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item3">Las 6 visualizaciones analíticas por sesión</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item4">Métricas estadísticas y exportación a PDF</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item4">Métricas estadísticas</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item5">Soporte técnico remoto en horario comercial</span></li>
                     <li class="no-incluye"><svg width="17" height="17" aria-hidden="true"><use href="#i-cerrar" /></svg><span data-i18n="planes.scout.item6">Sin análisis múltiple</span></li>
                 </ul>
@@ -264,7 +264,6 @@
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item1">Todo lo del plan Scout</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item2">Análisis múltiple: promedio de hasta 10 sesiones</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item3">Informes comparativos entre sesiones</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item4">Exportación de los datos crudos de seguimiento</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item5">Soporte prioritario con tiempo de respuesta garantizado</span></li>
                     <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item6">Hasta 3 dispositivos simultáneos</span></li>
                 </ul>
@@ -349,12 +348,6 @@
                         </tr>
                         <tr>
                             <th scope="row" data-i18n="planes.comparador.multiple">Análisis múltiple</th>
-                            <td class="centro no" data-i18n="planes.comparador.noIncluido">No incluido</td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" data-i18n="planes.comparador.crudos">Exportar datos crudos</th>
                             <td class="centro no" data-i18n="planes.comparador.noIncluido">No incluido</td>
                             <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
                             <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>

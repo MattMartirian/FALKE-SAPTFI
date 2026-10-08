@@ -46,7 +46,6 @@ namespace GUI
             return ticket;
         }
 
-        // Un solo uso: el ticket se borra al consumirlo, sirva o no.
         public static Pendiente Consumir(string ticket, string direccion)
         {
             if (string.IsNullOrEmpty(ticket)) return null;

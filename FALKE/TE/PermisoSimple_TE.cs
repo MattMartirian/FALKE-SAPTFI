@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace TE
 {
-    // Leaf del Composite: una patente. Responde por sí misma y no contiene nada (Agregar y Quitar, heredados, lo rechazan).
     public class PermisoSimple_TE : PermisoAbstracto_TE
     {
         public override TipoPermiso TipoPermiso => TipoPermiso.Simple;

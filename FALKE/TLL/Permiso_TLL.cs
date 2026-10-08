@@ -25,13 +25,11 @@ namespace TLL
             return permisoRepo.ObtenerTodos();
         }
 
-        // ---- Gestión de roles y grupos (solo con GESTIONAR_ROLES). Los permisos (patentes) los define el desarrollador.
 
         public CatalogoPermisos_TE ObtenerCatalogo(ActorUsuario_TE actor)
         {
             ExigirGestionar(actor);
 
-            // Todo sale del Composite: qué incluye cada nodo, en qué está incluido y qué patentes da.
             var arbol = permisoRepo.ConstruirArbol();
             var padres = IndexarPadres(arbol.Values);
             var usuarios = usuarioRepo.ContarUsuariosPorRol();
@@ -72,9 +70,6 @@ namespace TLL
 
             return catalogo;
         }
-
-        // Un rol de gestión es del personal de Pattern Blue: solo se asigna a usuarios de la empresa proveedora y es el único que puede
-        // incluir permisos reservados. Un rol general se asigna a cualquier empresa y no puede incluirlos. Se elige al crearlo.
         public void CrearRol(ActorUsuario_TE actor, string nombre, string descripcion = null, bool deGestion = false)
         {
             Crear(actor, nombre, true, descripcion, deGestion);
@@ -84,8 +79,6 @@ namespace TLL
         {
             Crear(actor, nombre, false, descripcion, false);
         }
-
-        // Lo que se muestra de cada permiso: su descripción o, si no tiene, el nombre interno.
         public Dictionary<string, string> ObtenerEtiquetas()
         {
             var descripciones = permisoRepo.ObtenerDescripciones();
@@ -99,8 +92,6 @@ namespace TLL
 
             return nombre != null && descripciones.TryGetValue(nombre, out texto) && !string.IsNullOrWhiteSpace(texto) ? texto : nombre;
         }
-
-        // El nombre es interno y no se cambia; lo que se edita es la descripción que se muestra. Vacía = vuelve a mostrarse el nombre.
         public void CambiarDescripcion(ActorUsuario_TE actor, string nombre, string descripcion)
         {
             if (actor == null || !actor.Puede(Patentes_TLL.CAMBIAR_DESCRIPCION_PERMISO))
@@ -144,9 +135,6 @@ namespace TLL
             return descripcion;
         }
 
-        // Cambia lo que incluye un rol o un grupo. Se carga el árbol, se aplican los cambios con Agregar y Quitar del Composite (que cuida la
-        // estructura: a sí mismo, duplicados, ciclos), se validan las reglas del negocio y la ORM deja la base igual que el árbol.
-        // Todo va en una transacción con un bloqueo, así dos ediciones simultáneas no pueden crear un ciclo entre las dos.
         public void GuardarComposicion(ActorUsuario_TE actor, string nombre, IEnumerable<string> incluidos)
         {
             ExigirGestionar(actor);
@@ -170,7 +158,6 @@ namespace TLL
                 {
                     if (!arbol.ContainsKey(inc)) throw new PermisoInvalidoException("El permiso \"" + inc + "\" no existe.");
 
-                    // Regla del negocio (no de la estructura): los roles son el nivel superior y nada los incluye.
                     if (inc != nombre && arbol[inc].EsRolPermiso) throw new PermisoInvalidoException("\"" + inc + "\" es un rol: ni un rol ni un grupo pueden incluir roles.");
                 }
 
@@ -187,7 +174,6 @@ namespace TLL
                 foreach (string q in aQuitar) objetivo.Quitar(arbol[q]);
                 foreach (string a in aAgregar) objetivo.Agregar(arbol[a]);
 
-                // Los permisos reservados a Pattern Blue solo van en roles de gestión (también a través de grupos).
                 foreach (var rol in roles.Where(r => !r.EsDeGestion))
                 {
                     var nuevosReservados = rol.ObtenerPatentes().Except(patentesDeRolesAntes[rol.Nombre]).Where(Patentes_TLL.EsDeProveedor).OrderBy(x => x).ToList();
@@ -216,8 +202,6 @@ namespace TLL
             });
         }
 
-        // La baja de un rol o un grupo también pasa por el Composite: primero se le quitan todos los hijos (Quitar), la ORM deja la base igual
-        // que el árbol (sin relaciones) y después se borra el nodo.
         public void EliminarRolOGrupo(ActorUsuario_TE actor, string nombre)
         {
             ExigirGestionar(actor);

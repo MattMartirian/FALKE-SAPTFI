@@ -99,7 +99,6 @@ namespace GUI
             };
         }
 
-        // Cada tanto se relee al usuario: una baja, un bloqueo o un cambio de rol hecho por otro administrador tiene efecto sin esperar a que cierre sesión.
         public static void VerificarVigencia()
         {
             if (HayUsuario && !object.Equals(Ctx.Session[K_EPOCA], Volatile.Read(ref epocaSesiones)))

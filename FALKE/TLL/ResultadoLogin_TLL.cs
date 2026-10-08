@@ -9,12 +9,8 @@ namespace TLL
         public string Motivo { get; private set; }
         public Usuario_TE Usuario { get; private set; }
         public string Token { get; private set; }
-
-        // Entró, pero la integridad de los datos está comprometida y esta cuenta puede repararla: hay que llevarla a la pantalla de Dígito verificador.
         public bool RequiereRevisarIntegridad { get; private set; }
 
-        // Solo en CREDENCIALES_INVALIDAS de una cuenta que existe: cuántos intentos quedan antes del bloqueo. Con un correo inexistente es null,
-        // así el mensaje no deja averiguar qué cuentas existen.
         public int? IntentosRestantes { get; private set; }
 
         private ResultadoLogin_TLL() { }

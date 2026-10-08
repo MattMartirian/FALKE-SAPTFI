@@ -13,18 +13,11 @@ namespace TE
     {
         public string Nombre { get; set; }
         public ClasePermiso Clase { get; set; }
-
-        // Descripción guardada (puede ser null) y lo que se muestra: la descripción o, si no hay, el nombre.
         public string Descripcion { get; set; }
         public string Etiqueta { get; set; }
-
-        // Roles base: no se renombran ni se eliminan. El Gestor además es fijo (no se edita su composición).
         public bool EsBase { get; set; }
         public bool EsFijo { get; set; }
-
-        // Rol de gestión: solo para usuarios de Pattern Blue.
         public bool EsDeGestion { get; set; }
-
         public int UsuariosAsignados { get; set; }
         public List<string> Incluye { get; set; } = new List<string>();
         public List<string> IncluidoEn { get; set; } = new List<string>();

@@ -205,7 +205,6 @@ namespace BLL
             throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
         }
 
-        // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
         private void Auditar(ActorUsuario_TE actor, int idEmpresa, string descripcion, CriticidadBitacora criticidad)
         {
             bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Empresas", descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
@@ -251,7 +250,6 @@ namespace BLL
 
         public Empresa_BE ObtenerPorId(int idEmpresa) => empresaRepo.ObtenerPorPK(idEmpresa);
 
-        // Solo el nombre de cada empresa: es lo que necesita quien ve la bitácora completa para filtrar por empresa.
         public List<Empresa_BE> ObtenerParaFiltroDeBitacora(ActorUsuario_TE actor)
         {
             if (actor == null || !actor.VeBitacoraCompleta()) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora de todas las empresas.");
@@ -259,7 +257,6 @@ namespace BLL
             return empresaRepo.ObtenerTodos().Select(e => new Empresa_BE { IdEmpresa = e.IdEmpresa, NombreEmpresa = e.NombreEmpresa }).OrderBy(e => e.NombreEmpresa).ToList();
         }
 
-        // Listado de la cartera: solo para quien ve todas las empresas.
         public List<Empresa_BE> ObtenerCartera(ActorUsuario_TE actor)
         {
             if (actor == null || !actor.VeTodasLasEmpresas()) throw new UnauthorizedAccessException("No tenés permiso para ver todas las empresas.");
@@ -267,8 +264,6 @@ namespace BLL
             return empresaRepo.ObtenerResumen();
         }
 
-        // cuitActual es el CUIT guardado cuando se modifica una empresa existente: si no se toca, no se vuelve a validar. Así se pueden editar
-        // los demás datos de una empresa cuyo CUIT se cargó antes de que existiera esta validación (o quedó en blanco).
         private void ValidarYNormalizar(Empresa_BE empresa, int idEmpresaPropia = 0, string cuitActual = null)
         {
             empresa.NombreEmpresa = (empresa.NombreEmpresa ?? string.Empty).Trim();
@@ -317,11 +312,9 @@ namespace BLL
             return texto == null ? 0 : texto.Length;
         }
 
-        // Prefijos que asigna AFIP a personas humanas (20, 23, 24, 27) y jurídicas (30, 33, 34); el último dígito se calcula módulo 11.
         private static readonly int[] PrefijosCuit = { 20, 23, 24, 27, 30, 33, 34 };
         private static readonly int[] PesosCuit = { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
 
-        // Dice qué le pasa a un CUIT de 11 dígitos, con el formato esperado, o devuelve null si es válido.
         private static string MotivoCuitInvalido(string cuitNormalizado)
         {
             const string FORMATO = " El formato es 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).";

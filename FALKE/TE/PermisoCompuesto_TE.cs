@@ -4,9 +4,6 @@ using System.Linq;
 
 namespace TE
 {
-    // Composite: un rol o un grupo. Guarda sus hijos y delega en ellos cada operación.
-    // Agregar solo cuida la integridad de la estructura (no se incluye a sí mismo, no repite hijos, no genera un ciclo). Las reglas del
-    // negocio (por ejemplo, que un rol no incluya roles) las aplica la capa de negocio, no la entidad.
     public class PermisoCompuesto_TE : PermisoAbstracto_TE
     {
         public override TipoPermiso TipoPermiso => TipoPermiso.Compuesto;

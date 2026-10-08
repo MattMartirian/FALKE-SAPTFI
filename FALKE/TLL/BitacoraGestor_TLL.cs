@@ -23,7 +23,6 @@ namespace TLL
             bitacoraRepo.Alta(bitacora);
         }
 
-        // Cada usuario ve su propia actividad (lo que hizo él), sin necesitar permiso sobre la bitácora general.
         public List<Bitacora_TE> ObtenerMiActividad(ActorUsuario_TE actor, int cantidad = 10)
         {
             if (actor == null || actor.IdUsuario <= 0) return new List<Bitacora_TE>();
@@ -47,8 +46,6 @@ namespace TLL
         public const string ACCION_ALTA = "Alta";
         public const string ACCION_MODIFICACION = "Modificacion";
         public const string ACCION_BAJA = "Baja";
-
-        // El Gestor ve todo con nombres; el administrador solo los eventos de su empresa y el equipo de Pattern Blue sin nombre.
         private List<BitacoraVista_TE> ObtenerAlcance(ActorUsuario_TE actor)
         {
             if (actor == null || !actor.Puede(Patentes_TLL.VER_BITACORA)) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora.");

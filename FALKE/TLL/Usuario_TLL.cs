@@ -16,8 +16,6 @@ namespace TLL
     {
         private const int MAX_INTENTOS_FALLIDOS = 5;
         private const int LARGO_MINIMO_CONTRASENA = 8;
-
-        // Lo que se le dice al usuario cuando la contraseña no cumple. Es el mismo texto en todas las pantallas.
         public const string POLITICA_CONTRASENA = "La contraseña debe tener al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).";
 
         public const string TOKEN_ACTIVACION = "activacion";
@@ -93,7 +91,6 @@ namespace TLL
             {
                 RegistrarIntentoFallido(usuario);
 
-                // El intento que agota el cupo bloquea la cuenta en ese momento: se le avisa enseguida.
                 if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos) return ResultadoLogin_TLL.BloqueadoPorIntentos();
 
                 return ResultadoLogin_TLL.CredencialesInvalidas(Math.Max(0, MAX_INTENTOS_FALLIDOS - usuario.IntentosFallidosUsuario));
@@ -108,8 +105,6 @@ namespace TLL
                 return ResultadoLogin_TLL.EmpresaNoActiva(motivoEmpresa);
             }
 
-            // Con la integridad comprometida nadie entra, salvo quien puede repararla (recalcular el dígito verificador): ese entra y se lo lleva directo
-            // a la pantalla de Dígito verificador.
             var inconsistencias = gestorIntegridad.VerificarIntegridadTodasLasTablas();
             bool revisarIntegridad = inconsistencias.Count > 0;
 
@@ -179,10 +174,6 @@ namespace TLL
 
             return token;
         }
-
-        // Para una cuenta que sigue pendiente de activación (el enlace venció, se perdió o el correo estaba mal): emite un enlace nuevo. El
-        // anterior no se anula (sigue valiendo hasta que venza o se use). Lo hace quien puede dar de alta usuarios, solo dentro de su alcance.
-        // El correo lo manda quien llama.
         public SolicitudEnlace_TLL ReenviarInvitacion(ActorUsuario_TE actor, int idUsuario)
         {
             ExigirPatente(actor, Patentes_TLL.REGISTRAR_USUARIO);
@@ -227,8 +218,6 @@ namespace TLL
             return usuarioRepo.Listar(f);
         }
 
-        // Quien ve todas las empresas asigna cualquier rol. Los demás, solo los que no tienen más permisos que ellos
-        // (así nadie puede darse ni dar un permiso que no tiene).
         public List<string> RolesAsignables(ActorUsuario_TE actor)
         {
             var roles = new PermisoRepository().ConstruirArbolDeRoles();
@@ -320,7 +309,6 @@ namespace TLL
             });
         }
 
-        // Un rol de gestión es del personal de Pattern Blue: no se asigna a usuarios de una empresa cliente.
         private static void ExigirRolCompatibleConEmpresa(string nombreRol, int idEmpresaDelUsuario)
         {
             if (idEmpresaDelUsuario == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) return;
@@ -333,7 +321,6 @@ namespace TLL
             }
         }
 
-        // Los roles de gestión (solo para usuarios de Pattern Blue).
         public HashSet<string> RolesDeGestion()
         {
             return new HashSet<string>(new PermisoRepository().ConstruirArbolDeRoles().Where(r => r.EsDeGestion).Select(r => r.Nombre));
@@ -365,8 +352,6 @@ namespace TLL
             });
         }
 
-        // Nadie modifica a alguien con más permisos que él: un administrador no puede bloquear ni degradar al Gestor.
-        // Los permisos de infraestructura (integridad y respaldos, del Webmaster) no cuentan: el Gestor administra también a los Webmasters.
         private void ExigirJerarquia(ActorUsuario_TE actor, Usuario_TE objetivo, string accion)
         {
             if (actor.EsEmergencia || objetivo.Rol == null) return;
@@ -379,9 +364,6 @@ namespace TLL
             throw new UnauthorizedAccessException("No podés modificar a un usuario con más permisos que vos.");
         }
 
-        // Datos de otro usuario. El administrador cambia nombre, apellido e idioma de la gente de su empresa.
-        // Cambiar el correo o la empresa es solo de quien tenga CAMBIAR_EMAIL_EMPRESA_USUARIO (el Gestor).
-        // Devuelve un token de activación nuevo cuando el usuario sigue pendiente y cambió su correo (hay que mandárselo a la dirección nueva).
         public string ModificarDatosUsuario(ActorUsuario_TE actor, int idUsuario, string nombre, string apellido, int idIdioma, string email, int idEmpresa, string motivo, bool confirmado)
         {
             ExigirPatente(actor, Patentes_TLL.MODIFICAR_USUARIO);

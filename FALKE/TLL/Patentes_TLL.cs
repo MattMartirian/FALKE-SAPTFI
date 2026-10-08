@@ -2,8 +2,6 @@ using System.Collections.Generic;
 
 namespace TLL
 {
-    // Las patentes las define el desarrollador: cada una está atada a una función de la página.
-    // Desde la pantalla de roles solo se combinan y se les edita la descripción (PermisoTable.descripcion_permiso); el nombre es interno.
     public static class Patentes_TLL
     {
         public const string REGISTRAR_EMPRESA = "REGISTRAR_EMPRESA";
@@ -34,8 +32,6 @@ namespace TLL
         public const string MODIFICAR_CONTACTO_EMPRESA = "MODIFICAR_CONTACTO_EMPRESA";
         public const string GESTIONAR_CATEGORIAS = "GESTIONAR_CATEGORIAS";
 
-        // Permisos reservados a Pattern Blue: un rol que los incluya solo se puede asignar a usuarios de la empresa proveedora,
-        // porque dan alcance sobre todas las empresas cliente o sobre el sistema en sí.
         private static readonly HashSet<string> deProveedor = new HashSet<string>
         {
             VER_USUARIOS_TODAS_EMPRESAS, CREAR_USUARIO_OTRA_EMPRESA, REGISTRAR_EMPRESA, MODIFICAR_EMPRESA, CAMBIAR_ESTADO_EMPRESA,
@@ -43,8 +39,6 @@ namespace TLL
             VER_RESPALDOS, HACER_RESPALDO, RESTAURAR_RESPALDO, VER_BITACORA_COMPLETA, CAMBIAR_DESCRIPCION_PERMISO, CAMBIAR_EMAIL_EMPRESA_USUARIO
         };
 
-        // Permisos de infraestructura: son del Webmaster (integridad de los datos y copias de seguridad). El Gestor, que se ocupa de los
-        // clientes, no los tiene; por eso no cuentan al comparar quién tiene "más permisos" que quién.
         private static readonly HashSet<string> deInfraestructura = new HashSet<string>
         {
             RECALCULAR_INTEGRIDAD, VER_RESPALDOS, HACER_RESPALDO, RESTAURAR_RESPALDO
