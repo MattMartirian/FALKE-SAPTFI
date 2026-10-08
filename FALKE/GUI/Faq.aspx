@@ -312,6 +312,22 @@
                     </div>
                 </div>
 
+                <div class="acordeon-item">
+                    <h3 class="sin-margen">
+                        <button type="button" class="acordeon-boton" aria-expanded="false" aria-controls="r13">
+                            <span data-i18n="faq.p13.pregunta">¿Puedo compartir los resultados con gente sin cuenta?</span>
+                            <svg class="signo" width="18" height="18" aria-hidden="true"><use href="#i-flecha-abajo" /></svg>
+                        </button>
+                    </h3>
+                    <div class="acordeon-panel" id="r13">
+                        <p data-i18n="faq.p13.respuesta">
+                            Sí. Cada análisis se exporta a PDF eligiendo con casillas qué visualizaciones
+                            y métricas incluir. Ese reporte se puede compartir con cualquiera, sin
+                            necesidad de que entre a la plataforma.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </section>
 

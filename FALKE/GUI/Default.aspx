@@ -533,7 +533,7 @@
                     <h3 data-i18n="inicio.paso4.titulo">Auditas los resultados</h3>
                     <p class="texto-suave" data-i18n="inicio.paso4.texto">
                         Mapa de calor, zonas de interés y ciegas, dispersión, recorrido y atención
-                        frente a distracción.
+                        frente a distracción. Todo exportable a PDF.
                     </p>
                 </div>
             </div>

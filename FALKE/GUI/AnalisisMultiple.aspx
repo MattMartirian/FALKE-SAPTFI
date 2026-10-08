@@ -219,6 +219,12 @@
                 <h1 id="tituloResultado" data-i18n="multiple.resultado.titulo">Resultado combinado</h1>
                 <p class="texto-suave sin-margen" id="subtituloResultado"></p>
             </div>
+            <div class="acciones">
+                <button type="button" class="btn btn-primario">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-descarga" /></svg>
+                    <span data-i18n="multiple.exportar">Descargar reporte</span>
+                </button>
+            </div>
         </div>
 
         <div class="tarjeta mb-24">

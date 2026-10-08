@@ -84,6 +84,9 @@
     <symbol id="i-filtro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 6h16l-6.2 7.3V19l-3.6-2v-3.7Z" />
     </symbol>
+    <symbol id="i-descarga" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4v10m0 0 3.8-3.8M12 14l-3.8-3.8M4.5 16.5v2A1.5 1.5 0 0 0 6 20h12a1.5 1.5 0 0 0 1.5-1.5v-2" />
+    </symbol>
     <symbol id="i-flecha-der" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
         <path d="m9 5 7 7-7 7" />
     </symbol>
