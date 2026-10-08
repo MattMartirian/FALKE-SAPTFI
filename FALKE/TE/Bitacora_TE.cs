@@ -39,7 +39,6 @@ namespace TE
         public DateTime FechaHoraBitacora { get; set; }
         public string Actor { get; set; }
 
-        // El correo de quien hizo el evento. Es null cuando el actor está enmascarado (el equipo de Pattern Blue visto por una empresa cliente) o no hay usuario.
         public string EmailActor { get; set; }
         public int? IdEmpresa { get; set; }
         public string NombreEmpresa { get; set; }
@@ -52,8 +51,6 @@ namespace TE
     {
         public DateTime? Desde { get; set; }
         public DateTime? Hasta { get; set; }
-
-        // Las horas filtran la hora del día en cada fecha del rango (si desde > hasta, cruza la medianoche).
         public TimeSpan? HoraDesde { get; set; }
         public TimeSpan? HoraHasta { get; set; }
 
