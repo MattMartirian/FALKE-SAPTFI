@@ -46,6 +46,7 @@
     <Compile Include="BitacoraGestor_TLL.cs" />
     <Compile Include="ActorUsuarioAlcance_TLL.cs" />
     <Compile Include="Patentes_TLL.cs" />
+    <Compile Include="Texto_TLL.cs" />
     <Compile Include="SolicitudEnlace_TLL.cs" />
     <Compile Include="Permiso_TLL.cs" />
     <Compile Include="Respaldo_TLL.cs" />

@@ -23,6 +23,16 @@ namespace TLL
             bitacoraRepo.Alta(bitacora);
         }
 
+        public void Auditar(int idUsuario, string modulo, int? idEmpresa, string descripcion, CriticidadBitacora criticidad)
+        {
+            Guardar(new Bitacora_TE(idUsuario, modulo, descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
+        }
+
+        public void Auditar(ActorUsuario_TE actor, string modulo, int? idEmpresa, string descripcion, CriticidadBitacora criticidad)
+        {
+            Auditar(actor.IdUsuario, modulo, idEmpresa, descripcion, criticidad);
+        }
+
         public List<Bitacora_TE> ObtenerMiActividad(ActorUsuario_TE actor, int cantidad = 10)
         {
             if (actor == null || actor.IdUsuario <= 0) return new List<Bitacora_TE>();
@@ -148,11 +158,6 @@ namespace TLL
             if (d.StartsWith("cambio") || d.StartsWith("modificaci") || d.StartsWith("renombrado")) return ACCION_MODIFICACION;
 
             return string.Empty;
-        }
-
-        public List<Bitacora_TE> ObtenerTodas()
-        {
-            return bitacoraRepo.ObtenerTodos();
         }
     }
 }

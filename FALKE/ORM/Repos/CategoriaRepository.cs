@@ -2,13 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using BE;
+using DAL;
 
 namespace ORM
 {
     public class CategoriaRepository : RepositoryBase<Categoria_BE, int>
     {
+        private static readonly Dictionary<TipoActivoCategoria, Mapeo> Mapeos = new Mapeo[]
+        {
+            new MapeoSoftware(),
+            new MapeoAppWeb(),
+            new MapeoAppMovil(),
+            new MapeoVideojuego(),
+            new MapeoPublicidad()
+        }.ToDictionary(m => m.Tipo);
+
         public CategoriaRepository() : base() { }
+
+        public TablasBD TablaEspecifica(TipoActivoCategoria tipo)
+        {
+            return Mapeos[tipo].TablaIntegridad;
+        }
 
         public override void Alta(Categoria_BE c)
         {
@@ -21,7 +37,7 @@ namespace ORM
                      @flujo, @fechaCreacion, @activa);
                 SELECT CAST(SCOPE_IDENTITY() AS int);";
 
-            var idGenerado = Gestor.EjecutarScalar<int>(sql,
+            c.IdCategoria = Gestor.EjecutarScalar<int>(sql,
                 new SqlParameter("@idEmpresa", c.IdEmpresa),
                 new SqlParameter("@nombre", c.NombreCategoria),
                 new SqlParameter("@tipo", Normalizar(c.Tipo)),
@@ -30,9 +46,7 @@ namespace ORM
                 new SqlParameter("@fechaCreacion", c.FechaCreacion),
                 new SqlParameter("@activa", c.Activa));
 
-            c.IdCategoria = idGenerado;
-
-            InsertarEspecifico(c);
+            Mapeos[c.Tipo].Insertar(c);
         }
 
         public override void Modificar(Categoria_BE c)
@@ -56,15 +70,14 @@ namespace ORM
                 new SqlParameter("@activa", c.Activa),
                 new SqlParameter("@id", c.IdCategoria));
 
-            // Si cambia el tipo de activo, la fila específica anterior ya no corresponde: se reemplaza por una nueva.
             if (tipoAnterior != c.Tipo)
             {
-                EliminarEspecifico(c.IdCategoria, tipoAnterior);
-                InsertarEspecifico(c);
+                Mapeos[tipoAnterior].Eliminar(c.IdCategoria);
+                Mapeos[c.Tipo].Insertar(c);
             }
             else
             {
-                ActualizarEspecifico(c);
+                Mapeos[c.Tipo].Actualizar(c);
             }
         }
 
@@ -96,7 +109,6 @@ namespace ORM
             return Convert.ToInt32(dt.Rows[0][0]) > 0;
         }
 
-        // Una categoría con sesiones grabadas no se puede eliminar físicamente (ver Categoria_BLL.Eliminar).
         public int ContarSesiones(int idCategoria)
         {
             string sql = "SELECT COUNT(1) FROM SesionGrabadaTable WHERE id_categoria = @id";
@@ -104,124 +116,11 @@ namespace ORM
             return Convert.ToInt32(dt.Rows[0][0]);
         }
 
-        // Las tablas específicas no tienen ON DELETE CASCADE: primero se borra la fila del tipo y después la base.
         public void Eliminar(int idCategoria)
         {
-            foreach (TipoActivoCategoria tipo in Enum.GetValues(typeof(TipoActivoCategoria)))
-                EliminarEspecifico(idCategoria, tipo);
+            foreach (Mapeo mapeo in Mapeos.Values) mapeo.Eliminar(idCategoria);
 
             Gestor.EjecutarNonQuery("DELETE FROM CategoriaTable WHERE id_categoria = @id", new SqlParameter("@id", idCategoria));
-        }
-
-        #region Tabla específica por tipo de activo
-
-        private void InsertarEspecifico(Categoria_BE c)
-        {
-            switch (c.Tipo)
-            {
-                case TipoActivoCategoria.Software:
-                    Gestor.EjecutarNonQuery(
-                        "INSERT INTO CategoriaSoftwareTable (id_categoria, sistema_operativo_software, version_software) VALUES (@id, @so, @version)",
-                        new SqlParameter("@id", c.IdCategoria),
-                        new SqlParameter("@so", ValorONulo(c.SistemaOperativoSoftware)),
-                        new SqlParameter("@version", ValorONulo(c.VersionSoftware)));
-                    break;
-
-                case TipoActivoCategoria.AppWeb:
-                    Gestor.EjecutarNonQuery(
-                        "INSERT INTO CategoriaAppWebTable (id_categoria, url_appweb, dispositivo_objetivo_appweb) VALUES (@id, @url, @dispositivo)",
-                        new SqlParameter("@id", c.IdCategoria),
-                        new SqlParameter("@url", ValorONulo(c.UrlAppWeb)),
-                        new SqlParameter("@dispositivo", Normalizar(c.DispositivoAppWeb)));
-                    break;
-
-                case TipoActivoCategoria.AppMovil:
-                    Gestor.EjecutarNonQuery(
-                        "INSERT INTO CategoriaAppMovilTable (id_categoria, sistema_operativo_appmovil, version_appmovil) VALUES (@id, @so, @version)",
-                        new SqlParameter("@id", c.IdCategoria),
-                        new SqlParameter("@so", Normalizar(c.SoAppMovil)),
-                        new SqlParameter("@version", ValorONulo(c.VersionAppMovil)));
-                    break;
-
-                case TipoActivoCategoria.Videojuego:
-                    Gestor.EjecutarNonQuery(
-                        "INSERT INTO CategoriaVideojuegoTable (id_categoria, plataforma_videojuego, version_videojuego) VALUES (@id, @plataforma, @version)",
-                        new SqlParameter("@id", c.IdCategoria),
-                        new SqlParameter("@plataforma", Normalizar(c.Plataforma)),
-                        new SqlParameter("@version", ValorONulo(c.VersionVideojuego)));
-                    break;
-
-                case TipoActivoCategoria.Publicidad:
-                    Gestor.EjecutarNonQuery(
-                        "INSERT INTO CategoriaPublicidadTable (id_categoria, formato_publicidad, canal_distribucion_publicidad) VALUES (@id, @formato, @canal)",
-                        new SqlParameter("@id", c.IdCategoria),
-                        new SqlParameter("@formato", ValorONulo(c.FormatoPublicidad)),
-                        new SqlParameter("@canal", ValorONulo(c.CanalPublicidad)));
-                    break;
-            }
-        }
-
-        private void ActualizarEspecifico(Categoria_BE c)
-        {
-            switch (c.Tipo)
-            {
-                case TipoActivoCategoria.Software:
-                    Gestor.EjecutarNonQuery(
-                        "UPDATE CategoriaSoftwareTable SET sistema_operativo_software = @so, version_software = @version WHERE id_categoria = @id",
-                        new SqlParameter("@so", ValorONulo(c.SistemaOperativoSoftware)),
-                        new SqlParameter("@version", ValorONulo(c.VersionSoftware)),
-                        new SqlParameter("@id", c.IdCategoria));
-                    break;
-
-                case TipoActivoCategoria.AppWeb:
-                    Gestor.EjecutarNonQuery(
-                        "UPDATE CategoriaAppWebTable SET url_appweb = @url, dispositivo_objetivo_appweb = @dispositivo WHERE id_categoria = @id",
-                        new SqlParameter("@url", ValorONulo(c.UrlAppWeb)),
-                        new SqlParameter("@dispositivo", Normalizar(c.DispositivoAppWeb)),
-                        new SqlParameter("@id", c.IdCategoria));
-                    break;
-
-                case TipoActivoCategoria.AppMovil:
-                    Gestor.EjecutarNonQuery(
-                        "UPDATE CategoriaAppMovilTable SET sistema_operativo_appmovil = @so, version_appmovil = @version WHERE id_categoria = @id",
-                        new SqlParameter("@so", Normalizar(c.SoAppMovil)),
-                        new SqlParameter("@version", ValorONulo(c.VersionAppMovil)),
-                        new SqlParameter("@id", c.IdCategoria));
-                    break;
-
-                case TipoActivoCategoria.Videojuego:
-                    Gestor.EjecutarNonQuery(
-                        "UPDATE CategoriaVideojuegoTable SET plataforma_videojuego = @plataforma, version_videojuego = @version WHERE id_categoria = @id",
-                        new SqlParameter("@plataforma", Normalizar(c.Plataforma)),
-                        new SqlParameter("@version", ValorONulo(c.VersionVideojuego)),
-                        new SqlParameter("@id", c.IdCategoria));
-                    break;
-
-                case TipoActivoCategoria.Publicidad:
-                    Gestor.EjecutarNonQuery(
-                        "UPDATE CategoriaPublicidadTable SET formato_publicidad = @formato, canal_distribucion_publicidad = @canal WHERE id_categoria = @id",
-                        new SqlParameter("@formato", ValorONulo(c.FormatoPublicidad)),
-                        new SqlParameter("@canal", ValorONulo(c.CanalPublicidad)),
-                        new SqlParameter("@id", c.IdCategoria));
-                    break;
-            }
-        }
-
-        private void EliminarEspecifico(int idCategoria, TipoActivoCategoria tipo)
-        {
-            Gestor.EjecutarNonQuery($"DELETE FROM {TablaEspecifica(tipo)} WHERE id_categoria = @id", new SqlParameter("@id", idCategoria));
-        }
-
-        private static string TablaEspecifica(TipoActivoCategoria tipo)
-        {
-            switch (tipo)
-            {
-                case TipoActivoCategoria.Software: return "CategoriaSoftwareTable";
-                case TipoActivoCategoria.AppWeb: return "CategoriaAppWebTable";
-                case TipoActivoCategoria.AppMovil: return "CategoriaAppMovilTable";
-                case TipoActivoCategoria.Videojuego: return "CategoriaVideojuegoTable";
-                default: return "CategoriaPublicidadTable";
-            }
         }
 
         private TipoActivoCategoria ObtenerTipoActual(int idCategoria)
@@ -232,10 +131,6 @@ namespace ORM
 
             return (TipoActivoCategoria)Enum.Parse(typeof(TipoActivoCategoria), dt.Rows[0]["tipo_activo_digital_categoria"].ToString(), true);
         }
-
-        #endregion
-
-        #region Mapping
 
         private static string Normalizar(Enum valor)
         {
@@ -262,49 +157,17 @@ namespace ORM
 
         private static Categoria_BE Map(DataRow dr)
         {
-            var tipo = Valor<TipoActivoCategoria>(dr, "tipo_activo_digital_categoria");
+            Categoria_BE c = Mapeos[Valor<TipoActivoCategoria>(dr, "tipo_activo_digital_categoria")].Leer(dr);
 
-            var c = new Categoria_BE
-            {
-                IdCategoria = Valor<int>(dr, "id_categoria"),
-                IdEmpresa = Valor<int>(dr, "id_empresa"),
-                NombreCategoria = Valor<string>(dr, "nombre_categoria"),
-                Tipo = tipo,
-                NombreActivo = Valor<string>(dr, "nombre_activo_categoria"),
-                FlujoEsperado = Valor<string>(dr, "flujo_analizado_categoria"),
-                FechaCreacion = Valor<DateTime>(dr, "fecha_creacion_categoria"),
-                Activa = Valor<bool>(dr, "activa_categoria"),
-                DVH = Valor<string>(dr, "DVH"),
-                CantidadSesiones = Valor<int>(dr, "cant_sesiones")
-            };
-
-            switch (tipo)
-            {
-                case TipoActivoCategoria.Software:
-                    c.SistemaOperativoSoftware = Valor<string>(dr, "sistema_operativo_software");
-                    c.VersionSoftware = Valor<string>(dr, "version_software");
-                    break;
-
-                case TipoActivoCategoria.AppWeb:
-                    c.UrlAppWeb = Valor<string>(dr, "url_appweb");
-                    c.DispositivoAppWeb = Valor<DispositivoObjetivo>(dr, "dispositivo_objetivo_appweb");
-                    break;
-
-                case TipoActivoCategoria.AppMovil:
-                    c.SoAppMovil = Valor<SistemaOperativoMovil>(dr, "sistema_operativo_appmovil");
-                    c.VersionAppMovil = Valor<string>(dr, "version_appmovil");
-                    break;
-
-                case TipoActivoCategoria.Videojuego:
-                    c.Plataforma = Valor<PlataformaVideojuego>(dr, "plataforma_videojuego");
-                    c.VersionVideojuego = Valor<string>(dr, "version_videojuego");
-                    break;
-
-                case TipoActivoCategoria.Publicidad:
-                    c.FormatoPublicidad = Valor<string>(dr, "formato_publicidad");
-                    c.CanalPublicidad = Valor<string>(dr, "canal_distribucion_publicidad");
-                    break;
-            }
+            c.IdCategoria = Valor<int>(dr, "id_categoria");
+            c.IdEmpresa = Valor<int>(dr, "id_empresa");
+            c.NombreCategoria = Valor<string>(dr, "nombre_categoria");
+            c.NombreActivo = Valor<string>(dr, "nombre_activo_categoria");
+            c.FlujoEsperado = Valor<string>(dr, "flujo_analizado_categoria");
+            c.FechaCreacion = Valor<DateTime>(dr, "fecha_creacion_categoria");
+            c.Activa = Valor<bool>(dr, "activa_categoria");
+            c.DVH = Valor<string>(dr, "DVH");
+            c.CantidadSesiones = Valor<int>(dr, "cant_sesiones");
 
             return c;
         }
@@ -316,6 +179,214 @@ namespace ORM
             return lista;
         }
 
-        #endregion
+        private abstract class Mapeo
+        {
+            protected static GestorBaseDeDatos_DAL Gestor
+            {
+                get { return GestorBaseDeDatos_DAL.Instancia; }
+            }
+
+            public abstract TipoActivoCategoria Tipo { get; }
+            public abstract string Tabla { get; }
+            public abstract TablasBD TablaIntegridad { get; }
+            public abstract void Insertar(Categoria_BE c);
+            public abstract void Actualizar(Categoria_BE c);
+            public abstract Categoria_BE Leer(DataRow dr);
+
+            public void Eliminar(int idCategoria)
+            {
+                Gestor.EjecutarNonQuery("DELETE FROM " + Tabla + " WHERE id_categoria = @id", new SqlParameter("@id", idCategoria));
+            }
+        }
+
+        private sealed class MapeoSoftware : Mapeo
+        {
+            public override TipoActivoCategoria Tipo { get { return TipoActivoCategoria.Software; } }
+            public override string Tabla { get { return "CategoriaSoftwareTable"; } }
+            public override TablasBD TablaIntegridad { get { return TablasBD.CategoriaSoftware; } }
+
+            public override void Insertar(Categoria_BE c)
+            {
+                var s = (CategoriaSoftware_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "INSERT INTO CategoriaSoftwareTable (id_categoria, sistema_operativo_software, version_software) VALUES (@id, @so, @version)",
+                    new SqlParameter("@id", s.IdCategoria),
+                    new SqlParameter("@so", ValorONulo(s.SistemaOperativoSoftware)),
+                    new SqlParameter("@version", ValorONulo(s.VersionSoftware)));
+            }
+
+            public override void Actualizar(Categoria_BE c)
+            {
+                var s = (CategoriaSoftware_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "UPDATE CategoriaSoftwareTable SET sistema_operativo_software = @so, version_software = @version WHERE id_categoria = @id",
+                    new SqlParameter("@so", ValorONulo(s.SistemaOperativoSoftware)),
+                    new SqlParameter("@version", ValorONulo(s.VersionSoftware)),
+                    new SqlParameter("@id", s.IdCategoria));
+            }
+
+            public override Categoria_BE Leer(DataRow dr)
+            {
+                return new CategoriaSoftware_BE
+                {
+                    SistemaOperativoSoftware = Valor<string>(dr, "sistema_operativo_software"),
+                    VersionSoftware = Valor<string>(dr, "version_software")
+                };
+            }
+        }
+
+        private sealed class MapeoAppWeb : Mapeo
+        {
+            public override TipoActivoCategoria Tipo { get { return TipoActivoCategoria.AppWeb; } }
+            public override string Tabla { get { return "CategoriaAppWebTable"; } }
+            public override TablasBD TablaIntegridad { get { return TablasBD.CategoriaAppWeb; } }
+
+            public override void Insertar(Categoria_BE c)
+            {
+                var w = (CategoriaAppWeb_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "INSERT INTO CategoriaAppWebTable (id_categoria, url_appweb, dispositivo_objetivo_appweb) VALUES (@id, @url, @dispositivo)",
+                    new SqlParameter("@id", w.IdCategoria),
+                    new SqlParameter("@url", ValorONulo(w.UrlAppWeb)),
+                    new SqlParameter("@dispositivo", Normalizar(w.DispositivoAppWeb)));
+            }
+
+            public override void Actualizar(Categoria_BE c)
+            {
+                var w = (CategoriaAppWeb_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "UPDATE CategoriaAppWebTable SET url_appweb = @url, dispositivo_objetivo_appweb = @dispositivo WHERE id_categoria = @id",
+                    new SqlParameter("@url", ValorONulo(w.UrlAppWeb)),
+                    new SqlParameter("@dispositivo", Normalizar(w.DispositivoAppWeb)),
+                    new SqlParameter("@id", w.IdCategoria));
+            }
+
+            public override Categoria_BE Leer(DataRow dr)
+            {
+                return new CategoriaAppWeb_BE
+                {
+                    UrlAppWeb = Valor<string>(dr, "url_appweb"),
+                    DispositivoAppWeb = Valor<DispositivoObjetivo>(dr, "dispositivo_objetivo_appweb")
+                };
+            }
+        }
+
+        private sealed class MapeoAppMovil : Mapeo
+        {
+            public override TipoActivoCategoria Tipo { get { return TipoActivoCategoria.AppMovil; } }
+            public override string Tabla { get { return "CategoriaAppMovilTable"; } }
+            public override TablasBD TablaIntegridad { get { return TablasBD.CategoriaAppMovil; } }
+
+            public override void Insertar(Categoria_BE c)
+            {
+                var m = (CategoriaAppMovil_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "INSERT INTO CategoriaAppMovilTable (id_categoria, sistema_operativo_appmovil, version_appmovil) VALUES (@id, @so, @version)",
+                    new SqlParameter("@id", m.IdCategoria),
+                    new SqlParameter("@so", Normalizar(m.SoAppMovil)),
+                    new SqlParameter("@version", ValorONulo(m.VersionAppMovil)));
+            }
+
+            public override void Actualizar(Categoria_BE c)
+            {
+                var m = (CategoriaAppMovil_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "UPDATE CategoriaAppMovilTable SET sistema_operativo_appmovil = @so, version_appmovil = @version WHERE id_categoria = @id",
+                    new SqlParameter("@so", Normalizar(m.SoAppMovil)),
+                    new SqlParameter("@version", ValorONulo(m.VersionAppMovil)),
+                    new SqlParameter("@id", m.IdCategoria));
+            }
+
+            public override Categoria_BE Leer(DataRow dr)
+            {
+                return new CategoriaAppMovil_BE
+                {
+                    SoAppMovil = Valor<SistemaOperativoMovil>(dr, "sistema_operativo_appmovil"),
+                    VersionAppMovil = Valor<string>(dr, "version_appmovil")
+                };
+            }
+        }
+
+        private sealed class MapeoVideojuego : Mapeo
+        {
+            public override TipoActivoCategoria Tipo { get { return TipoActivoCategoria.Videojuego; } }
+            public override string Tabla { get { return "CategoriaVideojuegoTable"; } }
+            public override TablasBD TablaIntegridad { get { return TablasBD.CategoriaVideojuego; } }
+
+            public override void Insertar(Categoria_BE c)
+            {
+                var v = (CategoriaVideojuego_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "INSERT INTO CategoriaVideojuegoTable (id_categoria, plataforma_videojuego, version_videojuego) VALUES (@id, @plataforma, @version)",
+                    new SqlParameter("@id", v.IdCategoria),
+                    new SqlParameter("@plataforma", Normalizar(v.Plataforma)),
+                    new SqlParameter("@version", ValorONulo(v.VersionVideojuego)));
+            }
+
+            public override void Actualizar(Categoria_BE c)
+            {
+                var v = (CategoriaVideojuego_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "UPDATE CategoriaVideojuegoTable SET plataforma_videojuego = @plataforma, version_videojuego = @version WHERE id_categoria = @id",
+                    new SqlParameter("@plataforma", Normalizar(v.Plataforma)),
+                    new SqlParameter("@version", ValorONulo(v.VersionVideojuego)),
+                    new SqlParameter("@id", v.IdCategoria));
+            }
+
+            public override Categoria_BE Leer(DataRow dr)
+            {
+                return new CategoriaVideojuego_BE
+                {
+                    Plataforma = Valor<PlataformaVideojuego>(dr, "plataforma_videojuego"),
+                    VersionVideojuego = Valor<string>(dr, "version_videojuego")
+                };
+            }
+        }
+
+        private sealed class MapeoPublicidad : Mapeo
+        {
+            public override TipoActivoCategoria Tipo { get { return TipoActivoCategoria.Publicidad; } }
+            public override string Tabla { get { return "CategoriaPublicidadTable"; } }
+            public override TablasBD TablaIntegridad { get { return TablasBD.CategoriaPublicidad; } }
+
+            public override void Insertar(Categoria_BE c)
+            {
+                var p = (CategoriaPublicidad_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "INSERT INTO CategoriaPublicidadTable (id_categoria, formato_publicidad, canal_distribucion_publicidad) VALUES (@id, @formato, @canal)",
+                    new SqlParameter("@id", p.IdCategoria),
+                    new SqlParameter("@formato", ValorONulo(p.FormatoPublicidad)),
+                    new SqlParameter("@canal", ValorONulo(p.CanalPublicidad)));
+            }
+
+            public override void Actualizar(Categoria_BE c)
+            {
+                var p = (CategoriaPublicidad_BE)c;
+
+                Gestor.EjecutarNonQuery(
+                    "UPDATE CategoriaPublicidadTable SET formato_publicidad = @formato, canal_distribucion_publicidad = @canal WHERE id_categoria = @id",
+                    new SqlParameter("@formato", ValorONulo(p.FormatoPublicidad)),
+                    new SqlParameter("@canal", ValorONulo(p.CanalPublicidad)),
+                    new SqlParameter("@id", p.IdCategoria));
+            }
+
+            public override Categoria_BE Leer(DataRow dr)
+            {
+                return new CategoriaPublicidad_BE
+                {
+                    FormatoPublicidad = Valor<string>(dr, "formato_publicidad"),
+                    CanalPublicidad = Valor<string>(dr, "canal_distribucion_publicidad")
+                };
+            }
+        }
     }
 }

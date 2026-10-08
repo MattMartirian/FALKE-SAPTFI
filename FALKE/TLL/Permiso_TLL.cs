@@ -20,11 +20,6 @@ namespace TLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        public List<PermisoAbstracto_TE> ObtenerTodos()
-        {
-            return permisoRepo.ObtenerTodos();
-        }
-
 
         public CatalogoPermisos_TE ObtenerCatalogo(ActorUsuario_TE actor)
         {
@@ -116,7 +111,7 @@ namespace TLL
                 permiso.Descripcion = nueva;
                 permisoRepo.Modificar(permiso);
 
-                Auditar(actor, "Cambio de descripción del " + clase + " \"" + permiso.Nombre + "\": " +
+                bitacora.Auditar(actor, "Roles", null, "Cambio de descripción del " + clase + " \"" + permiso.Nombre + "\": " +
                     (anterior == null ? "(sin descripción)" : "\"" + anterior + "\"") + " → " + (nueva == null ? "(sin descripción)" : "\"" + nueva + "\""),
                     CriticidadBitacora.Media);
             });
@@ -194,7 +189,7 @@ namespace TLL
 
                 permisoRepo.Modificar(objetivo);
 
-                Auditar(actor, "Cambio de composición del " + tipo + " \"" + nombre + "\"" +
+                bitacora.Auditar(actor, "Roles", null, "Cambio de composición del " + tipo + " \"" + nombre + "\"" +
                     (aAgregar.Count > 0 ? ". Agrega: " + string.Join(", ", aAgregar) : string.Empty) +
                     (aQuitar.Count > 0 ? ". Quita: " + string.Join(", ", aQuitar) : string.Empty) +
                     ". Permisos efectivos" + (ganados.Count > 0 ? " +[" + string.Join(", ", ganados) + "]" : string.Empty) + (perdidos.Count > 0 ? " -[" + string.Join(", ", perdidos) + "]" : string.Empty),
@@ -234,7 +229,7 @@ namespace TLL
                 permisoRepo.Modificar(compuesto);
                 permisoRepo.Eliminar(nombre);
 
-                Auditar(actor, "Baja del " + tipo + " \"" + nombre + "\"" + (propios.Count > 0 ? " (incluía: " + string.Join(", ", propios) + ")" : string.Empty), CriticidadBitacora.Alta);
+                bitacora.Auditar(actor, "Roles", null, "Baja del " + tipo + " \"" + nombre + "\"" + (propios.Count > 0 ? " (incluía: " + string.Join(", ", propios) + ")" : string.Empty), CriticidadBitacora.Alta);
             });
         }
 
@@ -257,7 +252,7 @@ namespace TLL
             {
                 permisoRepo.Alta(new PermisoCompuesto_TE(nombre, esRol) { Descripcion = descripcion, EsDeGestion = esRol && deGestion });
 
-                Auditar(actor, "Alta del " + (esRol ? (deGestion ? "rol de gestión" : "rol general") : "grupo") + " \"" + nombre + "\"" + (descripcion == null ? string.Empty : " (descripción: \"" + descripcion + "\")"), CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Roles", null, "Alta del " + (esRol ? (deGestion ? "rol de gestión" : "rol general") : "grupo") + " \"" + nombre + "\"" + (descripcion == null ? string.Empty : " (descripción: \"" + descripcion + "\")"), CriticidadBitacora.Media);
             });
         }
 
@@ -298,12 +293,6 @@ namespace TLL
 
             bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + Patentes_TLL.GESTIONAR_ROLES + ")", CriticidadBitacora.Media);
             throw new UnauthorizedAccessException("No tenés permiso para gestionar roles y permisos.");
-        }
-
-        // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
-        private void Auditar(ActorUsuario_TE actor, string descripcion, CriticidadBitacora criticidad)
-        {
-            bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Roles", descripcion, criticidad, DateTime.Now));
         }
 
         // Para cada permiso, los roles y grupos que lo incluyen directamente.

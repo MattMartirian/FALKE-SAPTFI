@@ -110,11 +110,7 @@
                             data-id="<%#: Eval("IdCategoria") %>" data-nombre="<%#: Eval("NombreCategoria") %>"
                             data-e-nombre="<%#: Eval("NombreCategoria") %>" data-e-tipo="<%#: Eval("Tipo") %>"
                             data-e-activo="<%#: Eval("NombreActivo") %>" data-e-flujo="<%#: Eval("FlujoEsperado") %>"
-                            data-e-so="<%#: Eval("SistemaOperativoSoftware") %>" data-e-versionsw="<%#: Eval("VersionSoftware") %>"
-                            data-e-url="<%#: Eval("UrlAppWeb") %>" data-e-dispositivo="<%#: Eval("DispositivoAppWeb") %>"
-                            data-e-somovil="<%#: Eval("SoAppMovil") %>" data-e-versionapp="<%#: Eval("VersionAppMovil") %>"
-                            data-e-plataforma="<%#: Eval("Plataforma") %>" data-e-versionjuego="<%#: Eval("VersionVideojuego") %>"
-                            data-e-formato="<%#: Eval("FormatoPublicidad") %>" data-e-canal="<%#: Eval("CanalPublicidad") %>">
+                            <%# AtributosEspecificos((BE.Categoria_BE)Container.DataItem) %>>
                             <td><strong><%#: Eval("NombreCategoria") %></strong></td>
                             <td><span class="categoria-tipo"><svg width="15" height="15" aria-hidden="true"><use href="#i-carpeta" /></svg><%#: EtiquetaTipo((BE.TipoActivoCategoria)Eval("Tipo")) %></span></td>
                             <td class="texto-suave"><%#: Dato((string)Eval("NombreActivo")) %></td>

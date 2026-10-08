@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
+using System.Web;
 using System.Web.UI.WebControls;
 using BE;
 using BLL;
@@ -10,7 +12,7 @@ using TE;
 
 namespace GUI
 {
-    public partial class Categorias : System.Web.UI.Page
+    public partial class Categorias : PaginaConAviso_GUI
     {
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
@@ -55,8 +57,7 @@ namespace GUI
 
             int idCategoria = Convert.ToInt32(e.CommandArgument);
 
-            Ejecutar("Categorias.Eliminar", () => new Categoria_BLL().Eliminar(actor, idCategoria),
-                "La categoría se eliminó.");
+            Ejecutar("Categorias.Eliminar", "La categoría se eliminó.", () => new Categoria_BLL().Eliminar(actor, idCategoria));
         }
 
         protected void btnGuardarCategoria_Click(object sender, EventArgs e)
@@ -64,72 +65,49 @@ namespace GUI
             int idCategoria;
             TipoActivoCategoria tipo;
 
-            if (actor == null || !int.TryParse(hfCatId.Value, out idCategoria) || !Enum.TryParse(mcTipo.SelectedValue, out tipo))
+            if (actor == null || !int.TryParse(hfCatId.Value, out idCategoria) || !Enum.TryParse(mcTipo.SelectedValue, out tipo) || !Enum.IsDefined(typeof(TipoActivoCategoria), tipo))
             {
                 Avisar("aviso-peligro", "No se pudo identificar la categoría. Volvé a intentarlo.");
                 return;
             }
 
-            var categoria = new Categoria_BE
+            Categoria_BE categoria = Categoria_BE.Nueva(tipo);
+
+            categoria.NombreCategoria = mcNombre.Text;
+            categoria.NombreActivo = mcActivo.Text;
+            categoria.FlujoEsperado = mcFlujo.Text;
+            categoria.AplicarCampos(new Dictionary<string, string>
             {
-                NombreCategoria = mcNombre.Text,
-                Tipo = tipo,
-                NombreActivo = mcActivo.Text,
-                FlujoEsperado = mcFlujo.Text,
-                SistemaOperativoSoftware = mcSo.Text,
-                VersionSoftware = mcVersionSw.Text,
-                UrlAppWeb = mcUrl.Text,
-                VersionAppMovil = mcVersionApp.Text,
-                VersionVideojuego = mcVersionJuego.Text,
-                FormatoPublicidad = mcFormato.Text,
-                CanalPublicidad = mcCanal.Text
-            };
-
-            DispositivoObjetivo dispositivo;
-            SistemaOperativoMovil soMovil;
-            PlataformaVideojuego plataforma;
-
-            if (Enum.TryParse(mcDispositivo.SelectedValue, out dispositivo)) categoria.DispositivoAppWeb = dispositivo;
-            if (Enum.TryParse(mcSoMovil.SelectedValue, out soMovil)) categoria.SoAppMovil = soMovil;
-            if (Enum.TryParse(mcPlataforma.SelectedValue, out plataforma)) categoria.Plataforma = plataforma;
+                { "so", mcSo.Text },
+                { "versionsw", mcVersionSw.Text },
+                { "url", mcUrl.Text },
+                { "dispositivo", mcDispositivo.SelectedValue },
+                { "somovil", mcSoMovil.SelectedValue },
+                { "versionapp", mcVersionApp.Text },
+                { "plataforma", mcPlataforma.SelectedValue },
+                { "versionjuego", mcVersionJuego.Text },
+                { "formato", mcFormato.Text },
+                { "canal", mcCanal.Text }
+            });
 
             if (idCategoria == 0)
             {
-                Ejecutar("Categorias.Alta", () => new Categoria_BLL().Crear(actor, categoria), "Se registró la categoría.");
+                Ejecutar("Categorias.Alta", "Se registró la categoría.", () => new Categoria_BLL().Crear(actor, categoria));
             }
             else
             {
-                Ejecutar("Categorias.Modificar", () => new Categoria_BLL().Modificar(actor, idCategoria, categoria), "Los datos de la categoría se actualizaron.");
+                Ejecutar("Categorias.Modificar", "Los datos de la categoría se actualizaron.", () => new Categoria_BLL().Modificar(actor, idCategoria, categoria));
             }
         }
 
-        private void Ejecutar(string origen, Action accion, string exito)
+        protected static string AtributosEspecificos(Categoria_BE categoria)
         {
-            try
-            {
-                accion();
-                Avisar("aviso-exito", exito);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar(origen, ex);
-                Avisar("aviso-peligro", "No se pudo completar la operación. Volvé a intentarlo.");
-            }
-        }
+            var atributos = new StringBuilder();
 
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
+            foreach (KeyValuePair<string, string> campo in categoria.ObtenerCampos())
+                atributos.Append(" data-e-").Append(campo.Key).Append("=\"").Append(HttpUtility.HtmlAttributeEncode(campo.Value)).Append('"');
+
+            return atributos.ToString();
         }
 
         protected static string Dato(string valor)

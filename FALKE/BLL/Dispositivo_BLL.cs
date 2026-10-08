@@ -7,6 +7,7 @@ using ORM;
 using SERVICES;
 using TE;
 using TLL;
+using static TLL.TextoHelper_TLL;
 
 namespace BLL
 {
@@ -48,7 +49,7 @@ namespace BLL
 
         public List<Dispositivo_BE> Listar(ActorUsuario_TE actor, string texto = null, EstadoDispositivo? estado = null, int? idModelo = null)
         {
-            Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
+            actor.Exigir(Patentes_TLL.VER_DISPOSITIVOS);
 
             texto = (texto ?? string.Empty).Trim();
 
@@ -62,28 +63,21 @@ namespace BLL
 
         public Dispositivo_BE ObtenerPorId(ActorUsuario_TE actor, int idDispositivo)
         {
-            Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
+            actor.Exigir(Patentes_TLL.VER_DISPOSITIVOS);
 
             return dispositivoRepo.ObtenerPorPK(idDispositivo);
         }
 
-        public List<Prestamo_BE> ObtenerHistorial(ActorUsuario_TE actor, int idDispositivo)
-        {
-            Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
-
-            return prestamoRepo.ObtenerHistorial(idDispositivo);
-        }
-
         public List<Prestamo_BE> ObtenerHistorialCompleto(ActorUsuario_TE actor)
         {
-            Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
+            actor.Exigir(Patentes_TLL.VER_DISPOSITIVOS);
 
             return prestamoRepo.ObtenerTodos();
         }
 
         public List<Empresa_BE> EmpresasParaPrestar(ActorUsuario_TE actor)
         {
-            Exigir(actor, Patentes_TLL.ASIGNAR_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
             return empresaRepo.ObtenerResumen()
                 .Where(e => e.Estado == EstadoEmpresa.Activa && e.IdEmpresa != BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA)
@@ -101,7 +95,7 @@ namespace BLL
 
         public void Crear(ActorUsuario_TE actor, Dispositivo_BE dispositivo)
         {
-            Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ALTA_DISPOSITIVO);
 
             if (dispositivo == null) throw new ArgumentNullException(nameof(dispositivo));
 
@@ -122,13 +116,13 @@ namespace BLL
                 dispositivoRepo.Alta(dispositivo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { dispositivo.IdDispositivo.ToString() });
 
-                Auditar(actor, null, "Alta del dispositivo " + dispositivo.NumeroSerie + " (" + dispositivo.Modelo + ").", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, "Alta del dispositivo " + dispositivo.NumeroSerie + " (" + dispositivo.Modelo + ").", CriticidadBitacora.Media);
             });
         }
 
         public void Modificar(ActorUsuario_TE actor, int idDispositivo, Dispositivo_BE nuevos)
         {
-            Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ALTA_DISPOSITIVO);
 
             if (nuevos == null) throw new ArgumentNullException(nameof(nuevos));
 
@@ -158,13 +152,13 @@ namespace BLL
                 dispositivoRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { actual.IdDispositivo.ToString() });
 
-                Auditar(actor, actual.IdEmpresaActual, "Modificación del dispositivo " + actual.NumeroSerie + ": " + string.Join("; ", cambios) + ".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", actual.IdEmpresaActual, "Modificación del dispositivo " + actual.NumeroSerie + ": " + string.Join("; ", cambios) + ".", CriticidadBitacora.Media);
             });
         }
 
         public void AsignarAEmpresa(ActorUsuario_TE actor, int idDispositivo, int idEmpresa)
         {
-            Exigir(actor, Patentes_TLL.ASIGNAR_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
 
@@ -195,13 +189,13 @@ namespace BLL
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Prestamo, new[] { prestamo.IdPrestamo.ToString() });
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { idDispositivo.ToString() });
 
-                Auditar(actor, idEmpresa, "Préstamo del dispositivo " + dispositivo.NumeroSerie + " (" + dispositivo.Modelo + ") a la empresa \"" + empresa.NombreEmpresa + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", idEmpresa, "Préstamo del dispositivo " + dispositivo.NumeroSerie + " (" + dispositivo.Modelo + ") a la empresa \"" + empresa.NombreEmpresa + "\".", CriticidadBitacora.Media);
             });
         }
 
         public void RegistrarDevolucion(ActorUsuario_TE actor, int idDispositivo, bool requiereMantenimiento)
         {
-            Exigir(actor, Patentes_TLL.ASIGNAR_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
             Prestamo_BE prestamo = prestamoRepo.ObtenerAbierto(idDispositivo);
@@ -222,14 +216,14 @@ namespace BLL
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Prestamo, new[] { prestamo.IdPrestamo.ToString() });
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { idDispositivo.ToString() });
 
-                Auditar(actor, prestamo.IdEmpresa, "Devolución del dispositivo " + dispositivo.NumeroSerie + " por la empresa \"" + empresa + "\"" +
+                bitacora.Auditar(actor, "Dispositivos", prestamo.IdEmpresa, "Devolución del dispositivo " + dispositivo.NumeroSerie + " por la empresa \"" + empresa + "\"" +
                     (requiereMantenimiento ? "; pasa a mantenimiento." : "."), CriticidadBitacora.Media);
             });
         }
 
         public void EnviarAMantenimiento(ActorUsuario_TE actor, int idDispositivo)
         {
-            Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ALTA_DISPOSITIVO);
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
 
@@ -241,7 +235,7 @@ namespace BLL
 
         public void TerminarMantenimiento(ActorUsuario_TE actor, int idDispositivo)
         {
-            Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ALTA_DISPOSITIVO);
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
 
@@ -253,7 +247,7 @@ namespace BLL
 
         public void DarDeBaja(ActorUsuario_TE actor, int idDispositivo, string motivo)
         {
-            Exigir(actor, Patentes_TLL.ALTA_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.ALTA_DISPOSITIVO);
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
             ExigirNoDadoDeBaja(dispositivo);
@@ -287,7 +281,7 @@ namespace BLL
                 dispositivoRepo.Modificar(dispositivo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { dispositivo.IdDispositivo.ToString() });
 
-                Auditar(actor, null, descripcion, criticidad);
+                bitacora.Auditar(actor, "Dispositivos", null, descripcion, criticidad);
             });
         }
 
@@ -314,19 +308,6 @@ namespace BLL
             if (dispositivo.Estado == EstadoDispositivo.DeBaja) throw new InvalidOperationException("El dispositivo está dado de baja.");
         }
 
-        private void Exigir(ActorUsuario_TE actor, string patente)
-        {
-            if (actor != null && actor.Puede(patente)) return;
-
-            bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + patente + ")", CriticidadBitacora.Media);
-            throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
-        }
-
-        private void Auditar(ActorUsuario_TE actor, int? idEmpresa, string descripcion, CriticidadBitacora criticidad)
-        {
-            bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Dispositivos", descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
-        }
-
         private static void ValidarYNormalizar(Dispositivo_BE d)
         {
             d.NumeroSerie = (d.NumeroSerie ?? string.Empty).Trim();
@@ -349,12 +330,6 @@ namespace BLL
             if (string.Equals(antes, despues, StringComparison.Ordinal)) return;
 
             cambios.Add(campo + ": " + (antes ?? "(vacío)") + " → " + (despues ?? "(vacío)"));
-        }
-
-        private static string Recortar(string texto)
-        {
-            string limpio = (texto ?? string.Empty).Trim();
-            return limpio.Length == 0 ? null : limpio;
         }
 
         private static bool Contiene(string texto, string buscado)

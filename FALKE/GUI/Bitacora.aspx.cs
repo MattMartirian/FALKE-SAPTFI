@@ -9,7 +9,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class Bitacora : System.Web.UI.Page
+    public partial class Bitacora : PaginaConAviso_GUI
     {
         private const int TAMANO_PAGINA = 50;
 
@@ -170,13 +170,6 @@ namespace GUI
         protected void lnkSiguiente_Click(object sender, EventArgs e)
         {
             PaginaActual = PaginaActual + 1;
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
         }
 
         private void MostrarAlcance()

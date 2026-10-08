@@ -130,7 +130,7 @@ namespace TLL
 
         public string RegistrarUsuario(ActorUsuario_TE actor, Usuario_TE usuario)
         {
-            ExigirPatente(actor, Patentes_TLL.REGISTRAR_USUARIO);
+            actor.Exigir(Patentes_TLL.REGISTRAR_USUARIO);
 
             if (!actor.Puede(Patentes_TLL.CREAR_USUARIO_OTRA_EMPRESA))
                 ExigirAlcance(actor, usuario.IdEmpresa, "dar de alta un usuario");
@@ -166,7 +166,7 @@ namespace TLL
 
                 string t = EmitirToken(usuario.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION);
 
-                Auditar(idActor > 0 ? idActor : usuario.IdUsuario, usuario.IdEmpresa,
+                bitacora.Auditar(idActor > 0 ? idActor : usuario.IdUsuario, "Usuarios", usuario.IdEmpresa,
                     "Alta de usuario '" + usuario.EmailUsuario + "' (rol " + rolNombre + "); queda pendiente de activación", CriticidadBitacora.Media);
 
                 return t;
@@ -176,7 +176,7 @@ namespace TLL
         }
         public SolicitudEnlace_TLL ReenviarInvitacion(ActorUsuario_TE actor, int idUsuario)
         {
-            ExigirPatente(actor, Patentes_TLL.REGISTRAR_USUARIO);
+            actor.Exigir(Patentes_TLL.REGISTRAR_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
             ExigirAlcance(actor, objetivo.IdEmpresa, "reenviar una invitación");
@@ -192,7 +192,7 @@ namespace TLL
             {
                 string t = EmitirToken(objetivo.IdUsuario, TOKEN_ACTIVACION, VIGENCIA_ACTIVACION, false);
 
-                Auditar(actor.IdUsuario, objetivo.IdEmpresa,
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
                     "Reenvío de la invitación al usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): se emitió un enlace de activación nuevo",
                     CriticidadBitacora.Media);
 
@@ -204,7 +204,7 @@ namespace TLL
 
         public PaginaUsuarios_TE ListarUsuarios(ActorUsuario_TE actor, FiltroUsuarios_TE filtro)
         {
-            ExigirPatente(actor, Patentes_TLL.VER_USUARIOS);
+            actor.Exigir(Patentes_TLL.VER_USUARIOS);
 
             var f = (filtro ?? new FiltroUsuarios_TE()).Copiar();
 
@@ -231,7 +231,7 @@ namespace TLL
 
         public void CambiarEstado(ActorUsuario_TE actor, int idUsuario, EstadoUsuario nuevoEstado, string motivo)
         {
-            ExigirPatente(actor, Patentes_TLL.CAMBIAR_ESTADO_USUARIO);
+            actor.Exigir(Patentes_TLL.CAMBIAR_ESTADO_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
             ExigirAlcance(actor, objetivo.IdEmpresa, "cambiar el estado de un usuario");
@@ -263,7 +263,7 @@ namespace TLL
 
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { objetivo.IdUsuario.ToString() });
 
-                Auditar(actor.IdUsuario, objetivo.IdEmpresa,
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
                     "Cambio de estado del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): " + anterior + " → " + nuevo + ConMotivo(motivoLimpio),
                     restringe ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
             });
@@ -271,7 +271,7 @@ namespace TLL
 
         public void CambiarRol(ActorUsuario_TE actor, int idUsuario, string nuevoRol, string motivo, bool confirmado)
         {
-            ExigirPatente(actor, Patentes_TLL.CAMBIAR_ROL_USUARIO);
+            actor.Exigir(Patentes_TLL.CAMBIAR_ROL_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
             ExigirAlcance(actor, objetivo.IdEmpresa, "cambiar el rol de un usuario");
@@ -303,7 +303,7 @@ namespace TLL
 
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { objetivo.IdUsuario.ToString() });
 
-                Auditar(actor.IdUsuario, objetivo.IdEmpresa,
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
                     "Cambio de rol del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): " + anterior + " → " + nuevoRol + ConMotivo(motivoLimpio),
                     CriticidadBitacora.Alta);
             });
@@ -348,7 +348,7 @@ namespace TLL
                 usuarioRepo.ActualizarPerfil(usuario.IdUsuario, nombre, apellido, idIdioma);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
 
-                Auditar(usuario.IdUsuario, usuario.IdEmpresa, "Modificación de los datos personales del usuario '" + usuario.EmailUsuario + "'", CriticidadBitacora.Baja);
+                bitacora.Auditar(usuario.IdUsuario, "Usuarios", usuario.IdEmpresa, "Modificación de los datos personales del usuario '" + usuario.EmailUsuario + "'", CriticidadBitacora.Baja);
             });
         }
 
@@ -366,7 +366,7 @@ namespace TLL
 
         public string ModificarDatosUsuario(ActorUsuario_TE actor, int idUsuario, string nombre, string apellido, int idIdioma, string email, int idEmpresa, string motivo, bool confirmado)
         {
-            ExigirPatente(actor, Patentes_TLL.MODIFICAR_USUARIO);
+            actor.Exigir(Patentes_TLL.MODIFICAR_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
             ExigirAlcance(actor, objetivo.IdEmpresa, "modificar los datos de un usuario");
@@ -386,7 +386,7 @@ namespace TLL
             bool cambiaEmpresa = idEmpresa != objetivo.IdEmpresa;
             bool sensible = cambiaEmail || cambiaEmpresa;
 
-            if (sensible) ExigirPatente(actor, Patentes_TLL.CAMBIAR_EMAIL_EMPRESA_USUARIO);
+            if (sensible) actor.Exigir(Patentes_TLL.CAMBIAR_EMAIL_EMPRESA_USUARIO);
 
             if (cambiaEmail)
             {
@@ -433,10 +433,10 @@ namespace TLL
 
                 string detalle = "Modificación de datos del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresaAnterior + "): " + string.Join("; ", cambios) + ConMotivo(motivoLimpio);
 
-                Auditar(actor.IdUsuario, objetivo.IdEmpresa, detalle, sensible ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa, detalle, sensible ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
 
                 if (cambiaEmpresa)
-                    Auditar(actor.IdUsuario, idEmpresa, "Se incorporó a la empresa el usuario '" + emailNuevo + "' (venía de " + empresaAnterior + ")" + ConMotivo(motivoLimpio), CriticidadBitacora.Alta);
+                    bitacora.Auditar(actor.IdUsuario, "Usuarios", idEmpresa, "Se incorporó a la empresa el usuario '" + emailNuevo + "' (venía de " + empresaAnterior + ")" + ConMotivo(motivoLimpio), CriticidadBitacora.Alta);
 
                 return token;
             });
@@ -449,15 +449,6 @@ namespace TLL
             if (usuario == null) throw new InvalidOperationException("El usuario no existe.");
 
             return usuario;
-        }
-
-        private void ExigirPatente(ActorUsuario_TE actor, string patente)
-        {
-            if (actor == null || !actor.Puede(patente))
-            {
-                bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + patente + ")", CriticidadBitacora.Media);
-                throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
-            }
         }
 
         private void ExigirAlcance(ActorUsuario_TE actor, int idEmpresaObjetivo, string accion)
@@ -509,12 +500,6 @@ namespace TLL
             }
         }
 
-        // Estos eventos son de auditoría: si no se pueden guardar, el cambio completo se revierte.
-        private void Auditar(int idActor, int idEmpresa, string descripcion, CriticidadBitacora criticidad)
-        {
-            bitacora.Guardar(new Bitacora_TE(idActor, "Usuarios", descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
-        }
-
         // Marca que cambia cuando cambia la contraseña: las sesiones y las cookies de "recordarme" que la llevan dejan de valer.
         public string HuellaDeAcceso(Usuario_TE usuario)
         {
@@ -522,8 +507,6 @@ namespace TLL
         }
 
         public Usuario_TE ObtenerPorId(int idUsuario) => usuarioRepo.ObtenerPorPK(idUsuario);
-
-        public Usuario_TE ObtenerPorEmail(string email) => usuarioRepo.ObtenerPorEmail(NormalizarEmail(email));
 
         public bool CambiarContrasena(string email, string contrasenaActual, string contrasenaNueva, out string error)
         {

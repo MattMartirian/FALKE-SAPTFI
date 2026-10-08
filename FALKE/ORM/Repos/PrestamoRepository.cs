@@ -49,12 +49,6 @@ namespace ORM
             return dt.Rows.Count == 0 ? null : Map(dt.Rows[0]);
         }
 
-        public List<Prestamo_BE> ObtenerHistorial(int idDispositivo)
-        {
-            return MapTodos(Gestor.EjecutarQuery(SqlSeleccion() + " WHERE p.id_dispositivo = @id ORDER BY p.fecha_entrega_prestamo DESC, p.id_prestamo DESC",
-                new SqlParameter("@id", idDispositivo)));
-        }
-
         public int ContarAbiertosDeEmpresa(int idEmpresa)
         {
             var dt = Gestor.EjecutarQuery("SELECT COUNT(1) FROM PrestamoTable WHERE id_empresa = @empresa AND fecha_devolucion_prestamo IS NULL",

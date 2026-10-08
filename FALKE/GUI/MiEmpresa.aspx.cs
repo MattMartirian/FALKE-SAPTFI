@@ -8,7 +8,7 @@ using TE;
 
 namespace GUI
 {
-    public partial class MiEmpresa : System.Web.UI.Page
+    public partial class MiEmpresa : PaginaConAviso_GUI
     {
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
@@ -130,13 +130,6 @@ namespace GUI
             edicionEnCurso = true;
             ClientScript.RegisterStartupScript(GetType(), "abrirContacto",
                 "window.addEventListener('load',function(){try{window.Falke.abrirModal('modalContacto');}catch(e){}});", true);
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
         }
 
         private void MostrarError(string texto)

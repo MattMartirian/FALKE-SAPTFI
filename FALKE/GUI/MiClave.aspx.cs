@@ -4,7 +4,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class MiClave : System.Web.UI.Page
+    public partial class MiClave : PaginaConAviso_GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,13 +55,6 @@ namespace GUI
                 LogErrores_SERVICE.Registrar("MiClave", ex);
                 Avisar("aviso-peligro", "Ocurrió un error al procesar la solicitud. Volvé a intentarlo.");
             }
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
         }
     }
 }

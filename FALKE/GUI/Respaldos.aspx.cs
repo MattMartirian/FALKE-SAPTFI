@@ -9,7 +9,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class Respaldos : System.Web.UI.Page
+    public partial class Respaldos : PaginaConAviso_GUI
     {
         private const string CLAVE_AVISO = "respaldos.aviso";
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
@@ -151,13 +151,6 @@ namespace GUI
 
             ClientScript.RegisterStartupScript(GetType(), "abrirRestaurar",
                 "window.addEventListener('load',function(){try{window.Falke.abrirModal('modalRestaurar');}catch(e){}});", true);
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
         }
 
         protected bool MostrarRestaurar(object item)

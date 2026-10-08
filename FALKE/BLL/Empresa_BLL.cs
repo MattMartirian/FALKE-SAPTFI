@@ -6,6 +6,7 @@ using ORM;
 using SERVICES;
 using TE;
 using TLL;
+using static TLL.TextoHelper_TLL;
 
 namespace BLL
 {
@@ -76,7 +77,7 @@ namespace BLL
 
         public void ModificarDatos(ActorUsuario_TE actor, int idEmpresa, Empresa_BE nuevos, string motivo)
         {
-            ExigirPatente(actor, Patentes_TLL.MODIFICAR_EMPRESA);
+            actor.Exigir(Patentes_TLL.MODIFICAR_EMPRESA);
 
             Empresa_BE actual = ObtenerExistente(idEmpresa);
 
@@ -113,7 +114,7 @@ namespace BLL
                 empresaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { actual.IdEmpresa.ToString() });
 
-                Auditar(actor, actual.IdEmpresa,
+                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa,
                     "Modificación de datos de la empresa \"" + actual.NombreEmpresa + "\": " + string.Join("; ", cambios) + ConMotivo(motivoLimpio),
                     critico ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
             });
@@ -121,7 +122,7 @@ namespace BLL
 
         public void ModificarContacto(ActorUsuario_TE actor, string rubro, string domicilio, string telefono)
         {
-            ExigirPatente(actor, Patentes_TLL.MODIFICAR_CONTACTO_EMPRESA);
+            actor.Exigir(Patentes_TLL.MODIFICAR_CONTACTO_EMPRESA);
 
             if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
 
@@ -151,7 +152,7 @@ namespace BLL
                 empresaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { actual.IdEmpresa.ToString() });
 
-                Auditar(actor, actual.IdEmpresa,
+                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa,
                     "Modificación de datos de contacto de la empresa \"" + actual.NombreEmpresa + "\" hecha por su administrador: " + string.Join("; ", cambios),
                     CriticidadBitacora.Media);
             });
@@ -159,7 +160,7 @@ namespace BLL
 
         public void CambiarEstado(ActorUsuario_TE actor, int idEmpresa, EstadoEmpresa nuevoEstado, string motivo)
         {
-            ExigirPatente(actor, Patentes_TLL.CAMBIAR_ESTADO_EMPRESA);
+            actor.Exigir(Patentes_TLL.CAMBIAR_ESTADO_EMPRESA);
 
             if (idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) throw new InvalidOperationException("Pattern Blue no se bloquea ni se deshabilita.");
             if (!Enum.IsDefined(typeof(EstadoEmpresa), nuevoEstado)) throw new InvalidOperationException("El estado no es válido.");
@@ -182,7 +183,7 @@ namespace BLL
                 empresaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { actual.IdEmpresa.ToString() });
 
-                Auditar(actor, actual.IdEmpresa,
+                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa,
                     "Cambio de estado de la empresa \"" + actual.NombreEmpresa + "\": " + anterior + " → " + nuevoEstado + ConMotivo(motivoLimpio),
                     CriticidadBitacora.Alta);
             });
@@ -195,19 +196,6 @@ namespace BLL
             if (empresa == null) throw new InvalidOperationException("La empresa no existe.");
 
             return empresa;
-        }
-
-        private void ExigirPatente(ActorUsuario_TE actor, string patente)
-        {
-            if (actor != null && actor.Puede(patente)) return;
-
-            bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + patente + ")", CriticidadBitacora.Media);
-            throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
-        }
-
-        private void Auditar(ActorUsuario_TE actor, int idEmpresa, string descripcion, CriticidadBitacora criticidad)
-        {
-            bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Empresas", descripcion, criticidad, DateTime.Now) { IdEmpresa = idEmpresa });
         }
 
         private static bool Registrar(List<string> cambios, string campo, string antes, string despues)
@@ -298,18 +286,6 @@ namespace BLL
 
             if (empresaRepo.ExisteNombre(empresa.NombreEmpresa, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con esa razón social.");
             if (empresa.Cuit != null && empresaRepo.ExisteCuit(empresa.Cuit, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con ese CUIT.");
-        }
-
-        private static string Recortar(string texto)
-        {
-            string limpio = (texto ?? string.Empty).Trim();
-
-            return limpio.Length == 0 ? null : limpio;
-        }
-
-        private static int Largo(string texto)
-        {
-            return texto == null ? 0 : texto.Length;
         }
 
         private static readonly int[] PrefijosCuit = { 20, 23, 24, 27, 30, 33, 34 };

@@ -10,7 +10,7 @@ using TE;
 
 namespace GUI
 {
-    public partial class Empresas : System.Web.UI.Page
+    public partial class Empresas : PaginaConAviso_GUI
     {
         private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
 
@@ -114,31 +114,7 @@ namespace GUI
         {
             hfSeleccion.Value = idEmpresa.ToString();
 
-            try
-            {
-                accion();
-                Avisar("aviso-exito", exito);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar(origen, ex);
-                Avisar("aviso-peligro", "No se pudo completar la operación. Volvé a intentarlo.");
-            }
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
+            Ejecutar(origen, exito, accion);
         }
 
         protected static string Sigla(string nombre)

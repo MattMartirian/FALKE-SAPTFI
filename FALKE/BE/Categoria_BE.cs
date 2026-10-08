@@ -1,41 +1,72 @@
 using System;
+using System.Collections.Generic;
 
 namespace BE
 {
-    public class Categoria_BE
+    public abstract class Categoria_BE
     {
+        protected const int LARGO_CAMPO = 50;
+
         public int IdCategoria { get; set; }
         public int IdEmpresa { get; set; }
         public string NombreCategoria { get; set; }
-        public TipoActivoCategoria Tipo { get; set; }
         public string NombreActivo { get; set; }
         public string FlujoEsperado { get; set; }
         public DateTime FechaCreacion { get; set; }
         public bool Activa { get; set; }
         public string DVH { get; set; }
-
         public int CantidadSesiones { get; set; }
 
-        // TODO: Cuando este realizado correctamente el flujo de Categorias, dividir en subclases con herencia.
-        // Específicos de software
-        public string SistemaOperativoSoftware { get; set; }
-        public string VersionSoftware { get; set; }
+        public abstract TipoActivoCategoria Tipo { get; }
 
-        // Específicos de app web
-        public string UrlAppWeb { get; set; }
-        public DispositivoObjetivo DispositivoAppWeb { get; set; }
+        public abstract IDictionary<string, string> ObtenerCampos();
 
-        // Específicos de app móvil
-        public SistemaOperativoMovil SoAppMovil { get; set; }
-        public string VersionAppMovil { get; set; }
+        public abstract void AplicarCampos(IDictionary<string, string> campos);
 
-        // Específicos de videojuego
-        public PlataformaVideojuego Plataforma { get; set; }
-        public string VersionVideojuego { get; set; }
+        public abstract string NormalizarYValidar();
 
-        // Específicos de publicidad
-        public string FormatoPublicidad { get; set; }
-        public string CanalPublicidad { get; set; }
+        public static Categoria_BE Nueva(TipoActivoCategoria tipo)
+        {
+            switch (tipo)
+            {
+                case TipoActivoCategoria.Software: return new CategoriaSoftware_BE();
+                case TipoActivoCategoria.AppWeb: return new CategoriaAppWeb_BE();
+                case TipoActivoCategoria.AppMovil: return new CategoriaAppMovil_BE();
+                case TipoActivoCategoria.Videojuego: return new CategoriaVideojuego_BE();
+                case TipoActivoCategoria.Publicidad: return new CategoriaPublicidad_BE();
+                default: throw new ArgumentOutOfRangeException(nameof(tipo));
+            }
+        }
+
+        protected static string Limpiar(string texto)
+        {
+            string limpio = (texto ?? string.Empty).Trim();
+
+            return limpio.Length == 0 ? null : limpio;
+        }
+
+        protected static string Valor(IDictionary<string, string> campos, string clave)
+        {
+            string valor;
+
+            return campos.TryGetValue(clave, out valor) ? valor : null;
+        }
+
+        protected static T Enumerado<T>(IDictionary<string, string> campos, string clave) where T : struct
+        {
+            T resultado;
+
+            Enum.TryParse(Valor(campos, clave), out resultado);
+
+            return resultado;
+        }
+
+        protected static string ExcedeLargo(string valor, string campo, int maximo = LARGO_CAMPO)
+        {
+            return valor != null && valor.Length > maximo
+                ? "El campo \"" + campo + "\" no puede superar los " + maximo + " caracteres."
+                : null;
+        }
     }
 
     public enum TipoActivoCategoria

@@ -11,7 +11,7 @@ using TE;
 
 namespace GUI
 {
-    public partial class Dispositivos : System.Web.UI.Page
+    public partial class Dispositivos : PaginaConAviso_GUI
     {
         private const string CLAVE_AVISO = "dispositivos.aviso";
         private const string CLAVE_AVISO_MODELOS = "dispositivos.aviso.modelos";
@@ -365,30 +365,17 @@ namespace GUI
         // Si sale bien se vuelve a cargar la página (así las listas de modelos se arman de nuevo); si no, se muestra el motivo en la misma ventana.
         private void EjecutarModelos(Action accion, string origen, string exito)
         {
-            try
+            bool salioBien = Intentar(accion, origen, mensaje =>
             {
-                accion();
+                AvisarModelos("aviso-peligro", mensaje);
+                AbrirModal("modalModelos");
+            });
 
-                Session[CLAVE_AVISO_MODELOS] = exito;
-                Response.Redirect("Dispositivos.aspx?modelos=1", false);
-                Context.ApplicationInstance.CompleteRequest();
-                return;
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                AvisarModelos("aviso-peligro", ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                AvisarModelos("aviso-peligro", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar(origen, ex);
-                AvisarModelos("aviso-peligro", "No se pudo completar la operación. Volvé a intentarlo.");
-            }
+            if (!salioBien) return;
 
-            AbrirModal("modalModelos");
+            Session[CLAVE_AVISO_MODELOS] = exito;
+            Response.Redirect("Dispositivos.aspx?modelos=1", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         // ---- Auxiliares
@@ -396,26 +383,7 @@ namespace GUI
         // Devuelve true si salió bien. Si falla, muestra el motivo y reabre el modal para no perder lo escrito.
         private bool Ejecutar(Action accion, string origen, string modal)
         {
-            try
-            {
-                accion();
-                return true;
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Fallar(ex.Message, modal);
-            }
-            catch (InvalidOperationException ex)
-            {
-                Fallar(ex.Message, modal);
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar(origen, ex);
-                Fallar("No se pudo completar la operación. Volvé a intentarlo.", modal);
-            }
-
-            return false;
+            return Intentar(accion, origen, mensaje => Fallar(mensaje, modal));
         }
 
         private void Fallar(string mensaje, string modal)
@@ -438,18 +406,9 @@ namespace GUI
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
-        }
-
         private void AvisarModelos(string variante, string texto)
         {
-            pnlAvisoModelos.CssClass = "aviso " + variante;
-            litAvisoModelos.Text = Server.HtmlEncode(texto);
-            pnlAvisoModelos.Visible = true;
+            Avisar(pnlAvisoModelos, litAvisoModelos, variante, texto);
         }
 
         // ---- Para las plantillas

@@ -10,7 +10,7 @@ using TLL;
 namespace GUI
 {
     // El espacio personal de cada usuario. No pide ningún permiso: basta con haber iniciado sesión, y siempre trabaja sobre la propia cuenta.
-    public partial class MiPerfil : System.Web.UI.Page
+    public partial class MiPerfil : PaginaConAviso_GUI
     {
         private const string CLAVE_AVISO = "perfil.aviso";
 
@@ -160,13 +160,6 @@ namespace GUI
             if (partes.Length == 1) return partes[0].Substring(0, 1).ToUpperInvariant();
 
             return (partes[0].Substring(0, 1) + partes[partes.Length - 1].Substring(0, 1)).ToUpperInvariant();
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
         }
     }
 }

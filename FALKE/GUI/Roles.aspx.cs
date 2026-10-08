@@ -7,7 +7,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class Roles : System.Web.UI.Page
+    public partial class Roles : PaginaConAviso_GUI
     {
         private const string CLAVE_AVISO = "roles.aviso";
 
@@ -220,26 +220,7 @@ namespace GUI
         // destino: a qué elemento ir después de un éxito (null = quedarse donde está; vacío = volver a la lista).
         private void Ejecutar(string origen, string exito, Action accion, string destino, string modalSiFalla = null)
         {
-            try
-            {
-                accion();
-            }
-            catch (PermisoInvalidoException ex)
-            {
-                Fallar(ex.Message, modalSiFalla);
-                return;
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Fallar(ex.Message, modalSiFalla);
-                return;
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar(origen, ex);
-                Fallar("No se pudo completar la operación. Volvé a intentarlo.", modalSiFalla);
-                return;
-            }
+            if (!Intentar(accion, origen, mensaje => Fallar(mensaje, modalSiFalla))) return;
 
             if (destino == null)
             {
@@ -252,6 +233,11 @@ namespace GUI
             Context.ApplicationInstance.CompleteRequest();
         }
 
+        protected override bool EsErrorDeUsuario(Exception ex)
+        {
+            return ex is PermisoInvalidoException || base.EsErrorDeUsuario(ex);
+        }
+
         private void Fallar(string mensaje, string modal)
         {
             Avisar("aviso-peligro", mensaje);
@@ -259,13 +245,6 @@ namespace GUI
             if (modal != null)
                 ClientScript.RegisterStartupScript(GetType(), "abrir" + modal,
                     "window.addEventListener('load',function(){try{window.Falke.abrirModal('" + modal + "');}catch(e){}});", true);
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
         }
 
         protected string Enlace(string nombre)

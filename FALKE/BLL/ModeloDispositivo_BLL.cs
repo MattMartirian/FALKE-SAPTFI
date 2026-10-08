@@ -25,14 +25,14 @@ namespace BLL
 
         public List<ModeloDispositivo_BE> Listar(ActorUsuario_TE actor)
         {
-            Exigir(actor, Patentes_TLL.VER_DISPOSITIVOS);
+            actor.Exigir(Patentes_TLL.VER_DISPOSITIVOS);
 
             return modeloRepo.ObtenerTodos();
         }
 
         public void Crear(ActorUsuario_TE actor, string nombre)
         {
-            Exigir(actor, Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
             nombre = Normalizar(nombre);
             ValidarNombre(nombre);
@@ -46,13 +46,13 @@ namespace BLL
                 modeloRepo.Alta(modelo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.ModeloDispositivo, new[] { modelo.IdModelo.ToString() });
 
-                Auditar(actor, "Alta del modelo de dispositivo \"" + nombre + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, "Alta del modelo de dispositivo \"" + nombre + "\".", CriticidadBitacora.Media);
             });
         }
 
         public void Renombrar(ActorUsuario_TE actor, int idModelo, string nombre)
         {
-            Exigir(actor, Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
             ModeloDispositivo_BE modelo = ObtenerExistente(idModelo);
 
@@ -70,7 +70,7 @@ namespace BLL
                 modeloRepo.Modificar(modelo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.ModeloDispositivo, new[] { idModelo.ToString() });
 
-                Auditar(actor, "El modelo de dispositivo \"" + anterior + "\" pasó a llamarse \"" + nombre + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, "El modelo de dispositivo \"" + anterior + "\" pasó a llamarse \"" + nombre + "\".", CriticidadBitacora.Media);
             });
         }
 
@@ -86,7 +86,7 @@ namespace BLL
 
         private void CambiarActivo(ActorUsuario_TE actor, int idModelo, bool activo, string descripcion)
         {
-            Exigir(actor, Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
+            actor.Exigir(Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
             ModeloDispositivo_BE modelo = ObtenerExistente(idModelo);
 
@@ -99,7 +99,7 @@ namespace BLL
                 modeloRepo.Modificar(modelo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.ModeloDispositivo, new[] { idModelo.ToString() });
 
-                Auditar(actor, string.Format(descripcion, modelo.Nombre), CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, string.Format(descripcion, modelo.Nombre), CriticidadBitacora.Media);
             });
         }
 
@@ -121,19 +121,6 @@ namespace BLL
         {
             if (nombre.Length == 0) throw new InvalidOperationException("El nombre del modelo es obligatorio.");
             if (nombre.Length > LARGO_NOMBRE) throw new InvalidOperationException("El nombre del modelo no puede superar los " + LARGO_NOMBRE + " caracteres.");
-        }
-
-        private void Exigir(ActorUsuario_TE actor, string patente)
-        {
-            if (actor != null && actor.Puede(patente)) return;
-
-            bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + patente + ")", CriticidadBitacora.Media);
-            throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
-        }
-
-        private void Auditar(ActorUsuario_TE actor, string descripcion, CriticidadBitacora criticidad)
-        {
-            bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Dispositivos", descripcion, criticidad, DateTime.Now));
         }
     }
 }

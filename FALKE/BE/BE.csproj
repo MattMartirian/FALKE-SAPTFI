@@ -42,6 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Categoria_BE.cs" />
+    <Compile Include="CategoriaAppMovil_BE.cs" />
+    <Compile Include="CategoriaAppWeb_BE.cs" />
+    <Compile Include="CategoriaPublicidad_BE.cs" />
+    <Compile Include="CategoriaSoftware_BE.cs" />
+    <Compile Include="CategoriaVideojuego_BE.cs" />
     <Compile Include="Dispositivo_BE.cs" />
     <Compile Include="Empresa_BE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

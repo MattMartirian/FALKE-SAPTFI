@@ -9,7 +9,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class Usuarios : System.Web.UI.Page
+    public partial class Usuarios : PaginaConAviso_GUI
     {
         private const int ID_IDIOMA_ESPANOL = 1;
         private const int TAMANO_PAGINA = 25;
@@ -440,40 +440,9 @@ namespace GUI
             }
         }
 
-        private void Ejecutar(string origen, string exito, Action accion)
-        {
-            try
-            {
-                accion();
-                Avisar("aviso-exito", exito);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                Avisar("aviso-peligro", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                LogErrores_SERVICE.Registrar(origen, ex);
-                Avisar("aviso-peligro", "No se pudo completar la operación. Volvé a intentarlo.");
-            }
-        }
-
-        private void Avisar(string variante, string texto)
-        {
-            pnlAviso.CssClass = "aviso " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
-        }
-
         private void AvisarInvitacion(string variante, string texto)
         {
-            pnlInvitarAviso.CssClass = "aviso " + variante;
-            litInvitarAviso.Text = Server.HtmlEncode(texto);
-            pnlInvitarAviso.Visible = true;
+            Avisar(pnlInvitarAviso, litInvitarAviso, variante, texto);
 
             AbrirModal("modalInvitar");
         }

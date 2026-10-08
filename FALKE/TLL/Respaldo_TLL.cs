@@ -35,7 +35,7 @@ namespace TLL
 
         public List<Respaldo_TE> Listar(ActorUsuario_TE actor)
         {
-            Exigir(actor, Patentes_TLL.VER_RESPALDOS);
+            actor.Exigir(Patentes_TLL.VER_RESPALDOS);
 
             List<Respaldo_TE> lista = respaldoRepo.ObtenerTodos();
 
@@ -52,7 +52,7 @@ namespace TLL
         // Copia completa de la base, verificada al terminar. Devuelve el registro de la copia.
         public Respaldo_TE Generar(ActorUsuario_TE actor)
         {
-            Exigir(actor, Patentes_TLL.HACER_RESPALDO);
+            actor.Exigir(Patentes_TLL.HACER_RESPALDO);
 
             if (RestauracionEnCurso) throw new InvalidOperationException("Hay una restauración en curso: esperá a que termine.");
 
@@ -95,7 +95,7 @@ namespace TLL
         // Reemplaza toda la base por la de la copia elegida. Quien llama debe cerrar las sesiones al terminar.
         public void Restaurar(ActorUsuario_TE actor, int idRespaldo, string confirmacion)
         {
-            Exigir(actor, Patentes_TLL.RESTAURAR_RESPALDO);
+            actor.Exigir(Patentes_TLL.RESTAURAR_RESPALDO);
 
             if (!string.Equals((confirmacion ?? string.Empty).Trim(), PALABRA_CONFIRMACION, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Para confirmar, escribí " + PALABRA_CONFIRMACION + ".");
@@ -190,14 +190,6 @@ namespace TLL
             Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(actor.IdUsuario);
 
             return usuario == null ? "el usuario " + actor.IdUsuario : (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim() + " (" + usuario.EmailUsuario + ")";
-        }
-
-        private void Exigir(ActorUsuario_TE actor, string patente)
-        {
-            if (actor != null && actor.Puede(patente)) return;
-
-            bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + patente + ")", CriticidadBitacora.Media);
-            throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
         }
     }
 }
