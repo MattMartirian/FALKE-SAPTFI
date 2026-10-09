@@ -102,7 +102,6 @@
             <div class="campo">
                 <label for="txtUsuario" data-i18n="bitacora.usuario">Usuario</label>
                 <asp:TextBox ID="txtUsuario" runat="server" CssClass="entrada" MaxLength="100" placeholder="Nombre o correo" autocomplete="off" ClientIDMode="Static" />
-                <p class="ayuda">La lista se filtra mientras escribís.</p>
             </div>
 
             <asp:PlaceHolder ID="phFiltroEmpresa" runat="server">
@@ -196,8 +195,6 @@
             var espera = null;
             var pedido = null;
 
-            // Pide la página con los filtros actuales (como si se apretara "Aplicar filtros") y cambia solo la tabla y el contador:
-            // así se puede seguir escribiendo. El servidor siempre aplica el alcance de la cuenta: cada uno ve solo lo suyo.
             function filtrar() {
                 var boton = formulario.querySelector('[name$="btnBuscar"]');
                 if (!boton) return;
@@ -218,7 +215,6 @@
                         var resultados = doc.getElementById("resultadosBitacora");
                         var contador = doc.getElementById("contadorBitacora");
 
-                        // Si la sesión venció la respuesta es otra página: se envía el formulario de la forma común.
                         if (!resultados || !contador) { boton.click(); return; }
 
                         document.getElementById("resultadosBitacora").innerHTML = resultados.innerHTML;
