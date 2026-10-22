@@ -46,6 +46,8 @@
     <Compile Include="Repos\DispositivoRepository.cs" />
     <Compile Include="Repos\ModeloDispositivoRepository.cs" />
     <Compile Include="Repos\EmpresaRepository.cs" />
+    <Compile Include="Repos\IdiomaRepository.cs" />
+    <Compile Include="Repos\TraduccionRepository.cs" />
     <Compile Include="Integridad_ORM.cs" />
     <Compile Include="Repos\PermisoRepository.cs" />
     <Compile Include="Repos\PrestamoRepository.cs" />

@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora_TE.cs" />
+    <Compile Include="Idioma_TE.cs" />
+    <Compile Include="Traduccion_TE.cs" />
     <Compile Include="ActorUsuario_TE.cs" />
     <Compile Include="Respaldo_TE.cs" />
     <Compile Include="PermisoAbstracto_TE.cs" />

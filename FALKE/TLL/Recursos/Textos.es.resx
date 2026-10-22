@@ -1,0 +1,3211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="analisismultiple_analisis_multiple" xml:space="preserve">
+    <value>Análisis múltiple</value>
+  </data>
+  <data name="analisismultiple_app_movil" xml:space="preserve">
+    <value>App móvil</value>
+  </data>
+  <data name="analisismultiple_app_web" xml:space="preserve">
+    <value>App web</value>
+  </data>
+  <data name="analisismultiple_areas_que_la_mayoria_de_los" xml:space="preserve">
+    <value>Áreas que la mayoria de los testers miro y áreas que ignoraron.</value>
+  </data>
+  <data name="analisismultiple_atencion_activa" xml:space="preserve">
+    <value>Atención activa</value>
+  </data>
+  <data name="analisismultiple_atencion_por_sesion" xml:space="preserve">
+    <value>Atención por sesión</value>
+  </data>
+  <data name="analisismultiple_atencion_vs_distraccion" xml:space="preserve">
+    <value>Atención vs. distracción</value>
+  </data>
+  <data name="analisismultiple_combina_varias_sesiones_para_obtener_res" xml:space="preserve">
+    <value>Combina varias sesiones para obtener resultados promediados y ver que patrones se repiten entre distintos testers.</value>
+  </data>
+  <data name="analisismultiple_comparacion_directa_del_porcentaje_de_at" xml:space="preserve">
+    <value>Comparación directa del porcentaje de atención activa de cada sesión.</value>
+  </data>
+  <data name="analisismultiple_cuanto_varia_la_atencion_entre_los" xml:space="preserve">
+    <value>Cuanto varia la atención entre los distintos participantes.</value>
+  </data>
+  <data name="analisismultiple_densidad_de_fijaciones_promediada_entre" xml:space="preserve">
+    <value>Densidad de fijaciones promediada entre las sesiones elegidas.</value>
+  </data>
+  <data name="analisismultiple_descargar_reporte" xml:space="preserve">
+    <value>Descargar reporte</value>
+  </data>
+  <data name="analisismultiple_dispersion_de_mirada" xml:space="preserve">
+    <value>Dispersión de mirada</value>
+  </data>
+  <data name="analisismultiple_duracion_promedio" xml:space="preserve">
+    <value>Duración promedio</value>
+  </data>
+  <data name="analisismultiple_fijacion_media" xml:space="preserve">
+    <value>Fijación media</value>
+  </data>
+  <data name="analisismultiple_fijaciones_promedio" xml:space="preserve">
+    <value>Fijaciones promedio</value>
+  </data>
+  <data name="analisismultiple_generar_analisis" xml:space="preserve">
+    <value>Generar análisis</value>
+  </data>
+  <data name="analisismultiple_graficos_promediados" xml:space="preserve">
+    <value>Gráficos promediados</value>
+  </data>
+  <data name="analisismultiple_mapa_de_calor" xml:space="preserve">
+    <value>Mapa de calor</value>
+  </data>
+  <data name="analisismultiple_metricas_promediadas" xml:space="preserve">
+    <value>Métricas promediadas</value>
+  </data>
+  <data name="analisismultiple_necesitas_al_menos_dos_sesiones_del" xml:space="preserve">
+    <value>Necesitas al menos dos sesiones del mismo tipo.</value>
+  </data>
+  <data name="analisismultiple_promediar_sesiones_de_tipos_distintos_da" xml:space="preserve">
+    <value>Promediar sesiones de tipos distintos daria un resultado estadisticamente inválido, así que al elegir la primera se deshabilitan las que no son compatibles. Hacen falta al menos dos.</value>
+  </data>
+  <data name="analisismultiple_proporcion_media_de_fijacion_activa_fren" xml:space="preserve">
+    <value>Proporción media de fijación activa frente a movimiento sacádico.</value>
+  </data>
+  <data name="analisismultiple_recorrido_de_mirada" xml:space="preserve">
+    <value>Recorrido de mirada</value>
+  </data>
+  <data name="analisismultiple_resultado_combinado" xml:space="preserve">
+    <value>Resultado combinado</value>
+  </data>
+  <data name="analisismultiple_seleccion_actual" xml:space="preserve">
+    <value>Selección actual</value>
+  </data>
+  <data name="analisismultiple_seleccion_de_sesiones" xml:space="preserve">
+    <value>Selección de sesiones</value>
+  </data>
+  <data name="analisismultiple_sesiones_combinadas" xml:space="preserve">
+    <value>Sesiones combinadas</value>
+  </data>
+  <data name="analisismultiple_sesiones_finalizadas" xml:space="preserve">
+    <value>Sesiones finalizadas</value>
+  </data>
+  <data name="analisismultiple_software" xml:space="preserve">
+    <value>Software</value>
+  </data>
+  <data name="analisismultiple_solo_se_listan_las_ya_procesadas" xml:space="preserve">
+    <value>Solo se listan las ya procesadas</value>
+  </data>
+  <data name="analisismultiple_todas_las_sesiones_tienen_que_ser" xml:space="preserve">
+    <value>Todas las sesiones tienen que ser del mismo tipo de activo</value>
+  </data>
+  <data name="analisismultiple_todavia_no_elegiste_ninguna_sesion" xml:space="preserve">
+    <value>Todavía no elegiste ninguna sesión.</value>
+  </data>
+  <data name="analisismultiple_trayecto_tipico_la_linea_llena_es" xml:space="preserve">
+    <value>Trayecto tipico: la línea llena es el promedio del conjunto.</value>
+  </data>
+  <data name="analisismultiple_videojuego" xml:space="preserve">
+    <value>Videojuego</value>
+  </data>
+  <data name="analisismultiple_zonas_de_interes_y_ciegas" xml:space="preserve">
+    <value>Zonas de interés y ciegas</value>
+  </data>
+  <data name="app_analisis" xml:space="preserve">
+    <value>Análisis</value>
+  </data>
+  <data name="app_bitacora" xml:space="preserve">
+    <value>Bitácora</value>
+  </data>
+  <data name="app_cambiar_el_tema_de_color" xml:space="preserve">
+    <value>Cambiar el tema de color</value>
+  </data>
+  <data name="app_cambiar_entre_modo_dia_y_modo" xml:space="preserve">
+    <value>Cambiar entre modo día y modo noche</value>
+  </data>
+  <data name="app_categorias" xml:space="preserve">
+    <value>Categorías</value>
+  </data>
+  <data name="app_cerrar_sesion" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="app_copias_de_seguridad" xml:space="preserve">
+    <value>Copias de seguridad</value>
+  </data>
+  <data name="app_digito_verificador" xml:space="preserve">
+    <value>Dígito verificador</value>
+  </data>
+  <data name="app_dispositivos" xml:space="preserve">
+    <value>Dispositivos</value>
+  </data>
+  <data name="app_empresas" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="app_falke" xml:space="preserve">
+    <value>Falke</value>
+  </data>
+  <data name="app_mi_empresa" xml:space="preserve">
+    <value>Mi empresa</value>
+  </data>
+  <data name="app_mi_perfil" xml:space="preserve">
+    <value>Mi perfil</value>
+  </data>
+  <data name="app_mi_perfil_con_datos" xml:space="preserve">
+    <value>Mi perfil — {0} ({1}) · {2}</value>
+  </data>
+  <data name="app_nueva_grabacion" xml:space="preserve">
+    <value>Nueva grabación</value>
+  </data>
+  <data name="app_organizacion" xml:space="preserve">
+    <value>Organización</value>
+  </data>
+  <data name="app_pagina_principal" xml:space="preserve">
+    <value>Página principal</value>
+  </data>
+  <data name="app_plegar_el_menu" xml:space="preserve">
+    <value>Plegar el menú</value>
+  </data>
+  <data name="app_roles_y_permisos" xml:space="preserve">
+    <value>Roles y permisos</value>
+  </data>
+  <data name="app_saltar_al_contenido" xml:space="preserve">
+    <value>Saltar al contenido</value>
+  </data>
+  <data name="app_secciones_de_la_aplicacion" xml:space="preserve">
+    <value>Secciones de la aplicación</value>
+  </data>
+  <data name="app_sistema" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="app_titulo_pagina" xml:space="preserve">
+    <value>{0} - Falke</value>
+  </data>
+  <data name="app_usuarios" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="app_ver_mi_perfil" xml:space="preserve">
+    <value>Ver mi perfil</value>
+  </data>
+  <data name="app_visualizaciones" xml:space="preserve">
+    <value>Visualizaciones</value>
+  </data>
+  <data name="bitacora_accion" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="bitacora_accion_alta" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="bitacora_accion_baja" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+  <data name="bitacora_accion_cierre_sesion" xml:space="preserve">
+    <value>Cierre de sesión</value>
+  </data>
+  <data name="bitacora_accion_inicio_sesion" xml:space="preserve">
+    <value>Inicio de sesión</value>
+  </data>
+  <data name="bitacora_accion_modificacion" xml:space="preserve">
+    <value>Modificación</value>
+  </data>
+  <data name="bitacora_alcance_completa" xml:space="preserve">
+    <value>Ves la bitácora completa de todas las empresas cliente y de Pattern Blue.</value>
+  </data>
+  <data name="bitacora_alcance_empresa" xml:space="preserve">
+    <value>Estás viendo los movimientos que afectan a tu empresa. Lo que hace el equipo de Pattern Blue aparece sin nombre. Los registros no se pueden editar ni borrar.</value>
+  </data>
+  <data name="bitacora_anterior" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="bitacora_bajada_completa" xml:space="preserve">
+    <value>Todos los movimientos registrados en el sistema.</value>
+  </data>
+  <data name="bitacora_bajada_empresa" xml:space="preserve">
+    <value>Movimientos registrados en tu empresa.</value>
+  </data>
+  <data name="bitacora_criticidad" xml:space="preserve">
+    <value>Criticidad</value>
+  </data>
+  <data name="bitacora_criticidad_alta" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="bitacora_criticidad_baja" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+  <data name="bitacora_criticidad_media" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="bitacora_descripcion" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="bitacora_desde" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="bitacora_empresa" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="bitacora_equipo_pb" xml:space="preserve">
+    <value>Equipo de Pattern Blue</value>
+  </data>
+  <data name="bitacora_error_cargar" xml:space="preserve">
+    <value>No se pudo cargar la bitácora.</value>
+  </data>
+  <data name="bitacora_fecha_invalida" xml:space="preserve">
+    <value>La fecha "desde" no puede ser posterior a la fecha "hasta".</value>
+  </data>
+  <data name="bitacora_fecha_y_hora" xml:space="preserve">
+    <value>Fecha y hora</value>
+  </data>
+  <data name="bitacora_hasta" xml:space="preserve">
+    <value>Hasta</value>
+  </data>
+  <data name="bitacora_hora_desde" xml:space="preserve">
+    <value>Hora desde</value>
+  </data>
+  <data name="bitacora_hora_hasta" xml:space="preserve">
+    <value>Hora hasta</value>
+  </data>
+  <data name="bitacora_los_registros_de_la_bitacora_no" xml:space="preserve">
+    <value>Los registros de la bitácora no se pueden editar ni borrar. Se conservan por el plazo que fije la política de retención del sistema.</value>
+  </data>
+  <data name="bitacora_modulo" xml:space="preserve">
+    <value>Módulo</value>
+  </data>
+  <data name="bitacora_no_hay_registros_que_coincidan_con" xml:space="preserve">
+    <value>No hay registros que coincidan con los filtros.</value>
+  </data>
+  <data name="bitacora_nombre_o_correo" xml:space="preserve">
+    <value>Nombre o correo</value>
+  </data>
+  <data name="bitacora_pagina" xml:space="preserve">
+    <value>Página {0} de {1}</value>
+  </data>
+  <data name="bitacora_registros_de_la_bitacora" xml:space="preserve">
+    <value>Registros de la bitácora</value>
+  </data>
+  <data name="bitacora_registros_rango" xml:space="preserve">
+    <value>Registros {0}–{1} de {2}.</value>
+  </data>
+  <data name="bitacora_siguiente" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="bitacora_sin_permiso" xml:space="preserve">
+    <value>No tenés permiso para ver la bitácora.</value>
+  </data>
+  <data name="bitacora_sin_registros" xml:space="preserve">
+    <value>Sin registros</value>
+  </data>
+  <data name="bitacora_usuario" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="categoria_activo_largo" xml:space="preserve">
+    <value>El nombre del activo no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="categoria_actualizada" xml:space="preserve">
+    <value>Los datos de la categoría se actualizaron.</value>
+  </data>
+  <data name="categoria_campo_largo" xml:space="preserve">
+    <value>El campo "{0}" no puede superar los {1} caracteres.</value>
+  </data>
+  <data name="categoria_duplicada" xml:space="preserve">
+    <value>Ya existe una categoría con ese nombre en tu empresa.</value>
+  </data>
+  <data name="categoria_eliminada" xml:space="preserve">
+    <value>La categoría se eliminó.</value>
+  </data>
+  <data name="categoria_error_identificar" xml:space="preserve">
+    <value>No se pudo identificar la categoría. Volvé a intentarlo.</value>
+  </data>
+  <data name="categoria_error_listado" xml:space="preserve">
+    <value>No se pudo cargar el listado de categorías.</value>
+  </data>
+  <data name="categoria_flujo_largo" xml:space="preserve">
+    <value>El flujo a analizar no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="categoria_no_existe" xml:space="preserve">
+    <value>La categoría no existe.</value>
+  </data>
+  <data name="categoria_nombre_largo" xml:space="preserve">
+    <value>El nombre de la categoría no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="categoria_nombre_obligatorio" xml:space="preserve">
+    <value>El nombre de la categoría es obligatorio.</value>
+  </data>
+  <data name="categoria_otra_empresa" xml:space="preserve">
+    <value>La categoría no pertenece a tu empresa.</value>
+  </data>
+  <data name="categoria_registrada" xml:space="preserve">
+    <value>Se registró la categoría.</value>
+  </data>
+  <data name="categoria_ya_desactivada" xml:space="preserve">
+    <value>La categoría ya está desactivada.</value>
+  </data>
+  <data name="categorias_acciones" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+  <data name="categorias_activo_evaluado" xml:space="preserve">
+    <value>Activo evaluado</value>
+  </data>
+  <data name="categorias_buscar" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="categorias_cada_categoria_identifica_un_activo_digi" xml:space="preserve">
+    <value>Cada categoría identifica un activo digital de tu empresa y agrupa todas las sesiones que se graben sobre el.</value>
+  </data>
+  <data name="categorias_campos_especificos_del_tipo_seleccionado" xml:space="preserve">
+    <value>Campos específicos del tipo seleccionado</value>
+  </data>
+  <data name="categorias_canal_de_distribucion" xml:space="preserve">
+    <value>Canal de distribución</value>
+  </data>
+  <data name="categorias_cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="categorias_categoria" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="categorias_categorias_registradas_por_tu_empresa" xml:space="preserve">
+    <value>Categorías registradas por tu empresa</value>
+  </data>
+  <data name="categorias_cerrar" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="categorias_creada" xml:space="preserve">
+    <value>Creada</value>
+  </data>
+  <data name="categorias_dispositivo_objetivo" xml:space="preserve">
+    <value>Dispositivo objetivo</value>
+  </data>
+  <data name="categorias_editar_la_categoria" xml:space="preserve">
+    <value>Editar la categoría</value>
+  </data>
+  <data name="categorias_flujo_o_proceso_a_analizar" xml:space="preserve">
+    <value>Flujo o proceso a analizar</value>
+  </data>
+  <data name="categorias_formato" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="categorias_los_campos_disponibles_cambian_segun_el" xml:space="preserve">
+    <value>Los campos disponibles cambian según el tipo de activo digital seleccionado.</value>
+  </data>
+  <data name="categorias_mostrar_desactivadas" xml:space="preserve">
+    <value>Mostrar desactivadas</value>
+  </data>
+  <data name="categorias_no_hay_categorias_que_coincidan_con" xml:space="preserve">
+    <value>No hay categorías que coincidan con el filtro.</value>
+  </data>
+  <data name="categorias_nombre_de_la_categoria" xml:space="preserve">
+    <value>Nombre de la categoría...</value>
+  </data>
+  <data name="categorias_nombre_de_la_categoria_2" xml:space="preserve">
+    <value>Nombre de la categoría</value>
+  </data>
+  <data name="categorias_nombre_del_activo_evaluado" xml:space="preserve">
+    <value>Nombre del activo evaluado</value>
+  </data>
+  <data name="categorias_nueva_categoria" xml:space="preserve">
+    <value>Nueva categoría</value>
+  </data>
+  <data name="categorias_plataforma" xml:space="preserve">
+    <value>Plataforma</value>
+  </data>
+  <data name="categorias_publicidad" xml:space="preserve">
+    <value>Publicidad</value>
+  </data>
+  <data name="categorias_que_parte_del_activo_se_va" xml:space="preserve">
+    <value>Que parte del activo se va a evaluar</value>
+  </data>
+  <data name="categorias_registrar_nueva_categoria" xml:space="preserve">
+    <value>Registrar nueva categoría</value>
+  </data>
+  <data name="categorias_sesiones" xml:space="preserve">
+    <value>Sesiones</value>
+  </data>
+  <data name="categorias_sistema_operativo" xml:space="preserve">
+    <value>Sistema operativo</value>
+  </data>
+  <data name="categorias_sistema_operativo_objetivo" xml:space="preserve">
+    <value>Sistema operativo objetivo</value>
+  </data>
+  <data name="categorias_tipo_de_activo" xml:space="preserve">
+    <value>Tipo de activo</value>
+  </data>
+  <data name="categorias_tipo_de_activo_digital" xml:space="preserve">
+    <value>Tipo de activo digital</value>
+  </data>
+  <data name="categorias_todos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="categorias_url_opcional" xml:space="preserve">
+    <value>URL (opcional)</value>
+  </data>
+  <data name="categorias_ver_sesiones" xml:space="preserve">
+    <value>Ver sesiones</value>
+  </data>
+  <data name="categorias_version_de_la_aplicacion" xml:space="preserve">
+    <value>Versión de la aplicación</value>
+  </data>
+  <data name="categorias_version_del_juego" xml:space="preserve">
+    <value>Versión del juego</value>
+  </data>
+  <data name="categorias_version_del_software" xml:space="preserve">
+    <value>Versión del software</value>
+  </data>
+  <data name="clave_fuerza_0" xml:space="preserve">
+    <value>Muy débil</value>
+  </data>
+  <data name="clave_fuerza_1" xml:space="preserve">
+    <value>Débil</value>
+  </data>
+  <data name="clave_fuerza_2" xml:space="preserve">
+    <value>Aceptable</value>
+  </data>
+  <data name="clave_fuerza_3" xml:space="preserve">
+    <value>Buena</value>
+  </data>
+  <data name="clave_fuerza_4" xml:space="preserve">
+    <value>Fuerte</value>
+  </data>
+  <data name="clave_igual_a_actual" xml:space="preserve">
+    <value>La nueva contraseña no puede ser igual a la actual.</value>
+  </data>
+  <data name="clave_no_se_pudo_cambiar" xml:space="preserve">
+    <value>No se pudo cambiar la contraseña. Verificá los datos ingresados.</value>
+  </data>
+  <data name="clave_politica" xml:space="preserve">
+    <value>La contraseña debe tener al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).</value>
+  </data>
+  <data name="comun_error_procesar" xml:space="preserve">
+    <value>Ocurrió un error al procesar la solicitud. Volvé a intentarlo.</value>
+  </data>
+  <data name="comun_error_procesar_vuelve" xml:space="preserve">
+    <value>Ocurrió un error al procesar la solicitud. Vuelve a intentarlo.</value>
+  </data>
+  <data name="comun_error_reintentar" xml:space="preserve">
+    <value>No se pudo completar la operación. Volvé a intentarlo.</value>
+  </data>
+  <data name="comun_estado_activo" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="comun_estado_bloqueado" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="comun_estado_bloqueo_estricto" xml:space="preserve">
+    <value>Bloqueo estricto</value>
+  </data>
+  <data name="comun_estado_inactivo" xml:space="preserve">
+    <value>Inactivo</value>
+  </data>
+  <data name="comun_motivo_largo" xml:space="preserve">
+    <value>El motivo no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="comun_motivo_largo_300" xml:space="preserve">
+    <value>El motivo no puede superar los 300 caracteres.</value>
+  </data>
+  <data name="comun_motivo_obligatorio" xml:space="preserve">
+    <value>Indicá el motivo del cambio.</value>
+  </data>
+  <data name="comun_pendiente_activacion" xml:space="preserve">
+    <value>Pendiente de activación</value>
+  </data>
+  <data name="comun_permiso_plural" xml:space="preserve">
+    <value>{0} permisos</value>
+  </data>
+  <data name="comun_permiso_singular" xml:space="preserve">
+    <value>1 permiso</value>
+  </data>
+  <data name="comun_plan_etiqueta" xml:space="preserve">
+    <value>Plan {0}</value>
+  </data>
+  <data name="comun_sesion_sin_empresa" xml:space="preserve">
+    <value>La sesión no tiene una empresa asociada.</value>
+  </data>
+  <data name="comun_sin_cambios" xml:space="preserve">
+    <value>No hay cambios para guardar.</value>
+  </data>
+  <data name="comun_sin_descripcion" xml:space="preserve">
+    <value>(sin descripción)</value>
+  </data>
+  <data name="comun_sin_permiso" xml:space="preserve">
+    <value>No tenés permiso para realizar esta acción.</value>
+  </data>
+  <data name="comun_sin_rol" xml:space="preserve">
+    <value>(sin rol)</value>
+  </data>
+  <data name="comun_usuario_plural" xml:space="preserve">
+    <value>{0} usuarios</value>
+  </data>
+  <data name="comun_usuario_singular" xml:space="preserve">
+    <value>1 usuario</value>
+  </data>
+  <data name="comun_vacio" xml:space="preserve">
+    <value>(vacío)</value>
+  </data>
+  <data name="default_agencias_de_publicidad_digital" xml:space="preserve">
+    <value>Agencias de publicidad digital</value>
+  </data>
+  <data name="default_al_alcance_de_tu_empresa" xml:space="preserve">
+    <value>al alcance de tu empresa</value>
+  </data>
+  <data name="default_al_terminar_la_grabacion_el_procesamient" xml:space="preserve">
+    <value>Al terminar la grabación, el procesamiento arranca solo. Los análisis quedan disponibles en menos de cinco minutos.</value>
+  </data>
+  <data name="default_atencion_activa" xml:space="preserve">
+    <value>atención activa</value>
+  </data>
+  <data name="default_auditas_los_resultados" xml:space="preserve">
+    <value>Auditas los resultados</value>
+  </data>
+  <data name="default_como_funciona_falke" xml:space="preserve">
+    <value>¿Cómo funciona Falke?</value>
+  </data>
+  <data name="default_configurado_del_analisis" xml:space="preserve">
+    <value>Configurado del análisis</value>
+  </data>
+  <data name="default_cuatro_pasos_entre_la_firma_del" xml:space="preserve">
+    <value>Cuatro pasos entre la firma del contrato y el primer informe.</value>
+  </data>
+  <data name="default_datos_protegidos" xml:space="preserve">
+    <value>Datos protegidos</value>
+  </data>
+  <data name="default_demostrar_con_evidencia_si_la_pieza" xml:space="preserve">
+    <value>Demostrar con evidencia si la pieza dirige la atención al mensaje que importa.</value>
+  </data>
+  <data name="default_descubre_lo_que_tus_usuarios" xml:space="preserve">
+    <value>Descubre lo que tus usuarios</value>
+  </data>
+  <data name="default_detectar_problemas_de_usabilidad_durante" xml:space="preserve">
+    <value>Detectar problemas de usabilidad durante el desarrollo y no después del lanzamiento.</value>
+  </data>
+  <data name="default_duracion" xml:space="preserve">
+    <value>duración</value>
+  </data>
+  <data name="default_economicas_pero_la_precision_depende_de" xml:space="preserve">
+    <value>Económicas, pero la precisión depende de la postura y la iluminación, y limitan la duración del estudio.</value>
+  </data>
+  <data name="default_el_dispositivo_tobii_es_dado_en" xml:space="preserve">
+    <value>El dispositivo Tobii es dado en préstamo con la suscripción y vuelve al terminar el contrato. Sin inversión inicial.</value>
+  </data>
+  <data name="default_empieza_a_decidir_con_evidencia" xml:space="preserve">
+    <value>Empieza a decidir con evidencia</value>
+  </data>
+  <data name="default_empresas_de_software" xml:space="preserve">
+    <value>Empresas de software</value>
+  </data>
+  <data name="default_en_vivo" xml:space="preserve">
+    <value>En vivo</value>
+  </data>
+  <data name="default_enviamos_el_tobii_en_prestamo_con" xml:space="preserve">
+    <value>Enviamos el Tobii en préstamo con su guía de instalación. Llega dentro de los diez días de firmado del contrato.</value>
+  </data>
+  <data name="default_equipo_propio" xml:space="preserve">
+    <value>Equipo propio</value>
+  </data>
+  <data name="default_estudios_de_videojuegos" xml:space="preserve">
+    <value>Estudios de videojuegos</value>
+  </data>
+  <data name="default_evidencia_real" xml:space="preserve">
+    <value>Evidencia real</value>
+  </data>
+  <data name="default_falke_mide_la_atencion_visual_real" xml:space="preserve">
+    <value>Falke mide la atención visual real sobre tus productos digitales con seguimiento ocular de precisión profesional. Tú realizas las pruebas con tus propios usuarios; nosotros ponemos el dispositivo, el procesamiento y los informes.</value>
+  </data>
+  <data name="default_fijaciones" xml:space="preserve">
+    <value>fijaciones</value>
+  </data>
+  <data name="default_grabas_la_sesion" xml:space="preserve">
+    <value>Grabas la sesión</value>
+  </data>
+  <data name="default_informes_que_se_entienden" xml:space="preserve">
+    <value>Informes que se entienden</value>
+  </data>
+  <data name="default_infrarrojo_dedicado_sin_limite_de_duraci" xml:space="preserve">
+    <value>Infrarrojo dedicado, sin límite de duración ni de tipo de activo, bajo suscripción y con el hardware incluido.</value>
+  </data>
+  <data name="default_inicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="default_la_misma_calidad_de_dato_pero" xml:space="preserve">
+    <value>La misma calidad de dato, pero exige comprar equipos, licencias y formar gente antes del primer estudio.</value>
+  </data>
+  <data name="default_la_pantalla_y_el_seguimiento_ocular" xml:space="preserve">
+    <value>La pantalla y el seguimiento ocular se graban sincronizados. Puedes pausar, reanudar o reiniciar en cualquier momento.</value>
+  </data>
+  <data name="default_las_metricas_que_usas_hoy_no" xml:space="preserve">
+    <value>Las métricas que usas hoy no revelan dónde mira el usuario</value>
+  </data>
+  <data name="default_las_sesiones_las_realizas_tu_con" xml:space="preserve">
+    <value>Las sesiones las realizas tú, con tus propios testers, sobre tu producto real, asegurandote un control total.</value>
+  </data>
+  <data name="default_leer_las_preguntas_frecuentes" xml:space="preserve">
+    <value>Leer las preguntas frecuentes</value>
+  </data>
+  <data name="default_los_clics_el_tiempo_de_sesion" xml:space="preserve">
+    <value>Los clics, el tiempo de sesión y las encuestas son información indirecta. Ninguna muestra qué elemento capta la atención y cuál pasa desapercibido.</value>
+  </data>
+  <data name="default_los_datos_de_mirada_se_disocian" xml:space="preserve">
+    <value>Los datos de mirada se disocian de la identidad del tester al guardarse, conforme a lo estipulado en la Ley N.° 25.326.</value>
+  </data>
+  <data name="default_mapa_de_calor_zonas_de_interes" xml:space="preserve">
+    <value>Mapa de calor, zonas de interés y ciegas, dispersión, recorrido y atención frente a distracción. Todo exportable a PDF.</value>
+  </data>
+  <data name="default_nadie_necesita_interpretar_datos_biometr" xml:space="preserve">
+    <value>Nadie necesita interpretar datos biométricos crudos: la plataforma devuelve mapas y métricas listas para interpretar y utilizar.</value>
+  </data>
+  <data name="default_pedir_una_demostracion" xml:space="preserve">
+    <value>Pedir una demostración</value>
+  </data>
+  <data name="default_pensado_para_ti" xml:space="preserve">
+    <value>Pensado para ti</value>
+  </data>
+  <data name="default_precision_profesional" xml:space="preserve">
+    <value>Precisión profesional,</value>
+  </data>
+  <data name="default_realmente_observan" xml:space="preserve">
+    <value>realmente observan</value>
+  </data>
+  <data name="default_recibo_del_dispositivo" xml:space="preserve">
+    <value>Recibo del dispositivo</value>
+  </data>
+  <data name="default_registras_la_categoria_del_activo_a" xml:space="preserve">
+    <value>Registras la categoría del activo a evaluar (software, aplicación web, móvil, videojuego o publicidad).</value>
+  </data>
+  <data name="default_resultados_en_minutos" xml:space="preserve">
+    <value>Resultados en minutos</value>
+  </data>
+  <data name="default_sesion_n_04_falke" xml:space="preserve">
+    <value>Sesión N.° 04 · Falke</value>
+  </data>
+  <data name="default_sin_comprar_equipamiento" xml:space="preserve">
+    <value>Sin comprar equipamiento</value>
+  </data>
+  <data name="default_soluciones_por_camara_web" xml:space="preserve">
+    <value>Soluciones por cámara web</value>
+  </data>
+  <data name="default_tus_usuarios_tu_entorno" xml:space="preserve">
+    <value>Tus usuarios, tu entorno</value>
+  </data>
+  <data name="default_uso_de_hardware_tobii_con_infrarrojos" xml:space="preserve">
+    <value>Uso de hardware Tobii con infrarrojos que registra la mirada con precisión de nivel profesional.</value>
+  </data>
+  <data name="default_validar_tutoriales_hud_y_elementos_criti" xml:space="preserve">
+    <value>Validar tutoriales, HUD y elementos críticos de escena antes del lanzamiento.</value>
+  </data>
+  <data name="default_ver_los_planes" xml:space="preserve">
+    <value>Ver los planes</value>
+  </data>
+  <data name="definirclave_al_menos_8_caracteres_con_una" xml:space="preserve">
+    <value>Al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).</value>
+  </data>
+  <data name="definirclave_contrasena_nueva" xml:space="preserve">
+    <value>Contraseña nueva</value>
+  </data>
+  <data name="definirclave_cuenta" xml:space="preserve">
+    <value>Cuenta:</value>
+  </data>
+  <data name="definirclave_definir_contrasena" xml:space="preserve">
+    <value>Definir contraseña</value>
+  </data>
+  <data name="definirclave_definir_mi_contrasena" xml:space="preserve">
+    <value>Definir mi contraseña</value>
+  </data>
+  <data name="definirclave_elegi_una_contrasena_para_tu_cuenta" xml:space="preserve">
+    <value>Elegí una contraseña para tu cuenta de Falke. Con esto la cuenta queda activa.</value>
+  </data>
+  <data name="definirclave_invalido" xml:space="preserve">
+    <value>El enlace no es válido. Revisá que hayas copiado la dirección completa.</value>
+  </data>
+  <data name="definirclave_ir_al_inicio_de_sesion" xml:space="preserve">
+    <value>Ir al inicio de sesión</value>
+  </data>
+  <data name="definirclave_las_dos_tienen_que_coincidir" xml:space="preserve">
+    <value>Las dos tienen que coincidir.</value>
+  </data>
+  <data name="definirclave_listo_tu_contrasena_quedo_definida_y" xml:space="preserve">
+    <value>Listo: tu contraseña quedó definida y la cuenta está activa. Ya podés iniciar sesión.</value>
+  </data>
+  <data name="definirclave_no_coinciden" xml:space="preserve">
+    <value>Las dos contraseñas no coinciden.</value>
+  </data>
+  <data name="definirclave_repetir_la_contrasena_nueva" xml:space="preserve">
+    <value>Repetir la contraseña nueva</value>
+  </data>
+  <data name="definirclave_si_el_enlace_vencio_pedi_uno" xml:space="preserve">
+    <value>Si el enlace venció, pedí uno nuevo desde «Recuperar mi contraseña».</value>
+  </data>
+  <data name="definirclave_usado" xml:space="preserve">
+    <value>Este enlace ya fue utilizado. Si necesitás cambiar la contraseña, pedí uno nuevo.</value>
+  </data>
+  <data name="definirclave_vencido" xml:space="preserve">
+    <value>El enlace venció. Pedí uno nuevo desde «Recuperar mi contraseña».</value>
+  </data>
+  <data name="disp_actualizado" xml:space="preserve">
+    <value>Los datos del dispositivo se actualizaron.</value>
+  </data>
+  <data name="disp_alta_ok" xml:space="preserve">
+    <value>Se dio de alta el dispositivo {0}.</value>
+  </data>
+  <data name="disp_baja_ok" xml:space="preserve">
+    <value>El dispositivo se dio de baja.</value>
+  </data>
+  <data name="disp_devolucion_a_mantenimiento" xml:space="preserve">
+    <value>Se registró la devolución y el dispositivo pasó a mantenimiento.</value>
+  </data>
+  <data name="disp_devolucion_disponible" xml:space="preserve">
+    <value>Se registró la devolución: el dispositivo está disponible.</value>
+  </data>
+  <data name="disp_driver_largo" xml:space="preserve">
+    <value>El driver requerido no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="disp_elegir_disponible_y_empresa" xml:space="preserve">
+    <value>Elegí un dispositivo disponible y una empresa.</value>
+  </data>
+  <data name="disp_elegir_modelo" xml:space="preserve">
+    <value>Elegí el modelo del dispositivo.</value>
+  </data>
+  <data name="disp_elegir_modelo_opcion" xml:space="preserve">
+    <value>Elegí un modelo</value>
+  </data>
+  <data name="disp_empresa_no_existe" xml:space="preserve">
+    <value>La empresa no existe.</value>
+  </data>
+  <data name="disp_empresa_opcion" xml:space="preserve">
+    <value>{0} — plan {1} ({2})</value>
+  </data>
+  <data name="disp_empresa_uso_prestados" xml:space="preserve">
+    <value>{0} en préstamo</value>
+  </data>
+  <data name="disp_empresa_uso_tope" xml:space="preserve">
+    <value>{0} de {1}</value>
+  </data>
+  <data name="disp_error_cargar" xml:space="preserve">
+    <value>No se pudo cargar el inventario de dispositivos.</value>
+  </data>
+  <data name="disp_estado_de_baja" xml:space="preserve">
+    <value>De baja</value>
+  </data>
+  <data name="disp_estado_disponible" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="disp_estado_en_uso" xml:space="preserve">
+    <value>En uso</value>
+  </data>
+  <data name="disp_firmware_largo" xml:space="preserve">
+    <value>El firmware no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="disp_mantenimiento_terminado" xml:space="preserve">
+    <value>El dispositivo terminó el mantenimiento y está disponible.</value>
+  </data>
+  <data name="disp_modelo_agregado" xml:space="preserve">
+    <value>Se agregó el modelo «{0}».</value>
+  </data>
+  <data name="disp_modelo_baja_ok" xml:space="preserve">
+    <value>El modelo se dio de baja: ya no se ofrece para dispositivos nuevos.</value>
+  </data>
+  <data name="disp_modelo_de_baja" xml:space="preserve">
+    <value>El modelo "{0}" está dado de baja: elegí otro.</value>
+  </data>
+  <data name="disp_modelo_de_baja_sufijo" xml:space="preserve">
+    <value>{0} (de baja)</value>
+  </data>
+  <data name="disp_modelo_nombre_guardado" xml:space="preserve">
+    <value>Se guardó el nuevo nombre del modelo.</value>
+  </data>
+  <data name="disp_modelo_reactivado" xml:space="preserve">
+    <value>El modelo se reactivó.</value>
+  </data>
+  <data name="disp_motivo_baja" xml:space="preserve">
+    <value>Indicá el motivo de la baja.</value>
+  </data>
+  <data name="disp_no_esta_en_mantenimiento" xml:space="preserve">
+    <value>El dispositivo no está en mantenimiento.</value>
+  </data>
+  <data name="disp_no_esta_prestado" xml:space="preserve">
+    <value>El dispositivo no está en préstamo.</value>
+  </data>
+  <data name="disp_no_existe" xml:space="preserve">
+    <value>El dispositivo no existe.</value>
+  </data>
+  <data name="disp_paso_a_mantenimiento" xml:space="preserve">
+    <value>El dispositivo pasó a mantenimiento.</value>
+  </data>
+  <data name="disp_prestado_ok" xml:space="preserve">
+    <value>El dispositivo se prestó a «{0}».</value>
+  </data>
+  <data name="disp_prestado_registrar_devolucion" xml:space="preserve">
+    <value>El dispositivo está en préstamo: registrá primero la devolución.</value>
+  </data>
+  <data name="disp_prestamo_en_curso" xml:space="preserve">
+    <value>En curso</value>
+  </data>
+  <data name="disp_prestar_a_pattern_blue" xml:space="preserve">
+    <value>Los dispositivos se prestan a empresas cliente, no a Pattern Blue.</value>
+  </data>
+  <data name="disp_serie_caracteres" xml:space="preserve">
+    <value>El número de serie solo admite letras, números, espacios y . _ / -</value>
+  </data>
+  <data name="disp_serie_duplicada" xml:space="preserve">
+    <value>Ya existe un dispositivo con ese número de serie.</value>
+  </data>
+  <data name="disp_serie_larga" xml:space="preserve">
+    <value>El número de serie no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="disp_serie_obligatoria" xml:space="preserve">
+    <value>El número de serie es obligatorio.</value>
+  </data>
+  <data name="disp_sin_disponibles" xml:space="preserve">
+    <value>No hay dispositivos disponibles</value>
+  </data>
+  <data name="disp_sin_empresas_activas" xml:space="preserve">
+    <value>No hay empresas activas</value>
+  </data>
+  <data name="disp_sin_modelos" xml:space="preserve">
+    <value>No hay modelos cargados</value>
+  </data>
+  <data name="disp_sin_permiso_ver" xml:space="preserve">
+    <value>No tenés permiso para ver los dispositivos de la empresa.</value>
+  </data>
+  <data name="disp_solo_empresas_activas" xml:space="preserve">
+    <value>Solo se prestan dispositivos a empresas activas.</value>
+  </data>
+  <data name="disp_solo_mantenimiento_disponible" xml:space="preserve">
+    <value>Solo se envía a mantenimiento un dispositivo disponible.</value>
+  </data>
+  <data name="disp_solo_prestar_disponible" xml:space="preserve">
+    <value>Solo se puede prestar un dispositivo disponible (este está {0}).</value>
+  </data>
+  <data name="disp_tope_plan_uno" xml:space="preserve">
+    <value>El plan {0} de "{1}" incluye {2} dispositivo y ya tiene {3} en préstamo.</value>
+  </data>
+  <data name="disp_tope_plan_varios" xml:space="preserve">
+    <value>El plan {0} de "{1}" incluye {2} dispositivos y ya tiene {3} en préstamo.</value>
+  </data>
+  <data name="disp_ya_de_baja" xml:space="preserve">
+    <value>El dispositivo está dado de baja.</value>
+  </data>
+  <data name="dispositivos_agregar_un_modelo" xml:space="preserve">
+    <value>Agregar un modelo</value>
+  </data>
+  <data name="dispositivos_alta_de_dispositivo" xml:space="preserve">
+    <value>Alta de dispositivo</value>
+  </data>
+  <data name="dispositivos_asignar_a_empresa" xml:space="preserve">
+    <value>Asignar a empresa</value>
+  </data>
+  <data name="dispositivos_asignar_dispositivo" xml:space="preserve">
+    <value>Asignar dispositivo</value>
+  </data>
+  <data name="dispositivos_cierra_el_prestamo_con_la_fecha" xml:space="preserve">
+    <value>Cierra el préstamo con la fecha de hoy.</value>
+  </data>
+  <data name="dispositivos_dar_de_baja" xml:space="preserve">
+    <value>Dar de baja</value>
+  </data>
+  <data name="dispositivos_dar_de_baja_el_dispositivo" xml:space="preserve">
+    <value>Dar de baja el dispositivo</value>
+  </data>
+  <data name="dispositivos_disponibles" xml:space="preserve">
+    <value>Disponibles</value>
+  </data>
+  <data name="dispositivos_dispositivo_disponible" xml:space="preserve">
+    <value>Dispositivo disponible</value>
+  </data>
+  <data name="dispositivos_driver_requerido" xml:space="preserve">
+    <value>Driver requerido</value>
+  </data>
+  <data name="dispositivos_editar_datos" xml:space="preserve">
+    <value>Editar datos</value>
+  </data>
+  <data name="dispositivos_editar_datos_del_dispositivo" xml:space="preserve">
+    <value>Editar datos del dispositivo</value>
+  </data>
+  <data name="dispositivos_el_de_fabrica_figura_en_la" xml:space="preserve">
+    <value>El de fábrica: figura en la etiqueta del equipo y lo informa el SDK de Tobii. No se puede repetir ni cambiar después.</value>
+  </data>
+  <data name="dispositivos_el_numero_de_serie_y_el" xml:space="preserve">
+    <value>El número de serie y el estado no se editan desde acá.</value>
+  </data>
+  <data name="dispositivos_el_prestamo_queda_asociado_a_la" xml:space="preserve">
+    <value>El préstamo queda asociado a la empresa hasta que se registre la devolución.</value>
+  </data>
+  <data name="dispositivos_en_inventario" xml:space="preserve">
+    <value>En inventario</value>
+  </data>
+  <data name="dispositivos_en_mantenimiento" xml:space="preserve">
+    <value>En mantenimiento</value>
+  </data>
+  <data name="dispositivos_entregado" xml:space="preserve">
+    <value>Entregado</value>
+  </data>
+  <data name="dispositivos_enviar_a_mantenimiento" xml:space="preserve">
+    <value>Enviar a mantenimiento</value>
+  </data>
+  <data name="dispositivos_estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="dispositivos_fecha_de_entrega" xml:space="preserve">
+    <value>Fecha de entrega</value>
+  </data>
+  <data name="dispositivos_firmware" xml:space="preserve">
+    <value>Firmware</value>
+  </data>
+  <data name="dispositivos_historial_de_prestamos" xml:space="preserve">
+    <value>Historial de préstamos</value>
+  </data>
+  <data name="dispositivos_historial_de_prestamos_del_dispositivo" xml:space="preserve">
+    <value>Historial de préstamos del dispositivo</value>
+  </data>
+  <data name="dispositivos_inventario_de_dispositivos" xml:space="preserve">
+    <value>Inventario de dispositivos</value>
+  </data>
+  <data name="dispositivos_inventario_de_eye_trackers_y_a" xml:space="preserve">
+    <value>Inventario de eye trackers y a qué empresa está prestado cada uno.</value>
+  </data>
+  <data name="dispositivos_la_baja_es_definitiva_y_queda" xml:space="preserve">
+    <value>La baja es definitiva y queda en la bitácora.</value>
+  </data>
+  <data name="dispositivos_la_fecha_de_entrega_es_la" xml:space="preserve">
+    <value>La fecha de entrega es la de hoy. El préstamo queda en la bitácora de la empresa.</value>
+  </data>
+  <data name="dispositivos_modelo" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="dispositivos_modelos" xml:space="preserve">
+    <value>Modelos</value>
+  </data>
+  <data name="dispositivos_modelos_de_dispositivo" xml:space="preserve">
+    <value>Modelos de dispositivo</value>
+  </data>
+  <data name="dispositivos_motivo" xml:space="preserve">
+    <value>Motivo</value>
+  </data>
+  <data name="dispositivos_no_hay_dispositivos_que_coincidan_con" xml:space="preserve">
+    <value>No hay dispositivos que coincidan con el filtro.</value>
+  </data>
+  <data name="dispositivos_nombre" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="dispositivos_numero_de_serie" xml:space="preserve">
+    <value>Número de serie</value>
+  </data>
+  <data name="dispositivos_obligatorio" xml:space="preserve">
+    <value>(obligatorio)</value>
+  </data>
+  <data name="dispositivos_ocultar_detalle" xml:space="preserve">
+    <value>Ocultar detalle</value>
+  </data>
+  <data name="dispositivos_opcional" xml:space="preserve">
+    <value>(opcional)</value>
+  </data>
+  <data name="dispositivos_prestado_a" xml:space="preserve">
+    <value>Prestado a</value>
+  </data>
+  <data name="dispositivos_prestados" xml:space="preserve">
+    <value>Prestados</value>
+  </data>
+  <data name="dispositivos_registrar_devolucion" xml:space="preserve">
+    <value>Registrar devolución</value>
+  </data>
+  <data name="dispositivos_se_suma_al_inventario_en_estado" xml:space="preserve">
+    <value>Se suma al inventario en estado disponible.</value>
+  </data>
+  <data name="dispositivos_serie_modelo_o_empresa" xml:space="preserve">
+    <value>Serie, modelo o empresa...</value>
+  </data>
+  <data name="dispositivos_si_no_lo_marcas_queda_disponible" xml:space="preserve">
+    <value>Si no lo marcás, queda disponible para prestarlo de nuevo.</value>
+  </data>
+  <data name="dispositivos_solo_aparecen_las_empresas_activas_con" xml:space="preserve">
+    <value>Solo aparecen las empresas activas, con los dispositivos que ya tienen y el tope de su plan.</value>
+  </data>
+  <data name="dispositivos_terminar_mantenimiento" xml:space="preserve">
+    <value>Terminar mantenimiento</value>
+  </data>
+  <data name="dispositivos_todavia_no_hay_modelos_agrega_el" xml:space="preserve">
+    <value>Todavía no hay modelos: agregá el primero para poder dar de alta dispositivos.</value>
+  </data>
+  <data name="dispositivos_todavia_no_se_presto_a_ninguna" xml:space="preserve">
+    <value>Todavía no se prestó a ninguna empresa.</value>
+  </data>
+  <data name="dispositivos_un_dispositivo_dado_de_baja_no" xml:space="preserve">
+    <value>Un dispositivo dado de baja no se puede prestar ni modificar. Se conserva su historial.</value>
+  </data>
+  <data name="dispositivos_un_modelo_no_se_borra_al" xml:space="preserve">
+    <value>Un modelo no se borra: al darlo de baja deja de ofrecerse para dispositivos nuevos, y los que ya lo tienen lo conservan.</value>
+  </data>
+  <data name="dispositivos_ver_detalle" xml:space="preserve">
+    <value>Ver detalle</value>
+  </data>
+  <data name="dispositivos_vuelve_con_problemas_enviarlo_a_mantenim" xml:space="preserve">
+    <value>Vuelve con problemas: enviarlo a mantenimiento</value>
+  </data>
+  <data name="empresa_baja_solo_activa" xml:space="preserve">
+    <value>Una empresa dada de baja solo puede volver a Activa, si retoma el servicio.</value>
+  </data>
+  <data name="empresa_contacto_largo" xml:space="preserve">
+    <value>El número de contacto no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="empresa_cuit_control" xml:space="preserve">
+    <value>El último dígito del CUIT no coincide con los anteriores (es un número de control): revisá que no haya un error de tipeo.</value>
+  </data>
+  <data name="empresa_cuit_duplicado" xml:space="preserve">
+    <value>Ya existe una empresa registrada con ese CUIT.</value>
+  </data>
+  <data name="empresa_cuit_formato" xml:space="preserve">
+    <value>El CUIT debe tener 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).</value>
+  </data>
+  <data name="empresa_cuit_prefijo" xml:space="preserve">
+    <value>El CUIT tiene que empezar con 20, 23, 24, 27, 30, 33 o 34, y el tuyo empieza con {0}. El formato es 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).</value>
+  </data>
+  <data name="empresa_domicilio_largo" xml:space="preserve">
+    <value>El domicilio no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="empresa_estado_invalido" xml:space="preserve">
+    <value>El estado no es válido.</value>
+  </data>
+  <data name="empresa_facturacion_invalida" xml:space="preserve">
+    <value>El tipo de facturación no es válido.</value>
+  </data>
+  <data name="empresa_motivo_cambio_estado" xml:space="preserve">
+    <value>Indicá el motivo del cambio de estado.</value>
+  </data>
+  <data name="empresa_motivo_requerido" xml:space="preserve">
+    <value>Indicá el motivo: se modifica la razón social, el CUIT o el plan.</value>
+  </data>
+  <data name="empresa_no_existe" xml:space="preserve">
+    <value>La empresa no existe.</value>
+  </data>
+  <data name="empresa_nueva_admin_obligatorio" xml:space="preserve">
+    <value>El nombre, el apellido y el correo del administrador son obligatorios.</value>
+  </data>
+  <data name="empresa_nueva_error" xml:space="preserve">
+    <value>No se pudo registrar la empresa. Volvé a intentarlo.</value>
+  </data>
+  <data name="empresa_nueva_mail_intro" xml:space="preserve">
+    <value>Se creó la empresa "{0}" en Falke y sos su administrador.</value>
+  </data>
+  <data name="empresa_nueva_ok" xml:space="preserve">
+    <value>Se registró la empresa «{0}» y su administrador {1} (pendiente de activación).</value>
+  </data>
+  <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
+    <value> No se pudo enviar el correo de activación: desde Usuarios se puede reenviar la invitación.</value>
+  </data>
+  <data name="empresa_nueva_ok_enlace" xml:space="preserve">
+    <value> El enlace de activación quedó en App_Data/mails/.</value>
+  </data>
+  <data name="empresa_nueva_plan_invalido" xml:space="preserve">
+    <value>El plan o la facturación no son válidos.</value>
+  </data>
+  <data name="empresa_pattern_blue_no_se_bloquea" xml:space="preserve">
+    <value>Pattern Blue no se bloquea ni se deshabilita.</value>
+  </data>
+  <data name="empresa_plan_invalido" xml:space="preserve">
+    <value>El plan de suscripción no es válido.</value>
+  </data>
+  <data name="empresa_razon_duplicada" xml:space="preserve">
+    <value>Ya existe una empresa registrada con esa razón social.</value>
+  </data>
+  <data name="empresa_razon_larga" xml:space="preserve">
+    <value>La razón social no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="empresa_razon_obligatoria" xml:space="preserve">
+    <value>La razón social es obligatoria.</value>
+  </data>
+  <data name="empresa_rubro_largo" xml:space="preserve">
+    <value>El rubro no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="empresa_sin_permiso_bitacora_todas" xml:space="preserve">
+    <value>No tenés permiso para ver la bitácora de todas las empresas.</value>
+  </data>
+  <data name="empresa_sin_permiso_registrar" xml:space="preserve">
+    <value>No tenés permiso para registrar empresas.</value>
+  </data>
+  <data name="empresa_sin_permiso_ver_datos" xml:space="preserve">
+    <value>No tenés permiso para ver los datos de la empresa.</value>
+  </data>
+  <data name="empresa_sin_permiso_ver_todas" xml:space="preserve">
+    <value>No tenés permiso para ver todas las empresas.</value>
+  </data>
+  <data name="empresa_ya_en_ese_estado" xml:space="preserve">
+    <value>La empresa ya está en ese estado.</value>
+  </data>
+  <data name="empresanueva_11_digitos_con_o_sin_guiones" xml:space="preserve">
+    <value>11 dígitos, con o sin guiones. Empieza con 20, 23, 24, 27, 30, 33 o 34.</value>
+  </data>
+  <data name="empresanueva_administrador_cuenta_inicial" xml:space="preserve">
+    <value>Administrador (cuenta inicial)</value>
+  </data>
+  <data name="empresanueva_administrador_inicial_de_la_cuenta" xml:space="preserve">
+    <value>Administrador inicial de la cuenta</value>
+  </data>
+  <data name="empresanueva_administrador_sin_completar" xml:space="preserve">
+    <value>Administrador sin completar</value>
+  </data>
+  <data name="empresanueva_ahi_llega_el_enlace_para_que" xml:space="preserve">
+    <value>Ahí llega el enlace para que defina su contraseña. Después no se puede cambiar.</value>
+  </data>
+  <data name="empresanueva_alta_manual_del_gestor_de_pattern" xml:space="preserve">
+    <value>Alta manual del gestor de Pattern Blue, una vez formalizado el acuerdo comercial. Se crea también el usuario administrador inicial, que recibe un enlace de activación.</value>
+  </data>
+  <data name="empresanueva_anual" xml:space="preserve">
+    <value>Anual</value>
+  </data>
+  <data name="empresanueva_apellido" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="empresanueva_apex" xml:space="preserve">
+    <value>Apex</value>
+  </data>
+  <data name="empresanueva_correo_electronico" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="empresanueva_cuit" xml:space="preserve">
+    <value>CUIT</value>
+  </data>
+  <data name="empresanueva_datos_de_la_empresa" xml:space="preserve">
+    <value>Datos de la empresa</value>
+  </data>
+  <data name="empresanueva_define_su_contrasena" xml:space="preserve">
+    <value>Define su contraseña.</value>
+  </data>
+  <data name="empresanueva_domicilio" xml:space="preserve">
+    <value>Domicilio</value>
+  </data>
+  <data name="empresanueva_el_administrador_recibe_un_enlace_para" xml:space="preserve">
+    <value>El administrador recibe un enlace para definir sus credenciales.</value>
+  </data>
+  <data name="empresanueva_el_administrador_ya_puede_invitar_a" xml:space="preserve">
+    <value>El administrador ya puede invitar a los demás usuarios de su empresa.</value>
+  </data>
+  <data name="empresanueva_el_alta_queda_registrada_en_la" xml:space="preserve">
+    <value>El alta queda registrada en la bitácora con criticidad alta. Si la empresa no continúa, se la deshabilita en lugar de borrarla.</value>
+  </data>
+  <data name="empresanueva_el_enlace_lo_lleva_a_la" xml:space="preserve">
+    <value>El enlace lo lleva a la pantalla de activación de cuenta.</value>
+  </data>
+  <data name="empresanueva_empresas_cliente" xml:space="preserve">
+    <value>Empresas cliente</value>
+  </data>
+  <data name="empresanueva_empresas_registradas" xml:space="preserve">
+    <value>Empresas registradas</value>
+  </data>
+  <data name="empresanueva_es_quien_despues_invita_y_administra" xml:space="preserve">
+    <value>Es quien después invita y administra al resto de los usuarios de su empresa.</value>
+  </data>
+  <data name="empresanueva_estado_inicial_pendiente_de_activacion" xml:space="preserve">
+    <value>Estado inicial: pendiente de activación</value>
+  </data>
+  <data name="empresanueva_facturacion" xml:space="preserve">
+    <value>Facturación</value>
+  </data>
+  <data name="empresanueva_hunter" xml:space="preserve">
+    <value>Hunter</value>
+  </data>
+  <data name="empresanueva_la_cuenta_queda_activa" xml:space="preserve">
+    <value>La cuenta queda activa.</value>
+  </data>
+  <data name="empresanueva_la_empresa_queda_registrada_en_estado" xml:space="preserve">
+    <value>La empresa queda registrada en estado pendiente de activación.</value>
+  </data>
+  <data name="empresanueva_los_datos_fiscales_van_tal_como" xml:space="preserve">
+    <value>Los datos fiscales van tal como figuran en la factura.</value>
+  </data>
+  <data name="empresanueva_mensual" xml:space="preserve">
+    <value>Mensual</value>
+  </data>
+  <data name="empresanueva_nombre_de_la_empresa" xml:space="preserve">
+    <value>Nombre de la empresa</value>
+  </data>
+  <data name="empresanueva_nueva_empresa_en_curso" xml:space="preserve">
+    <value>Nueva empresa (en curso)</value>
+  </data>
+  <data name="empresanueva_numero_de_contacto" xml:space="preserve">
+    <value>Número de contacto</value>
+  </data>
+  <data name="empresanueva_plan_de_suscripcion" xml:space="preserve">
+    <value>Plan de suscripción</value>
+  </data>
+  <data name="empresanueva_que_pasa_despues_de_registrar" xml:space="preserve">
+    <value>Qué pasa después de registrar</value>
+  </data>
+  <data name="empresanueva_razon_social" xml:space="preserve">
+    <value>Razón social</value>
+  </data>
+  <data name="empresanueva_registrar_empresa_cliente" xml:space="preserve">
+    <value>Registrar empresa cliente</value>
+  </data>
+  <data name="empresanueva_rol_asignado" xml:space="preserve">
+    <value>Rol asignado</value>
+  </data>
+  <data name="empresanueva_rubro" xml:space="preserve">
+    <value>Rubro</value>
+  </data>
+  <data name="empresanueva_rubro_sin_completar" xml:space="preserve">
+    <value>Rubro sin completar</value>
+  </data>
+  <data name="empresanueva_scout" xml:space="preserve">
+    <value>Scout</value>
+  </data>
+  <data name="empresanueva_se_crea_la_cuenta" xml:space="preserve">
+    <value>Se crea la cuenta.</value>
+  </data>
+  <data name="empresanueva_se_envia_el_correo" xml:space="preserve">
+    <value>Se envía el correo.</value>
+  </data>
+  <data name="empresanueva_vista_previa_de_la_cuenta" xml:space="preserve">
+    <value>Vista previa de la cuenta</value>
+  </data>
+  <data name="empresas_activa" xml:space="preserve">
+    <value>Activa</value>
+  </data>
+  <data name="empresas_activas" xml:space="preserve">
+    <value>Activas</value>
+  </data>
+  <data name="empresas_al_cambiar_el_estado_a_bloqueada" xml:space="preserve">
+    <value>Al cambiar el estado a Bloqueada o Deshabilitada nadie de la empresa puede ingresar. Las cuentas y los datos no se alteran.</value>
+  </data>
+  <data name="empresas_bloqueada" xml:space="preserve">
+    <value>Bloqueada</value>
+  </data>
+  <data name="empresas_bloqueadas" xml:space="preserve">
+    <value>Bloqueadas</value>
+  </data>
+  <data name="empresas_cambiar_el_estado_de_la_empresa" xml:space="preserve">
+    <value>Cambiar el estado de la empresa</value>
+  </data>
+  <data name="empresas_cambiar_la_razon_social_el_cuit" xml:space="preserve">
+    <value>Cambiar la razón social, el CUIT o el plan exige indicar el motivo. Todo queda en la bitácora.</value>
+  </data>
+  <data name="empresas_cartera_de_empresas_que_contrataron_falk" xml:space="preserve">
+    <value>Cartera de empresas que contrataron Falke, con su plan y su estado.</value>
+  </data>
+  <data name="empresas_dadas_de_baja" xml:space="preserve">
+    <value>Dadas de baja</value>
+  </data>
+  <data name="empresas_datos_actualizados" xml:space="preserve">
+    <value>Los datos de la empresa se actualizaron.</value>
+  </data>
+  <data name="empresas_deshabilitada" xml:space="preserve">
+    <value>Deshabilitada</value>
+  </data>
+  <data name="empresas_dispositivos_prestados" xml:space="preserve">
+    <value>Dispositivos prestados</value>
+  </data>
+  <data name="empresas_editar_datos_de_la_empresa" xml:space="preserve">
+    <value>Editar datos de la empresa</value>
+  </data>
+  <data name="empresas_error_identificar" xml:space="preserve">
+    <value>No se pudo identificar la empresa. Volvé a intentarlo.</value>
+  </data>
+  <data name="empresas_error_listado" xml:space="preserve">
+    <value>No se pudo cargar el listado de empresas.</value>
+  </data>
+  <data name="empresas_estado_actualizado" xml:space="preserve">
+    <value>El estado de la empresa se actualizó.</value>
+  </data>
+  <data name="empresas_estado_de_la_empresa" xml:space="preserve">
+    <value>Estado de la empresa</value>
+  </data>
+  <data name="empresas_estas_modificando_los_datos_de_un" xml:space="preserve">
+    <value>Estás modificando los datos de un cliente:</value>
+  </data>
+  <data name="empresas_esto_afecta_a_todos_los_usuarios" xml:space="preserve">
+    <value>Esto afecta a todos los usuarios de la empresa.</value>
+  </data>
+  <data name="empresas_filtrar_por_estado" xml:space="preserve">
+    <value>Filtrar por estado</value>
+  </data>
+  <data name="empresas_lo_que_cambies_lo_ve_la" xml:space="preserve">
+    <value>Lo que cambies lo ve la empresa en «Mi empresa». Cambiar el CUIT, el plan o la facturación afecta la facturación. Queda en la bitácora y la empresa lo ve como hecho por el equipo de Pattern Blue.</value>
+  </data>
+  <data name="empresas_no_hay_empresas_que_coincidan" xml:space="preserve">
+    <value>No hay empresas que coincidan.</value>
+  </data>
+  <data name="empresas_nueva_empresa" xml:space="preserve">
+    <value>Nueva empresa</value>
+  </data>
+  <data name="empresas_obligatorio_si_cambia_la_razon_social" xml:space="preserve">
+    <value>(obligatorio si cambia la razón social, el CUIT o el plan)</value>
+  </data>
+  <data name="empresas_razon_social_cuit_o_rubro" xml:space="preserve">
+    <value>Razón social, CUIT o rubro...</value>
+  </data>
+  <data name="empresas_telefono_de_contacto" xml:space="preserve">
+    <value>Teléfono de contacto</value>
+  </data>
+  <data name="empresas_todas" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="empresas_usuarios_totales" xml:space="preserve">
+    <value>Usuarios totales</value>
+  </data>
+  <data name="faq_arranca_solo_al_terminar_la_grabacion" xml:space="preserve">
+    <value>Arranca solo al terminar la grabación y, en condiciones normales de carga, deja todas las visualizaciones disponibles en menos de cinco minutos. No hay ningún paso manual de tu lado.</value>
+  </data>
+  <data name="faq_buscar_en_las_preguntas_frecuentes" xml:space="preserve">
+    <value>Buscar en las preguntas frecuentes</value>
+  </data>
+  <data name="faq_buscar_una_pregunta" xml:space="preserve">
+    <value>Buscar una pregunta...</value>
+  </data>
+  <data name="faq_contratacion" xml:space="preserve">
+    <value>Contratación</value>
+  </data>
+  <data name="faq_contratacion_y_facturacion" xml:space="preserve">
+    <value>Contratación y facturación</value>
+  </data>
+  <data name="faq_conviene_pagar_por_mes_o_por" xml:space="preserve">
+    <value>¿Conviene pagar por mes o por año?</value>
+  </data>
+  <data name="faq_cuanto_tarda_desde_que_firmo_hasta" xml:space="preserve">
+    <value>¿Cuánto tarda desde que firmo hasta que puedo grabar?</value>
+  </data>
+  <data name="faq_cuanto_tarda_el_procesamiento" xml:space="preserve">
+    <value>¿Cuánto tarda el procesamiento?</value>
+  </data>
+  <data name="faq_datos_y_seguridad" xml:space="preserve">
+    <value>Datos y seguridad</value>
+  </data>
+  <data name="faq_donde_se_guardan_las_grabaciones" xml:space="preserve">
+    <value>¿Dónde se guardan las grabaciones?</value>
+  </data>
+  <data name="faq_el_administrador_de_tu_empresa_ve" xml:space="preserve">
+    <value>El administrador de tu empresa ve la bitácora de acciones de los usuarios de tu propia organización, y nada más. Los análisis y las grabaciones solo son accesibles para los usuarios de tu cuenta.</value>
+  </data>
+  <data name="faq_el_dispositivo_vuelve_a_pattern_blue" xml:space="preserve">
+    <value>El dispositivo vuelve a Pattern Blue sin costo para ti, reusando el mismo embalaje con el que llegó. Te avisamos por correo con anticipación y coordinamos el retiro.</value>
+  </data>
+  <data name="faq_el_objetivo_es_que_puedas_correr" xml:space="preserve">
+    <value>El objetivo es que puedas correr tu primera sesión dentro de los diez días de firmado el contrato, incluyendo el envío del dispositivo. En AMBA, Córdoba, Rosario y Mendoza ese plazo se cumple sin problema; para otras localidades se acuerda caso por caso.</value>
+  </data>
+  <data name="faq_el_pago_anual_anticipado_tiene_un" xml:space="preserve">
+    <value>El pago anual anticipado tiene un 20% de descuento sobre el precio mensual. Si recién estás evaluando la herramienta, el ciclo mensual te deja más margen.</value>
+  </data>
+  <data name="faq_el_servicio" xml:space="preserve">
+    <value>El servicio</value>
+  </data>
+  <data name="faq_en_la_infraestructura_propia_de_pattern" xml:space="preserve">
+    <value>En la infraestructura propia de Pattern Blue, nunca en plataformas de terceros. Los datos de cada empresa se almacenan separados, sin posibilidad de acceso cruzado, y las comunicaciones entre tu navegador y el servidor viajan cifradas.</value>
+  </data>
+  <data name="faq_en_que_idiomas_esta_la_plataforma" xml:space="preserve">
+    <value>¿En qué idiomas está la plataforma?</value>
+  </data>
+  <data name="faq_en_que_se_diferencia_del_eye" xml:space="preserve">
+    <value>¿En qué se diferencia del eye tracking por cámara web?</value>
+  </data>
+  <data name="faq_es_una_suite_de_analitica_conductual" xml:space="preserve">
+    <value>Es una suite de analítica conductual basada en seguimiento ocular. Un dispositivo Tobii registra donde mira tu usuario mientras usa tu producto digital, y la plataforma convierte esos datos en mapas de calor, zonas de interés, recorridos de mirada y métricas de atención listas para interpretar.</value>
+  </data>
+  <data name="faq_escribenos_desde_la_pantalla_de_planes" xml:space="preserve">
+    <value>Escríbenos desde la pantalla de planes y te respondemos a la brevedad.</value>
+  </data>
+  <data name="faq_espanol_ingles_y_portugues_cada_usuario" xml:space="preserve">
+    <value>Español, inglés y portugués. Cada usuario elige el suyo desde su perfil y la preferencia se mantiene entre sesiones, sin afectar al resto del equipo.</value>
+  </data>
+  <data name="faq_falke_usa_hardware_de_infrarrojo_dedicad" xml:space="preserve">
+    <value>Falke usa hardware de infrarrojo dedicado, no la cámara web del equipo. Eso da mayor precisión y no se ve afectado por la postura ni la iluminación del participante. Además no imponemos límite de duración ni de tipo de activo: puedes analizar un videojuego o un flujo completo de software.</value>
+  </data>
+  <data name="faq_hardware_y_soporte" xml:space="preserve">
+    <value>Hardware y soporte</value>
+  </data>
+  <data name="faq_hay_limite_de_duracion_en_las" xml:space="preserve">
+    <value>¿Hay límite de duración en las sesiones?</value>
+  </data>
+  <data name="faq_ir_a_los_planes" xml:space="preserve">
+    <value>Ir a los planes</value>
+  </data>
+  <data name="faq_los_datos_de_seguimiento_ocular_se" xml:space="preserve">
+    <value>Los datos de seguimiento ocular se disocian de la identidad del tester en el momento de guardarse: lo que queda almacenado no permite identificar a la persona. Es un requisito de la Ley N.° 25.326 de Protección de Datos Personales y está contemplado desde el diseño del sistema.</value>
+  </data>
+  <data name="faq_no_el_modelo_de_falke_esta" xml:space="preserve">
+    <value>No. El modelo de Falke está pensado para que trabajes con tus propios usuarios, en tu propio entorno. Eso da mucha más fidelidad que un panel externo, sobre todo en productos con audiencias específicas. Tampoco hacemos consultoría de diseño: entregamos la evidencia, la decisión es de tu equipo.</value>
+  </data>
+  <data name="faq_no_encontramos_ninguna_pregunta_con_ese" xml:space="preserve">
+    <value>No encontramos ninguna pregunta con ese texto. Prueba con otras palabras.</value>
+  </data>
+  <data name="faq_no_puedes_grabar_una_sesion_tan" xml:space="preserve">
+    <value>No. Puedes grabar una sesión tan larga como necesites, que es justamente lo que permite analizar videojuegos o flujos completos de software empresarial.</value>
+  </data>
+  <data name="faq_por_que_no_puedo_crear_una" xml:space="preserve">
+    <value>¿Por qué no puedo crear una cuenta solo?</value>
+  </data>
+  <data name="faq_porque_el_servicio_incluye_un_dispositiv" xml:space="preserve">
+    <value>Porque el servicio incluye un dispositivo físico en préstamo. El alta la hace un gestor de Pattern Blue una vez firmado el contrato: se registra la empresa, se crea el usuario administrador y esa persona recibe un correo con un enlace para definir su contraseña. Desde ahí el administrador invita al resto de su equipo.</value>
+  </data>
+  <data name="faq_preguntas_frecuentes" xml:space="preserve">
+    <value>Preguntas frecuentes</value>
+  </data>
+  <data name="faq_puedo_combinar_varias_sesiones_en_un" xml:space="preserve">
+    <value>¿Puedo combinar varias sesiones en un solo análisis?</value>
+  </data>
+  <data name="faq_puedo_compartir_los_resultados_con_gente" xml:space="preserve">
+    <value>¿Puedo compartir los resultados con gente sin cuenta?</value>
+  </data>
+  <data name="faq_que_es_exactamente_falke" xml:space="preserve">
+    <value>¿Qué es exactamente Falke?</value>
+  </data>
+  <data name="faq_que_necesito_en_mi_equipo" xml:space="preserve">
+    <value>¿Qué necesito en mi equipo?</value>
+  </data>
+  <data name="faq_que_pasa_con_los_datos_de" xml:space="preserve">
+    <value>¿Qué pasa con los datos de las personas que participan?</value>
+  </data>
+  <data name="faq_que_pasa_cuando_termina_el_contrato" xml:space="preserve">
+    <value>¿Qué pasa cuando termina el contrato?</value>
+  </data>
+  <data name="faq_que_tipos_de_activos_digitales_puedo" xml:space="preserve">
+    <value>¿Qué tipos de activos digitales puedo analizar?</value>
+  </data>
+  <data name="faq_que_visualizaciones_obtengo_de_cada_sesi" xml:space="preserve">
+    <value>¿Qué visualizaciones obtengo de cada sesión?</value>
+  </data>
+  <data name="faq_quien_puede_ver_lo_que_hace" xml:space="preserve">
+    <value>¿Quién puede ver lo que hace mi equipo?</value>
+  </data>
+  <data name="faq_seis_la_grabacion_con_el_seguimiento" xml:space="preserve">
+    <value>Seis: la grabación con el seguimiento superpuesto, el mapa de calor, las zonas de interés y zonas ciegas, la dispersión de mirada, el recorrido de mirada y la relación atención vs. distracción. Además de las métricas estadísticas: duración, cantidad de fijaciones y tiempo de fijación medio.</value>
+  </data>
+  <data name="faq_si_cada_analisis_se_exporta_a" xml:space="preserve">
+    <value>Sí. Cada análisis se exporta a PDF eligiendo con casillas qué visualizaciones y métricas incluir. Ese reporte se puede compartir con cualquiera, sin necesidad de que entre a la plataforma.</value>
+  </data>
+  <data name="faq_si_con_el_analisis_multiple_planes" xml:space="preserve">
+    <value>Sí, con el análisis múltiple (planes Hunter y Apex). Se promedian los datos de varias sesiones para ver patrones comunes entre distintos testers. La plataforma válida que todas las sesiones sean del mismo tipo de activo, porque si no el promedio no sería válido.</value>
+  </data>
+  <data name="faq_si_la_falla_no_es_atribuible" xml:space="preserve">
+    <value>Si la falla no es atribuible al uso, la reparación o el reemplazo corren por cuenta de Pattern Blue, sin costo adicional. Quedan afuera los daños por golpes, líquidos, modificaciones no autorizadas o extravío.</value>
+  </data>
+  <data name="faq_sobre_el_servicio" xml:space="preserve">
+    <value>Sobre el servicio</value>
+  </data>
+  <data name="faq_software_de_escritorio_aplicaciones_web" xml:space="preserve">
+    <value>Software de escritorio, aplicaciones web, aplicaciones móviles, videojuegos y piezas de publicidad digital. Al crear la categoría eliges el tipo y la plataforma pide los datos propios de ese caso (sistema operativo, plataforma, canal de distribución, etc.).</value>
+  </data>
+  <data name="faq_te_quedo_alguna_duda" xml:space="preserve">
+    <value>¿Te quedó alguna duda?</value>
+  </data>
+  <data name="faq_todo_lo_que_suelen_preguntarnos_antes" xml:space="preserve">
+    <value>Todo lo que suelen preguntarnos antes de contratar Falke. Si te queda alguna duda, escríbenos y la respondemos.</value>
+  </data>
+  <data name="faq_un_equipo_de_oficina_estandar_con" xml:space="preserve">
+    <value>Un equipo de oficina estándar con un puerto USB libre, un navegador actualizado (Chrome, Firefox o Edge) y el driver del dispositivo Tobii instalado. La plataforma verifica la conexión, la calibración y la versión del driver antes de dejarte iniciar una grabación.</value>
+  </data>
+  <data name="faq_uso_de_la_plataforma" xml:space="preserve">
+    <value>Uso de la plataforma</value>
+  </data>
+  <data name="faq_ustedes_ponen_los_testers" xml:space="preserve">
+    <value>¿Ustedes ponen los testers?</value>
+  </data>
+  <data name="faq_y_si_el_dispositivo_falla" xml:space="preserve">
+    <value>¿Y si el dispositivo falla?</value>
+  </data>
+  <data name="ingresar_analitica_conductual_biometrica_por_segu" xml:space="preserve">
+    <value>Analítica conductual biométrica por seguimiento ocular, con hardware de precisión profesional incluido en la suscripción.</value>
+  </data>
+  <data name="ingresar_asi_se_obtiene_una_cuenta" xml:space="preserve">
+    <value>Así se obtiene una cuenta</value>
+  </data>
+  <data name="ingresar_bloqueo_estricto" xml:space="preserve">
+    <value>La cuenta tiene un bloqueo estricto. Comunícate con el administrador de tu empresa: el acceso no se puede recuperar desde acá.</value>
+  </data>
+  <data name="ingresar_cierre_clave_cambiada" xml:space="preserve">
+    <value>Tu sesión se cerró porque se cambió la contraseña de tu cuenta. Volvé a entrar con la nueva.</value>
+  </data>
+  <data name="ingresar_cierre_cuenta" xml:space="preserve">
+    <value>Tu sesión se cerró porque la cuenta fue dada de baja, bloqueada o cambió de estado. Comunícate con el administrador de tu empresa.</value>
+  </data>
+  <data name="ingresar_cierre_empresa_baja" xml:space="preserve">
+    <value>Tu sesión se cerró porque la empresa de tu cuenta fue dada de baja. Si crees que es un error, comunícate con Pattern Blue.</value>
+  </data>
+  <data name="ingresar_cierre_empresa_bloqueada" xml:space="preserve">
+    <value>Tu sesión se cerró porque la empresa de tu cuenta fue bloqueada. Comunícate con Pattern Blue para regularizar la situación.</value>
+  </data>
+  <data name="ingresar_cierre_restauracion" xml:space="preserve">
+    <value>Se restauró la base de datos desde una copia de seguridad y se cerraron todas las sesiones. Volvé a entrar.</value>
+  </data>
+  <data name="ingresar_completar_datos" xml:space="preserve">
+    <value>Completa el correo y la contraseña para continuar.</value>
+  </data>
+  <data name="ingresar_contrasena" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="ingresar_cuenta_baja" xml:space="preserve">
+    <value>La cuenta fue dada de baja. Si crees que es un error, comunícate con el administrador de tu empresa.</value>
+  </data>
+  <data name="ingresar_cuenta_bloqueada" xml:space="preserve">
+    <value>La cuenta está bloqueada por contraseñas incorrectas. Usa «Olvidé mi contraseña» para recuperar el acceso.</value>
+  </data>
+  <data name="ingresar_cuenta_pendiente" xml:space="preserve">
+    <value>La cuenta todavía no fue activada. Revisa el correo con el enlace de activación.</value>
+  </data>
+  <data name="ingresar_datos_biometricos_disociados_y_cifrados" xml:space="preserve">
+    <value>Datos biométricos disociados y cifrados</value>
+  </data>
+  <data name="ingresar_datos_incorrectos" xml:space="preserve">
+    <value>El correo o la contraseña no son correctos.</value>
+  </data>
+  <data name="ingresar_descubre_lo_que_tus_usuarios_miran" xml:space="preserve">
+    <value>Descubre lo que tus usuarios miran de verdad</value>
+  </data>
+  <data name="ingresar_despues_de_cinco_intentos_fallidos_la" xml:space="preserve">
+    <value>Después de cinco intentos fallidos, la cuenta se bloquea temporalmente por seguridad.</value>
+  </data>
+  <data name="ingresar_empresa_baja" xml:space="preserve">
+    <value>La empresa de tu cuenta fue dada de baja y ya no tiene acceso a Falke. Si crees que es un error, comunícate con Pattern Blue.</value>
+  </data>
+  <data name="ingresar_empresa_bloqueada" xml:space="preserve">
+    <value>La empresa de tu cuenta está bloqueada. Comunícate con Pattern Blue para regularizar la situación.</value>
+  </data>
+  <data name="ingresar_entra_con_el_correo_con_el" xml:space="preserve">
+    <value>Entra con el correo con el que te dieron de alta en tu empresa.</value>
+  </data>
+  <data name="ingresar_iniciar_sesion" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="ingresar_iniciar_sesion_falke" xml:space="preserve">
+    <value>Iniciar sesión - Falke</value>
+  </data>
+  <data name="ingresar_mostrar_la_contrasena" xml:space="preserve">
+    <value>Mostrar la contraseña</value>
+  </data>
+  <data name="ingresar_mostrar_u_ocultar_la_contrasena" xml:space="preserve">
+    <value>Mostrar u ocultar la contraseña</value>
+  </data>
+  <data name="ingresar_no_se_pudo" xml:space="preserve">
+    <value>No se pudo iniciar sesión. Vuelve a intentarlo.</value>
+  </data>
+  <data name="ingresar_olvide_mi_contrasena" xml:space="preserve">
+    <value>Olvidé mi contraseña</value>
+  </data>
+  <data name="ingresar_queda_un_intento" xml:space="preserve">
+    <value> Te queda 1 intento antes de que se bloquee la cuenta.</value>
+  </data>
+  <data name="ingresar_quedan_intentos" xml:space="preserve">
+    <value> Te quedan {0} intentos antes de que se bloquee la cuenta.</value>
+  </data>
+  <data name="ingresar_recordarme_en_este_equipo" xml:space="preserve">
+    <value>Recordarme en este equipo</value>
+  </data>
+  <data name="ingresar_seis_visualizaciones_por_sesion_listas_e" xml:space="preserve">
+    <value>Seis visualizaciones por sesión, listas en minutos</value>
+  </data>
+  <data name="ingresar_sistema_no_disponible" xml:space="preserve">
+    <value>El sistema no está disponible en este momento. Comunícate con el administrador o con soporte técnico.</value>
+  </data>
+  <data name="ingresar_todavia_no_eres_cliente" xml:space="preserve">
+    <value>¿Todavía no eres cliente?</value>
+  </data>
+  <data name="ingresar_tus_propios_testers_sobre_tu_propio" xml:space="preserve">
+    <value>Tus propios testers, sobre tu propio producto</value>
+  </data>
+  <data name="ingresar_volver_al_inicio" xml:space="preserve">
+    <value>Volver al inicio</value>
+  </data>
+  <data name="integridad_agregados_externos" xml:space="preserve">
+    <value>Se detectaron registros agregados de forma externa en la tabla {0}.</value>
+  </data>
+  <data name="integridad_al_recalcular_los_datos_actuales_pasan" xml:space="preserve">
+    <value>Al recalcular, los datos actuales pasan a considerarse correctos y se pierde la evidencia de que algo fue modificado por fuera del sistema.</value>
+  </data>
+  <data name="integridad_alcance" xml:space="preserve">
+    <value>Alcance</value>
+  </data>
+  <data name="integridad_badge_inconsistente" xml:space="preserve">
+    <value>Inconsistente</value>
+  </data>
+  <data name="integridad_badge_integra" xml:space="preserve">
+    <value>Íntegra</value>
+  </data>
+  <data name="integridad_clave_pk" xml:space="preserve">
+    <value>Clave (PK)</value>
+  </data>
+  <data name="integridad_con_dvh_que_no_coincide" xml:space="preserve">
+    <value>Con DVH que no coincide</value>
+  </data>
+  <data name="integridad_detalle" xml:space="preserve">
+    <value>Detalle</value>
+  </data>
+  <data name="integridad_digito_verificador_horizontal_dvh_por_re" xml:space="preserve">
+    <value>Dígito verificador horizontal (DVH) por registro y vertical (DVV) por tabla, según SHA-256 encadenado.</value>
+  </data>
+  <data name="integridad_dvh_calculado" xml:space="preserve">
+    <value>DVH calculado</value>
+  </data>
+  <data name="integridad_dvh_guardado" xml:space="preserve">
+    <value>DVH guardado</value>
+  </data>
+  <data name="integridad_dvv_y_dvh_coinciden" xml:space="preserve">
+    <value>DVV y DVH coinciden</value>
+  </data>
+  <data name="integridad_el_acceso_al_sistema_permanece_bloqueado" xml:space="preserve">
+    <value>El acceso al sistema permanece bloqueado para el resto de los usuarios hasta ejecutar el recálculo completo. Solo el webmaster puede ver el detalle técnico de las tablas y registros afectados.</value>
+  </data>
+  <data name="integridad_eliminados_externos" xml:space="preserve">
+    <value>Se detectaron registros eliminados de forma externa en la tabla {0}.</value>
+  </data>
+  <data name="integridad_error_leer" xml:space="preserve">
+    <value>No se pudo leer el estado de integridad de la base.</value>
+  </data>
+  <data name="integridad_error_recalcular" xml:space="preserve">
+    <value>Ocurrió un error al recalcular la integridad.</value>
+  </data>
+  <data name="integridad_estado_de_integridad_de_cada_tabla" xml:space="preserve">
+    <value>Estado de integridad de cada tabla controlada</value>
+  </data>
+  <data name="integridad_estado_de_integridad_por_tabla" xml:space="preserve">
+    <value>Estado de integridad por tabla</value>
+  </data>
+  <data name="integridad_firma_invalida" xml:space="preserve">
+    <value>La tabla {0} posee datos corruptos (firma global inválida).</value>
+  </data>
+  <data name="integridad_integridad_de_la_base_de_datos" xml:space="preserve">
+    <value>Integridad de la base de datos</value>
+  </data>
+  <data name="integridad_la_verificacion_no_encontro_inconsistenc" xml:space="preserve">
+    <value>La verificación no encontró inconsistencias: los datos coinciden con los dígitos verificadores almacenados.</value>
+  </data>
+  <data name="integridad_queda_registrado_en_la_bitacora" xml:space="preserve">
+    <value>Queda registrado en la bitácora</value>
+  </data>
+  <data name="integridad_recalcular_digitos_verificadores" xml:space="preserve">
+    <value>Recalcular dígitos verificadores</value>
+  </data>
+  <data name="integridad_recalcular_los_digitos_hace_que_el" xml:space="preserve">
+    <value>Recalcular los dígitos hace que el sistema vuelva a aceptar los datos tal como están hoy. Antes de hacerlo conviene revisar los registros marcados y, si corresponde, restaurar un respaldo: recalcular sobre datos adulterados deja el problema adentro.</value>
+  </data>
+  <data name="integridad_recalcular_los_digitos_verificadores" xml:space="preserve">
+    <value>Recalcular los dígitos verificadores</value>
+  </data>
+  <data name="integridad_recalculo_con_problemas" xml:space="preserve">
+    <value>Recálculo completo: {0} tabla(s), {1} registro(s). La verificación posterior todavía encuentra {2} inconsistencia(s).</value>
+  </data>
+  <data name="integridad_recalculo_ok" xml:space="preserve">
+    <value>Recálculo completo: {0} tabla(s), {1} registro(s). La verificación posterior no encontró inconsistencias.</value>
+  </data>
+  <data name="integridad_registro_alterado" xml:space="preserve">
+    <value>El registro #{0} (clave "{1}") de la tabla {2} fue alterado o agregado externamente.</value>
+  </data>
+  <data name="integridad_registro_n" xml:space="preserve">
+    <value>Registro n.°</value>
+  </data>
+  <data name="integridad_registros" xml:space="preserve">
+    <value>Registros</value>
+  </data>
+  <data name="integridad_registros_alterados" xml:space="preserve">
+    <value>Registros alterados</value>
+  </data>
+  <data name="integridad_registros_con_digito_verificador_incorre" xml:space="preserve">
+    <value>Registros con dígito verificador incorrecto</value>
+  </data>
+  <data name="integridad_registros_observados_por_el_control_de" xml:space="preserve">
+    <value>Registros observados por el control de integridad</value>
+  </data>
+  <data name="integridad_requieren_recalculo" xml:space="preserve">
+    <value>Requieren recálculo</value>
+  </data>
+  <data name="integridad_resumen_alerta" xml:space="preserve">
+    <value>Se detectaron inconsistencias en {0} de {1} tablas.</value>
+  </data>
+  <data name="integridad_revisa_bien_antes_de_confirmar" xml:space="preserve">
+    <value>Revisá bien antes de confirmar.</value>
+  </data>
+  <data name="integridad_sin_permiso" xml:space="preserve">
+    <value>Tu cuenta no tiene permiso para recalcular los dígitos verificadores.</value>
+  </data>
+  <data name="integridad_sin_registro_previo" xml:space="preserve">
+    <value>No se encontró un registro de integridad previo para la tabla {0}.</value>
+  </data>
+  <data name="integridad_solo_las_tablas_con_inconsistencias" xml:space="preserve">
+    <value>Solo las tablas con inconsistencias</value>
+  </data>
+  <data name="integridad_tabla" xml:space="preserve">
+    <value>Tabla</value>
+  </data>
+  <data name="integridad_tabla_corrupta" xml:space="preserve">
+    <value>La tabla se encuentra corrupta</value>
+  </data>
+  <data name="integridad_tabla_ok" xml:space="preserve">
+    <value>El DVV coincide y los DVH de todos los registros son válidos.</value>
+  </data>
+  <data name="integridad_tablas_bajo_control" xml:space="preserve">
+    <value>Tablas bajo control</value>
+  </data>
+  <data name="integridad_tablas_con_inconsistencias" xml:space="preserve">
+    <value>Tablas con inconsistencias</value>
+  </data>
+  <data name="integridad_tablas_integras" xml:space="preserve">
+    <value>Tablas íntegras</value>
+  </data>
+  <data name="integridad_todas_las_tablas_bajo_control" xml:space="preserve">
+    <value>Todas las tablas bajo control</value>
+  </data>
+  <data name="integridad_uso_exclusivo_pattern_blue" xml:space="preserve">
+    <value>Uso exclusivo Pattern Blue</value>
+  </data>
+  <data name="integridad_verificacion_mediante_digitos_verificado" xml:space="preserve">
+    <value>Verificación mediante dígitos verificadores (DVH por registro y DVV por tabla) sobre las tablas bajo control de integridad. Se recalcula automáticamente al iniciar sesión y puede recalcularse manualmente ante una inconsistencia detectada.</value>
+  </data>
+  <data name="integridad_verificadas_en_cada_inicio_de_sesion" xml:space="preserve">
+    <value>Verificadas en cada inicio de sesión</value>
+  </data>
+  <data name="mantenimiento_el_sistema_no_esta_disponible_por" xml:space="preserve">
+    <value>El sistema no está disponible por unos minutos mientras realizamos tareas programadas. Tus datos y tus grabaciones están a salvo.</value>
+  </data>
+  <data name="mantenimiento_estamos_haciendo_mantenimiento" xml:space="preserve">
+    <value>Estamos haciendo mantenimiento</value>
+  </data>
+  <data name="mantenimiento_estimamos_volver_a_las_20_00" xml:space="preserve">
+    <value>Estimamos volver a las 20:00</value>
+  </data>
+  <data name="mantenimiento_reintentar" xml:space="preserve">
+    <value>Reintentar</value>
+  </data>
+  <data name="mantenimiento_si_es_urgente_escribenos_a_soporte" xml:space="preserve">
+    <value>Si es urgente, escríbenos a soporte@patternblue.com</value>
+  </data>
+  <data name="mantenimiento_si_estabas_grabando_una_sesion_la" xml:space="preserve">
+    <value>Si estabas grabando una sesión, la grabación quedó guardada y va a estar disponible cuando el sistema vuelva.</value>
+  </data>
+  <data name="mantenimiento_sistema_en_mantenimiento_falke" xml:space="preserve">
+    <value>Sistema en mantenimiento - Falke</value>
+  </data>
+  <data name="miclave_actualizada" xml:space="preserve">
+    <value>La contraseña quedó actualizada.</value>
+  </data>
+  <data name="miclave_al_cambiarla_se_cierran_las_sesiones" xml:space="preserve">
+    <value>Al cambiarla se cierran las sesiones abiertas en otros equipos y vas a tener que volver a entrar en ellos.</value>
+  </data>
+  <data name="miclave_al_menos_8_caracteres" xml:space="preserve">
+    <value>Al menos 8 caracteres</value>
+  </data>
+  <data name="miclave_cambiar_mi_contrasena" xml:space="preserve">
+    <value>Cambiar mi contraseña</value>
+  </data>
+  <data name="miclave_contrasena_actual" xml:space="preserve">
+    <value>Contraseña actual</value>
+  </data>
+  <data name="miclave_elegi_una_contrasena_nueva_para_tu" xml:space="preserve">
+    <value>Elegí una contraseña nueva para tu cuenta. Se te va a pedir la actual.</value>
+  </data>
+  <data name="miclave_emergencia" xml:space="preserve">
+    <value>El acceso de emergencia no tiene una contraseña en la base: no se puede cambiar desde acá.</value>
+  </data>
+  <data name="miclave_no_coinciden" xml:space="preserve">
+    <value>Las dos contraseñas nuevas no coinciden.</value>
+  </data>
+  <data name="miclave_todavia_no_escribiste_nada" xml:space="preserve">
+    <value>Todavía no escribiste nada.</value>
+  </data>
+  <data name="miclave_un_caracter_especial_por_ejemplo" xml:space="preserve">
+    <value>Un carácter especial (por ejemplo # ! @ $ %)</value>
+  </data>
+  <data name="miclave_un_numero" xml:space="preserve">
+    <value>Un número</value>
+  </data>
+  <data name="miclave_una_mayuscula" xml:space="preserve">
+    <value>Una mayúscula</value>
+  </data>
+  <data name="miclave_una_minuscula" xml:space="preserve">
+    <value>Una minúscula</value>
+  </data>
+  <data name="miclave_volver_a_mi_perfil" xml:space="preserve">
+    <value>Volver a mi perfil</value>
+  </data>
+  <data name="miempresa_cliente_desde" xml:space="preserve">
+    <value>Cliente desde</value>
+  </data>
+  <data name="miempresa_contacto_actualizado" xml:space="preserve">
+    <value>Los datos de contacto se actualizaron.</value>
+  </data>
+  <data name="miempresa_datos_de_tu_empresa_en_falke" xml:space="preserve">
+    <value>Datos de tu empresa en Falke.</value>
+  </data>
+  <data name="miempresa_dispositivos_en_prestamo" xml:space="preserve">
+    <value>Dispositivos en préstamo</value>
+  </data>
+  <data name="miempresa_dispositivos_que_la_empresa_tiene_en" xml:space="preserve">
+    <value>Dispositivos que la empresa tiene en préstamo</value>
+  </data>
+  <data name="miempresa_editar_contacto" xml:space="preserve">
+    <value>Editar contacto</value>
+  </data>
+  <data name="miempresa_editar_datos_de_contacto" xml:space="preserve">
+    <value>Editar datos de contacto</value>
+  </data>
+  <data name="miempresa_el_rubro_el_domicilio_y_el" xml:space="preserve">
+    <value>El rubro, el domicilio y el teléfono los actualizás vos. La razón social, el CUIT, el plan y la facturación los administra Pattern Blue: si algo cambió, escríbenos y lo actualizamos.</value>
+  </data>
+  <data name="miempresa_empleados_con_cuenta" xml:space="preserve">
+    <value>Empleados con cuenta</value>
+  </data>
+  <data name="miempresa_error_cargar" xml:space="preserve">
+    <value>No se pudieron cargar los datos de la empresa.</value>
+  </data>
+  <data name="miempresa_error_guardar" xml:space="preserve">
+    <value>No se pudo guardar. Volvé a intentarlo.</value>
+  </data>
+  <data name="miempresa_estado_de_la_cuenta" xml:space="preserve">
+    <value>Estado de la cuenta</value>
+  </data>
+  <data name="miempresa_estos_datos_los_administra_pattern_blue" xml:space="preserve">
+    <value>Estos datos los administra Pattern Blue. Si algo cambió (domicilio, teléfono, razón social), escríbenos y lo actualizamos.</value>
+  </data>
+  <data name="miempresa_no_encontrada" xml:space="preserve">
+    <value>No se encontró la empresa de tu cuenta.</value>
+  </data>
+  <data name="miempresa_plan_contratado" xml:space="preserve">
+    <value>Plan contratado</value>
+  </data>
+  <data name="miempresa_plan_y_facturacion" xml:space="preserve">
+    <value>Plan y facturación</value>
+  </data>
+  <data name="miempresa_proxima_renovacion" xml:space="preserve">
+    <value>Próxima renovación</value>
+  </data>
+  <data name="miempresa_rubro_domicilio_y_telefono_de_tu" xml:space="preserve">
+    <value>Rubro, domicilio y teléfono de tu empresa. Queda registrado en la bitácora.</value>
+  </data>
+  <data name="miempresa_sesiones_grabadas" xml:space="preserve">
+    <value>Sesiones grabadas</value>
+  </data>
+  <data name="miempresa_sin_empresa" xml:space="preserve">
+    <value>Esta cuenta no pertenece a ninguna empresa cliente, así que no hay datos de empresa para mostrar.</value>
+  </data>
+  <data name="miempresa_todavia_no_tenes_dispositivos_en_prestam" xml:space="preserve">
+    <value>Todavía no tenés dispositivos en préstamo. Pattern Blue te los entrega con tu suscripción.</value>
+  </data>
+  <data name="miempresa_tu_empresa" xml:space="preserve">
+    <value>Tu empresa</value>
+  </data>
+  <data name="miempresa_ver_empleados" xml:space="preserve">
+    <value>Ver empleados</value>
+  </data>
+  <data name="miperfil_acceso_emergencia" xml:space="preserve">
+    <value>Acceso de emergencia</value>
+  </data>
+  <data name="miperfil_acceso_y_seguridad" xml:space="preserve">
+    <value>Acceso y seguridad</value>
+  </data>
+  <data name="miperfil_al_cambiarla_las_sesiones_abiertas_en" xml:space="preserve">
+    <value>Al cambiarla, las sesiones abiertas en otros equipos se cierran.</value>
+  </data>
+  <data name="miperfil_elegir_idioma" xml:space="preserve">
+    <value>Elegí un idioma.</value>
+  </data>
+  <data name="miperfil_error_cargar" xml:space="preserve">
+    <value>No se pudo cargar tu perfil.</value>
+  </data>
+  <data name="miperfil_error_guardar" xml:space="preserve">
+    <value>No se pudieron guardar los cambios. Volvé a intentarlo.</value>
+  </data>
+  <data name="miperfil_es_el_acceso_de_emergencia_no" xml:space="preserve">
+    <value>Es el acceso de emergencia: no es una cuenta de la base de datos, así que no tiene datos personales para editar.</value>
+  </data>
+  <data name="miperfil_es_tu_identidad_de_acceso_no" xml:space="preserve">
+    <value>Es tu identidad de acceso: no se cambia desde acá. Si necesitás cambiarlo, pedíselo a quien administra tu cuenta.</value>
+  </data>
+  <data name="miperfil_espanol" xml:space="preserve">
+    <value>Español</value>
+  </data>
+  <data name="miperfil_guardado" xml:space="preserve">
+    <value>Tus datos se guardaron.</value>
+  </data>
+  <data name="miperfil_idioma_de_la_interfaz" xml:space="preserve">
+    <value>Idioma de la interfaz</value>
+  </data>
+  <data name="miperfil_ingles" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="miperfil_los_ultimos_movimientos_hechos_desde_tu" xml:space="preserve">
+    <value>Los últimos movimientos hechos desde tu cuenta</value>
+  </data>
+  <data name="miperfil_mi_actividad_reciente" xml:space="preserve">
+    <value>Mi actividad reciente</value>
+  </data>
+  <data name="miperfil_mis_datos" xml:space="preserve">
+    <value>Mis datos</value>
+  </data>
+  <data name="miperfil_no_encontrada" xml:space="preserve">
+    <value>No se encontró tu cuenta.</value>
+  </data>
+  <data name="miperfil_no_tiene_el_acceso_de_emergencia" xml:space="preserve">
+    <value>No tiene: el acceso de emergencia se define en la configuración.</value>
+  </data>
+  <data name="miperfil_portugues" xml:space="preserve">
+    <value>Portugués</value>
+  </data>
+  <data name="miperfil_rol" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="miperfil_todavia_no_hay_movimientos_registrados_d" xml:space="preserve">
+    <value>Todavía no hay movimientos registrados desde tu cuenta.</value>
+  </data>
+  <data name="miperfil_tu_cuenta" xml:space="preserve">
+    <value>Tu cuenta</value>
+  </data>
+  <data name="miperfil_tus_datos_tu_acceso_y_tu" xml:space="preserve">
+    <value>Tus datos, tu acceso y tu actividad reciente.</value>
+  </data>
+  <data name="modelo_duplicado" xml:space="preserve">
+    <value>Ya existe un modelo con ese nombre.</value>
+  </data>
+  <data name="modelo_no_existe" xml:space="preserve">
+    <value>El modelo no existe.</value>
+  </data>
+  <data name="modelo_nombre_largo" xml:space="preserve">
+    <value>El nombre del modelo no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="modelo_nombre_obligatorio" xml:space="preserve">
+    <value>El nombre del modelo es obligatorio.</value>
+  </data>
+  <data name="modelo_ya_activo" xml:space="preserve">
+    <value>El modelo ya está activo.</value>
+  </data>
+  <data name="modelo_ya_de_baja" xml:space="preserve">
+    <value>El modelo ya está dado de baja.</value>
+  </data>
+  <data name="nuevagrabacion_4_0_o_superior" xml:space="preserve">
+    <value>: 4.0 o superior</value>
+  </data>
+  <data name="nuevagrabacion_actualizado" xml:space="preserve">
+    <value>Actualizado</value>
+  </data>
+  <data name="nuevagrabacion_analista_responsable" xml:space="preserve">
+    <value>Analista responsable</value>
+  </data>
+  <data name="nuevagrabacion_antes_de_grabar_la_plataforma_revisa" xml:space="preserve">
+    <value>Antes de grabar, la plataforma revisa que el Tobii este conectado, calibrado y con el driver correcto. Si algo falla no se puede iniciar la sesión.</value>
+  </data>
+  <data name="nuevagrabacion_calibracion" xml:space="preserve">
+    <value>Calibración</value>
+  </data>
+  <data name="nuevagrabacion_cancelar_la_grabacion" xml:space="preserve">
+    <value>¿Cancelar la grabación?</value>
+  </data>
+  <data name="nuevagrabacion_conectado" xml:space="preserve">
+    <value>Conectado</value>
+  </data>
+  <data name="nuevagrabacion_conexion_usb" xml:space="preserve">
+    <value>Conexión USB</value>
+  </data>
+  <data name="nuevagrabacion_configura_la_sesion_verifica_el_disposit" xml:space="preserve">
+    <value>Configura la sesión, verifica el dispositivo y empieza a grabar.</value>
+  </data>
+  <data name="nuevagrabacion_continuar" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="nuevagrabacion_correcta" xml:space="preserve">
+    <value>Correcta</value>
+  </data>
+  <data name="nuevagrabacion_crear_una_categoria_nueva" xml:space="preserve">
+    <value>Crear una categoría nueva</value>
+  </data>
+  <data name="nuevagrabacion_datos_de_la_sesion" xml:space="preserve">
+    <value>Datos de la sesión</value>
+  </data>
+  <data name="nuevagrabacion_dispositivo" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
+  <data name="nuevagrabacion_dispositivo_listo" xml:space="preserve">
+    <value>Dispositivo listo</value>
+  </data>
+  <data name="nuevagrabacion_driver_de_tobii" xml:space="preserve">
+    <value>Driver de Tobii</value>
+  </data>
+  <data name="nuevagrabacion_el_procesamiento_arranca_solo_y_suele" xml:space="preserve">
+    <value>El procesamiento arranca solo y suele tardar menos de cinco minutos. Cuando termine vas a recibir un aviso y la sesión queda disponible en Visualizaciones.</value>
+  </data>
+  <data name="nuevagrabacion_el_tobii_4c_esta_conectado_calibrado" xml:space="preserve">
+    <value>El Tobii 4C está conectado, calibrado y con el driver actualizado.</value>
+  </data>
+  <data name="nuevagrabacion_esta_accion_no_se_puede_deshacer" xml:space="preserve">
+    <value>Esta acción no se puede deshacer.</value>
+  </data>
+  <data name="nuevagrabacion_finalizar" xml:space="preserve">
+    <value>Finalizar</value>
+  </data>
+  <data name="nuevagrabacion_finalizar_la_grabacion" xml:space="preserve">
+    <value>¿Finalizar la grabación?</value>
+  </data>
+  <data name="nuevagrabacion_fuente_de_captura" xml:space="preserve">
+    <value>Fuente de captura</value>
+  </data>
+  <data name="nuevagrabacion_grabacion" xml:space="preserve">
+    <value>Grabación</value>
+  </data>
+  <data name="nuevagrabacion_grabacion_en_curso" xml:space="preserve">
+    <value>Grabación en curso</value>
+  </data>
+  <data name="nuevagrabacion_grabando" xml:space="preserve">
+    <value>Grabando</value>
+  </data>
+  <data name="nuevagrabacion_identificador_del_tester" xml:space="preserve">
+    <value>Identificador del tester</value>
+  </data>
+  <data name="nuevagrabacion_iniciar_la_grabacion" xml:space="preserve">
+    <value>Iniciar la grabación</value>
+  </data>
+  <data name="nuevagrabacion_instalado" xml:space="preserve">
+    <value>Instalado</value>
+  </data>
+  <data name="nuevagrabacion_la_categoria_define_el_tipo_de" xml:space="preserve">
+    <value>La categoría define el tipo de activo digital y agrupa todas las sesiones que hagas sobre él.</value>
+  </data>
+  <data name="nuevagrabacion_la_sesion_se_cierra_y_se" xml:space="preserve">
+    <value>La sesión se cierra y se envia a procesar. No se puede seguir grabando después.</value>
+  </data>
+  <data name="nuevagrabacion_no_encuentras_la_que_necesitas" xml:space="preserve">
+    <value>¿No encuentras la que necesitas?</value>
+  </data>
+  <data name="nuevagrabacion_nombre_de_la_sesion" xml:space="preserve">
+    <value>Nombre de la sesión</value>
+  </data>
+  <data name="nuevagrabacion_objetivo_de_la_prueba_opcional" xml:space="preserve">
+    <value>Objetivo de la prueba (opcional)</value>
+  </data>
+  <data name="nuevagrabacion_pantalla_completa_1920_x_1080_monitor" xml:space="preserve">
+    <value>Pantalla completa (1920 x 1080 - monitor principal)</value>
+  </data>
+  <data name="nuevagrabacion_pantalla_y_seguimiento_ocular_sincroniza" xml:space="preserve">
+    <value>Pantalla y seguimiento ocular sincronizados con la misma marca de tiempo.</value>
+  </data>
+  <data name="nuevagrabacion_pausar" xml:space="preserve">
+    <value>Pausar</value>
+  </data>
+  <data name="nuevagrabacion_que_quieres_validar_con_esta_sesion" xml:space="preserve">
+    <value>¿Qué quieres validar con esta sesión?</value>
+  </data>
+  <data name="nuevagrabacion_reiniciar" xml:space="preserve">
+    <value>Reiniciar</value>
+  </data>
+  <data name="nuevagrabacion_requerido" xml:space="preserve">
+    <value>requerido</value>
+  </data>
+  <data name="nuevagrabacion_se_descartan_todos_los_datos_capturados" xml:space="preserve">
+    <value>Se descartan todos los datos capturados hasta ahora, incluida la grabación de pantalla y los datos de seguimiento ocular. No se guarda nada.</value>
+  </data>
+  <data name="nuevagrabacion_se_toma_del_usuario_con_la" xml:space="preserve">
+    <value>Se toma del usuario con la sesión iniciada.</value>
+  </data>
+  <data name="nuevagrabacion_seguir_grabando" xml:space="preserve">
+    <value>Seguir grabando</value>
+  </data>
+  <data name="nuevagrabacion_si_descartar_todo" xml:space="preserve">
+    <value>Sí, descartar todo</value>
+  </data>
+  <data name="nuevagrabacion_si_el_dispositivo_se_desconecta_durante" xml:space="preserve">
+    <value>Si el dispositivo se desconecta durante la sesión, la grabación se interrumpe y los datos capturados se descartan. No muevas el cable durante la grabación.</value>
+  </data>
+  <data name="nuevagrabacion_si_finalizar" xml:space="preserve">
+    <value>Sí, finalizar</value>
+  </data>
+  <data name="nuevagrabacion_simular_un_fallo_demo" xml:space="preserve">
+    <value>Simular un fallo (demo)</value>
+  </data>
+  <data name="nuevagrabacion_tobii_4c_detectado_en_el_puerto" xml:space="preserve">
+    <value>Tobii 4C detectado en el puerto USB 3.0</value>
+  </data>
+  <data name="nuevagrabacion_ultima_calibracion_hace_4_minutos_calida" xml:space="preserve">
+    <value>Última calibración hace 4 minutos · calidad 92%</value>
+  </data>
+  <data name="nuevagrabacion_usa_un_codigo_no_el_nombre" xml:space="preserve">
+    <value>Usa un código, no el nombre real: los datos se guardan disociados de la identidad.</value>
+  </data>
+  <data name="nuevagrabacion_ventana_chrome_checkout_demo" xml:space="preserve">
+    <value>Ventana - Chrome: Checkout Demo</value>
+  </data>
+  <data name="nuevagrabacion_ventana_figma_prototipo_checkout" xml:space="preserve">
+    <value>Ventana - Figma: Prototipo checkout</value>
+  </data>
+  <data name="nuevagrabacion_verificacion_del_dispositivo" xml:space="preserve">
+    <value>Verificación del dispositivo</value>
+  </data>
+  <data name="nuevagrabacion_verificar_nuevamente" xml:space="preserve">
+    <value>Verificar nuevamente</value>
+  </data>
+  <data name="nuevagrabacion_volver" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="panel_4_respecto_del_mes_pasado" xml:space="preserve">
+    <value>+4 respecto del mes pasado</value>
+  </data>
+  <data name="panel_accesos_rapidos" xml:space="preserve">
+    <value>Accesos rápidos</value>
+  </data>
+  <data name="panel_actividad_reciente" xml:space="preserve">
+    <value>Actividad reciente</value>
+  </data>
+  <data name="panel_auditar_resultados" xml:space="preserve">
+    <value>Auditar resultados</value>
+  </data>
+  <data name="panel_calibrar_el_dispositivo_y_empezar" xml:space="preserve">
+    <value>Calibrar el dispositivo y empezar</value>
+  </data>
+  <data name="panel_calidad_de_calibracion_92" xml:space="preserve">
+    <value>Calidad de calibración: 92%</value>
+  </data>
+  <data name="panel_calidad_de_la_calibracion_92_por" xml:space="preserve">
+    <value>Calidad de la calibración: 92 por ciento</value>
+  </data>
+  <data name="panel_categorias_activas" xml:space="preserve">
+    <value>Categorías activas</value>
+  </data>
+  <data name="panel_comparar_sesiones" xml:space="preserve">
+    <value>Comparar sesiones</value>
+  </data>
+  <data name="panel_conectado_por_usb_3_0_ultima" xml:space="preserve">
+    <value>Conectado por USB 3.0 · última calibración hace 4 minutos · driver 4.2.1</value>
+  </data>
+  <data name="panel_dispositivos_asignados" xml:space="preserve">
+    <value>Dispositivos asignados</value>
+  </data>
+  <data name="panel_duracion" xml:space="preserve">
+    <value>Duración</value>
+  </data>
+  <data name="panel_en_procesamiento" xml:space="preserve">
+    <value>En procesamiento</value>
+  </data>
+  <data name="panel_este_es_el_resumen_de_la" xml:space="preserve">
+    <value>Este es el resumen de la actividad de tu empresa en Falke.</value>
+  </data>
+  <data name="panel_fecha" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="panel_finalizado" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="panel_grabar_una_sesion" xml:space="preserve">
+    <value>Grabar una sesión</value>
+  </data>
+  <data name="panel_hola" xml:space="preserve">
+    <value>Hola</value>
+  </data>
+  <data name="panel_listo" xml:space="preserve">
+    <value>Listo</value>
+  </data>
+  <data name="panel_mapas_zonas_y_recorridos" xml:space="preserve">
+    <value>Mapas, zonas y recorridos</value>
+  </data>
+  <data name="panel_organizar_los_activos_digitales" xml:space="preserve">
+    <value>Organizar los activos digitales</value>
+  </data>
+  <data name="panel_procesando" xml:space="preserve">
+    <value>Procesando</value>
+  </data>
+  <data name="panel_promediar_varios_testers" xml:space="preserve">
+    <value>Promediar varios testers</value>
+  </data>
+  <data name="panel_queda_disponible_en_unos_minutos" xml:space="preserve">
+    <value>Queda disponible en unos minutos</value>
+  </data>
+  <data name="panel_sesion" xml:space="preserve">
+    <value>Sesión</value>
+  </data>
+  <data name="panel_sesiones_este_mes" xml:space="preserve">
+    <value>Sesiones este mes</value>
+  </data>
+  <data name="panel_sobre_5_tipos_de_activo" xml:space="preserve">
+    <value>Sobre 5 tipos de activo</value>
+  </data>
+  <data name="panel_tobii_4c_calibrado" xml:space="preserve">
+    <value>Tobii 4C · calibrado</value>
+  </data>
+  <data name="panel_tu_dispositivo" xml:space="preserve">
+    <value>Tu dispositivo</value>
+  </data>
+  <data name="panel_ultimas_sesiones" xml:space="preserve">
+    <value>Últimas sesiones</value>
+  </data>
+  <data name="panel_ultimas_sesiones_grabadas" xml:space="preserve">
+    <value>Últimas sesiones grabadas</value>
+  </data>
+  <data name="panel_ver_todas" xml:space="preserve">
+    <value>Ver todas</value>
+  </data>
+  <data name="panel_verificar_el_dispositivo" xml:space="preserve">
+    <value>Verificar el dispositivo</value>
+  </data>
+  <data name="permiso_del_sistema" xml:space="preserve">
+    <value>"{0}" es un permiso del sistema: lo define el desarrollador y no se puede {1}.</value>
+  </data>
+  <data name="permiso_es_un_rol" xml:space="preserve">
+    <value>"{0}" es un rol: ni un rol ni un grupo pueden incluir roles.</value>
+  </data>
+  <data name="permiso_incluido_en" xml:space="preserve">
+    <value>"{0}" está incluido en: {1}. Quitalo de ahí antes de eliminarlo.</value>
+  </data>
+  <data name="permiso_incluido_no_existe" xml:space="preserve">
+    <value>El permiso "{0}" no existe.</value>
+  </data>
+  <data name="permiso_no_existe" xml:space="preserve">
+    <value>"{0}" no existe.</value>
+  </data>
+  <data name="permiso_nombre_control" xml:space="preserve">
+    <value>El nombre no puede tener saltos de línea ni caracteres de control.</value>
+  </data>
+  <data name="permiso_nombre_duplicado" xml:space="preserve">
+    <value>Ya existe un permiso, rol o grupo con el nombre "{0}".</value>
+  </data>
+  <data name="permiso_nombre_formato" xml:space="preserve">
+    <value>El nombre debe tener entre 3 y 60 caracteres (letras, números, espacios, guiones o puntos).</value>
+  </data>
+  <data name="permiso_nombre_largo" xml:space="preserve">
+    <value>El nombre no puede superar los 200 caracteres.</value>
+  </data>
+  <data name="permiso_rol_asignado" xml:space="preserve">
+    <value>El rol "{0}" está asignado a usuarios: reasignalos antes de eliminarlo.</value>
+  </data>
+  <data name="permiso_rol_base" xml:space="preserve">
+    <value>"{0}" es un rol base del sistema: no se puede {1}.</value>
+  </data>
+  <data name="permiso_rol_fijo" xml:space="preserve">
+    <value>El rol {0} es fijo: su composición no se modifica.</value>
+  </data>
+  <data name="permiso_rol_general_reservados" xml:space="preserve">
+    <value>El rol "{0}" es un rol general y quedaría con permisos reservados a Pattern Blue ({1}). Esos permisos solo van en roles de gestión.</value>
+  </data>
+  <data name="permiso_sin_permiso_descripciones" xml:space="preserve">
+    <value>No tenés permiso para cambiar descripciones.</value>
+  </data>
+  <data name="permiso_sin_permiso_gestionar" xml:space="preserve">
+    <value>No tenés permiso para gestionar roles y permisos.</value>
+  </data>
+  <data name="permiso_solo_roles_grupos" xml:space="preserve">
+    <value>Solo los roles y los grupos pueden contener permisos.</value>
+  </data>
+  <data name="permiso_te_ciclo" xml:space="preserve">
+    <value>Agregar "{0}" a "{1}" generaría un ciclo de composición.</value>
+  </data>
+  <data name="permiso_te_ciclo_si_mismo" xml:space="preserve">
+    <value>Un permiso no puede incluirse a sí mismo.</value>
+  </data>
+  <data name="permiso_te_no_incluye" xml:space="preserve">
+    <value>"{0}" no incluye a "{1}".</value>
+  </data>
+  <data name="permiso_te_ya_incluye" xml:space="preserve">
+    <value>"{0}" ya incluye a "{1}".</value>
+  </data>
+  <data name="planes_6_visualizaciones_analiticas" xml:space="preserve">
+    <value>6 visualizaciones analíticas</value>
+  </data>
+  <data name="planes_a_convenir" xml:space="preserve">
+    <value>A convenir</value>
+  </data>
+  <data name="planes_acepto_que_pattern_blue_use_estos" xml:space="preserve">
+    <value>Acepto que Pattern Blue use estos datos para contactarme por esta consulta.</value>
+  </data>
+  <data name="planes_acompanamiento_en_la_puesta_en_marcha" xml:space="preserve">
+    <value>Acompañamiento en la puesta en marcha</value>
+  </data>
+  <data name="planes_analisis_multiple_promedio_de_hasta_10" xml:space="preserve">
+    <value>Análisis múltiple: promedio de hasta 10 sesiones</value>
+  </data>
+  <data name="planes_anual_20_menos" xml:space="preserve">
+    <value>Anual (20% menos)</value>
+  </data>
+  <data name="planes_cantidad_de_dispositivos_a_convenir" xml:space="preserve">
+    <value>Cantidad de dispositivos a convenir</value>
+  </data>
+  <data name="planes_ciclo_de_facturacion" xml:space="preserve">
+    <value>Ciclo de facturacion</value>
+  </data>
+  <data name="planes_comparacion_de_funciones_incluidas_en_ca" xml:space="preserve">
+    <value>Comparación de funciones incluidas en cada plan</value>
+  </data>
+  <data name="planes_comparacion_detallada" xml:space="preserve">
+    <value>Comparación detallada</value>
+  </data>
+  <data name="planes_condiciones_de_contrato_y_soporte_a" xml:space="preserve">
+    <value>Condiciones de contrato y soporte a medida</value>
+  </data>
+  <data name="planes_condiciones_segun_volumen_de_dispositivo" xml:space="preserve">
+    <value>Condiciones según volumen de dispositivos y perfil de uso.</value>
+  </data>
+  <data name="planes_correo_de_contacto" xml:space="preserve">
+    <value>Correo de contacto</value>
+  </data>
+  <data name="planes_dejanos_tus_datos_y_un_ejecutivo" xml:space="preserve">
+    <value>Déjanos tus datos y un ejecutivo comercial te contacta para coordinar la puesta en marcha.</value>
+  </data>
+  <data name="planes_el_mas_elegido" xml:space="preserve">
+    <value>El más elegido</value>
+  </data>
+  <data name="planes_el_mensaje_viene_escrito_por_defecto" xml:space="preserve">
+    <value>El mensaje viene escrito por defecto, pero puedes cambiarlo.</value>
+  </data>
+  <data name="planes_enviar_consulta" xml:space="preserve">
+    <value>Enviar consulta</value>
+  </data>
+  <data name="planes_exportacion_de_los_datos_crudos_de" xml:space="preserve">
+    <value>Exportación de los datos crudos de seguimiento</value>
+  </data>
+  <data name="planes_exportar_datos_crudos" xml:space="preserve">
+    <value>Exportar datos crudos</value>
+  </data>
+  <data name="planes_facturacion_mensual_hasta_3_dispositivos" xml:space="preserve">
+    <value>Facturación mensual. Hasta 3 dispositivos en préstamo.</value>
+  </data>
+  <data name="planes_facturacion_mensual_un_dispositivo_en_pr" xml:space="preserve">
+    <value>Facturación mensual. Un dispositivo en préstamo.</value>
+  </data>
+  <data name="planes_falke_apex" xml:space="preserve">
+    <value>Falke Apex</value>
+  </data>
+  <data name="planes_falke_hunter" xml:space="preserve">
+    <value>Falke Hunter</value>
+  </data>
+  <data name="planes_falke_scout" xml:space="preserve">
+    <value>Falke Scout</value>
+  </data>
+  <data name="planes_funcion" xml:space="preserve">
+    <value>Función</value>
+  </data>
+  <data name="planes_hablar_con_ventas" xml:space="preserve">
+    <value>Hablar con ventas</value>
+  </data>
+  <data name="planes_hablemos_de_tu_implementacion" xml:space="preserve">
+    <value>Hablemos de tu implementación</value>
+  </data>
+  <data name="planes_hasta_3_dispositivos_simultaneos" xml:space="preserve">
+    <value>Hasta 3 dispositivos simultáneos</value>
+  </data>
+  <data name="planes_historial_y_auditoria_de_sesiones" xml:space="preserve">
+    <value>Historial y auditoría de sesiones</value>
+  </data>
+  <data name="planes_incluido" xml:space="preserve">
+    <value>Incluido</value>
+  </data>
+  <data name="planes_informes_comparativos_entre_sesiones" xml:space="preserve">
+    <value>Informes comparativos entre sesiones</value>
+  </data>
+  <data name="planes_las_6_visualizaciones_analiticas_por_ses" xml:space="preserve">
+    <value>Las 6 visualizaciones analíticas por sesión</value>
+  </data>
+  <data name="planes_mensaje" xml:space="preserve">
+    <value>Mensaje</value>
+  </data>
+  <data name="planes_mes" xml:space="preserve">
+    <value>/ mes</value>
+  </data>
+  <data name="planes_metricas_estadisticas_y_exportacion_a_pd" xml:space="preserve">
+    <value>Métricas estadísticas y exportación a PDF</value>
+  </data>
+  <data name="planes_no_incluido" xml:space="preserve">
+    <value>No incluido</value>
+  </data>
+  <data name="planes_nombre_de_tu_organizacion" xml:space="preserve">
+    <value>Nombre de tu organización</value>
+  </data>
+  <data name="planes_para_equipos_que_incorporan_el_seguimien" xml:space="preserve">
+    <value>Para equipos que incorporan el seguimiento ocular como práctica de validación.</value>
+  </data>
+  <data name="planes_para_equipos_que_usan_el_servicio" xml:space="preserve">
+    <value>Para equipos que usan el servicio de forma regular y necesitan comparar entre testers.</value>
+  </data>
+  <data name="planes_para_organizaciones_con_varios_equipos_p" xml:space="preserve">
+    <value>Para organizaciones con varios equipos, proyectos en paralelo y necesidades de escala.</value>
+  </data>
+  <data name="planes_plan_de_interes" xml:space="preserve">
+    <value>Plan de interés</value>
+  </data>
+  <data name="planes_planes" xml:space="preserve">
+    <value>Planes</value>
+  </data>
+  <data name="planes_planes_de_suscripcion" xml:space="preserve">
+    <value>Planes de suscripción</value>
+  </data>
+  <data name="planes_quiero_este_plan" xml:space="preserve">
+    <value>Quiero este plan</value>
+  </data>
+  <data name="planes_sesiones_de_analisis_individuales_ilimit" xml:space="preserve">
+    <value>Sesiones de análisis individuales ilimitadas</value>
+  </data>
+  <data name="planes_sesiones_individuales" xml:space="preserve">
+    <value>Sesiones individuales</value>
+  </data>
+  <data name="planes_sin_analisis_multiple" xml:space="preserve">
+    <value>Sin análisis múltiple</value>
+  </data>
+  <data name="planes_soporte_prioritario" xml:space="preserve">
+    <value>Soporte prioritario</value>
+  </data>
+  <data name="planes_soporte_prioritario_con_tiempo_de_respue" xml:space="preserve">
+    <value>Soporte prioritario con tiempo de respuesta garantizado</value>
+  </data>
+  <data name="planes_soporte_tecnico_remoto_en_horario_comerc" xml:space="preserve">
+    <value>Soporte técnico remoto en horario comercial</value>
+  </data>
+  <data name="planes_telefono" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="planes_todo_lo_del_plan_hunter" xml:space="preserve">
+    <value>Todo lo del plan Hunter</value>
+  </data>
+  <data name="planes_todo_lo_del_plan_scout" xml:space="preserve">
+    <value>Todo lo del plan Scout</value>
+  </data>
+  <data name="planes_todos_los_planes_incluyen_el_dispositivo" xml:space="preserve">
+    <value>Todos los planes incluyen el dispositivo Tobii en préstamo, la plataforma completa y el procesamiento en la infraestructura de Pattern Blue. Cambia el alcance del análisis y el nivel de acompañamiento.</value>
+  </data>
+  <data name="planes_todos_los_planes_incluyen_seguridad_y" xml:space="preserve">
+    <value>Todos los planes incluyen seguridad y cumplimiento normativo: disociación de los datos biométricos, cifrado de las comunicaciones y almacenamiento separado por empresa, conforme a la Ley N.° 25.326.</value>
+  </data>
+  <data name="planes_un_dispositivo_tobii_eye_tracker_en" xml:space="preserve">
+    <value>Un dispositivo Tobii Eye Tracker en préstamo</value>
+  </data>
+  <data name="planes_usd_590" xml:space="preserve">
+    <value>USD 590</value>
+  </data>
+  <data name="planes_usd_950" xml:space="preserve">
+    <value>USD 950</value>
+  </data>
+  <data name="planes_usuarios_adicionales_dentro_de_la_organi" xml:space="preserve">
+    <value>Usuarios adicionales dentro de la organización</value>
+  </data>
+  <data name="publico_acceso" xml:space="preserve">
+    <value>Acceso</value>
+  </data>
+  <data name="publico_analitica_conductual_biometrica_por_segu" xml:space="preserve">
+    <value>Analítica conductual biométrica por seguimiento ocular. Un servicio de Pattern Blue.</value>
+  </data>
+  <data name="publico_buenos_aires_argentina" xml:space="preserve">
+    <value>Buenos Aires, Argentina</value>
+  </data>
+  <data name="publico_como_se_contrata" xml:space="preserve">
+    <value>Cómo se contrata</value>
+  </data>
+  <data name="publico_contacto" xml:space="preserve">
+    <value>Contacto</value>
+  </data>
+  <data name="publico_contacto_patternblue_com_ar" xml:space="preserve">
+    <value>contacto@patternblue.com.ar</value>
+  </data>
+  <data name="publico_copyright" xml:space="preserve">
+    <value>© {0} Pattern Blue.</value>
+  </data>
+  <data name="publico_crear_cuenta" xml:space="preserve">
+    <value>Crear cuenta</value>
+  </data>
+  <data name="publico_navegacion_principal" xml:space="preserve">
+    <value>Navegación principal</value>
+  </data>
+  <data name="publico_panel" xml:space="preserve">
+    <value>Panel</value>
+  </data>
+  <data name="publico_producto" xml:space="preserve">
+    <value>Producto</value>
+  </data>
+  <data name="publico_todos_los_derechos_reservados" xml:space="preserve">
+    <value>Todos los derechos reservados.</value>
+  </data>
+  <data name="publico_tratamiento_de_datos_biometricos_conform" xml:space="preserve">
+    <value>Tratamiento de datos biométricos conforme a la Ley N.° 25.326.</value>
+  </data>
+  <data name="recuperar_escribir_correo" xml:space="preserve">
+    <value>Escribí el correo de tu cuenta para continuar.</value>
+  </data>
+  <data name="recuperar_mail_asunto" xml:space="preserve">
+    <value>Restablecer la contraseña de Falke</value>
+  </data>
+  <data name="recuperar_mail_cuerpo" xml:space="preserve">
+    <value>Recibimos un pedido para restablecer la contraseña de tu cuenta de Falke.
+Si fuiste vos, entrá a este enlace (vence en dos horas y se usa una sola vez):
+{0}
+
+Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo válida.
+</value>
+  </data>
+  <data name="recuperarclave_correo_de_la_cuenta" xml:space="preserve">
+    <value>Correo de la cuenta</value>
+  </data>
+  <data name="recuperarclave_el_enlace_vence_a_las_dos" xml:space="preserve">
+    <value>El enlace vence a las dos horas de haberse generado y se puede usar una sola vez.</value>
+  </data>
+  <data name="recuperarclave_escribi_el_correo_con_el_que" xml:space="preserve">
+    <value>Escribí el correo con el que entrás a Falke y te enviamos un enlace para definir una contraseña nueva.</value>
+  </data>
+  <data name="recuperarclave_recuperar_contrasena_falke" xml:space="preserve">
+    <value>Recuperar contraseña - Falke</value>
+  </data>
+  <data name="recuperarclave_recuperar_mi_contrasena" xml:space="preserve">
+    <value>Recuperar mi contraseña</value>
+  </data>
+  <data name="recuperarclave_si_ese_correo_pertenece_a_una" xml:space="preserve">
+    <value>Si ese correo pertenece a una cuenta registrada, vas a recibir el enlace para definir una contraseña nueva. El aviso se genera como archivo en App_Data/mails/.</value>
+  </data>
+  <data name="recuperarclave_si_tu_cuenta_fue_dada_de" xml:space="preserve">
+    <value>Si tu cuenta fue dada de baja o tiene un bloqueo estricto, no se envía ningún enlace: lo resuelve el administrador de tu empresa.</value>
+  </data>
+  <data name="recuperarclave_tiene_que_ser_el_mismo_correo" xml:space="preserve">
+    <value>Tiene que ser el mismo correo con el que te dieron de alta.</value>
+  </data>
+  <data name="recuperarclave_volver_al_inicio_de_sesion" xml:space="preserve">
+    <value>Volver al inicio de sesión</value>
+  </data>
+  <data name="registro_como_se_obtiene_una_cuenta" xml:space="preserve">
+    <value>Cómo se obtiene una cuenta</value>
+  </data>
+  <data name="registro_como_se_obtiene_una_cuenta_en" xml:space="preserve">
+    <value>Cómo se obtiene una cuenta en Falke</value>
+  </data>
+  <data name="registro_coordinamos_una_demostracion" xml:space="preserve">
+    <value>Coordinamos una demostración</value>
+  </data>
+  <data name="registro_damos_de_alta_tu_empresa" xml:space="preserve">
+    <value>Damos de alta tu empresa</value>
+  </data>
+  <data name="registro_desde_la_seccion_de_usuarios_el" xml:space="preserve">
+    <value>Desde la sección de usuarios, el administrador invita a los analistas de la empresa con el mismo mecanismo: cada uno recibe su enlace de activación y define su propia contraseña.</value>
+  </data>
+  <data name="registro_el_tobii_viaja_por_courier_con" xml:space="preserve">
+    <value>El Tobii viaja por courier con seguimiento, ya reacondicionado y calibrado, junto con la guia de instalación impresa. El plazo comprometido es de diez días desde la firma.</value>
+  </data>
+  <data name="registro_eliges_el_plan_que_mejor_se" xml:space="preserve">
+    <value>Eliges el plan que mejor se acerca a lo que necesitas y nos mandas una consulta desde la pantalla de planes con los datos de tu empresa.</value>
+  </data>
+  <data name="registro_falke_no_tiene_registro_automatico_como" xml:space="preserve">
+    <value>Falke no tiene registro automático. Como el servicio incluye un dispositivo de seguimiento ocular en préstamo, cada cuenta se abre después de un acuerdo comercial. Es corto, y aquí está todo el circuito.</value>
+  </data>
+  <data name="registro_ir_a_preguntas_frecuentes" xml:space="preserve">
+    <value>Ir a preguntas frecuentes</value>
+  </data>
+  <data name="registro_listo_para_empezar" xml:space="preserve">
+    <value>¿Listo para empezar?</value>
+  </data>
+  <data name="registro_lo_firman_las_dos_partes" xml:space="preserve">
+    <value>Lo firman las dos partes</value>
+  </data>
+  <data name="registro_lo_hace_pattern_blue" xml:space="preserve">
+    <value>Lo hace Pattern Blue</value>
+  </data>
+  <data name="registro_lo_hace_tu_administrador" xml:space="preserve">
+    <value>Lo hace tu administrador</value>
+  </data>
+  <data name="registro_lo_hace_tu_equipo" xml:space="preserve">
+    <value>Lo hace tu equipo</value>
+  </data>
+  <data name="registro_mira_los_planes_y_mandanos_la" xml:space="preserve">
+    <value>Mira los planes y mandanos la consulta desde ahí, o revisa primero las preguntas frecuentes si te quedan dudas del circuito.</value>
+  </data>
+  <data name="registro_nos_escribis" xml:space="preserve">
+    <value>Nos escribis</value>
+  </data>
+  <data name="registro_recibes_el_dispositivo" xml:space="preserve">
+    <value>Recibes el dispositivo</value>
+  </data>
+  <data name="registro_se_define_el_plan_el_ciclo" xml:space="preserve">
+    <value>Se define el plan, el ciclo de facturación (mensual o anual) y la cantidad de dispositivos. El contrato incluye las condiciones de préstamo y devolución del hardware.</value>
+  </data>
+  <data name="registro_se_firma_el_contrato" xml:space="preserve">
+    <value>Se firma el contrato</value>
+  </data>
+  <data name="registro_si_tu_empresa_ya_es_cliente" xml:space="preserve">
+    <value>Si tu empresa ya es cliente, vas a recibir un correo con un enlace para definir tu contraseña. Con eso tu cuenta queda activa y ya puedes iniciar sesión.</value>
+  </data>
+  <data name="registro_tu_administrador_suma_al_equipo" xml:space="preserve">
+    <value>Tu administrador suma al equipo</value>
+  </data>
+  <data name="registro_un_ejecutivo_comercial_te_contacta_y" xml:space="preserve">
+    <value>Un ejecutivo comercial te contacta y arma una demostración de unos 45 minutos, presencial o remota, sobre un activo digital tuyo. Ahí se ve en vivo como el dispositivo captura la mirada y como quedan las visualizaciones.</value>
+  </data>
+  <data name="registro_un_gestor_de_pattern_blue_registra" xml:space="preserve">
+    <value>Un gestor de Pattern Blue registra la empresa en la plataforma y crea el usuario administrador que tu designes. Esa persona recibe un correo con un enlace para definir su contraseña y activar la cuenta.</value>
+  </data>
+  <data name="registro_ver_los_planes_y_contactar" xml:space="preserve">
+    <value>Ver los planes y contactar</value>
+  </data>
+  <data name="registro_ya_te_invitaron" xml:space="preserve">
+    <value>¿Ya te invitaron?</value>
+  </data>
+  <data name="respaldo_archivo_danado" xml:space="preserve">
+    <value>El archivo del respaldo está dañado o no se puede leer: no se restauró nada. {0}</value>
+  </data>
+  <data name="respaldo_archivo_falta" xml:space="preserve">
+    <value>El archivo de ese respaldo ya no está en el servidor.</value>
+  </data>
+  <data name="respaldo_confirmar" xml:space="preserve">
+    <value>Para confirmar, escribí {0}.</value>
+  </data>
+  <data name="respaldo_en_curso" xml:space="preserve">
+    <value>Hay una restauración en curso: esperá a que termine.</value>
+  </data>
+  <data name="respaldo_error_generar" xml:space="preserve">
+    <value>No se pudo generar la copia de seguridad. El servidor respondió: {0}</value>
+  </data>
+  <data name="respaldo_error_restaurar" xml:space="preserve">
+    <value>No se pudo restaurar la base. El servidor respondió: {0}</value>
+  </data>
+  <data name="respaldo_no_existe" xml:space="preserve">
+    <value>El respaldo no existe.</value>
+  </data>
+  <data name="respaldo_restauracion_en_curso" xml:space="preserve">
+    <value>Ya hay una restauración en curso.</value>
+  </data>
+  <data name="respaldo_sin_usuario" xml:space="preserve">
+    <value>Sin usuario (cuenta de emergencia)</value>
+  </data>
+  <data name="respaldos_al_confirmar" xml:space="preserve">
+    <value>Al confirmar:</value>
+  </data>
+  <data name="respaldos_archivo" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="respaldos_confirmar_la_restauracion" xml:space="preserve">
+    <value>Confirmar la restauración</value>
+  </data>
+  <data name="respaldos_copias_de_seguridad_de_la_base" xml:space="preserve">
+    <value>Copias de seguridad de la base de datos. Quedan guardadas en el servidor: no se descargan desde acá.</value>
+  </data>
+  <data name="respaldos_error_generar" xml:space="preserve">
+    <value>No se pudo generar el respaldo. Volvé a intentarlo.</value>
+  </data>
+  <data name="respaldos_error_lista" xml:space="preserve">
+    <value>No se pudo cargar la lista de respaldos.</value>
+  </data>
+  <data name="respaldos_error_restaurar" xml:space="preserve">
+    <value>No se pudo restaurar la base. Volvé a intentarlo.</value>
+  </data>
+  <data name="respaldos_espacio_ocupado" xml:space="preserve">
+    <value>Espacio ocupado</value>
+  </data>
+  <data name="respaldos_generado" xml:space="preserve">
+    <value>Se generó el respaldo {0}.</value>
+  </data>
+  <data name="respaldos_generado_por" xml:space="preserve">
+    <value>Generado por</value>
+  </data>
+  <data name="respaldos_generar_respaldo" xml:space="preserve">
+    <value>Generar respaldo</value>
+  </data>
+  <data name="respaldos_lo_que_se_cargo_despues_de" xml:space="preserve">
+    <value>Lo que se cargó después de la copia se pierde.</value>
+  </data>
+  <data name="respaldos_los_digitos_verificadores_vuelven_al_est" xml:space="preserve">
+    <value>Los dígitos verificadores vuelven al estado de la copia: revisalos en «Dígito verificador».</value>
+  </data>
+  <data name="respaldos_los_usuarios_conectados_quedan_sin_servi" xml:space="preserve">
+    <value>Los usuarios conectados quedan sin servicio unos segundos y se cierran todas las sesiones, incluida la tuya.</value>
+  </data>
+  <data name="respaldos_para_confirmar_escribi_restaurar" xml:space="preserve">
+    <value>Para confirmar, escribí RESTAURAR</value>
+  </data>
+  <data name="respaldos_respaldos" xml:space="preserve">
+    <value>Respaldos</value>
+  </data>
+  <data name="respaldos_respaldos_de_la_base_de_datos" xml:space="preserve">
+    <value>Respaldos de la base de datos</value>
+  </data>
+  <data name="respaldos_respaldos_guardados" xml:space="preserve">
+    <value>Respaldos guardados</value>
+  </data>
+  <data name="respaldos_restaurar" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="respaldos_restaurar_un_respaldo_reemplaza_toda_la" xml:space="preserve">
+    <value>Restaurar un respaldo reemplaza toda la base por la del momento de la copia: lo que se cargó después se pierde. Al confirmar se cierran todas las sesiones, incluida la tuya.</value>
+  </data>
+  <data name="respaldos_se_reemplaza_toda_la_base_actual" xml:space="preserve">
+    <value>Se reemplaza toda la base actual por la de la copia elegida.</value>
+  </data>
+  <data name="respaldos_tamano" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="respaldos_todavia_no_se_genero_ningun_respaldo" xml:space="preserve">
+    <value>Todavía no se generó ningún respaldo.</value>
+  </data>
+  <data name="respaldos_ultimo_respaldo" xml:space="preserve">
+    <value>Último respaldo</value>
+  </data>
+  <data name="respaldos_vas_a_restaurar_la_copia_del" xml:space="preserve">
+    <value>Vas a restaurar la copia del</value>
+  </data>
+  <data name="roles_cambios_guardados" xml:space="preserve">
+    <value>Los cambios se guardaron y quedaron en la bitácora.</value>
+  </data>
+  <data name="roles_clase_general" xml:space="preserve">
+    <value>Rol general</value>
+  </data>
+  <data name="roles_clase_gestion" xml:space="preserve">
+    <value>Rol de gestión</value>
+  </data>
+  <data name="roles_clase_grupo" xml:space="preserve">
+    <value>Grupo</value>
+  </data>
+  <data name="roles_creado" xml:space="preserve">
+    <value>{0} «{1}» creado. Ahora marcá qué incluye.</value>
+  </data>
+  <data name="roles_de_gestion_solo_para_usuarios_de" xml:space="preserve">
+    <value>De gestión: solo para usuarios de Pattern Blue</value>
+  </data>
+  <data name="roles_elegi_un_rol_un_grupo_o" xml:space="preserve">
+    <value>Elegí un rol, un grupo o un permiso de la lista.</value>
+  </data>
+  <data name="roles_eliminado" xml:space="preserve">
+    <value>«{0}» se eliminó.</value>
+  </data>
+  <data name="roles_eliminar" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="roles_entre_3_y_60_caracteres_letras" xml:space="preserve">
+    <value>Entre 3 y 60 caracteres: letras, números, espacios, guiones y puntos.</value>
+  </data>
+  <data name="roles_error_cargar" xml:space="preserve">
+    <value>No se pudo cargar la lista de roles y permisos.</value>
+  </data>
+  <data name="roles_esta_accion_no_se_puede_deshacer" xml:space="preserve">
+    <value>Esta acción no se puede deshacer y queda registrada en la bitácora.</value>
+  </data>
+  <data name="roles_general_para_usuarios_de_cualquier_empre" xml:space="preserve">
+    <value>General: para usuarios de cualquier empresa</value>
+  </data>
+  <data name="roles_grupos" xml:space="preserve">
+    <value>Grupos</value>
+  </data>
+  <data name="roles_incluido_en" xml:space="preserve">
+    <value>Incluido en</value>
+  </data>
+  <data name="roles_los_roles_gestor_y_webmaster_son" xml:space="preserve">
+    <value>Los roles Gestor y Webmaster son fijos: no se edita su composición ni se eliminan, para que Pattern Blue nunca quede sin acceso a lo que cada uno cuida. Sí se les puede cambiar el nombre.</value>
+  </data>
+  <data name="roles_marca_los_grupos_y_permisos_que" xml:space="preserve">
+    <value>Marcá los grupos y permisos que forman parte de</value>
+  </data>
+  <data name="roles_nombre_guardado" xml:space="preserve">
+    <value>El nombre se guardó y quedó en la bitácora.</value>
+  </data>
+  <data name="roles_nombre_interno" xml:space="preserve">
+    <value>Nombre interno:</value>
+  </data>
+  <data name="roles_nuevo_grupo" xml:space="preserve">
+    <value>Nuevo grupo</value>
+  </data>
+  <data name="roles_nuevo_rol" xml:space="preserve">
+    <value>Nuevo rol</value>
+  </data>
+  <data name="roles_permisos" xml:space="preserve">
+    <value>Permisos</value>
+  </data>
+  <data name="roles_permisos_efectivos" xml:space="preserve">
+    <value>Permisos efectivos</value>
+  </data>
+  <data name="roles_que_incluye" xml:space="preserve">
+    <value>Qué incluye</value>
+  </data>
+  <data name="roles_roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="roles_roles_y_grupos" xml:space="preserve">
+    <value>Roles y grupos</value>
+  </data>
+  <data name="roles_se_elimina_solo_si_no_esta" xml:space="preserve">
+    <value>Se elimina solo si no está asignado a usuarios ni incluido en otro elemento.</value>
+  </data>
+  <data name="roles_sin_permisos" xml:space="preserve">
+    <value>Todavía no da ningún permiso.</value>
+  </data>
+  <data name="roles_solo_un_rol_de_gestion_puede" xml:space="preserve">
+    <value>Solo un rol de gestión puede incluir permisos reservados a Pattern Blue. No se puede cambiar después.</value>
+  </data>
+  <data name="roles_sufijo_de_gestion" xml:space="preserve">
+    <value> · de gestión</value>
+  </data>
+  <data name="roles_sufijo_fijo" xml:space="preserve">
+    <value> · fijo</value>
+  </data>
+  <data name="roles_tipo_de_rol" xml:space="preserve">
+    <value>Tipo de rol</value>
+  </data>
+  <data name="roles_todavia_no_hay_grupos" xml:space="preserve">
+    <value>Todavía no hay grupos.</value>
+  </data>
+  <data name="roles_todo_lo_que_da_este_elemento" xml:space="preserve">
+    <value>Todo lo que da este elemento, contando lo que hereda de sus grupos.</value>
+  </data>
+  <data name="roles_un_rol_es_lo_que_se" xml:space="preserve">
+    <value>Un rol es lo que se le asigna a un usuario. Después le marcás qué incluye.</value>
+  </data>
+  <data name="roles_un_rol_reune_grupos_y_permisos" xml:space="preserve">
+    <value>Un rol reúne grupos y permisos. Los grupos ordenan permisos y pueden contener otros grupos. Los permisos los define el sistema: acá solo se combinan.</value>
+  </data>
+  <data name="salir_cerrada" xml:space="preserve">
+    <value>Se cerró la sesión de {0}.</value>
+  </data>
+  <data name="salir_cerras_tu_sesion" xml:space="preserve">
+    <value>¿Cerrás tu sesión?</value>
+  </data>
+  <data name="salir_cerraste_tu_sesion" xml:space="preserve">
+    <value>Cerraste tu sesión</value>
+  </data>
+  <data name="salir_confirmar" xml:space="preserve">
+    <value>Vas a cerrar la sesión de {0} en este navegador.</value>
+  </data>
+  <data name="salir_ir_a_la_pagina_de_inicio" xml:space="preserve">
+    <value>Ir a la página de inicio</value>
+  </data>
+  <data name="salir_por_seguridad_cerra_tambien_la_ventana" xml:space="preserve">
+    <value>Por seguridad, cerrá también la ventana del navegador si estás en un equipo compartido.</value>
+  </data>
+  <data name="salir_seguir_en_falke" xml:space="preserve">
+    <value>Seguir en Falke</value>
+  </data>
+  <data name="salir_sin_sesion" xml:space="preserve">
+    <value>No había ninguna sesión abierta en este navegador.</value>
+  </data>
+  <data name="salir_volver_a_entrar" xml:space="preserve">
+    <value>Volver a entrar</value>
+  </data>
+  <data name="seguridad_aes_no_encontrada" xml:space="preserve">
+    <value>No se encontró la variable de entorno FALKE_AES_KEY.</value>
+  </data>
+  <data name="seguridad_aes_tamano" xml:space="preserve">
+    <value>La clave AES configurada no tiene el tamaño esperado ({0} bits).</value>
+  </data>
+  <data name="seguridad_datos_insuficientes" xml:space="preserve">
+    <value>El valor cifrado no contiene datos suficientes.</value>
+  </data>
+  <data name="seguridad_no_base64" xml:space="preserve">
+    <value>El valor a descifrar no es Base64 válido.</value>
+  </data>
+  <data name="seguridad_no_descifrable" xml:space="preserve">
+    <value>No fue posible descifrar el valor. Puede haberse alterado o haberse cifrado con otra clave.</value>
+  </data>
+  <data name="sinpermiso_el_intento_de_acceso_queda_registrado" xml:space="preserve">
+    <value>El intento de acceso queda registrado en la bitácora. No es un problema: se anota para poder revisar después quién necesita qué permisos.</value>
+  </data>
+  <data name="sinpermiso_no_tienes_permiso_para_entrar_aqui" xml:space="preserve">
+    <value>No tienes permiso para entrar aquí</value>
+  </data>
+  <data name="sinpermiso_sin_permiso" xml:space="preserve">
+    <value>Sin permiso</value>
+  </data>
+  <data name="sinpermiso_tu_rol_no_incluye_esta_seccion" xml:space="preserve">
+    <value>Tu rol no incluye esta sección. Si necesitas acceder, solicítalo al administrador de tu empresa: es quien puede solicitar el cambio de permisos.</value>
+  </data>
+  <data name="sinpermiso_volver_al_panel" xml:space="preserve">
+    <value>Volver al panel</value>
+  </data>
+  <data name="usuario_confirmar_aviso_guardar" xml:space="preserve">
+    <value>Tenés que confirmar el aviso antes de guardar los cambios.</value>
+  </data>
+  <data name="usuario_confirmar_aviso_rol" xml:space="preserve">
+    <value>Tenés que confirmar el aviso antes de cambiar el rol.</value>
+  </data>
+  <data name="usuario_cuenta_no_activada" xml:space="preserve">
+    <value>La cuenta todavía no fue activada: la activa el propio usuario con el enlace que recibió.</value>
+  </data>
+  <data name="usuario_email_duplicado" xml:space="preserve">
+    <value>Ya existe un usuario registrado con ese email.</value>
+  </data>
+  <data name="usuario_email_invalido" xml:space="preserve">
+    <value>El email no tiene un formato valido.</value>
+  </data>
+  <data name="usuario_empresa_no_existe" xml:space="preserve">
+    <value>La empresa indicada no existe.</value>
+  </data>
+  <data name="usuario_empresa_sin_admin" xml:space="preserve">
+    <value>No se puede: la empresa quedaría sin un administrador activo.</value>
+  </data>
+  <data name="usuario_estado_no_manual" xml:space="preserve">
+    <value>Ese estado no se asigna manualmente.</value>
+  </data>
+  <data name="usuario_motivo_correo_empresa" xml:space="preserve">
+    <value>Indicá el motivo del cambio de correo o de empresa.</value>
+  </data>
+  <data name="usuario_no_cambiar_propio_estado" xml:space="preserve">
+    <value>No podés cambiar tu propio estado.</value>
+  </data>
+  <data name="usuario_no_cambiar_propio_rol" xml:space="preserve">
+    <value>No podés cambiar tu propio rol.</value>
+  </data>
+  <data name="usuario_no_existe" xml:space="preserve">
+    <value>El usuario no existe.</value>
+  </data>
+  <data name="usuario_no_modificar_con_mas_permisos" xml:space="preserve">
+    <value>No podés modificar a un usuario con más permisos que vos.</value>
+  </data>
+  <data name="usuario_no_reenviar_a_si_mismo" xml:space="preserve">
+    <value>No podés reenviarte una invitación a vos mismo.</value>
+  </data>
+  <data name="usuario_nombre_apellido_largos" xml:space="preserve">
+    <value>El nombre y el apellido no pueden superar los 100 caracteres.</value>
+  </data>
+  <data name="usuario_nombre_apellido_obligatorios" xml:space="preserve">
+    <value>El nombre y el apellido son obligatorios.</value>
+  </data>
+  <data name="usuario_propios_datos_en_perfil" xml:space="preserve">
+    <value>Tus propios datos se cambian desde «Mi perfil».</value>
+  </data>
+  <data name="usuario_reenvio_solo_pendiente" xml:space="preserve">
+    <value>La invitación solo se reenvía a una cuenta que sigue pendiente de activación.</value>
+  </data>
+  <data name="usuario_rol_gestion_solo_pb" xml:space="preserve">
+    <value>El rol "{0}" es un rol de gestión, solo para usuarios de Pattern Blue: no se puede asignar a usuarios de empresas cliente.</value>
+  </data>
+  <data name="usuario_rol_no_asignable" xml:space="preserve">
+    <value>Ese rol no se puede asignar desde tu cuenta.</value>
+  </data>
+  <data name="usuario_sin_permiso_sobre" xml:space="preserve">
+    <value>No tenés permiso sobre ese usuario.</value>
+  </data>
+  <data name="usuario_ya_en_ese_estado" xml:space="preserve">
+    <value>El usuario ya está en ese estado.</value>
+  </data>
+  <data name="usuario_ya_tiene_rol" xml:space="preserve">
+    <value>El usuario ya tiene ese rol.</value>
+  </data>
+  <data name="usuarios_ahi_llega_el_enlace_de_activacion" xml:space="preserve">
+    <value>Ahí llega el enlace de activación.</value>
+  </data>
+  <data name="usuarios_cambia_los_permisos_de_esa_persona" xml:space="preserve">
+    <value>Cambia los permisos de esa persona. Queda en la bitácora y los administradores de la empresa ven que lo hizo el equipo de Pattern Blue.</value>
+  </data>
+  <data name="usuarios_cambiar_el_correo_o_la_empresa" xml:space="preserve">
+    <value>Cambiar el correo o la empresa es delicado.</value>
+  </data>
+  <data name="usuarios_cliente_desde" xml:space="preserve">
+    <value>Cliente desde {0}</value>
+  </data>
+  <data name="usuarios_como_gestor_podes_dar_de_alta" xml:space="preserve">
+    <value>Como gestor podés dar de alta usuarios en otra empresa.</value>
+  </data>
+  <data name="usuarios_cuidado" xml:space="preserve">
+    <value>Cuidado:</value>
+  </data>
+  <data name="usuarios_datos_actualizados" xml:space="preserve">
+    <value>Los datos del usuario se actualizaron.</value>
+  </data>
+  <data name="usuarios_datos_actualizados_pendiente" xml:space="preserve">
+    <value> Como su cuenta sigue pendiente, le enviamos un enlace de activación nuevo al correo nuevo.</value>
+  </data>
+  <data name="usuarios_datos_de_tu_empresa" xml:space="preserve">
+    <value>Datos de tu empresa</value>
+  </data>
+  <data name="usuarios_editar_datos_del_usuario" xml:space="preserve">
+    <value>Editar datos del usuario</value>
+  </data>
+  <data name="usuarios_el_correo_es_con_lo_que" xml:space="preserve">
+    <value>El correo es con lo que la persona entra, y la empresa define a qué datos accede. Si la cuenta sigue pendiente, se envía un enlace de activación nuevo al correo nuevo.</value>
+  </data>
+  <data name="usuarios_entiendo_el_aviso_y_quiero_continuar" xml:space="preserve">
+    <value>Entiendo el aviso y quiero continuar</value>
+  </data>
+  <data name="usuarios_error_identificar" xml:space="preserve">
+    <value>No se pudo identificar al usuario. Volvé a intentarlo.</value>
+  </data>
+  <data name="usuarios_error_listado" xml:space="preserve">
+    <value>No se pudo cargar el listado de usuarios.</value>
+  </data>
+  <data name="usuarios_error_reenviar" xml:space="preserve">
+    <value>No se pudo reenviar la invitación. Volvé a intentarlo.</value>
+  </data>
+  <data name="usuarios_error_registrar" xml:space="preserve">
+    <value>No se pudo registrar el usuario. Volvé a intentarlo.</value>
+  </data>
+  <data name="usuarios_estado_actual" xml:space="preserve">
+    <value>Estado actual:</value>
+  </data>
+  <data name="usuarios_estado_actualizado" xml:space="preserve">
+    <value>El estado de la cuenta se actualizó.</value>
+  </data>
+  <data name="usuarios_estas_creando_un_usuario_en_la" xml:space="preserve">
+    <value>estás creando un usuario en la empresa</value>
+  </data>
+  <data name="usuarios_estas_modificando_una_cuenta_de_un" xml:space="preserve">
+    <value>Estás modificando una cuenta de un cliente.</value>
+  </data>
+  <data name="usuarios_gestionar" xml:space="preserve">
+    <value>Gestionar</value>
+  </data>
+  <data name="usuarios_gestionar_usuario" xml:space="preserve">
+    <value>Gestionar usuario</value>
+  </data>
+  <data name="usuarios_inactivo_dada_de_baja_no_puede" xml:space="preserve">
+    <value>Inactivo: dada de baja, no puede entrar ni recuperar la contraseña. Bloqueo estricto: no puede entrar ni pedir el cambio de contraseña. «Bloqueado» (por contraseña incorrecta) lo pone el sistema: la persona se desbloquea recuperando su contraseña.</value>
+  </data>
+  <data name="usuarios_invitacion_enviada" xml:space="preserve">
+    <value>Invitación enviada</value>
+  </data>
+  <data name="usuarios_invitacion_ok" xml:space="preserve">
+    <value>Se creó la cuenta de {0} en estado «Pendiente de activación». El enlace de activación quedó en App_Data/mails/.</value>
+  </data>
+  <data name="usuarios_invitacion_reenviada" xml:space="preserve">
+    <value>Te enviamos de nuevo la invitación a tu cuenta de Falke.</value>
+  </data>
+  <data name="usuarios_invitar_a_un_usuario" xml:space="preserve">
+    <value>Invitar a un usuario</value>
+  </data>
+  <data name="usuarios_invitar_obligatorios" xml:space="preserve">
+    <value>Nombre, apellido y correo son obligatorios.</value>
+  </data>
+  <data name="usuarios_invitar_usuario" xml:space="preserve">
+    <value>Invitar usuario</value>
+  </data>
+  <data name="usuarios_la_cuenta_queda_en_estado_pendiente" xml:space="preserve">
+    <value>La cuenta queda en estado «Pendiente de activación» hasta que la persona entre al enlace y defina su contraseña.</value>
+  </data>
+  <data name="usuarios_la_invitacion_ya_se_envio" xml:space="preserve">
+    <value>La invitación ya se envió</value>
+  </data>
+  <data name="usuarios_mail_correo_actualizado" xml:space="preserve">
+    <value>Actualizamos el correo de tu cuenta de Falke. Sigue pendiente de activación.</value>
+  </data>
+  <data name="usuarios_mail_invitacion" xml:space="preserve">
+    <value>Hola {0},
+
+Se creó tu cuenta en Falke.
+Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas):
+{1}
+</value>
+  </data>
+  <data name="usuarios_mail_invitacion_asunto" xml:space="preserve">
+    <value>Activá tu cuenta de Falke</value>
+  </data>
+  <data name="usuarios_mostrando" xml:space="preserve">
+    <value>Mostrando {0}–{1} de {2}</value>
+  </data>
+  <data name="usuarios_no_hay_usuarios_que_coincidan_con" xml:space="preserve">
+    <value>No hay usuarios que coincidan con los filtros.</value>
+  </data>
+  <data name="usuarios_nuevo_estado" xml:space="preserve">
+    <value>Nuevo estado</value>
+  </data>
+  <data name="usuarios_puedes_ver_a_los_integrantes_de" xml:space="preserve">
+    <value>Puedes ver a los integrantes de tu empresa y sus roles, y editar tus propios datos. La gestión de las cuentas la hace el administrador.</value>
+  </data>
+  <data name="usuarios_que_no_es_la_tuya" xml:space="preserve">
+    <value>, que no es la tuya.</value>
+  </data>
+  <data name="usuarios_queda_en_la_bitacora_y_los" xml:space="preserve">
+    <value>Queda en la bitácora y los administradores de la empresa ven que lo hizo el equipo de Pattern Blue.</value>
+  </data>
+  <data name="usuarios_reenviar_invitacion" xml:space="preserve">
+    <value>Reenviar invitación</value>
+  </data>
+  <data name="usuarios_rol_actual" xml:space="preserve">
+    <value>Rol actual:</value>
+  </data>
+  <data name="usuarios_rol_actualizado" xml:space="preserve">
+    <value>El rol se actualizó.</value>
+  </data>
+  <data name="usuarios_se_le_envia_un_correo_con" xml:space="preserve">
+    <value>Se le envía un correo con un enlace para que defina su contraseña.</value>
+  </data>
+  <data name="usuarios_sin_resultados" xml:space="preserve">
+    <value>Sin resultados</value>
+  </data>
+  <data name="usuarios_titulo_admin" xml:space="preserve">
+    <value>Gestioná las cuentas de tu empresa y el estado de cada una.</value>
+  </data>
+  <data name="usuarios_titulo_integrantes" xml:space="preserve">
+    <value>Integrantes de tu empresa y sus roles.</value>
+  </data>
+  <data name="usuarios_titulo_todas" xml:space="preserve">
+    <value>Usuarios de todas las empresas. Los cambios de estado y de rol quedan registrados en la bitácora.</value>
+  </data>
+  <data name="usuarios_todas_empresas" xml:space="preserve">
+    <value>Todas las empresas</value>
+  </data>
+  <data name="usuarios_todos_estados" xml:space="preserve">
+    <value>Todos los estados</value>
+  </data>
+  <data name="usuarios_todos_roles" xml:space="preserve">
+    <value>Todos los roles</value>
+  </data>
+  <data name="visualizaciones_adelantar_diez_segundos" xml:space="preserve">
+    <value>Adelantar diez segundos</value>
+  </data>
+  <data name="visualizaciones_areas_miradas_y_areas_ignoradas" xml:space="preserve">
+    <value>Áreas miradas y áreas ignoradas.</value>
+  </data>
+  <data name="visualizaciones_atencion_frente_a_distraccion" xml:space="preserve">
+    <value>Atención frente a distracción</value>
+  </data>
+  <data name="visualizaciones_buscar_por_nombre" xml:space="preserve">
+    <value>Buscar por nombre</value>
+  </data>
+  <data name="visualizaciones_concentracion_de_la_atencion_visual" xml:space="preserve">
+    <value>Concentración de la atención visual.</value>
+  </data>
+  <data name="visualizaciones_contenido_del_reporte" xml:space="preserve">
+    <value>Contenido del reporte</value>
+  </data>
+  <data name="visualizaciones_duracion_total" xml:space="preserve">
+    <value>Duración total</value>
+  </data>
+  <data name="visualizaciones_elige_que_incluir_en_el_reporte" xml:space="preserve">
+    <value>Elige qué incluir en el reporte PDF.</value>
+  </data>
+  <data name="visualizaciones_exportar_analisis" xml:space="preserve">
+    <value>Exportar análisis</value>
+  </data>
+  <data name="visualizaciones_exportar_reporte" xml:space="preserve">
+    <value>Exportar reporte</value>
+  </data>
+  <data name="visualizaciones_fijacion_activa_frente_a_movimiento_saca" xml:space="preserve">
+    <value>Fijación activa frente a movimiento sacádico.</value>
+  </data>
+  <data name="visualizaciones_fijaciones" xml:space="preserve">
+    <value>Fijaciones</value>
+  </data>
+  <data name="visualizaciones_filtrar_por_categoria" xml:space="preserve">
+    <value>Filtrar por categoría</value>
+  </data>
+  <data name="visualizaciones_grabacion_con_seguimiento" xml:space="preserve">
+    <value>Grabación con seguimiento</value>
+  </data>
+  <data name="visualizaciones_listado_de_sesiones" xml:space="preserve">
+    <value>Listado de sesiones</value>
+  </data>
+  <data name="visualizaciones_metricas_generales" xml:space="preserve">
+    <value>Métricas generales</value>
+  </data>
+  <data name="visualizaciones_movimiento_sacadico" xml:space="preserve">
+    <value>Movimiento sacádico</value>
+  </data>
+  <data name="visualizaciones_muevete_por_la_linea_de_tiempo" xml:space="preserve">
+    <value>Muévete por la línea de tiempo para ver cómo cambia el análisis a lo largo de la sesión.</value>
+  </data>
+  <data name="visualizaciones_no_hay_sesiones_que_coincidan_con" xml:space="preserve">
+    <value>No hay sesiones que coincidan con los filtros.</value>
+  </data>
+  <data name="visualizaciones_nombre_fecha_y_metricas_generales" xml:space="preserve">
+    <value>Nombre, fecha y métricas generales</value>
+  </data>
+  <data name="visualizaciones_posicion_en_la_grabacion" xml:space="preserve">
+    <value>Posición en la grabación</value>
+  </data>
+  <data name="visualizaciones_que_tan_estable_fue_la_atencion" xml:space="preserve">
+    <value>Qué tan estable fue la atención.</value>
+  </data>
+  <data name="visualizaciones_reproducir" xml:space="preserve">
+    <value>Reproducir</value>
+  </data>
+  <data name="visualizaciones_retroceder_diez_segundos" xml:space="preserve">
+    <value>Retroceder diez segundos</value>
+  </data>
+  <data name="visualizaciones_salir" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="visualizaciones_se_incluye_como_cuadro_representativo" xml:space="preserve">
+    <value>Se incluye como cuadro representativo.</value>
+  </data>
+  <data name="visualizaciones_sesiones_y_filtros" xml:space="preserve">
+    <value>Sesiones y filtros</value>
+  </data>
+  <data name="visualizaciones_siempre_se_incluye_en_el_reporte" xml:space="preserve">
+    <value>Siempre se incluye en el reporte.</value>
+  </data>
+  <data name="visualizaciones_trayecto_secuencial_sobre_el_activo" xml:space="preserve">
+    <value>Trayecto secuencial sobre el activo.</value>
+  </data>
+  <data name="visualizaciones_visualizaciones_a_incluir" xml:space="preserve">
+    <value>Visualizaciones a incluir</value>
+  </data>
+</root>

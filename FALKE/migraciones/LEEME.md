@@ -18,6 +18,7 @@ guardados sin BOM y en ASCII, para pegarlos en SSMS o ejecutarlos con `sqlcmd -I
 | 12 | `2026-10-05_webmaster.sql` | Rol Webmaster, roles de gestión y `VER_BITACORA_COMPLETA`. |
 | 13 | `2026-10-05_quitar_notificaciones.sql` | Se elimina `NotificacionTable`. |
 | 14 | `2026-10-05_relaciones_permisos_validas.sql` | Disparador que rechaza estructuras imposibles de permisos. |
+| 15 | `2026-10-22_idiomas.sql` | Idiomas: nombre, activo y base en `IdiomaTable`; pendiente y origen en `TraduccionTable`; permiso `GESTIONAR_IDIOMAS` para el Webmaster. Catalogo inicial es + en. |
 
 ## Después de aplicarlas
 
