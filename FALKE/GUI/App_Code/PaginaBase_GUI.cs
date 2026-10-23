@@ -25,21 +25,6 @@ namespace GUI
             get { return codigo; }
         }
 
-        public void ActualizarIdioma(string codigoIdioma)
-        {
-            codigo = codigoIdioma;
-
-            if (!cargada) return;
-
-            RetraducirAvisos();
-            AlCambiarIdioma();
-        }
-
-        protected virtual void AlCambiarIdioma()
-        {
-            // template method aca cada pagina decide que hacer
-        }
-
         protected static void ConservandoSeleccion(Action reconstruir, params DropDownList[] listas)
         {
             var seleccion = listas.Select(l => l.SelectedValue).ToList();
@@ -96,29 +81,7 @@ namespace GUI
             ViewState[K_AVISOS] = avisos;
         }
 
-        protected virtual void RetraducirAvisos()
-        {
-            var avisos = ViewState[K_AVISOS] as Hashtable;
-
-            if (avisos == null) return;
-
-            foreach (string idPanel in avisos.Keys.Cast<string>().ToList())
-            {
-                var entrada = (object[])avisos[idPanel];
-                var panel = FindControl(idPanel) as Panel;
-                var literal = FindControl((string)entrada[0]) as Literal;
-
-                if (panel == null || literal == null || !panel.Visible || literal.Text != Server.HtmlEncode((string)entrada[1])) continue;
-
-                string texto = Traductor_TLL.Traducir((string)entrada[2], codigo, (object[])entrada[3]);
-
-                literal.Text = Server.HtmlEncode(texto);
-                entrada[1] = texto;
-            }
-
-            ViewState[K_AVISOS] = avisos;
-        }
-
+        // se registra la pagina que se abre como observador de SujetoIdioma_TLL (se accede desde IdiomaActual_GUI.Sujeto)
         protected override void OnInit(EventArgs e)
         {
             sujeto = IdiomaActual_GUI.Sujeto;
@@ -143,6 +106,44 @@ namespace GUI
         }
 
         // aca se traducen las cosas en una pagina X
+        public void ActualizarIdioma(string codigoIdioma)
+        {
+            codigo = codigoIdioma;
+
+            if (!cargada) return;
+
+            RetraducirAvisos();
+            AlCambiarIdioma();
+        }
+
+        protected virtual void RetraducirAvisos()
+        {
+            var avisos = ViewState[K_AVISOS] as Hashtable;
+
+            if (avisos == null) return;
+
+            foreach (string idPanel in avisos.Keys.Cast<string>().ToList())
+            {
+                var entrada = (object[])avisos[idPanel];
+                var panel = FindControl(idPanel) as Panel;
+                var literal = FindControl((string)entrada[0]) as Literal;
+
+                if (panel == null || literal == null || !panel.Visible || literal.Text != Server.HtmlEncode((string)entrada[1])) continue;
+
+                string texto = Traductor_TLL.Traducir((string)entrada[2], codigo, (object[])entrada[3]);
+
+                literal.Text = Server.HtmlEncode(texto);
+                entrada[1] = texto;
+            }
+
+            ViewState[K_AVISOS] = avisos;
+        }
+
+        protected virtual void AlCambiarIdioma()
+        {
+            // template method aca cada pagina decide que hacer
+        }
+
         protected override void Render(HtmlTextWriter writer)
         {
             // la pagina se dibuja primero en un texto en memoria para poder reemplazar los textos
