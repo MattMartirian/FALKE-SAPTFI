@@ -14,7 +14,10 @@ namespace GUI
 {
     public partial class Categorias : PaginaConAviso_GUI
     {
-        private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
+        private static CultureInfo Cultura
+        {
+            get { return IdiomaActual_GUI.Cultura; }
+        }
 
         private ActorUsuario_TE actor;
 
@@ -42,12 +45,12 @@ namespace GUI
             }
             catch (UnauthorizedAccessException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Categorias.Listar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar el listado de categorías.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("categoria_error_listado"));
             }
         }
 
@@ -57,7 +60,7 @@ namespace GUI
 
             int idCategoria = Convert.ToInt32(e.CommandArgument);
 
-            Ejecutar("Categorias.Eliminar", "La categoría se eliminó.", () => new Categoria_BLL().Eliminar(actor, idCategoria));
+            Ejecutar("Categorias.Eliminar", IdiomaActual_GUI.Texto("categoria_eliminada"), () => new Categoria_BLL().Eliminar(actor, idCategoria));
         }
 
         protected void btnGuardarCategoria_Click(object sender, EventArgs e)
@@ -67,7 +70,7 @@ namespace GUI
 
             if (actor == null || !int.TryParse(hfCatId.Value, out idCategoria) || !Enum.TryParse(mcTipo.SelectedValue, out tipo) || !Enum.IsDefined(typeof(TipoActivoCategoria), tipo))
             {
-                Avisar("aviso-peligro", "No se pudo identificar la categoría. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("categoria_error_identificar"));
                 return;
             }
 
@@ -92,11 +95,11 @@ namespace GUI
 
             if (idCategoria == 0)
             {
-                Ejecutar("Categorias.Alta", "Se registró la categoría.", () => new Categoria_BLL().Crear(actor, categoria));
+                Ejecutar("Categorias.Alta", IdiomaActual_GUI.Texto("categoria_registrada"), () => new Categoria_BLL().Crear(actor, categoria));
             }
             else
             {
-                Ejecutar("Categorias.Modificar", "Los datos de la categoría se actualizaron.", () => new Categoria_BLL().Modificar(actor, idCategoria, categoria));
+                Ejecutar("Categorias.Modificar", IdiomaActual_GUI.Texto("categoria_actualizada"), () => new Categoria_BLL().Modificar(actor, idCategoria, categoria));
             }
         }
 
@@ -124,8 +127,8 @@ namespace GUI
         {
             switch (tipo)
             {
-                case TipoActivoCategoria.AppWeb: return "App web";
-                case TipoActivoCategoria.AppMovil: return "App móvil";
+                case TipoActivoCategoria.AppWeb: return IdiomaActual_GUI.Texto("categoria_tipo_app_web");
+                case TipoActivoCategoria.AppMovil: return IdiomaActual_GUI.Texto("categoria_tipo_app_movil");
                 default: return tipo.ToString();
             }
         }

@@ -120,7 +120,7 @@ namespace ORM
             if (columnasPK.Count != valoresClave.Length)
             {
                 //TODO: Traducir.
-                throw new ArgumentException($"La tabla {nombreTabla} tiene {columnasPK.Count} columna(s) de PK, se pasaron {valoresClave.Length} valores.");
+                throw new ArgumentException("integridad_valores_clave_invalidos");
             }
 
             var condiciones = new List<string>();
@@ -166,13 +166,13 @@ namespace ORM
             if (columnasPK.Count == 0)
             {
                 //TODO: Traducir.
-                throw new InvalidOperationException($"No se encontró clave primaria para la tabla {nombreTabla}.");
+                throw new InvalidOperationException("integridad_sin_clave_primaria");
             }
 
             if (columnasPK.Count != valoresClave.Length)
             {
                 //TODO: Traducir.
-                throw new ArgumentException($"La tabla {nombreTabla} tiene {columnasPK.Count} columna(s) de PK, se pasaron {valoresClave.Length} valores.");
+                throw new ArgumentException("integridad_valores_clave_invalidos");
             }
 
             var condiciones = new List<string>();

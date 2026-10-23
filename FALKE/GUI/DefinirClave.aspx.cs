@@ -4,7 +4,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class DefinirClave : System.Web.UI.Page
+    public partial class DefinirClave : PaginaBase_GUI
     {
         private string Token
         {
@@ -32,7 +32,7 @@ namespace GUI
         {
             if (txtNueva.Text != txtRepetir.Text)
             {
-                MostrarError("Las dos contraseñas no coinciden.");
+                MostrarError(IdiomaActual_GUI.Texto("definirclave_no_coinciden"));
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("DefinirClave", ex);
-                MostrarError("Ocurrió un error al procesar la solicitud. Volvé a intentarlo.");
+                MostrarError(IdiomaActual_GUI.Texto("comun_error_procesar"));
             }
         }
 
@@ -73,16 +73,16 @@ namespace GUI
             switch (motivo)
             {
                 case "CONTRASENA_DEBIL":
-                    return Contrasena_TLL.POLITICA_CONTRASENA;
+                    return IdiomaActual_GUI.Texto("clave_politica");
 
                 case "TOKEN_EXPIRADO":
-                    return "El enlace venció. Pedí uno nuevo desde «Recuperar mi contraseña».";
+                    return IdiomaActual_GUI.Texto("definirclave_vencido");
 
                 case "TOKEN_USADO":
-                    return "Este enlace ya fue utilizado. Si necesitás cambiar la contraseña, pedí uno nuevo.";
+                    return IdiomaActual_GUI.Texto("definirclave_usado");
 
                 default:
-                    return "El enlace no es válido. Revisá que hayas copiado la dirección completa.";
+                    return IdiomaActual_GUI.Texto("definirclave_invalido");
             }
         }
     }

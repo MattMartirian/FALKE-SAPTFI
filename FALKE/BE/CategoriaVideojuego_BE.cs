@@ -28,13 +28,13 @@ namespace BE
             VersionVideojuego = Valor(campos, "versionjuego");
         }
 
-        public override string NormalizarYValidar()
+        public override ErrorValidacion_BE NormalizarYValidar()
         {
             VersionVideojuego = Limpiar(VersionVideojuego);
 
-            if (!Enum.IsDefined(typeof(PlataformaVideojuego), Plataforma)) return "La plataforma no es válida.";
+            if (!Enum.IsDefined(typeof(PlataformaVideojuego), Plataforma)) return new ErrorValidacion_BE("categoria_plataforma_invalida");
 
-            return ExcedeLargo(VersionVideojuego, "versión del juego");
+            return ExcedeLargo(VersionVideojuego, "categoria_campo_version_juego");
         }
     }
 }

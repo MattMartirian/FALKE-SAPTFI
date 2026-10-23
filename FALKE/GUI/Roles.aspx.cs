@@ -96,7 +96,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Roles.Mostrar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar la lista de roles y permisos.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("roles_error_cargar"));
             }
         }
 
@@ -120,7 +120,7 @@ namespace GUI
             litNombre.Text = Server.HtmlEncode(actual.Etiqueta);
             litNombre2.Text = Server.HtmlEncode(actual.Etiqueta);
             litNombreInterno.Text = Server.HtmlEncode(actual.Nombre);
-            litClase.Text = esRol ? (actual.EsDeGestion ? "Rol de gestión" : "Rol general") : "Grupo";
+            litClase.Text = esRol ? (actual.EsDeGestion ? IdiomaActual_GUI.Texto("roles_clase_gestion") : IdiomaActual_GUI.Texto("roles_clase_general")) : IdiomaActual_GUI.Texto("roles_clase_grupo");
             badgeClase.Attributes["class"] = "badge " + (esRol ? "badge-info" : "badge-neutro");
             phEtiquetas.Visible = !esPatente;
             litMeta.Text = Server.HtmlEncode(Meta(actual));
@@ -150,7 +150,7 @@ namespace GUI
                 var etiquetas = catalogo.Patentes.ToDictionary(p => p.Nombre, p => p.Etiqueta);
 
                 litEfectivos.Text = actual.PatentesEfectivas.Count == 0
-                    ? "<li>Todavía no da ningún permiso.</li>"
+                    ? "<li>" + Server.HtmlEncode(Traducir("roles_sin_permisos")) + "</li>"
                     : string.Concat(actual.PatentesEfectivas.Select(p => "<li>" + Server.HtmlEncode(Permiso_TLL.Etiqueta(etiquetas, p)) + "</li>"));
             }
 
@@ -171,7 +171,7 @@ namespace GUI
             var marcados = cblGrupos.Items.Cast<ListItem>().Concat(cblPatentes.Items.Cast<ListItem>())
                 .Where(i => i.Selected).Select(i => i.Value).ToList();
 
-            Ejecutar("Roles.Guardar", "Los cambios se guardaron y quedaron en la bitácora.",
+            Ejecutar("Roles.Guardar", IdiomaActual_GUI.Texto("roles_cambios_guardados"),
                 () => new Permiso_TLL().GuardarComposicion(actor, Seleccionado, marcados), null);
         }
 
@@ -183,7 +183,7 @@ namespace GUI
 
             string texto = txtDescripcion.Text;
 
-            Ejecutar("Roles.Descripcion", "El nombre se guardó y quedó en la bitácora.",
+            Ejecutar("Roles.Descripcion", IdiomaActual_GUI.Texto("roles_nombre_guardado"),
                 () => new Permiso_TLL().CambiarDescripcion(actor, Seleccionado, texto), null);
 
             if (pnlAviso.CssClass.Contains("aviso-exito")) editandoDescripcion = false;
@@ -197,7 +197,7 @@ namespace GUI
             bool deGestion = esRol && Request.Form["ambitoNuevo"] == "gestion";
             string nombre = txtNombreNuevo.Text.Trim();
 
-            Ejecutar("Roles.Crear", (esRol ? (deGestion ? "Rol de gestión" : "Rol") : "Grupo") + " «" + nombre + "» creado. Ahora marcá qué incluye.",
+            Ejecutar("Roles.Crear", Traducir("roles_creado", esRol ? (deGestion ? Traducir("roles_clase_gestion") : Traducir("roles_clase_rol")) : Traducir("roles_clase_grupo"), nombre),
                 () =>
                 {
                     var bll = new Permiso_TLL();
@@ -212,7 +212,7 @@ namespace GUI
 
             string nombre = Seleccionado;
 
-            Ejecutar("Roles.Eliminar", "«" + nombre + "» se eliminó.",
+            Ejecutar("Roles.Eliminar", IdiomaActual_GUI.Texto("roles_eliminado", nombre),
                 () => new Permiso_TLL().EliminarRolOGrupo(actor, nombre),
                 string.Empty, "modalEliminar");
         }
@@ -265,12 +265,12 @@ namespace GUI
             switch (p.Clase)
             {
                 case ClasePermiso.Rol:
-                    string usuarios = p.UsuariosAsignados == 1 ? "1 usuario" : p.UsuariosAsignados + " usuarios";
-                    resto = usuarios + (p.EsDeGestion ? " · de gestión" : string.Empty) + (p.EsFijo ? " · fijo" : string.Empty);
+                    string usuarios = p.UsuariosAsignados == 1 ? IdiomaActual_GUI.Texto("comun_usuario_singular") : IdiomaActual_GUI.Texto("comun_usuario_plural", p.UsuariosAsignados);
+                    resto = usuarios + (p.EsDeGestion ? IdiomaActual_GUI.Texto("roles_sufijo_de_gestion") : string.Empty) + (p.EsFijo ? IdiomaActual_GUI.Texto("roles_sufijo_fijo") : string.Empty);
                     break;
 
                 case ClasePermiso.Grupo:
-                    resto = p.PatentesEfectivas.Count == 1 ? "1 permiso" : p.PatentesEfectivas.Count + " permisos";
+                    resto = p.PatentesEfectivas.Count == 1 ? IdiomaActual_GUI.Texto("comun_permiso_singular") : IdiomaActual_GUI.Texto("comun_permiso_plural", p.PatentesEfectivas.Count);
                     break;
 
                 default:

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Usuarios.aspx.cs" Inherits="GUI.Usuarios" Title="Usuarios" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Usuarios.aspx.cs" Inherits="GUI.Usuarios" Title="[[app_usuarios]]" %>
 <%@ MasterType VirtualPath="~/App.master" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
@@ -140,7 +140,7 @@
 
     <div class="pagina-cabecera">
         <div>
-            <h1 data-i18n="usuarios.titulo">Usuarios</h1>
+            <h1 data-i18n="usuarios.titulo">[[app_usuarios]]</h1>
             <p class="texto-suave sin-margen">
                 <asp:Literal ID="litBajada" runat="server" />
             </p>
@@ -149,7 +149,7 @@
             <asp:PlaceHolder ID="phInvitar" runat="server">
                 <button type="button" class="btn btn-primario" data-abre-modal="modalInvitar">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-mas" /></svg>
-                    <span data-i18n="usuarios.invitar">Invitar usuario</span>
+                    <span data-i18n="usuarios.invitar">[[usuarios_invitar_usuario]]</span>
                 </button>
             </asp:PlaceHolder>
         </div>
@@ -161,7 +161,7 @@
     </asp:Panel>
 
     <asp:PlaceHolder ID="phFicha" runat="server">
-        <section class="ficha-empresa" aria-label="Datos de tu empresa">
+        <section class="ficha-empresa" aria-label="[[usuarios_datos_de_tu_empresa]]">
             <span class="sigla" aria-hidden="true"><asp:Literal ID="litSigla" runat="server" /></span>
             <div>
                 <strong style="font-size:1.05rem"><asp:Literal ID="litEmpresaNombre" runat="server" /></strong>
@@ -181,46 +181,45 @@
         <div class="aviso aviso-info mb-24">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
             <p class="sin-margen">
-                Puedes ver a los integrantes de tu empresa y sus roles, y editar tus propios datos.
-                La gestión de las cuentas la hace el administrador.
+                [[usuarios_puedes_ver_a_los_integrantes_de]]
             </p>
         </div>
     </asp:PlaceHolder>
 
     <div class="filtros filtros-usuarios">
         <div class="campo">
-            <label for="txtBuscar">Buscar</label>
-            <asp:TextBox ID="txtBuscar" runat="server" CssClass="entrada" placeholder="Nombre o correo" MaxLength="100" ClientIDMode="Static" />
+            <label for="txtBuscar">[[categorias_buscar]]</label>
+            <asp:TextBox ID="txtBuscar" runat="server" CssClass="entrada" placeholder="[[bitacora_nombre_o_correo]]" MaxLength="100" ClientIDMode="Static" />
         </div>
         <asp:PlaceHolder ID="phFiltroEmpresa" runat="server">
             <div class="campo">
-                <label for="ddlEmpresaFiltro">Empresa</label>
+                <label for="ddlEmpresaFiltro">[[bitacora_empresa]]</label>
                 <asp:DropDownList ID="ddlEmpresaFiltro" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
         </asp:PlaceHolder>
         <div class="campo">
-            <label for="ddlRolFiltro">Rol</label>
+            <label for="ddlRolFiltro">[[miperfil_rol]]</label>
             <asp:DropDownList ID="ddlRolFiltro" runat="server" CssClass="entrada" ClientIDMode="Static" />
         </div>
         <div class="campo">
-            <label for="ddlEstadoFiltro">Estado</label>
+            <label for="ddlEstadoFiltro">[[dispositivos_estado]]</label>
             <asp:DropDownList ID="ddlEstadoFiltro" runat="server" CssClass="entrada" ClientIDMode="Static" />
         </div>
         <div class="acciones-filtro">
-            <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario" Text="Buscar" OnClick="btnBuscar_Click" />
+            <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario" Text="[[categorias_buscar]]" OnClick="btnBuscar_Click" />
         </div>
     </div>
 
     <div class="tabla-scroll">
         <table class="tabla">
-            <caption class="solo-lectores">Usuarios</caption>
+            <caption class="solo-lectores">[[app_usuarios]]</caption>
             <thead>
                 <tr>
-                    <th scope="col">Usuario</th>
-                    <asp:PlaceHolder ID="phColEmpresa" runat="server"><th scope="col">Empresa</th></asp:PlaceHolder>
-                    <th scope="col">Rol</th>
-                    <th scope="col">Estado</th>
-                    <asp:PlaceHolder ID="phColAcciones" runat="server"><th scope="col"><span class="solo-lectores">Acciones</span></th></asp:PlaceHolder>
+                    <th scope="col">[[bitacora_usuario]]</th>
+                    <asp:PlaceHolder ID="phColEmpresa" runat="server"><th scope="col">[[bitacora_empresa]]</th></asp:PlaceHolder>
+                    <th scope="col">[[miperfil_rol]]</th>
+                    <th scope="col">[[dispositivos_estado]]</th>
+                    <asp:PlaceHolder ID="phColAcciones" runat="server"><th scope="col"><span class="solo-lectores">[[categorias_acciones]]</span></th></asp:PlaceHolder>
                 </tr>
             </thead>
             <tbody>
@@ -253,7 +252,7 @@
                                                     data-id-empresa="<%#: Eval("IdEmpresa") %>"
                                                     data-empresa="<%#: Eval("NombreEmpresa") %>"
                                                     data-otra-empresa="<%#: EsOtraEmpresa(Container.DataItem) ? "1" : "0" %>">
-                                                Editar datos
+                                                [[dispositivos_editar_datos]]
                                             </button>
                                         </asp:PlaceHolder>
                                         <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeGestionarCuenta %>">
@@ -267,18 +266,18 @@
                                                     data-estado="<%#: (int)(TE.EstadoUsuario)Eval("Estado") %>"
                                                     data-estado-etiqueta="<%#: EtiquetaEstado((TE.EstadoUsuario)Eval("Estado")) %>"
                                                     data-otra-empresa="<%#: EsOtraEmpresa(Container.DataItem) ? "1" : "0" %>">
-                                                Gestionar
+                                                [[usuarios_gestionar]]
                                             </button>
                                         </asp:PlaceHolder>
                                         <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeInvitar && EsPendiente(Container.DataItem) && !InvitacionEnviada(Container.DataItem) %>">
                                             <asp:LinkButton runat="server" CssClass="btn btn-secundario btn-chico" CommandName="reenviar" CommandArgument='<%# Eval("IdUsuario") %>'
-                                                            CausesValidation="false" ToolTip="Genera un enlace de activación nuevo y lo envía por correo"
-                                                            OnClientClick="if (this.getAttribute('data-enviando')) return false; this.setAttribute('data-enviando', '1'); return true;">Reenviar invitación</asp:LinkButton>
+                                                            CausesValidation="false" ToolTip="[[usuarios_reenviar_invitacion_ayuda]]"
+                                                            OnClientClick="if (this.getAttribute('data-enviando')) return false; this.setAttribute('data-enviando', '1'); return true;">[[usuarios_reenviar_invitacion]]</asp:LinkButton>
                                         </asp:PlaceHolder>
                                         <asp:PlaceHolder runat="server" Visible="<%# EsOtro(Container.DataItem) && PuedeInvitar && EsPendiente(Container.DataItem) && InvitacionEnviada(Container.DataItem) %>">
-                                            <span class="btn btn-secundario btn-chico" aria-disabled="true" title="La invitación ya se envió">
+                                            <span class="btn btn-secundario btn-chico" aria-disabled="true" title="[[usuarios_la_invitacion_ya_se_envio]]">
                                                 <svg width="15" height="15" aria-hidden="true"><use href="#i-tilde" /></svg>
-                                                Invitación enviada
+                                                [[usuarios_invitacion_enviada]]
                                             </span>
                                         </asp:PlaceHolder>
                                     </div>
@@ -293,7 +292,7 @@
         <asp:PlaceHolder ID="phVacio" runat="server" Visible="false">
             <div class="vacio">
                 <svg width="28" height="28" aria-hidden="true"><use href="#i-usuarios" /></svg>
-                <p class="sin-margen">No hay usuarios que coincidan con los filtros.</p>
+                <p class="sin-margen">[[usuarios_no_hay_usuarios_que_coincidan_con]]</p>
             </div>
         </asp:PlaceHolder>
     </div>
@@ -301,8 +300,8 @@
     <div class="paginado">
         <span><asp:Literal ID="litPaginado" runat="server" /></span>
         <div class="fila">
-            <asp:LinkButton ID="lnkAnterior" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkAnterior_Click" CausesValidation="false">Anterior</asp:LinkButton>
-            <asp:LinkButton ID="lnkSiguiente" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkSiguiente_Click" CausesValidation="false">Siguiente</asp:LinkButton>
+            <asp:LinkButton ID="lnkAnterior" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkAnterior_Click" CausesValidation="false">[[bitacora_anterior]]</asp:LinkButton>
+            <asp:LinkButton ID="lnkSiguiente" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkSiguiente_Click" CausesValidation="false">[[bitacora_siguiente]]</asp:LinkButton>
         </div>
     </div>
 
@@ -310,10 +309,10 @@
         <div class="modal ancho">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="gestionTitulo">Gestionar usuario</h2>
+                    <h2 id="gestionTitulo">[[usuarios_gestionar_usuario]]</h2>
                     <p class="subtitulo sin-margen"><span id="gestionNombre"></span> &middot; <span id="gestionEmail"></span></p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -323,51 +322,51 @@
                 <div class="gestion-columnas">
                 <asp:PlaceHolder ID="phGestionEstado" runat="server">
                     <section class="gestion-seccion">
-                        <h3>Estado de la cuenta</h3>
-                        <p class="gestion-actual">Estado actual: <strong id="gestionEstadoActual"></strong></p>
+                        <h3>[[miempresa_estado_de_la_cuenta]]</h3>
+                        <p class="gestion-actual">[[usuarios_estado_actual]] <strong id="gestionEstadoActual"></strong></p>
                         <div class="campo">
-                            <label for="ddlNuevoEstado">Nuevo estado</label>
+                            <label for="ddlNuevoEstado">[[usuarios_nuevo_estado]]</label>
                             <asp:DropDownList ID="ddlNuevoEstado" runat="server" CssClass="entrada" ClientIDMode="Static" />
-                            <p class="ayuda">Inactivo: dada de baja, no puede entrar ni recuperar la contraseña. Bloqueo estricto: no puede entrar ni pedir el cambio de contraseña. «Bloqueado» (por contraseña incorrecta) lo pone el sistema: la persona se desbloquea recuperando su contraseña.</p>
+                            <p class="ayuda">[[usuarios_inactivo_dada_de_baja_no_puede]]</p>
                         </div>
                         <div class="campo">
-                            <label for="txtMotivoEstado">Motivo <span class="texto-tenue" data-solo-otra-empresa>(obligatorio)</span></label>
+                            <label for="txtMotivoEstado">[[dispositivos_motivo]] <span class="texto-tenue" data-solo-otra-empresa>[[dispositivos_obligatorio]]</span></label>
                             <asp:TextBox ID="txtMotivoEstado" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
                         </div>
-                        <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-primario" Text="Cambiar estado" OnClick="btnCambiarEstado_Click" />
+                        <asp:Button ID="btnCambiarEstado" runat="server" CssClass="btn btn-primario" Text="[[comun_cambiar_estado]]" OnClick="btnCambiarEstado_Click" />
                     </section>
                 </asp:PlaceHolder>
 
                 <asp:PlaceHolder ID="phGestionRol" runat="server">
                     <section class="gestion-seccion">
-                        <h3>Rol</h3>
-                        <p class="gestion-actual">Rol actual: <strong id="gestionRolActual"></strong></p>
+                        <h3>[[miperfil_rol]]</h3>
+                        <p class="gestion-actual">[[usuarios_rol_actual]] <strong id="gestionRolActual"></strong></p>
                         <div class="campo">
-                            <label for="ddlNuevoRol">Nuevo rol</label>
+                            <label for="ddlNuevoRol">[[roles_nuevo_rol]]</label>
                             <asp:DropDownList ID="ddlNuevoRol" runat="server" CssClass="entrada" ClientIDMode="Static" />
                         </div>
                         <div class="aviso aviso-alerta" id="avisoRol" hidden>
                             <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
                             <div>
-                                <strong>Estás modificando una cuenta de un cliente.</strong>
-                                <p class="sin-margen">Cambia los permisos de esa persona. Queda en la bitácora y los administradores de la empresa ven que lo hizo el equipo de Pattern Blue.</p>
+                                <strong>[[usuarios_estas_modificando_una_cuenta_de_un]]</strong>
+                                <p class="sin-margen">[[usuarios_cambia_los_permisos_de_esa_persona]]</p>
                                 <label class="casilla-simple mt-8">
                                     <asp:CheckBox ID="chkConfirmaRol" runat="server" ClientIDMode="Static" />
-                                    <span>Entiendo el aviso y quiero continuar</span>
+                                    <span>[[usuarios_entiendo_el_aviso_y_quiero_continuar]]</span>
                                 </label>
                             </div>
                         </div>
                         <div class="campo">
-                            <label for="txtMotivoRol">Motivo <span class="texto-tenue" data-solo-otra-empresa>(obligatorio)</span></label>
+                            <label for="txtMotivoRol">[[dispositivos_motivo]] <span class="texto-tenue" data-solo-otra-empresa>[[dispositivos_obligatorio]]</span></label>
                             <asp:TextBox ID="txtMotivoRol" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
                         </div>
-                        <asp:Button ID="btnCambiarRol" runat="server" CssClass="btn btn-primario" Text="Cambiar rol" OnClick="btnCambiarRol_Click" />
+                        <asp:Button ID="btnCambiarRol" runat="server" CssClass="btn btn-primario" Text="[[usuarios_cambiar_rol]]" OnClick="btnCambiarRol_Click" />
                     </section>
                 </asp:PlaceHolder>
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cerrar</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cerrar]]</button>
             </div>
         </div>
     </div>
@@ -376,10 +375,10 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="datosTitulo">Editar datos del usuario</h2>
+                    <h2 id="datosTitulo">[[usuarios_editar_datos_del_usuario]]</h2>
                     <p class="subtitulo sin-margen" id="datosCuenta"></p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -389,60 +388,56 @@
                 <div class="aviso aviso-alerta" id="avisoDatosCliente" hidden>
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
                     <div>
-                        <strong>Estás modificando una cuenta de un cliente.</strong>
-                        <p class="sin-margen">Queda en la bitácora y los administradores de la empresa ven que lo hizo el equipo de Pattern Blue.</p>
+                        <strong>[[usuarios_estas_modificando_una_cuenta_de_un]]</strong>
+                        <p class="sin-margen">[[usuarios_queda_en_la_bitacora_y_los]]</p>
                     </div>
                 </div>
 
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="txtDatosNombre">Nombre</label>
+                        <label for="txtDatosNombre">[[dispositivos_nombre]]</label>
                         <asp:TextBox ID="txtDatosNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
                     </div>
                     <div class="campo">
-                        <label for="txtDatosApellido">Apellido</label>
+                        <label for="txtDatosApellido">[[empresanueva_apellido]]</label>
                         <asp:TextBox ID="txtDatosApellido" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
                     </div>
                 </div>
                 <div class="campo">
-                    <label for="ddlDatosIdioma">Idioma de la interfaz</label>
-                    <asp:DropDownList ID="ddlDatosIdioma" runat="server" CssClass="entrada" ClientIDMode="Static">
-                        <asp:ListItem Value="1">Español</asp:ListItem>
-                        <asp:ListItem Value="2">Inglés</asp:ListItem>
-                        <asp:ListItem Value="3">Portugués</asp:ListItem>
-                    </asp:DropDownList>
+                    <label for="ddlDatosIdioma">[[miperfil_idioma_de_la_interfaz]]</label>
+                    <asp:DropDownList ID="ddlDatosIdioma" runat="server" CssClass="entrada" ClientIDMode="Static" />
                 </div>
 
                 <asp:PlaceHolder ID="phDatosAvanzados" runat="server" Visible="false">
                     <div class="campo">
-                        <label for="txtDatosEmail">Correo electrónico</label>
+                        <label for="txtDatosEmail">[[empresanueva_correo_electronico]]</label>
                         <asp:TextBox ID="txtDatosEmail" runat="server" CssClass="entrada" TextMode="Email" MaxLength="255" ClientIDMode="Static" />
                     </div>
                     <div class="campo">
-                        <label for="ddlDatosEmpresa">Empresa</label>
+                        <label for="ddlDatosEmpresa">[[bitacora_empresa]]</label>
                         <asp:DropDownList ID="ddlDatosEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
                     </div>
                     <div class="aviso aviso-alerta" id="avisoDatosSensibles" hidden>
                         <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
                         <div>
-                            <strong>Cambiar el correo o la empresa es delicado.</strong>
-                            <p class="sin-margen">El correo es con lo que la persona entra, y la empresa define a qué datos accede. Si la cuenta sigue pendiente, se envía un enlace de activación nuevo al correo nuevo.</p>
+                            <strong>[[usuarios_cambiar_el_correo_o_la_empresa]]</strong>
+                            <p class="sin-margen">[[usuarios_el_correo_es_con_lo_que]]</p>
                         </div>
                     </div>
                 </asp:PlaceHolder>
 
                 <div class="campo">
-                    <label for="txtDatosMotivo">Motivo <span class="texto-tenue" id="datosMotivoObligatorio" hidden>(obligatorio)</span></label>
+                    <label for="txtDatosMotivo">[[dispositivos_motivo]] <span class="texto-tenue" id="datosMotivoObligatorio" hidden>[[dispositivos_obligatorio]]</span></label>
                     <asp:TextBox ID="txtDatosMotivo" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
                 </div>
                 <label class="casilla-simple" id="datosConfirma" hidden>
                     <asp:CheckBox ID="chkDatosConfirma" runat="server" ClientIDMode="Static" />
-                    <span>Entiendo el aviso y quiero continuar</span>
+                    <span>[[usuarios_entiendo_el_aviso_y_quiero_continuar]]</span>
                 </label>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnGuardarDatos" runat="server" CssClass="btn btn-primario" Text="Guardar datos" OnClick="btnGuardarDatos_Click" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+                <asp:Button ID="btnGuardarDatos" runat="server" CssClass="btn btn-primario" Text="[[usuarios_guardar_datos]]" OnClick="btnGuardarDatos_Click" />
             </div>
         </div>
     </div>
@@ -451,12 +446,12 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="invitarTitulo" data-i18n="invitar.titulo">Invitar a un usuario</h2>
+                    <h2 id="invitarTitulo" data-i18n="invitar.titulo">[[usuarios_invitar_a_un_usuario]]</h2>
                     <p class="subtitulo sin-margen" data-i18n="invitar.subtitulo">
-                        Se le envía un correo con un enlace para que defina su contraseña.
+                        [[usuarios_se_le_envia_un_correo_con]]
                     </p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -469,47 +464,46 @@
 
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="invNombre" data-i18n="invitar.nombre">Nombre</label>
+                        <label for="invNombre" data-i18n="invitar.nombre">[[dispositivos_nombre]]</label>
                         <asp:TextBox ID="invNombre" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" data-foco-inicial="si" />
                     </div>
                     <div class="campo">
-                        <label for="invApellido" data-i18n="invitar.apellido">Apellido</label>
+                        <label for="invApellido" data-i18n="invitar.apellido">[[empresanueva_apellido]]</label>
                         <asp:TextBox ID="invApellido" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
                     </div>
                 </div>
                 <div class="campo">
-                    <label for="invEmail" data-i18n="invitar.email">Correo electrónico</label>
+                    <label for="invEmail" data-i18n="invitar.email">[[empresanueva_correo_electronico]]</label>
                     <asp:TextBox ID="invEmail" runat="server" CssClass="entrada" TextMode="Email" MaxLength="255" ClientIDMode="Static"
                                  placeholder="nombre@empresa.com" />
-                    <p class="ayuda" data-i18n="invitar.email.ayuda">Ahí llega el enlace de activación.</p>
+                    <p class="ayuda" data-i18n="invitar.email.ayuda">[[usuarios_ahi_llega_el_enlace_de_activacion]]</p>
                 </div>
                 <div class="campo">
-                    <label for="invRol" data-i18n="invitar.rol">Rol</label>
+                    <label for="invRol" data-i18n="invitar.rol">[[miperfil_rol]]</label>
                     <asp:DropDownList ID="invRol" runat="server" CssClass="entrada" ClientIDMode="Static" />
                 </div>
                 <asp:PlaceHolder ID="phInvEmpresa" runat="server" Visible="false">
                     <div class="campo">
-                        <label for="invEmpresa" data-i18n="invitar.empresa">Empresa</label>
+                        <label for="invEmpresa" data-i18n="invitar.empresa">[[bitacora_empresa]]</label>
                         <asp:DropDownList ID="invEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
-                        <p class="ayuda" data-i18n="invitar.empresa.ayuda">Como gestor podés dar de alta usuarios en otra empresa.</p>
+                        <p class="ayuda" data-i18n="invitar.empresa.ayuda">[[usuarios_como_gestor_podes_dar_de_alta]]</p>
                     </div>
                     <div class="aviso aviso-alerta" id="avisoInvEmpresa" hidden>
                         <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
-                        <p class="sin-margen"><strong>Cuidado:</strong> estás creando un usuario en la empresa <strong id="invEmpresaNombre"></strong>, que no es la tuya.</p>
+                        <p class="sin-margen"><strong>[[usuarios_cuidado]]</strong> [[usuarios_estas_creando_un_usuario_en_la]] <strong id="invEmpresaNombre"></strong>[[usuarios_que_no_es_la_tuya]]</p>
                     </div>
                 </asp:PlaceHolder>
                 <div class="aviso aviso-info mb-0">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
                     <p class="sin-margen" data-i18n="invitar.aviso">
-                        La cuenta queda en estado «Pendiente de activación» hasta que la persona
-                        entre al enlace y defina su contraseña.
+                        [[usuarios_la_cuenta_queda_en_estado_pendiente]]
                     </p>
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">[[categorias_cancelar]]</button>
                 <asp:Button ID="btnInvitar" runat="server" CssClass="btn btn-primario" OnClick="btnInvitar_Click"
-                            Text="Enviar invitación" data-i18n="invitar.enviar" />
+                            Text="[[usuarios_enviar_invitacion]]" data-i18n="invitar.enviar" />
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ namespace GUI
                 claveNueva.Enabled = false;
                 claveRepetir.Enabled = false;
                 btnGuardarClave.Enabled = false;
-                Avisar("aviso-alerta", "El acceso de emergencia no tiene una contraseña en la base: no se puede cambiar desde acá.");
+                Avisar("aviso-alerta", IdiomaActual_GUI.Texto("miclave_emergencia"));
             }
         }
 
@@ -28,7 +28,7 @@ namespace GUI
 
             if (claveNueva.Text != claveRepetir.Text)
             {
-                Avisar("aviso-peligro", "Las dos contraseñas nuevas no coinciden.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("miclave_no_coinciden"));
                 return;
             }
 
@@ -44,16 +44,16 @@ namespace GUI
                     claveActual.Text = string.Empty;
                     claveNueva.Text = string.Empty;
                     claveRepetir.Text = string.Empty;
-                    Avisar("aviso-exito", "La contraseña quedó actualizada.");
+                    Avisar("aviso-exito", IdiomaActual_GUI.Texto("miclave_actualizada"));
                     return;
                 }
 
-                Avisar("aviso-peligro", error);
+                Avisar("aviso-peligro", Traducir(error));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("MiClave", ex);
-                Avisar("aviso-peligro", "Ocurrió un error al procesar la solicitud. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("comun_error_procesar"));
             }
         }
     }

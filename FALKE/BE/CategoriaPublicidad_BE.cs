@@ -16,24 +16,24 @@ namespace BE
         {
             return new Dictionary<string, string>
             {
-                { "formato", FormatoPublicidad },
+                { "categoria_campo_formato", FormatoPublicidad },
                 { "canal", CanalPublicidad }
             };
         }
 
         public override void AplicarCampos(IDictionary<string, string> campos)
         {
-            FormatoPublicidad = Valor(campos, "formato");
+            FormatoPublicidad = Valor(campos, "categoria_campo_formato");
             CanalPublicidad = Valor(campos, "canal");
         }
 
-        public override string NormalizarYValidar()
+        public override ErrorValidacion_BE NormalizarYValidar()
         {
             FormatoPublicidad = Limpiar(FormatoPublicidad);
             CanalPublicidad = Limpiar(CanalPublicidad);
 
-            return ExcedeLargo(FormatoPublicidad, "formato")
-                ?? ExcedeLargo(CanalPublicidad, "canal de distribución");
+            return ExcedeLargo(FormatoPublicidad, "categoria_campo_formato")
+                ?? ExcedeLargo(CanalPublicidad, "categoria_campo_canal");
         }
     }
 }

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Registro.aspx.cs" Inherits="GUI.Registro" Title="Cómo se obtiene una cuenta" %>
+<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Registro.aspx.cs" Inherits="GUI.Registro" Title="[[registro_como_se_obtiene_una_cuenta]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -102,21 +102,18 @@
     <div class="contenedor">
 
         <header class="registro-cabecera">
-            <h1 data-i18n="registro.titulo">Cómo se obtiene una cuenta en Falke</h1>
+            <h1 data-i18n="registro.titulo">[[registro_como_se_obtiene_una_cuenta_en]]</h1>
             <p data-i18n="registro.bajada">
-                Falke no tiene registro automático. Como el servicio incluye un dispositivo
-                de seguimiento ocular en préstamo, cada cuenta se abre después de un acuerdo
-                comercial. Es corto, y aquí está todo el circuito.
+                [[registro_falke_no_tiene_registro_automatico_como]]
             </p>
         </header>
 
         <div class="aviso aviso-info" style="max-width: 720px; margin: 24px auto 0;">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-mail" /></svg>
             <div>
-                <strong data-i18n="registro.yaTeInvitaron.titulo">¿Ya te invitaron?</strong>
+                <strong data-i18n="registro.yaTeInvitaron.titulo">[[registro_ya_te_invitaron]]</strong>
                 <p class="sin-margen" data-i18n="registro.yaTeInvitaron.texto">
-                    Si tu empresa ya es cliente, vas a recibir un correo con un enlace para definir
-                    tu contraseña. Con eso tu cuenta queda activa y ya puedes iniciar sesión.
+                    [[registro_si_tu_empresa_ya_es_cliente]]
                 </p>
             </div>
         </div>
@@ -125,80 +122,68 @@
 
             <article class="circuito-paso">
                 <span class="numero" aria-hidden="true">1</span>
-                <h3 data-i18n="registro.paso1.titulo">Nos escribis</h3>
+                <h3 data-i18n="registro.paso1.titulo">[[registro_nos_escribis]]</h3>
                 <p data-i18n="registro.paso1.texto">
-                    Eliges el plan que mejor se acerca a lo que necesitas y nos mandas una
-                    consulta desde la pantalla de planes con los datos de tu empresa.
+                    [[registro_eliges_el_plan_que_mejor_se]]
                 </p>
-                <span class="quien" data-i18n="registro.paso1.quien">Lo hace tu equipo</span>
+                <span class="quien" data-i18n="registro.paso1.quien">[[registro_lo_hace_tu_equipo]]</span>
             </article>
 
             <article class="circuito-paso">
                 <span class="numero" aria-hidden="true">2</span>
-                <h3 data-i18n="registro.paso2.titulo">Coordinamos una demostración</h3>
+                <h3 data-i18n="registro.paso2.titulo">[[registro_coordinamos_una_demostracion]]</h3>
                 <p data-i18n="registro.paso2.texto">
-                    Un ejecutivo comercial te contacta y arma una demostración de unos 45 minutos,
-                    presencial o remota, sobre un activo digital tuyo. Ahí se ve en vivo como el
-                    dispositivo captura la mirada y como quedan las visualizaciones.
+                    [[registro_un_ejecutivo_comercial_te_contacta_y]]
                 </p>
-                <span class="quien" data-i18n="registro.paso2.quien">Lo hace Pattern Blue</span>
+                <span class="quien" data-i18n="registro.paso2.quien">[[registro_lo_hace_pattern_blue]]</span>
             </article>
 
             <article class="circuito-paso">
                 <span class="numero" aria-hidden="true">3</span>
-                <h3 data-i18n="registro.paso3.titulo">Se firma el contrato</h3>
+                <h3 data-i18n="registro.paso3.titulo">[[registro_se_firma_el_contrato]]</h3>
                 <p data-i18n="registro.paso3.texto">
-                    Se define el plan, el ciclo de facturación (mensual o anual) y la cantidad de
-                    dispositivos. El contrato incluye las condiciones de préstamo y devolución del
-                    hardware.
+                    [[registro_se_define_el_plan_el_ciclo]]
                 </p>
-                <span class="quien" data-i18n="registro.paso3.quien">Lo firman las dos partes</span>
+                <span class="quien" data-i18n="registro.paso3.quien">[[registro_lo_firman_las_dos_partes]]</span>
             </article>
 
             <article class="circuito-paso">
                 <span class="numero" aria-hidden="true">4</span>
-                <h3 data-i18n="registro.paso4.titulo">Damos de alta tu empresa</h3>
+                <h3 data-i18n="registro.paso4.titulo">[[registro_damos_de_alta_tu_empresa]]</h3>
                 <p data-i18n="registro.paso4.texto">
-                    Un gestor de Pattern Blue registra la empresa en la plataforma y crea el usuario
-                    administrador que tu designes. Esa persona recibe un correo con un enlace para
-                    definir su contraseña y activar la cuenta.
+                    [[registro_un_gestor_de_pattern_blue_registra]]
                 </p>
-                <span class="quien" data-i18n="registro.paso4.quien">Lo hace Pattern Blue</span>
+                <span class="quien" data-i18n="registro.paso4.quien">[[registro_lo_hace_pattern_blue]]</span>
             </article>
 
             <article class="circuito-paso">
                 <span class="numero" aria-hidden="true">5</span>
-                <h3 data-i18n="registro.paso5.titulo">Recibes el dispositivo</h3>
+                <h3 data-i18n="registro.paso5.titulo">[[registro_recibes_el_dispositivo]]</h3>
                 <p data-i18n="registro.paso5.texto">
-                    El Tobii viaja por courier con seguimiento, ya reacondicionado y calibrado, junto
-                    con la guia de instalación impresa. El plazo comprometido es de diez días desde la
-                    firma.
+                    [[registro_el_tobii_viaja_por_courier_con]]
                 </p>
-                <span class="quien" data-i18n="registro.paso5.quien">Lo hace Pattern Blue</span>
+                <span class="quien" data-i18n="registro.paso5.quien">[[registro_lo_hace_pattern_blue]]</span>
             </article>
 
             <article class="circuito-paso">
                 <span class="numero" aria-hidden="true">6</span>
-                <h3 data-i18n="registro.paso6.titulo">Tu administrador suma al equipo</h3>
+                <h3 data-i18n="registro.paso6.titulo">[[registro_tu_administrador_suma_al_equipo]]</h3>
                 <p data-i18n="registro.paso6.texto">
-                    Desde la sección de usuarios, el administrador invita a los analistas de la
-                    empresa con el mismo mecanismo: cada uno recibe su enlace de activación y define
-                    su propia contraseña.
+                    [[registro_desde_la_seccion_de_usuarios_el]]
                 </p>
-                <span class="quien" data-i18n="registro.paso6.quien">Lo hace tu administrador</span>
+                <span class="quien" data-i18n="registro.paso6.quien">[[registro_lo_hace_tu_administrador]]</span>
             </article>
 
         </section>
 
         <section class="registro-cierre">
-            <h2 data-i18n="registro.cierre.titulo">¿Listo para empezar?</h2>
+            <h2 data-i18n="registro.cierre.titulo">[[registro_listo_para_empezar]]</h2>
             <p class="texto-suave" data-i18n="registro.cierre.texto">
-                Mira los planes y mandanos la consulta desde ahí, o revisa primero las preguntas
-                frecuentes si te quedan dudas del circuito.
+                [[registro_mira_los_planes_y_mandanos_la]]
             </p>
             <div class="fila" style="justify-content: center;">
-                <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="registro.cierre.planes">Ver los planes y contactar</a>
-                <a class="btn btn-secundario btn-grande" href="<%: ResolveUrl("~/Faq.aspx") %>" data-i18n="registro.cierre.faq">Ir a preguntas frecuentes</a>
+                <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="registro.cierre.planes">[[registro_ver_los_planes_y_contactar]]</a>
+                <a class="btn btn-secundario btn-grande" href="<%: ResolveUrl("~/Faq.aspx") %>" data-i18n="registro.cierre.faq">[[registro_ir_a_preguntas_frecuentes]]</a>
             </div>
         </section>
 

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Planes.aspx.cs" Inherits="GUI.Planes" Title="Planes" %>
+<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Planes.aspx.cs" Inherits="GUI.Planes" Title="[[planes_planes]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -198,16 +198,14 @@
     <div class="contenedor">
 
         <header class="planes-cabecera">
-            <h1 data-i18n="planes.titulo">Planes de suscripción</h1>
+            <h1 data-i18n="planes.titulo">[[planes_planes_de_suscripcion]]</h1>
             <p data-i18n="planes.bajada">
-                Todos los planes incluyen el dispositivo Tobii en préstamo, la plataforma completa
-                y el procesamiento en la infraestructura de Pattern Blue. Cambia el alcance del
-                análisis y el nivel de acompañamiento.
+                [[planes_todos_los_planes_incluyen_el_dispositivo]]
             </p>
 
-            <div class="selector-ciclo" role="group" aria-label="Ciclo de facturacion">
-                <button type="button" id="btnMensual" aria-pressed="true" data-i18n="planes.mensual">Mensual</button>
-                <button type="button" id="btnAnual" aria-pressed="false" data-i18n="planes.anual">Anual (20% menos)</button>
+            <div class="selector-ciclo" role="group" aria-label="[[planes_ciclo_de_facturacion]]">
+                <button type="button" id="btnMensual" aria-pressed="true" data-i18n="planes.mensual">[[empresanueva_mensual]]</button>
+                <button type="button" id="btnAnual" aria-pressed="false" data-i18n="planes.anual">[[planes_anual_20_menos]]</button>
             </div>
         </header>
 
@@ -216,90 +214,90 @@
             <article class="tarjeta plan">
                 <h2 data-i18n="planes.scout.nombre">Falke Scout</h2>
                 <p class="para-quien" data-i18n="planes.scout.paraQuien">
-                    Para equipos que incorporan el seguimiento ocular como práctica de validación.
+                    [[planes_para_equipos_que_incorporan_el_seguimien]]
                 </p>
 
                 <div class="plan-precio">
                     <span class="monto" data-precio-mensual="USD 590" data-precio-anual="USD 470">USD 590</span>
-                    <span class="periodo" data-i18n="planes.porMes">/ mes</span>
+                    <span class="periodo" data-i18n="planes.porMes">[[planes_mes]]</span>
                 </div>
                 <p class="plan-facturacion" data-factura-mensual="Facturacion mensual. Un dispositivo en prestamo."
                                             data-factura-anual="Facturacion anual: USD 5.640 por ano. Un dispositivo en prestamo.">
-                    Facturación mensual. Un dispositivo en préstamo.
+                    [[planes_facturacion_mensual_un_dispositivo_en_pr]]
                 </p>
 
                 <ul>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item1">Un dispositivo Tobii Eye Tracker en préstamo</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item2">Sesiones de análisis individuales ilimitadas</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item3">Las 6 visualizaciones analíticas por sesión</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item4">Métricas estadísticas y exportación a PDF</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item5">Soporte técnico remoto en horario comercial</span></li>
-                    <li class="no-incluye"><svg width="17" height="17" aria-hidden="true"><use href="#i-cerrar" /></svg><span data-i18n="planes.scout.item6">Sin análisis múltiple</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item1">[[planes_un_dispositivo_tobii_eye_tracker_en]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item2">[[planes_sesiones_de_analisis_individuales_ilimit]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item3">[[planes_las_6_visualizaciones_analiticas_por_ses]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item4">[[planes_metricas_estadisticas_y_exportacion_a_pd]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.scout.item5">[[planes_soporte_tecnico_remoto_en_horario_comerc]]</span></li>
+                    <li class="no-incluye"><svg width="17" height="17" aria-hidden="true"><use href="#i-cerrar" /></svg><span data-i18n="planes.scout.item6">[[planes_sin_analisis_multiple]]</span></li>
                 </ul>
 
                 <button type="button" class="btn btn-secundario btn-bloque"
                         data-abre-modal="modalContacto" data-plan="Falke Scout" data-i18n="planes.contratar">
-                    Quiero este plan
+                    [[planes_quiero_este_plan]]
                 </button>
             </article>
 
             <article class="tarjeta plan destacado">
-                <span class="plan-cinta" data-i18n="planes.masElegido">El más elegido</span>
+                <span class="plan-cinta" data-i18n="planes.masElegido">[[planes_el_mas_elegido]]</span>
 
                 <h2 data-i18n="planes.hunter.nombre">Falke Hunter</h2>
                 <p class="para-quien" data-i18n="planes.hunter.paraQuien">
-                    Para equipos que usan el servicio de forma regular y necesitan comparar entre testers.
+                    [[planes_para_equipos_que_usan_el_servicio]]
                 </p>
 
                 <div class="plan-precio">
                     <span class="monto" data-precio-mensual="USD 950" data-precio-anual="USD 760">USD 950</span>
-                    <span class="periodo" data-i18n="planes.porMes">/ mes</span>
+                    <span class="periodo" data-i18n="planes.porMes">[[planes_mes]]</span>
                 </div>
                 <p class="plan-facturacion" data-factura-mensual="Facturacion mensual. Hasta 3 dispositivos en prestamo."
                                             data-factura-anual="Facturacion anual: USD 9.120 por ano. Hasta 3 dispositivos en prestamo.">
-                    Facturación mensual. Hasta 3 dispositivos en préstamo.
+                    [[planes_facturacion_mensual_hasta_3_dispositivos]]
                 </p>
 
                 <ul>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item1">Todo lo del plan Scout</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item2">Análisis múltiple: promedio de hasta 10 sesiones</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item3">Informes comparativos entre sesiones</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item4">Exportación de los datos crudos de seguimiento</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item5">Soporte prioritario con tiempo de respuesta garantizado</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item6">Hasta 3 dispositivos simultáneos</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item1">[[planes_todo_lo_del_plan_scout]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item2">[[planes_analisis_multiple_promedio_de_hasta_10]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item3">[[planes_informes_comparativos_entre_sesiones]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item4">[[planes_exportacion_de_los_datos_crudos_de]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item5">[[planes_soporte_prioritario_con_tiempo_de_respue]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.hunter.item6">[[planes_hasta_3_dispositivos_simultaneos]]</span></li>
                 </ul>
 
                 <button type="button" class="btn btn-primario btn-bloque"
                         data-abre-modal="modalContacto" data-plan="Falke Hunter" data-i18n="planes.contratar">
-                    Quiero este plan
+                    [[planes_quiero_este_plan]]
                 </button>
             </article>
 
             <article class="tarjeta plan">
                 <h2 data-i18n="planes.apex.nombre">Falke Apex</h2>
                 <p class="para-quien" data-i18n="planes.apex.paraQuien">
-                    Para organizaciones con varios equipos, proyectos en paralelo y necesidades de escala.
+                    [[planes_para_organizaciones_con_varios_equipos_p]]
                 </p>
 
                 <div class="plan-precio">
-                    <span class="monto" data-precio-mensual="A convenir" data-precio-anual="A convenir">A convenir</span>
+                    <span class="monto" data-precio-mensual="A convenir" data-precio-anual="A convenir">[[planes_a_convenir]]</span>
                 </div>
                 <p class="plan-facturacion" data-factura-mensual="Condiciones segun volumen de dispositivos y perfil de uso."
                                             data-factura-anual="Condiciones segun volumen de dispositivos y perfil de uso.">
-                    Condiciones según volumen de dispositivos y perfil de uso.
+                    [[planes_condiciones_segun_volumen_de_dispositivo]]
                 </p>
 
                 <ul>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item1">Todo lo del plan Hunter</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item2">Cantidad de dispositivos a convenir</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item3">Usuarios adicionales dentro de la organización</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item4">Condiciones de contrato y soporte a medida</span></li>
-                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item5">Acompañamiento en la puesta en marcha</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item1">[[planes_todo_lo_del_plan_hunter]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item2">[[planes_cantidad_de_dispositivos_a_convenir]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item3">[[planes_usuarios_adicionales_dentro_de_la_organi]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item4">[[planes_condiciones_de_contrato_y_soporte_a]]</span></li>
+                    <li><svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg><span data-i18n="planes.apex.item5">[[planes_acompanamiento_en_la_puesta_en_marcha]]</span></li>
                 </ul>
 
                 <button type="button" class="btn btn-secundario btn-bloque"
                         data-abre-modal="modalContacto" data-plan="Falke Apex" data-i18n="planes.contactar">
-                    Hablar con ventas
+                    [[planes_hablar_con_ventas]]
                 </button>
             </article>
 
@@ -308,21 +306,19 @@
         <div class="aviso aviso-info mt-24">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
             <p class="sin-margen" data-i18n="planes.aviso">
-                Todos los planes incluyen seguridad y cumplimiento normativo: disociación de los
-                datos biométricos, cifrado de las comunicaciones y almacenamiento separado por
-                empresa, conforme a la Ley N.° 25.326.
+                [[planes_todos_los_planes_incluyen_seguridad_y]]
             </p>
         </div>
 
         <section class="comparador">
-            <h2 class="mb-24" data-i18n="planes.comparador.titulo">Comparación detallada</h2>
+            <h2 class="mb-24" data-i18n="planes.comparador.titulo">[[planes_comparacion_detallada]]</h2>
 
             <div class="tabla-scroll">
                 <table class="tabla">
-                    <caption class="solo-lectores">Comparación de funciones incluidas en cada plan</caption>
+                    <caption class="solo-lectores">[[planes_comparacion_de_funciones_incluidas_en_ca]]</caption>
                     <thead>
                         <tr>
-                            <th scope="col" data-i18n="planes.comparador.funcion">Función</th>
+                            <th scope="col" data-i18n="planes.comparador.funcion">[[planes_funcion]]</th>
                             <th scope="col" class="plan-col">Scout</th>
                             <th scope="col" class="plan-col">Hunter</th>
                             <th scope="col" class="plan-col">Apex</th>
@@ -330,46 +326,46 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.dispositivo">Dispositivos en préstamo</th>
+                            <th scope="row" data-i18n="planes.comparador.dispositivo">[[miempresa_dispositivos_en_prestamo]]</th>
                             <td class="centro">1</td>
                             <td class="centro">3</td>
-                            <td class="centro" data-i18n="planes.comparador.aConvenir">A convenir</td>
+                            <td class="centro" data-i18n="planes.comparador.aConvenir">[[planes_a_convenir]]</td>
                         </tr>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.sesiones">Sesiones individuales</th>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
+                            <th scope="row" data-i18n="planes.comparador.sesiones">[[planes_sesiones_individuales]]</th>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
                         </tr>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.visualizaciones">6 visualizaciones analíticas</th>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
+                            <th scope="row" data-i18n="planes.comparador.visualizaciones">[[planes_6_visualizaciones_analiticas]]</th>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
                         </tr>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.multiple">Análisis múltiple</th>
-                            <td class="centro no" data-i18n="planes.comparador.noIncluido">No incluido</td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
+                            <th scope="row" data-i18n="planes.comparador.multiple">[[analisismultiple_analisis_multiple]]</th>
+                            <td class="centro no" data-i18n="planes.comparador.noIncluido">[[planes_no_incluido]]</td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
                         </tr>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.crudos">Exportar datos crudos</th>
-                            <td class="centro no" data-i18n="planes.comparador.noIncluido">No incluido</td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
+                            <th scope="row" data-i18n="planes.comparador.crudos">[[planes_exportar_datos_crudos]]</th>
+                            <td class="centro no" data-i18n="planes.comparador.noIncluido">[[planes_no_incluido]]</td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
                         </tr>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.soporte">Soporte prioritario</th>
-                            <td class="centro no" data-i18n="planes.comparador.noIncluido">No incluido</td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
+                            <th scope="row" data-i18n="planes.comparador.soporte">[[planes_soporte_prioritario]]</th>
+                            <td class="centro no" data-i18n="planes.comparador.noIncluido">[[planes_no_incluido]]</td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
                         </tr>
                         <tr>
-                            <th scope="row" data-i18n="planes.comparador.historial">Historial y auditoría de sesiones</th>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
-                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">Incluido</span></td>
+                            <th scope="row" data-i18n="planes.comparador.historial">[[planes_historial_y_auditoria_de_sesiones]]</th>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
+                            <td class="centro si"><svg width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg><span class="solo-lectores">[[planes_incluido]]</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -383,12 +379,12 @@
 
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="tituloContacto" data-i18n="contacto.titulo">Hablemos de tu implementación</h2>
+                    <h2 id="tituloContacto" data-i18n="contacto.titulo">[[planes_hablemos_de_tu_implementacion]]</h2>
                     <p class="subtitulo sin-margen" data-i18n="contacto.subtitulo">
-                        Déjanos tus datos y un ejecutivo comercial te contacta para coordinar la puesta en marcha.
+                        [[planes_dejanos_tus_datos_y_un_ejecutivo]]
                     </p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -396,61 +392,61 @@
             <div class="modal-cuerpo">
 
                 <div class="campo">
-                    <label for="ctPlan" data-i18n="contacto.plan">Plan de interés</label>
+                    <label for="ctPlan" data-i18n="contacto.plan">[[planes_plan_de_interes]]</label>
                     <input type="text" class="entrada" id="ctPlan" value="Falke Hunter" readonly />
                 </div>
 
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="ctNombre" data-i18n="contacto.nombre">Nombre</label>
+                        <label for="ctNombre" data-i18n="contacto.nombre">[[dispositivos_nombre]]</label>
                         <input type="text" class="entrada" id="ctNombre" data-foco-inicial
                                placeholder="Maria" data-i18n-attr="placeholder:contacto.nombre.placeholder" />
                     </div>
                     <div class="campo">
-                        <label for="ctApellido" data-i18n="contacto.apellido">Apellido</label>
+                        <label for="ctApellido" data-i18n="contacto.apellido">[[empresanueva_apellido]]</label>
                         <input type="text" class="entrada" id="ctApellido"
                                placeholder="Gomez" data-i18n-attr="placeholder:contacto.apellido.placeholder" />
                     </div>
                 </div>
 
                 <div class="campo">
-                    <label for="ctEmpresa" data-i18n="contacto.empresa">Empresa</label>
+                    <label for="ctEmpresa" data-i18n="contacto.empresa">[[bitacora_empresa]]</label>
                     <input type="text" class="entrada" id="ctEmpresa"
-                           placeholder="Nombre de tu organización" data-i18n-attr="placeholder:contacto.empresa.placeholder" />
+                           placeholder="[[planes_nombre_de_tu_organizacion]]" data-i18n-attr="placeholder:contacto.empresa.placeholder" />
                 </div>
 
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="ctEmail" data-i18n="contacto.email">Correo de contacto</label>
+                        <label for="ctEmail" data-i18n="contacto.email">[[planes_correo_de_contacto]]</label>
                         <input type="email" class="entrada" id="ctEmail"
                                placeholder="maria@empresa.com" data-i18n-attr="placeholder:contacto.email.placeholder" />
                     </div>
                     <div class="campo">
-                        <label for="ctTelefono" data-i18n="contacto.telefono">Teléfono</label>
+                        <label for="ctTelefono" data-i18n="contacto.telefono">[[planes_telefono]]</label>
                         <input type="tel" class="entrada" id="ctTelefono"
                                placeholder="+54 11 0000-0000" data-i18n-attr="placeholder:contacto.telefono.placeholder" />
                     </div>
                 </div>
 
                 <div class="campo">
-                    <label for="ctMensaje" data-i18n="contacto.mensaje">Mensaje</label>
+                    <label for="ctMensaje" data-i18n="contacto.mensaje">[[planes_mensaje]]</label>
 
                     <textarea class="entrada" id="ctMensaje" rows="4"></textarea>
-                    <p class="ayuda" data-i18n="contacto.ayuda">El mensaje viene escrito por defecto, pero puedes cambiarlo.</p>
+                    <p class="ayuda" data-i18n="contacto.ayuda">[[planes_el_mensaje_viene_escrito_por_defecto]]</p>
                 </div>
 
                 <label class="casilla-simple">
                     <input type="checkbox" id="ctConsentimiento" />
                     <span data-i18n="contacto.consentimiento">
-                        Acepto que Pattern Blue use estos datos para contactarme por esta consulta.
+                        [[planes_acepto_que_pattern_blue_use_estos]]
                     </span>
                 </label>
 
             </div>
 
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
-                <button type="button" class="btn btn-primario" data-i18n="contacto.enviar">Enviar consulta</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">[[categorias_cancelar]]</button>
+                <button type="button" class="btn btn-primario" data-i18n="contacto.enviar">[[planes_enviar_consulta]]</button>
             </div>
 
         </div>
@@ -491,8 +487,7 @@
             var campoMensaje = document.getElementById("ctMensaje");
 
             function armarMensaje(plan) {
-                return "Hola! Me interesa comunicarme con ustedes para discutir la puesta en " +
-                       "funcionamiento del plan " + plan + ". Quedo a la espera de su respuesta.";
+                return "[[js:planes_hola_me_interesa_comunicarme_con_ustedes]]".replace("{0}", plan);
             }
 
             for (var i = 0; i < botonesPlan.length; i++) {

@@ -12,7 +12,10 @@ namespace GUI
 {
     public partial class Empresas : PaginaConAviso_GUI
     {
-        private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
+        private static CultureInfo Cultura
+        {
+            get { return IdiomaActual_GUI.Cultura; }
+        }
 
         private ActorUsuario_TE actor;
 
@@ -63,7 +66,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Empresas.Listar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar el listado de empresas.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("empresas_error_listado"));
             }
         }
 
@@ -76,7 +79,7 @@ namespace GUI
             if (actor == null || !int.TryParse(hfEdId.Value, out idEmpresa) ||
                 !Enum.TryParse(edPlan.SelectedValue, out plan) || !Enum.TryParse(edFactura.SelectedValue, out facturacion))
             {
-                Avisar("aviso-peligro", "No se pudo identificar la empresa. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("empresas_error_identificar"));
                 return;
             }
 
@@ -91,7 +94,7 @@ namespace GUI
                 Facturacion = facturacion
             };
 
-            Ejecutar("Empresas.Modificar", idEmpresa, "Los datos de la empresa se actualizaron.",
+            Ejecutar("Empresas.Modificar", idEmpresa, IdiomaActual_GUI.Texto("empresas_datos_actualizados"),
                 () => new Empresa_BLL().ModificarDatos(actor, idEmpresa, nuevos, edMotivo.Text));
         }
 
@@ -102,11 +105,11 @@ namespace GUI
 
             if (actor == null || !int.TryParse(hfEstId.Value, out idEmpresa) || !Enum.TryParse(edEstado.SelectedValue, out estado))
             {
-                Avisar("aviso-peligro", "No se pudo identificar la empresa. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("empresas_error_identificar"));
                 return;
             }
 
-            Ejecutar("Empresas.Estado", idEmpresa, "El estado de la empresa se actualizó.",
+            Ejecutar("Empresas.Estado", idEmpresa, IdiomaActual_GUI.Texto("empresas_estado_actualizado"),
                 () => new Empresa_BLL().CambiarEstado(actor, idEmpresa, estado, edMotivoEstado.Text));
         }
 

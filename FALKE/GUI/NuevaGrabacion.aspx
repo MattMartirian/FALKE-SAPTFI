@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="NuevaGrabacion.aspx.cs" Inherits="GUI.NuevaGrabacion" Title="Nueva grabación" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="NuevaGrabacion.aspx.cs" Inherits="GUI.NuevaGrabacion" Title="[[app_nueva_grabacion]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -227,9 +227,9 @@
 
     <div class="pagina-cabecera">
         <div>
-            <h1 data-i18n="grabacion.titulo">Nueva grabación</h1>
+            <h1 data-i18n="grabacion.titulo">[[app_nueva_grabacion]]</h1>
             <p class="texto-suave sin-margen" data-i18n="grabacion.bajada">
-                Configura la sesión, verifica el dispositivo y empieza a grabar.
+                [[nuevagrabacion_configura_la_sesion_verifica_el_disposit]]
             </p>
         </div>
     </div>
@@ -237,26 +237,26 @@
     <ol class="pasos-barra" id="pasosBarra">
         <li aria-current="step" data-paso="1">
             <span class="bolita" aria-hidden="true">1</span>
-            <span data-i18n="grabacion.paso1">Datos de la sesión</span>
+            <span data-i18n="grabacion.paso1">[[nuevagrabacion_datos_de_la_sesion]]</span>
         </li>
         <li data-paso="2">
             <span class="bolita" aria-hidden="true">2</span>
-            <span data-i18n="grabacion.paso2">Dispositivo</span>
+            <span data-i18n="grabacion.paso2">[[nuevagrabacion_dispositivo]]</span>
         </li>
         <li data-paso="3">
             <span class="bolita" aria-hidden="true">3</span>
-            <span data-i18n="grabacion.paso3">Grabación</span>
+            <span data-i18n="grabacion.paso3">[[nuevagrabacion_grabacion]]</span>
         </li>
     </ol>
 
     <section class="tarjeta paso-panel" id="panelPaso1" aria-labelledby="tituloPaso1">
-        <h2 id="tituloPaso1" style="font-size:1.1rem" data-i18n="grabacion.datos.titulo">Datos de la sesión</h2>
+        <h2 id="tituloPaso1" style="font-size:1.1rem" data-i18n="grabacion.datos.titulo">[[nuevagrabacion_datos_de_la_sesion]]</h2>
         <p class="texto-suave texto-chico" data-i18n="grabacion.datos.bajada">
-            La categoría define el tipo de activo digital y agrupa todas las sesiones que hagas sobre él.
+            [[nuevagrabacion_la_categoria_define_el_tipo_de]]
         </p>
 
         <div class="campo">
-            <label for="grCategoria" data-i18n="grabacion.categoria">Categoría</label>
+            <label for="grCategoria" data-i18n="grabacion.categoria">[[categorias_categoria]]</label>
 
             <select class="entrada" id="grCategoria">
                 <option value="1">Checkout flow v2 - Software</option>
@@ -266,60 +266,59 @@
                 <option value="5">Alta de cuenta - App móvil</option>
             </select>
             <p class="ayuda">
-                <span data-i18n="grabacion.categoria.ayuda">¿No encuentras la que necesitas?</span>
-                <a href="<%: ResolveUrl("~/Categorias.aspx") %>" data-i18n="grabacion.categoria.crear">Crear una categoría nueva</a>
+                <span data-i18n="grabacion.categoria.ayuda">[[nuevagrabacion_no_encuentras_la_que_necesitas]]</span>
+                <a href="<%: ResolveUrl("~/Categorias.aspx") %>" data-i18n="grabacion.categoria.crear">[[nuevagrabacion_crear_una_categoria_nueva]]</a>
             </p>
         </div>
 
         <div class="campo">
-            <label for="grNombre" data-i18n="grabacion.nombre">Nombre de la sesión</label>
+            <label for="grNombre" data-i18n="grabacion.nombre">[[nuevagrabacion_nombre_de_la_sesion]]</label>
             <input type="text" class="entrada" id="grNombre"
                    placeholder="Checkout - App e-commerce" data-i18n-attr="placeholder:grabacion.nombre.placeholder" />
         </div>
 
         <div class="fila-campos">
             <div class="campo">
-                <label for="grTester" data-i18n="grabacion.tester">Identificador del tester</label>
+                <label for="grTester" data-i18n="grabacion.tester">[[nuevagrabacion_identificador_del_tester]]</label>
                 <input type="text" class="entrada" id="grTester"
                        placeholder="Tester 07" data-i18n-attr="placeholder:grabacion.tester.placeholder" />
                 <p class="ayuda" data-i18n="grabacion.tester.ayuda">
-                    Usa un código, no el nombre real: los datos se guardan disociados de la identidad.
+                    [[nuevagrabacion_usa_un_codigo_no_el_nombre]]
                 </p>
             </div>
             <div class="campo">
-                <label for="grAnalista" data-i18n="grabacion.analista">Analista responsable</label>
+                <label for="grAnalista" data-i18n="grabacion.analista">[[nuevagrabacion_analista_responsable]]</label>
                 <input type="text" class="entrada" id="grAnalista" value="Maria Gomez" readonly />
-                <p class="ayuda" data-i18n="grabacion.analista.ayuda">Se toma del usuario con la sesión iniciada.</p>
+                <p class="ayuda" data-i18n="grabacion.analista.ayuda">[[nuevagrabacion_se_toma_del_usuario_con_la]]</p>
             </div>
         </div>
 
         <div class="campo">
-            <label for="grObjetivo" data-i18n="grabacion.objetivo">Objetivo de la prueba (opcional)</label>
+            <label for="grObjetivo" data-i18n="grabacion.objetivo">[[nuevagrabacion_objetivo_de_la_prueba_opcional]]</label>
             <textarea class="entrada" id="grObjetivo" rows="3"
-                      placeholder="¿Qué quieres validar con esta sesión?"
+                      placeholder="[[nuevagrabacion_que_quieres_validar_con_esta_sesion]]"
                       data-i18n-attr="placeholder:grabacion.objetivo.placeholder"></textarea>
         </div>
 
         <div class="paso-acciones">
-            <a class="btn btn-fantasma izquierda" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.cancelar">Cancelar</a>
+            <a class="btn btn-fantasma izquierda" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.cancelar">[[categorias_cancelar]]</a>
             <button type="button" class="btn btn-primario" data-ir-paso="2">
-                <span data-i18n="grabacion.continuar">Continuar</span>
+                <span data-i18n="grabacion.continuar">[[nuevagrabacion_continuar]]</span>
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-flecha-der" /></svg>
             </button>
         </div>
     </section>
 
     <section class="tarjeta paso-panel" id="panelPaso2" aria-labelledby="tituloPaso2" hidden>
-        <h2 id="tituloPaso2" style="font-size:1.1rem" data-i18n="grabacion.dispositivo.titulo">Verificación del dispositivo</h2>
+        <h2 id="tituloPaso2" style="font-size:1.1rem" data-i18n="grabacion.dispositivo.titulo">[[nuevagrabacion_verificacion_del_dispositivo]]</h2>
         <p class="texto-suave texto-chico" data-i18n="grabacion.dispositivo.bajada">
-            Antes de grabar, la plataforma revisa que el Tobii este conectado, calibrado y con
-            el driver correcto. Si algo falla no se puede iniciar la sesión.
+            [[nuevagrabacion_antes_de_grabar_la_plataforma_revisa]]
         </p>
 
         <div class="aviso aviso-exito" id="resumenDispositivo">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-tilde" /></svg>
             <div>
-                <strong data-i18n="grabacion.dispositivo.listo">Dispositivo listo</strong>
+                <strong data-i18n="grabacion.dispositivo.listo">[[nuevagrabacion_dispositivo_listo]]</strong>
                 <p class="sin-margen" data-i18n="grabacion.dispositivo.listoDetalle">
                     El Tobii 4C está conectado, calibrado y con el driver actualizado.
                 </p>
@@ -329,57 +328,57 @@
         <div class="chequeo correcto" data-chequeo="usb">
             <span class="icono"><svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg></span>
             <span class="texto">
-                <span class="nombre" data-i18n="grabacion.chequeo.usb">Conexión USB</span>
+                <span class="nombre" data-i18n="grabacion.chequeo.usb">[[nuevagrabacion_conexion_usb]]</span>
                 <span class="detalle" data-i18n="grabacion.chequeo.usb.detalle">Tobii 4C detectado en el puerto USB 3.0</span>
             </span>
-            <span class="badge badge-exito" data-i18n="estado.conectado">Conectado</span>
+            <span class="badge badge-exito" data-i18n="estado.conectado">[[nuevagrabacion_conectado]]</span>
         </div>
 
         <div class="chequeo correcto" data-chequeo="calibracion">
             <span class="icono"><svg width="18" height="18" aria-hidden="true"><use href="#i-ojo" /></svg></span>
             <span class="texto">
-                <span class="nombre" data-i18n="grabacion.chequeo.calibracion">Calibración</span>
+                <span class="nombre" data-i18n="grabacion.chequeo.calibracion">[[nuevagrabacion_calibracion]]</span>
                 <span class="detalle" data-i18n="grabacion.chequeo.calibracion.detalle">Última calibración hace 4 minutos &middot; calidad 92%</span>
             </span>
-            <span class="badge badge-exito" data-i18n="estado.correcta">Correcta</span>
+            <span class="badge badge-exito" data-i18n="estado.correcta">[[nuevagrabacion_correcta]]</span>
         </div>
 
         <div class="chequeo correcto" data-chequeo="driver">
             <span class="icono"><svg width="18" height="18" aria-hidden="true"><use href="#i-engranaje" /></svg></span>
             <span class="texto">
-                <span class="nombre" data-i18n="grabacion.chequeo.driver">Driver de Tobii</span>
+                <span class="nombre" data-i18n="grabacion.chequeo.driver">[[nuevagrabacion_driver_de_tobii]]</span>
                 <span class="detalle">
-                    <span data-i18n="grabacion.chequeo.driver.instalado">Instalado</span>: 4.2.1 &middot;
-                    <span data-i18n="grabacion.chequeo.driver.requerido">requerido</span>: 4.0 o superior
+                    <span data-i18n="grabacion.chequeo.driver.instalado">[[nuevagrabacion_instalado]]</span>: 4.2.1 &middot;
+                    <span data-i18n="grabacion.chequeo.driver.requerido">[[nuevagrabacion_requerido]]</span>: 4.0 o superior
                 </span>
             </span>
-            <span class="badge badge-exito" data-i18n="estado.actualizado">Actualizado</span>
+            <span class="badge badge-exito" data-i18n="estado.actualizado">[[nuevagrabacion_actualizado]]</span>
         </div>
 
         <div class="fila mt-16">
             <button type="button" class="btn btn-secundario btn-chico" id="btnVerificar">
                 <svg width="16" height="16" aria-hidden="true"><use href="#i-refrescar" /></svg>
-                <span data-i18n="grabacion.verificar">Verificar nuevamente</span>
+                <span data-i18n="grabacion.verificar">[[nuevagrabacion_verificar_nuevamente]]</span>
             </button>
             <button type="button" class="btn btn-fantasma btn-chico" id="btnSimularFallo" data-i18n="grabacion.simularFallo">
-                Simular un fallo (demo)
+                [[nuevagrabacion_simular_un_fallo_demo]]
             </button>
         </div>
 
         <div class="paso-acciones">
-            <button type="button" class="btn btn-secundario izquierda" data-ir-paso="1" data-i18n="comun.volver">Volver</button>
+            <button type="button" class="btn btn-secundario izquierda" data-ir-paso="1" data-i18n="comun.volver">[[nuevagrabacion_volver]]</button>
             <button type="button" class="btn btn-primario" data-ir-paso="3" id="btnIrAGrabar">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-video" /></svg>
-                <span data-i18n="grabacion.iniciar">Iniciar la grabación</span>
+                <span data-i18n="grabacion.iniciar">[[nuevagrabacion_iniciar_la_grabacion]]</span>
             </button>
         </div>
     </section>
 
     <section class="tarjeta paso-panel grabando" id="panelPaso3" aria-labelledby="tituloPaso3" hidden>
-        <h2 id="tituloPaso3" class="solo-lectores">Grabación en curso</h2>
+        <h2 id="tituloPaso3" class="solo-lectores">[[nuevagrabacion_grabacion_en_curso]]</h2>
 
         <div class="campo derecha" style="text-align:left">
-            <label for="grFuente" data-i18n="grabacion.fuente">Fuente de captura</label>
+            <label for="grFuente" data-i18n="grabacion.fuente">[[nuevagrabacion_fuente_de_captura]]</label>
 
             <select class="entrada" id="grFuente">
                 <option data-i18n="grabacion.fuente.pantalla">Pantalla completa (1920 x 1080 - monitor principal)</option>
@@ -390,13 +389,13 @@
 
         <div class="indicador-rec" id="indicadorRec">
             <span class="punto" aria-hidden="true"></span>
-            <span data-i18n="grabacion.grabando">Grabando</span>
+            <span data-i18n="grabacion.grabando">[[nuevagrabacion_grabando]]</span>
         </div>
 
         <div class="reloj-grabacion" id="relojGrabacion" role="timer" aria-live="off">00:00:00</div>
 
         <p class="texto-suave texto-chico" id="estadoGrabacion" role="status" data-i18n="grabacion.sincronizado">
-            Pantalla y seguimiento ocular sincronizados con la misma marca de tiempo.
+            [[nuevagrabacion_pantalla_y_seguimiento_ocular_sincroniza]]
         </p>
 
         <div class="previa-captura">
@@ -412,27 +411,26 @@
         <div class="controles-grabacion">
             <button type="button" class="btn btn-secundario" id="btnPausar">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-pausa" /></svg>
-                <span id="textoPausar" data-i18n="grabacion.pausar">Pausar</span>
+                <span id="textoPausar" data-i18n="grabacion.pausar">[[nuevagrabacion_pausar]]</span>
             </button>
             <button type="button" class="btn btn-secundario" id="btnReiniciar">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-refrescar" /></svg>
-                <span data-i18n="grabacion.reiniciar">Reiniciar</span>
+                <span data-i18n="grabacion.reiniciar">[[nuevagrabacion_reiniciar]]</span>
             </button>
             <button type="button" class="btn btn-primario" data-abre-modal="modalFinalizar">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg>
-                <span data-i18n="grabacion.finalizar">Finalizar</span>
+                <span data-i18n="grabacion.finalizar">[[nuevagrabacion_finalizar]]</span>
             </button>
             <button type="button" class="btn btn-peligro" data-abre-modal="modalCancelar">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-cerrar" /></svg>
-                <span data-i18n="grabacion.cancelar">Cancelar</span>
+                <span data-i18n="grabacion.cancelar">[[categorias_cancelar]]</span>
             </button>
         </div>
 
         <div class="aviso aviso-alerta mt-24 mb-0" style="text-align:left">
             <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
             <p class="sin-margen" data-i18n="grabacion.avisoDesconexion">
-                Si el dispositivo se desconecta durante la sesión, la grabación se interrumpe y los
-                datos capturados se descartan. No muevas el cable durante la grabación.
+                [[nuevagrabacion_si_el_dispositivo_se_desconecta_durante]]
             </p>
         </div>
     </section>
@@ -443,24 +441,23 @@
     <div class="modal">
         <div class="modal-cabecera">
             <div>
-                <h2 id="finTitulo" data-i18n="grabacion.finModal.titulo">¿Finalizar la grabación?</h2>
+                <h2 id="finTitulo" data-i18n="grabacion.finModal.titulo">[[nuevagrabacion_finalizar_la_grabacion]]</h2>
                 <p class="subtitulo sin-margen" data-i18n="grabacion.finModal.subtitulo">
-                    La sesión se cierra y se envia a procesar. No se puede seguir grabando después.
+                    [[nuevagrabacion_la_sesion_se_cierra_y_se]]
                 </p>
             </div>
-            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
             </button>
         </div>
         <div class="modal-cuerpo">
             <p class="texto-suave sin-margen" data-i18n="grabacion.finModal.texto">
-                El procesamiento arranca solo y suele tardar menos de cinco minutos. Cuando termine
-                vas a recibir un aviso y la sesión queda disponible en Visualizaciones.
+                [[nuevagrabacion_el_procesamiento_arranca_solo_y_suele]]
             </p>
         </div>
         <div class="modal-pie">
-            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="grabacion.finModal.seguir">Seguir grabando</button>
-            <button type="button" class="btn btn-primario" data-i18n="grabacion.finModal.confirmar">Sí, finalizar</button>
+            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="grabacion.finModal.seguir">[[nuevagrabacion_seguir_grabando]]</button>
+            <button type="button" class="btn btn-primario" data-i18n="grabacion.finModal.confirmar">[[nuevagrabacion_si_finalizar]]</button>
         </div>
     </div>
 </div>
@@ -469,12 +466,12 @@
     <div class="modal">
         <div class="modal-cabecera">
             <div>
-                <h2 id="canTitulo" data-i18n="grabacion.canModal.titulo">¿Cancelar la grabación?</h2>
+                <h2 id="canTitulo" data-i18n="grabacion.canModal.titulo">[[nuevagrabacion_cancelar_la_grabacion]]</h2>
                 <p class="subtitulo sin-margen" data-i18n="grabacion.canModal.subtitulo">
-                    Esta acción no se puede deshacer.
+                    [[nuevagrabacion_esta_accion_no_se_puede_deshacer]]
                 </p>
             </div>
-            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
             </button>
         </div>
@@ -482,14 +479,13 @@
             <div class="aviso aviso-peligro mb-0">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
                 <p class="sin-margen" data-i18n="grabacion.canModal.texto">
-                    Se descartan todos los datos capturados hasta ahora, incluida la grabación de
-                    pantalla y los datos de seguimiento ocular. No se guarda nada.
+                    [[nuevagrabacion_se_descartan_todos_los_datos_capturados]]
                 </p>
             </div>
         </div>
         <div class="modal-pie">
-            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="grabacion.canModal.seguir">Seguir grabando</button>
-            <button type="button" class="btn btn-peligro" data-i18n="grabacion.canModal.confirmar">Sí, descartar todo</button>
+            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="grabacion.canModal.seguir">[[nuevagrabacion_seguir_grabando]]</button>
+            <button type="button" class="btn btn-peligro" data-i18n="grabacion.canModal.confirmar">[[nuevagrabacion_si_descartar_todo]]</button>
         </div>
     </div>
 </div>
@@ -553,28 +549,28 @@
 
                 resumen.className = ok ? "aviso aviso-exito" : "aviso aviso-peligro";
                 resumen.querySelector("use").setAttribute("href", ok ? "#i-tilde" : "#i-alerta");
-                resumen.querySelector("strong").textContent = ok ? "Dispositivo listo" : "El dispositivo no esta listo";
+                resumen.querySelector("strong").textContent = ok ? "[[js:nuevagrabacion_dispositivo_listo]]" : "[[js:nuevagrabacion_el_dispositivo_no_esta_listo]]";
                 resumen.querySelector("p").textContent = ok
-                    ? "El Tobii 4C esta conectado, calibrado y con el driver actualizado."
-                    : "Resuelve el problema marcado en rojo y verifica de nuevo para poder grabar.";
+                    ? "[[js:nuevagrabacion_el_tobii_4c_esta_conectado_calibrado]]"
+                    : "[[js:nuevagrabacion_resuelve_el_problema_marcado_en_rojo]]";
 
                 btnIrAGrabar.disabled = !ok;
             }
 
             document.getElementById("btnSimularFallo").addEventListener("click", function () {
                 chequeoDriver.className = "chequeo problema";
-                chequeoDriver.querySelector(".detalle").textContent = "Instalado: 3.4.0 - requerido: 4.0 o superior";
+                chequeoDriver.querySelector(".detalle").textContent = "[[js:nuevagrabacion_instalado_3_4_0_requerido_4]]";
                 chequeoDriver.querySelector(".badge").className = "badge badge-peligro";
-                chequeoDriver.querySelector(".badge").textContent = "Desactualizado";
+                chequeoDriver.querySelector(".badge").textContent = "[[js:nuevagrabacion_desactualizado]]";
 
                 pintarResumen(false);
             });
 
             document.getElementById("btnVerificar").addEventListener("click", function () {
                 chequeoDriver.className = "chequeo correcto";
-                chequeoDriver.querySelector(".detalle").textContent = "Instalado: 4.2.1 - requerido: 4.0 o superior";
+                chequeoDriver.querySelector(".detalle").textContent = "[[js:nuevagrabacion_instalado_4_2_1_requerido_4]]";
                 chequeoDriver.querySelector(".badge").className = "badge badge-exito";
-                chequeoDriver.querySelector(".badge").textContent = "Actualizado";
+                chequeoDriver.querySelector(".badge").textContent = "[[js:nuevagrabacion_actualizado]]";
 
                 pintarResumen(true);
             });
@@ -617,14 +613,14 @@
                 textoPausar.textContent = enPausa ? "Reanudar" : "Pausar";
                 indicador.style.opacity = enPausa ? ".45" : "1";
                 estado.textContent = enPausa
-                    ? "Grabacion en pausa. Los datos capturados hasta ahora se conservan."
-                    : "Pantalla y seguimiento ocular sincronizados con la misma marca de tiempo.";
+                    ? "[[js:nuevagrabacion_grabacion_en_pausa_los_datos_capturados]]"
+                    : "[[js:nuevagrabacion_pantalla_y_seguimiento_ocular_sincroniza]]";
             });
 
             document.getElementById("btnReiniciar").addEventListener("click", function () {
                 segundos = 0;
                 pintarReloj();
-                estado.textContent = "La grabacion se reinicio. Se descartaron los datos anteriores.";
+                estado.textContent = "[[js:nuevagrabacion_la_grabacion_se_reinicio_se_descartaron]]";
             });
         })();
     </script>

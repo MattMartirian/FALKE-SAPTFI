@@ -743,6 +743,7 @@ a.icono-boton
 }
 
 .btn[disabled],
+.btn.aspNetDisabled,
 .btn[aria-disabled="true"]
 {
     opacity: .5;
@@ -1717,4 +1718,20 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
     {
         background: #FFFFFF;
     }
+}
+
+.selector-idioma
+{
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.selector-idioma select.entrada
+{
+    width: auto;
+    min-width: 108px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: .85rem;
 }

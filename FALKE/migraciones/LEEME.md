@@ -18,12 +18,16 @@ guardados sin BOM y en ASCII, para pegarlos en SSMS o ejecutarlos con `sqlcmd -I
 | 12 | `2026-10-05_webmaster.sql` | Rol Webmaster, roles de gestión y `VER_BITACORA_COMPLETA`. |
 | 13 | `2026-10-05_quitar_notificaciones.sql` | Se elimina `NotificacionTable`. |
 | 14 | `2026-10-05_relaciones_permisos_validas.sql` | Disparador que rechaza estructuras imposibles de permisos. |
-| 15 | `2026-10-22_idiomas.sql` | Idiomas: nombre, activo y base en `IdiomaTable`; pendiente y origen en `TraduccionTable`; permiso `GESTIONAR_IDIOMAS` para el Webmaster. Catalogo inicial es + en. |
+| 15 | `2026-10-22_idiomas.sql` | Idiomas: nombre, activo y base en `IdiomaTable`; pendiente y origen en `TraduccionTable`; permiso `GESTIONAR_IDIOMAS` para el Webmaster. Crea las filas de es y en. |
+| 16 | `2026-10-22_idioma_base_ingles.sql` | El inglés pasa a ser el idioma base (`es_base_idioma`); el español queda como idioma común. No cambia el idioma de cada usuario. |
+| 17 | `2026-10-22_bitacora_detalle.sql` | Bitácora: columna `detalle_bitacora`; la descripción pasa a ser un código de evento traducible. Los registros anteriores no se modifican. |
+| 18 | `2026-10-22_idiomas_estado.sql` | Textos `idiomas_estado_habilitado` y `idiomas_estado_deshabilitado` en los idiomas ya cargados (es, en, pt, de). |
 
 ## Después de aplicarlas
 
 1. Entrar con la cuenta de emergencia y ejecutar **Recalcular integridad** (pantalla *Dígito verificador*).
 2. Asignarle el rol **Webmaster** a quien corresponda, desde *Usuarios*.
+3. La aplicación no copia los resx a la base al arrancar: los textos se cargan a la base solo al agregar un idioma desde *Idiomas*. Mientras es y en no tengan textos en la base, se leen del resx y no se pueden editar.
 
 Las que agregan una tabla bajo control de integridad (8, 10 y 11) deben aplicarse **antes** de ejecutar la versión
 nueva de la aplicación: sin su fila en `IntegridadTable` el sistema rechaza todos los ingresos.

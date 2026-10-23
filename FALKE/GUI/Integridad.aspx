@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Integridad.aspx.cs" Inherits="GUI.Integridad" Title="Integridad de la base de datos" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Integridad.aspx.cs" Inherits="GUI.Integridad" Title="[[integridad_integridad_de_la_base_de_datos]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -189,16 +189,14 @@
             <svg width="24" height="24"><use href="#i-escudo" /></svg>
         </span>
         <div>
-            <h1 data-i18n="integridad.titulo">Integridad de la base de datos</h1>
+            <h1 data-i18n="integridad.titulo">[[integridad_integridad_de_la_base_de_datos]]</h1>
             <p data-i18n="integridad.bajada">
-                Verificación mediante dígitos verificadores (DVH por registro y DVV por tabla)
-                sobre las tablas bajo control de integridad. Se recalcula automáticamente al
-                iniciar sesión y puede recalcularse manualmente ante una inconsistencia detectada.
+                [[integridad_verificacion_mediante_digitos_verificado]]
             </p>
         </div>
         <span class="int-sello">
             <svg width="13" height="13" aria-hidden="true"><use href="#i-candado" /></svg>
-            <span data-i18n="integridad.sello">Uso exclusivo Pattern Blue</span>
+            <span data-i18n="integridad.sello">[[integridad_uso_exclusivo_pattern_blue]]</span>
         </span>
     </div>
 
@@ -212,9 +210,7 @@
         <div>
             <strong><asp:Literal ID="litResumenAlerta" runat="server" /></strong>
             <p class="sin-margen" data-i18n="integridad.alerta.texto">
-                El acceso al sistema permanece bloqueado para el resto de los usuarios hasta
-                ejecutar el recálculo completo. Solo el webmaster puede ver el detalle técnico
-                de las tablas y registros afectados.
+                [[integridad_el_acceso_al_sistema_permanece_bloqueado]]
             </p>
         </div>
     </asp:Panel>
@@ -222,58 +218,56 @@
     <asp:Panel ID="pnlAlertaOk" runat="server" CssClass="aviso aviso-exito" role="status" Visible="false">
         <svg width="20" height="20" aria-hidden="true"><use href="#i-tilde" /></svg>
         <p class="sin-margen" data-i18n="integridad.alerta.ok">
-            La verificación no encontró inconsistencias: los datos coinciden con los dígitos
-            verificadores almacenados.
+            [[integridad_la_verificacion_no_encontro_inconsistenc]]
         </p>
     </asp:Panel>
 
     <div class="int-metricas">
         <div class="int-metrica">
-            <div class="rotulo" data-i18n="integridad.metrica.controladas">Tablas bajo control</div>
+            <div class="rotulo" data-i18n="integridad.metrica.controladas">[[integridad_tablas_bajo_control]]</div>
             <div class="dato"><asp:Literal ID="litTotalTablas" runat="server" Text="0" /></div>
-            <div class="sub" data-i18n="integridad.metrica.controladas.sub">Verificadas en cada inicio de sesión</div>
+            <div class="sub" data-i18n="integridad.metrica.controladas.sub">[[integridad_verificadas_en_cada_inicio_de_sesion]]</div>
         </div>
         <div class="int-metrica">
-            <div class="rotulo" data-i18n="integridad.metrica.integras">Tablas íntegras</div>
+            <div class="rotulo" data-i18n="integridad.metrica.integras">[[integridad_tablas_integras]]</div>
             <div class="dato"><asp:Literal ID="litIntegras" runat="server" Text="0" /></div>
-            <div class="sub" data-i18n="integridad.metrica.integras.sub">DVV y DVH coinciden</div>
+            <div class="sub" data-i18n="integridad.metrica.integras.sub">[[integridad_dvv_y_dvh_coinciden]]</div>
         </div>
         <div class="int-metrica" runat="server" id="cardConProblemas">
-            <div class="rotulo" data-i18n="integridad.metrica.inconsistentes">Tablas con inconsistencias</div>
+            <div class="rotulo" data-i18n="integridad.metrica.inconsistentes">[[integridad_tablas_con_inconsistencias]]</div>
             <div class="dato"><asp:Literal ID="litConProblemas" runat="server" Text="0" /></div>
-            <div class="sub" data-i18n="integridad.metrica.inconsistentes.sub">Requieren recálculo</div>
+            <div class="sub" data-i18n="integridad.metrica.inconsistentes.sub">[[integridad_requieren_recalculo]]</div>
         </div>
         <div class="int-metrica" runat="server" id="cardRegistros">
-            <div class="rotulo" data-i18n="integridad.metrica.afectados">Registros alterados</div>
+            <div class="rotulo" data-i18n="integridad.metrica.afectados">[[integridad_registros_alterados]]</div>
             <div class="dato"><asp:Literal ID="litRegistrosAfectados" runat="server" Text="0" /></div>
-            <div class="sub" data-i18n="integridad.metrica.afectados.sub">Con DVH que no coincide</div>
+            <div class="sub" data-i18n="integridad.metrica.afectados.sub">[[integridad_con_dvh_que_no_coincide]]</div>
         </div>
     </div>
 
     <div class="int-seccion-cab">
         <div>
-            <h2 data-i18n="integridad.porTabla">Estado de integridad por tabla</h2>
+            <h2 data-i18n="integridad.porTabla">[[integridad_estado_de_integridad_por_tabla]]</h2>
             <p data-i18n="integridad.porTabla.ayuda">
-                Dígito verificador horizontal (DVH) por registro y vertical (DVV) por tabla,
-                según SHA-256 encadenado.
+                [[integridad_digito_verificador_horizontal_dvh_por_re]]
             </p>
         </div>
         <button type="button" class="btn btn-peligro" data-abre-modal="modalRecalcular">
             <svg width="16" height="16" aria-hidden="true"><use href="#i-refrescar" /></svg>
-            <span data-i18n="integridad.recalcular">Recalcular dígitos verificadores</span>
+            <span data-i18n="integridad.recalcular">[[integridad_recalcular_digitos_verificadores]]</span>
         </button>
     </div>
 
     <div class="tabla-scroll">
         <table class="tabla int-tabla">
-            <caption class="solo-lectores" data-i18n="integridad.tabla.caption">Estado de integridad de cada tabla controlada</caption>
+            <caption class="solo-lectores" data-i18n="integridad.tabla.caption">[[integridad_estado_de_integridad_de_cada_tabla]]</caption>
             <thead>
                 <tr>
-                    <th scope="col" data-i18n="integridad.col.tabla">Tabla</th>
-                    <th scope="col" data-i18n="integridad.col.registros">Registros</th>
-                    <th scope="col" data-i18n="integridad.col.estado">Estado</th>
-                    <th scope="col" data-i18n="integridad.col.detalle">Detalle</th>
-                    <th scope="col"><span class="solo-lectores" data-i18n="comun.acciones">Acciones</span></th>
+                    <th scope="col" data-i18n="integridad.col.tabla">[[integridad_tabla]]</th>
+                    <th scope="col" data-i18n="integridad.col.registros">[[integridad_registros]]</th>
+                    <th scope="col" data-i18n="integridad.col.estado">[[dispositivos_estado]]</th>
+                    <th scope="col" data-i18n="integridad.col.detalle">[[integridad_detalle]]</th>
+                    <th scope="col"><span class="solo-lectores" data-i18n="comun.acciones">[[categorias_acciones]]</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -293,7 +287,7 @@
                                 <button type="button" class="btn btn-fantasma btn-chico js-ver-detalle"
                                         data-abre-modal="modalDetalleTabla" data-tabla='<%# Eval("Nombre") %>' <%# Eval("AtributoDetalle") %>>
                                     <svg width="15" height="15" aria-hidden="true"><use href="#i-ojo" /></svg>
-                                    <span data-i18n="integridad.verDetalle">Ver detalle</span>
+                                    <span data-i18n="integridad.verDetalle">[[dispositivos_ver_detalle]]</span>
                                 </button>
                             </td>
                         </tr>
@@ -306,10 +300,7 @@
     <div class="aviso aviso-alerta mt-24">
         <svg width="20" height="20" aria-hidden="true"><use href="#i-escudo" /></svg>
         <p class="sin-margen" data-i18n="integridad.avisoRecalculo">
-            Recalcular los dígitos hace que el sistema vuelva a aceptar los datos tal como
-            están hoy. Antes de hacerlo conviene revisar los registros marcados y, si
-            corresponde, restaurar un respaldo: recalcular sobre datos adulterados deja el
-            problema adentro.
+            [[integridad_recalcular_los_digitos_hace_que_el]]
         </p>
     </div>
 
@@ -317,10 +308,10 @@
         <div class="modal ancho">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="detIntTitulo" data-i18n="integridad.detalle.titulo">Registros observados por el control de integridad</h2>
+                    <h2 id="detIntTitulo" data-i18n="integridad.detalle.titulo">[[integridad_registros_observados_por_el_control_de]]</h2>
                     <p class="subtitulo sin-margen mono" id="detIntTabla"></p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -329,13 +320,13 @@
                 <ul class="texto-chico texto-suave" id="detIntMotivos"></ul>
                 <div class="tabla-scroll">
                     <table class="tabla">
-                        <caption class="solo-lectores" data-i18n="integridad.detalle.caption">Registros con dígito verificador incorrecto</caption>
+                        <caption class="solo-lectores" data-i18n="integridad.detalle.caption">[[integridad_registros_con_digito_verificador_incorre]]</caption>
                         <thead>
                             <tr>
-                                <th scope="col" data-i18n="integridad.col.numero">Registro n.&deg;</th>
-                                <th scope="col" data-i18n="integridad.col.clave">Clave (PK)</th>
-                                <th scope="col" data-i18n="integridad.col.dvhGuardado">DVH guardado</th>
-                                <th scope="col" data-i18n="integridad.col.dvhCalculado">DVH calculado</th>
+                                <th scope="col" data-i18n="integridad.col.numero">[[integridad_registro_n]]</th>
+                                <th scope="col" data-i18n="integridad.col.clave">[[integridad_clave_pk]]</th>
+                                <th scope="col" data-i18n="integridad.col.dvhGuardado">[[integridad_dvh_guardado]]</th>
+                                <th scope="col" data-i18n="integridad.col.dvhCalculado">[[integridad_dvh_calculado]]</th>
                             </tr>
                         </thead>
                         <tbody id="detIntCuerpo"></tbody>
@@ -343,7 +334,7 @@
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cerrar">Cerrar</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cerrar">[[categorias_cerrar]]</button>
             </div>
         </div>
     </div>
@@ -352,10 +343,10 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="recalcTitulo" data-i18n="recalcular.titulo">Recalcular los dígitos verificadores</h2>
-                    <p class="subtitulo sin-margen" data-i18n="recalcular.subtitulo">Revisá bien antes de confirmar.</p>
+                    <h2 id="recalcTitulo" data-i18n="recalcular.titulo">[[integridad_recalcular_los_digitos_verificadores]]</h2>
+                    <p class="subtitulo sin-margen" data-i18n="recalcular.subtitulo">[[integridad_revisa_bien_antes_de_confirmar]]</p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -363,28 +354,27 @@
                 <div class="aviso aviso-peligro">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
                     <p class="sin-margen" data-i18n="recalcular.aviso">
-                        Al recalcular, los datos actuales pasan a considerarse correctos y se
-                        pierde la evidencia de que algo fue modificado por fuera del sistema.
+                        [[integridad_al_recalcular_los_datos_actuales_pasan]]
                     </p>
                 </div>
                 <div class="campo">
-                    <label for="ddlAlcance" data-i18n="recalcular.alcance">Alcance</label>
+                    <label for="ddlAlcance" data-i18n="recalcular.alcance">[[integridad_alcance]]</label>
                     <asp:DropDownList ID="ddlAlcance" runat="server" CssClass="entrada" ClientIDMode="Static" data-foco-inicial="si">
-                        <asp:ListItem Value="problemas">Solo las tablas con inconsistencias</asp:ListItem>
-                        <asp:ListItem Value="todas">Todas las tablas bajo control</asp:ListItem>
+                        <asp:ListItem Value="problemas">[[integridad_solo_las_tablas_con_inconsistencias]]</asp:ListItem>
+                        <asp:ListItem Value="todas">[[integridad_todas_las_tablas_bajo_control]]</asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 <div class="campo">
-                    <label for="txtMotivo" data-i18n="recalcular.motivo">Motivo</label>
+                    <label for="txtMotivo" data-i18n="recalcular.motivo">[[dispositivos_motivo]]</label>
                     <asp:TextBox ID="txtMotivo" runat="server" CssClass="entrada" TextMode="MultiLine" Rows="3" ClientIDMode="Static"
-                                 placeholder="Queda registrado en la bitácora"
+                                 placeholder="[[integridad_queda_registrado_en_la_bitacora]]"
                                  data-i18n-attr="placeholder:recalcular.motivo.placeholder" />
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">[[categorias_cancelar]]</button>
                 <asp:Button ID="btnRecalcular" runat="server" CssClass="btn btn-peligro" OnClick="btnRecalcular_Click"
-                            Text="Recalcular ahora" data-i18n="recalcular.confirmar" />
+                            Text="[[integridad_recalcular_ahora]]" data-i18n="recalcular.confirmar" />
             </div>
         </div>
     </div>

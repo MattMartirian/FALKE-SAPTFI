@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Visualizaciones.aspx.cs" Inherits="GUI.Visualizaciones" Title="Visualizaciones" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Visualizaciones.aspx.cs" Inherits="GUI.Visualizaciones" Title="[[app_visualizaciones]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -347,32 +347,32 @@
 
 <div class="vis">
 
-    <nav class="vis-rail" aria-label="Sesiones y filtros">
+    <nav class="vis-rail" aria-label="[[visualizaciones_sesiones_y_filtros]]">
 
-        <h2 data-i18n="vis.rail.sesiones">Sesiones</h2>
+        <h2 data-i18n="vis.rail.sesiones">[[categorias_sesiones]]</h2>
 
         <div class="vis-buscador campo-buscar">
-            <label class="solo-lectores" for="visBuscar" data-i18n="vis.buscar">Buscar por nombre</label>
+            <label class="solo-lectores" for="visBuscar" data-i18n="vis.buscar">[[visualizaciones_buscar_por_nombre]]</label>
             <svg aria-hidden="true"><use href="#i-buscar" /></svg>
             <input type="search" class="entrada" id="visBuscar"
                    placeholder="Checkout, onboarding..." data-i18n-attr="placeholder:vis.buscar.placeholder" />
         </div>
 
-        <div class="vis-chips chips" data-unico role="group" aria-label="Filtrar por categoría">
-            <button type="button" class="chip" aria-pressed="true" data-categoria="todas" data-i18n="vis.cat.todas">Todas</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="appweb" data-i18n="vis.cat.appweb">App web</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="software" data-i18n="vis.cat.software">Software</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="videojuego" data-i18n="vis.cat.videojuego">Videojuego</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="publicidad" data-i18n="vis.cat.publicidad">Publicidad</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="appmovil" data-i18n="vis.cat.appmovil">App móvil</button>
+        <div class="vis-chips chips" data-unico role="group" aria-label="[[visualizaciones_filtrar_por_categoria]]">
+            <button type="button" class="chip" aria-pressed="true" data-categoria="todas" data-i18n="vis.cat.todas">[[empresas_todas]]</button>
+            <button type="button" class="chip" aria-pressed="false" data-categoria="appweb" data-i18n="vis.cat.appweb">[[analisismultiple_app_web]]</button>
+            <button type="button" class="chip" aria-pressed="false" data-categoria="software" data-i18n="vis.cat.software">[[analisismultiple_software]]</button>
+            <button type="button" class="chip" aria-pressed="false" data-categoria="videojuego" data-i18n="vis.cat.videojuego">[[analisismultiple_videojuego]]</button>
+            <button type="button" class="chip" aria-pressed="false" data-categoria="publicidad" data-i18n="vis.cat.publicidad">[[categorias_publicidad]]</button>
+            <button type="button" class="chip" aria-pressed="false" data-categoria="appmovil" data-i18n="vis.cat.appmovil">[[analisismultiple_app_movil]]</button>
         </div>
 
         <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Categorias.aspx") %>">
             <svg width="16" height="16" aria-hidden="true"><use href="#i-mas" /></svg>
-            <span data-i18n="vis.nuevaCategoria">Nueva categoría</span>
+            <span data-i18n="vis.nuevaCategoria">[[categorias_nueva_categoria]]</span>
         </a>
 
-        <h2 data-i18n="vis.rail.listado">Listado de sesiones</h2>
+        <h2 data-i18n="vis.rail.listado">[[visualizaciones_listado_de_sesiones]]</h2>
 
         <div class="vis-lista" id="listaSesiones">
 
@@ -380,7 +380,7 @@
                     data-categoria="appweb" data-estado="finalizado" data-tipo="App e-commerce"
                     data-nombre="Checkout — App e-commerce" data-fecha="12 jul 2026" data-duracion="18:42" data-analista="María Gómez">
                 <span class="nombre">Checkout — App e-commerce</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span>
+                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
                 <span class="meta">12 jul 2026 &middot; 18:42</span>
             </button>
 
@@ -388,7 +388,7 @@
                     data-categoria="videojuego" data-estado="finalizado" data-tipo="RPG móvil"
                     data-nombre="Onboarding — RPG móvil" data-fecha="10 jul 2026" data-duracion="09:15" data-analista="Nicolás Castro">
                 <span class="nombre">Onboarding — RPG móvil</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span>
+                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
                 <span class="meta">10 jul 2026 &middot; 09:15</span>
             </button>
 
@@ -396,7 +396,7 @@
                     data-categoria="publicidad" data-estado="procesando" data-tipo="Campaña Q3"
                     data-nombre="Landing — Campaña Q3" data-fecha="08 jul 2026" data-duracion="04:03" data-analista="María Gómez">
                 <span class="nombre">Landing — Campaña Q3</span>
-                <span class="badge-vivo" data-i18n="estado.procesando">Procesando</span>
+                <span class="badge-vivo" data-i18n="estado.procesando">[[panel_procesando]]</span>
                 <span class="meta">08 jul 2026 &middot; 04:03</span>
             </button>
 
@@ -404,7 +404,7 @@
                     data-categoria="software" data-estado="finalizado" data-tipo="Panel interno"
                     data-nombre="Login — Panel interno" data-fecha="05 jul 2026" data-duracion="06:51" data-analista="María Gómez">
                 <span class="nombre">Login — Panel interno</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span>
+                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
                 <span class="meta">05 jul 2026 &middot; 06:51</span>
             </button>
 
@@ -412,7 +412,7 @@
                     data-categoria="appweb" data-estado="finalizado" data-tipo="App e-commerce"
                     data-nombre="Carrito — App e-commerce" data-fecha="01 jul 2026" data-duracion="12:27" data-analista="Valentina Ruiz">
                 <span class="nombre">Carrito — App e-commerce</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span>
+                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
                 <span class="meta">01 jul 2026 &middot; 12:27</span>
             </button>
 
@@ -420,7 +420,7 @@
                     data-categoria="appmovil" data-estado="finalizado" data-tipo="App móvil"
                     data-nombre="Alta de cuenta — App móvil" data-fecha="27 jun 2026" data-duracion="07:40" data-analista="Nicolás Castro">
                 <span class="nombre">Alta de cuenta — App móvil</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span>
+                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
                 <span class="meta">27 jun 2026 &middot; 07:40</span>
             </button>
 
@@ -428,7 +428,7 @@
 
         <div class="vacio" id="sesionesVacio" hidden>
             <svg width="28" height="28" aria-hidden="true"><use href="#i-carpeta" /></svg>
-            <p class="sin-margen" data-i18n="vis.sinSesiones">No hay sesiones que coincidan con los filtros.</p>
+            <p class="sin-margen" data-i18n="vis.sinSesiones">[[visualizaciones_no_hay_sesiones_que_coincidan_con]]</p>
         </div>
 
     </nav>
@@ -436,7 +436,7 @@
     <div class="vis-main">
 
         <p class="migas">
-            <span data-i18n="vis.rail.sesiones">Sesiones</span>
+            <span data-i18n="vis.rail.sesiones">[[categorias_sesiones]]</span>
             <span aria-hidden="true">/</span>
             <strong id="migaSesion">Checkout — App e-commerce</strong>
         </p>
@@ -451,7 +451,7 @@
             <div class="acciones">
                 <button type="button" class="btn btn-primario" data-abre-modal="modalExportar">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-descarga" /></svg>
-                    <span data-i18n="vis.exportar">Descargar reporte</span>
+                    <span data-i18n="vis.exportar">[[analisismultiple_descargar_reporte]]</span>
                 </button>
             </div>
         </div>
@@ -461,28 +461,28 @@
             <div class="visual destacada">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-metricas" /></svg>
-                    <span data-i18n="vis.metricas.titulo">Métricas generales</span>
+                    <span data-i18n="vis.metricas.titulo">[[visualizaciones_metricas_generales]]</span>
                 </span>
                 <div class="metricas">
                     <div>
                         <div class="metrica-valor">18:42</div>
-                        <div class="metrica-nombre" data-i18n="vis.metrica.duracion">Duración total</div>
+                        <div class="metrica-nombre" data-i18n="vis.metrica.duracion">[[visualizaciones_duracion_total]]</div>
                     </div>
                     <div>
                         <div class="metrica-valor">2,3 s</div>
-                        <div class="metrica-nombre" data-i18n="vis.metrica.fijacionMedia">Fijación media</div>
+                        <div class="metrica-nombre" data-i18n="vis.metrica.fijacionMedia">[[analisismultiple_fijacion_media]]</div>
                     </div>
                     <div>
                         <div class="metrica-valor">47</div>
-                        <div class="metrica-nombre" data-i18n="vis.metrica.fijaciones">Fijaciones</div>
+                        <div class="metrica-nombre" data-i18n="vis.metrica.fijaciones">[[visualizaciones_fijaciones]]</div>
                     </div>
                     <div>
                         <div class="metrica-valor">62%</div>
-                        <div class="metrica-nombre" data-i18n="vis.metrica.atencion">Atención activa</div>
+                        <div class="metrica-nombre" data-i18n="vis.metrica.atencion">[[analisismultiple_atencion_activa]]</div>
                     </div>
                     <div>
                         <div class="metrica-valor">38%</div>
-                        <div class="metrica-nombre" data-i18n="vis.metrica.sacadico">Movimiento sacádico</div>
+                        <div class="metrica-nombre" data-i18n="vis.metrica.sacadico">[[visualizaciones_movimiento_sacadico]]</div>
                     </div>
                 </div>
             </div>
@@ -490,13 +490,13 @@
             <button type="button" class="visual" data-abre-modal="modalVisor" data-visual="grabacion">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-video" /></svg>
-                    <span data-i18n="vis.grafico.grabacion">Grabación con seguimiento</span>
+                    <span data-i18n="vis.grafico.grabacion">[[visualizaciones_grabacion_con_seguimiento]]</span>
                 </span>
                 <span class="grafico grafico-video" aria-hidden="true">
                     <span class="play"><svg width="22" height="22"><use href="#i-play" /></svg></span>
                 </span>
                 <span class="ver">
-                    <span data-i18n="comun.verDetalle">Ver detalle</span>
+                    <span data-i18n="comun.verDetalle">[[dispositivos_ver_detalle]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </span>
             </button>
@@ -504,11 +504,11 @@
             <button type="button" class="visual" data-abre-modal="modalVisor" data-visual="calor">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-calor" /></svg>
-                    <span data-i18n="vis.grafico.calor">Mapa de calor</span>
+                    <span data-i18n="vis.grafico.calor">[[analisismultiple_mapa_de_calor]]</span>
                 </span>
                 <span class="grafico grafico-calor" aria-hidden="true"></span>
                 <span class="ver">
-                    <span data-i18n="comun.verDetalle">Ver detalle</span>
+                    <span data-i18n="comun.verDetalle">[[dispositivos_ver_detalle]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </span>
             </button>
@@ -516,7 +516,7 @@
             <button type="button" class="visual" data-abre-modal="modalVisor" data-visual="zonas">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-zonas" /></svg>
-                    <span data-i18n="vis.grafico.zonas">Zonas de interés y ciegas</span>
+                    <span data-i18n="vis.grafico.zonas">[[analisismultiple_zonas_de_interes_y_ciegas]]</span>
                 </span>
                 <span class="grafico" aria-hidden="true">
                     <svg viewBox="0 0 320 180" preserveAspectRatio="none">
@@ -527,7 +527,7 @@
                     </svg>
                 </span>
                 <span class="ver">
-                    <span data-i18n="comun.verDetalle">Ver detalle</span>
+                    <span data-i18n="comun.verDetalle">[[dispositivos_ver_detalle]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </span>
             </button>
@@ -535,7 +535,7 @@
             <button type="button" class="visual" data-abre-modal="modalVisor" data-visual="dispersion">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-dispersion" /></svg>
-                    <span data-i18n="vis.grafico.dispersion">Dispersión de mirada</span>
+                    <span data-i18n="vis.grafico.dispersion">[[analisismultiple_dispersion_de_mirada]]</span>
                 </span>
                 <span class="grafico" aria-hidden="true">
                     <svg viewBox="0 0 320 180" preserveAspectRatio="none">
@@ -551,7 +551,7 @@
                     </svg>
                 </span>
                 <span class="ver">
-                    <span data-i18n="comun.verDetalle">Ver detalle</span>
+                    <span data-i18n="comun.verDetalle">[[dispositivos_ver_detalle]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </span>
             </button>
@@ -559,7 +559,7 @@
             <button type="button" class="visual" data-abre-modal="modalVisor" data-visual="atencion">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-torta" /></svg>
-                    <span data-i18n="vis.grafico.atencion">Atención frente a distracción</span>
+                    <span data-i18n="vis.grafico.atencion">[[visualizaciones_atencion_frente_a_distraccion]]</span>
                 </span>
                 <span class="grafico" aria-hidden="true" style="display:flex;align-items:center;justify-content:center">
                     <svg viewBox="0 0 120 120" style="width:auto;height:82%">
@@ -570,7 +570,7 @@
                     </svg>
                 </span>
                 <span class="ver">
-                    <span data-i18n="comun.verDetalle">Ver detalle</span>
+                    <span data-i18n="comun.verDetalle">[[dispositivos_ver_detalle]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </span>
             </button>
@@ -578,7 +578,7 @@
             <button type="button" class="visual" data-abre-modal="modalVisor" data-visual="recorrido">
                 <span class="rotulo">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-recorrido" /></svg>
-                    <span data-i18n="vis.grafico.recorrido">Recorrido de mirada</span>
+                    <span data-i18n="vis.grafico.recorrido">[[analisismultiple_recorrido_de_mirada]]</span>
                 </span>
                 <span class="grafico" aria-hidden="true">
                     <svg viewBox="0 0 320 180" preserveAspectRatio="none">
@@ -589,7 +589,7 @@
                     </svg>
                 </span>
                 <span class="ver">
-                    <span data-i18n="comun.verDetalle">Ver detalle</span>
+                    <span data-i18n="comun.verDetalle">[[dispositivos_ver_detalle]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </span>
             </button>
@@ -604,10 +604,10 @@
 
         <div class="modal-cabecera">
             <div>
-                <h2 id="visorTitulo" data-i18n="vis.visor.titulo">Grabación con seguimiento</h2>
+                <h2 id="visorTitulo" data-i18n="vis.visor.titulo">[[visualizaciones_grabacion_con_seguimiento]]</h2>
                 <p class="subtitulo sin-margen" id="visorSubtitulo">Checkout — App e-commerce &middot; 12 jul 2026</p>
             </div>
-            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
             </button>
         </div>
@@ -618,24 +618,24 @@
 
             <div class="visor-controles">
                 <div class="visor-botones">
-                    <button type="button" class="icono-boton" aria-label="Retroceder diez segundos">
+                    <button type="button" class="icono-boton" aria-label="[[visualizaciones_retroceder_diez_segundos]]">
                         <svg width="20" height="20" aria-hidden="true"><use href="#i-atras" /></svg>
                     </button>
-                    <button type="button" class="icono-boton principal" id="btnReproducir" aria-label="Reproducir">
+                    <button type="button" class="icono-boton principal" id="btnReproducir" aria-label="[[visualizaciones_reproducir]]">
                         <svg width="20" height="20" aria-hidden="true" data-icono-play><use href="#i-play" /></svg>
                         <svg width="20" height="20" aria-hidden="true" data-icono-pausa style="display:none"><use href="#i-pausa" /></svg>
                     </button>
-                    <button type="button" class="icono-boton" aria-label="Adelantar diez segundos">
+                    <button type="button" class="icono-boton" aria-label="[[visualizaciones_adelantar_diez_segundos]]">
                         <svg width="20" height="20" aria-hidden="true"><use href="#i-adelante" /></svg>
                     </button>
                 </div>
 
                 <span class="visor-tiempo" id="visorTiempo">06:32 / 18:42</span>
 
-                <label class="solo-lectores" for="visorLinea" data-i18n="vis.visor.linea">Posición en la grabación</label>
+                <label class="solo-lectores" for="visorLinea" data-i18n="vis.visor.linea">[[visualizaciones_posicion_en_la_grabacion]]</label>
                 <input type="range" class="linea-tiempo" id="visorLinea" min="0" max="100" value="35" />
 
-                <button type="button" class="btn btn-secundario btn-chico" data-cierra-modal data-i18n="comun.salir">Salir</button>
+                <button type="button" class="btn btn-secundario btn-chico" data-cierra-modal data-i18n="comun.salir">[[visualizaciones_salir]]</button>
             </div>
 
             <div class="leyenda" id="visorLeyenda"></div>
@@ -643,7 +643,7 @@
             <div class="aviso aviso-info mt-16 mb-0">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
                 <p class="sin-margen" id="visorAyuda" data-i18n="vis.visor.ayuda">
-                    Muévete por la línea de tiempo para ver cómo cambia el análisis a lo largo de la sesión.
+                    [[visualizaciones_muevete_por_la_linea_de_tiempo]]
                 </p>
             </div>
 
@@ -656,75 +656,75 @@
 
         <div class="modal-cabecera">
             <div>
-                <h2 id="exportarTitulo" data-i18n="vis.exportar.titulo">Exportar análisis</h2>
+                <h2 id="exportarTitulo" data-i18n="vis.exportar.titulo">[[visualizaciones_exportar_analisis]]</h2>
                 <p class="subtitulo sin-margen" data-i18n="vis.exportar.subtitulo">
-                    Elige qué incluir en el reporte PDF.
+                    [[visualizaciones_elige_que_incluir_en_el_reporte]]
                 </p>
             </div>
-            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
             </button>
         </div>
 
         <div class="modal-cuerpo">
 
-            <p class="etiqueta" data-i18n="vis.exportar.contenido">Contenido del reporte</p>
+            <p class="etiqueta" data-i18n="vis.exportar.contenido">[[visualizaciones_contenido_del_reporte]]</p>
 
             <label class="opcion">
                 <input type="checkbox" checked disabled />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.exportar.portada">Nombre, fecha y métricas generales</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.portada.detalle">Siempre se incluye en el reporte.</span>
+                    <span class="opcion-titulo" data-i18n="vis.exportar.portada">[[visualizaciones_nombre_fecha_y_metricas_generales]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.portada.detalle">[[visualizaciones_siempre_se_incluye_en_el_reporte]]</span>
                 </span>
             </label>
 
-            <p class="etiqueta mt-16" data-i18n="vis.exportar.visualizaciones">Visualizaciones a incluir</p>
+            <p class="etiqueta mt-16" data-i18n="vis.exportar.visualizaciones">[[visualizaciones_visualizaciones_a_incluir]]</p>
 
             <label class="opcion">
                 <input type="checkbox" name="expVisual" value="grabacion" />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.grabacion">Grabación con seguimiento</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.grabacion.detalle">Se incluye como cuadro representativo.</span>
+                    <span class="opcion-titulo" data-i18n="vis.grafico.grabacion">[[visualizaciones_grabacion_con_seguimiento]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.grabacion.detalle">[[visualizaciones_se_incluye_como_cuadro_representativo]]</span>
                 </span>
             </label>
 
             <label class="opcion">
                 <input type="checkbox" name="expVisual" value="calor" checked />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.calor">Mapa de calor</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.calor.detalle">Concentración de la atención visual.</span>
+                    <span class="opcion-titulo" data-i18n="vis.grafico.calor">[[analisismultiple_mapa_de_calor]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.calor.detalle">[[visualizaciones_concentracion_de_la_atencion_visual]]</span>
                 </span>
             </label>
 
             <label class="opcion">
                 <input type="checkbox" name="expVisual" value="zonas" checked />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.zonas">Zonas de interés y ciegas</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.zonas.detalle">Áreas miradas y áreas ignoradas.</span>
+                    <span class="opcion-titulo" data-i18n="vis.grafico.zonas">[[analisismultiple_zonas_de_interes_y_ciegas]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.zonas.detalle">[[visualizaciones_areas_miradas_y_areas_ignoradas]]</span>
                 </span>
             </label>
 
             <label class="opcion">
                 <input type="checkbox" name="expVisual" value="dispersion" />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.dispersion">Dispersión de mirada</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.dispersion.detalle">Qué tan estable fue la atención.</span>
+                    <span class="opcion-titulo" data-i18n="vis.grafico.dispersion">[[analisismultiple_dispersion_de_mirada]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.dispersion.detalle">[[visualizaciones_que_tan_estable_fue_la_atencion]]</span>
                 </span>
             </label>
 
             <label class="opcion">
                 <input type="checkbox" name="expVisual" value="atencion" />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.atencion">Atención frente a distracción</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.atencion.detalle">Fijación activa frente a movimiento sacádico.</span>
+                    <span class="opcion-titulo" data-i18n="vis.grafico.atencion">[[visualizaciones_atencion_frente_a_distraccion]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.atencion.detalle">[[visualizaciones_fijacion_activa_frente_a_movimiento_saca]]</span>
                 </span>
             </label>
 
             <label class="opcion">
                 <input type="checkbox" name="expVisual" value="recorrido" checked />
                 <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.recorrido">Recorrido de mirada</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.recorrido.detalle">Trayecto secuencial sobre el activo.</span>
+                    <span class="opcion-titulo" data-i18n="vis.grafico.recorrido">[[analisismultiple_recorrido_de_mirada]]</span>
+                    <span class="opcion-detalle" data-i18n="vis.exportar.recorrido.detalle">[[visualizaciones_trayecto_secuencial_sobre_el_activo]]</span>
                 </span>
             </label>
 
@@ -733,10 +733,10 @@
         </div>
 
         <div class="modal-pie">
-            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
+            <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">[[categorias_cancelar]]</button>
             <button type="button" class="btn btn-primario" id="btnExportar">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-descarga" /></svg>
-                <span data-i18n="vis.exportar.boton">Exportar reporte</span>
+                <span data-i18n="vis.exportar.boton">[[visualizaciones_exportar_reporte]]</span>
             </button>
         </div>
 
@@ -808,7 +808,7 @@
                 tituloSesion.textContent = nombre;
                 migaSesion.textContent = nombre;
                 subtituloSesion.textContent = boton.getAttribute("data-fecha") + " · " +
-                    boton.getAttribute("data-duracion") + " min · Analista: " +
+                    boton.getAttribute("data-duracion") + " [[js:visualizaciones_min_analista]] " +
                     boton.getAttribute("data-analista") + " · " + boton.getAttribute("data-tipo");
                 visorSubtitulo.textContent = nombre + " · " + boton.getAttribute("data-fecha");
 
@@ -822,58 +822,58 @@
 
             var VISUALES = {
                 grabacion: {
-                    titulo: "Grabación con seguimiento",
+                    titulo: "[[js:visualizaciones_grabacion_con_seguimiento]]",
                     lienzo: '<span class="grafico grafico-video" style="height:100%;aspect-ratio:auto;border:0"></span>',
-                    leyenda: '<span><i style="background:#F26157"></i>Punto de mirada actual</span>'
+                    leyenda: '<span><i style="background:#F26157"></i>[[js:visualizaciones_punto_de_mirada_actual]]</span>'
                 },
                 calor: {
-                    titulo: "Mapa de calor",
+                    titulo: "[[js:analisismultiple_mapa_de_calor]]",
                     lienzo: '<span class="grafico grafico-calor" style="height:100%;aspect-ratio:auto;border:0"></span>',
-                    leyenda: '<span><i style="background:#F26157"></i>Mayor concentración</span>' +
-                             '<span><i style="background:#E8AF52"></i>Concentración media</span>' +
-                             '<span><i style="background:#56637C"></i>Menor concentración</span>'
+                    leyenda: '<span><i style="background:#F26157"></i>[[js:visualizaciones_mayor_concentracion]]</span>' +
+                             '<span><i style="background:#E8AF52"></i>[[js:visualizaciones_concentracion_media]]</span>' +
+                             '<span><i style="background:#56637C"></i>[[js:visualizaciones_menor_concentracion]]</span>'
                 },
                 zonas: {
-                    titulo: "Zonas de interés y zonas ciegas",
+                    titulo: "[[js:visualizaciones_zonas_de_interes_y_zonas_ciegas]]",
                     lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
                             '<rect class="zona-interes" x="30" y="26" width="120" height="62" rx="6" />' +
                             '<rect class="zona-interes" x="170" y="60" width="90" height="46" rx="6" />' +
                             '<rect class="zona-ciega" x="42" y="112" width="86" height="44" rx="6" />' +
                             '<rect class="zona-ciega" x="212" y="122" width="74" height="36" rx="6" /></svg>',
-                    leyenda: '<span><i style="background:rgba(232,175,82,.5);border:1px solid #E8AF52"></i>Zona de interés</span>' +
-                             '<span><i style="background:transparent;border:1px dashed #56637C"></i>Zona ciega</span>'
+                    leyenda: '<span><i style="background:rgba(232,175,82,.5);border:1px solid #E8AF52"></i>[[js:visualizaciones_zona_de_interes]]</span>' +
+                             '<span><i style="background:transparent;border:1px dashed #56637C"></i>[[js:visualizaciones_zona_ciega]]</span>'
                 },
                 dispersion: {
-                    titulo: "Dispersión de mirada",
+                    titulo: "[[js:analisismultiple_dispersion_de_mirada]]",
                     lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
                             '<ellipse cx="158" cy="88" rx="86" ry="48" fill="rgba(232,175,82,.16)" stroke="#E8AF52" stroke-width="2" stroke-dasharray="5 4" />' +
                             '<circle class="punto-mirada" cx="120" cy="66" r="4" /><circle class="punto-mirada" cx="168" cy="58" r="4" />' +
                             '<circle class="punto-mirada" cx="196" cy="92" r="4" /><circle class="punto-mirada" cx="142" cy="104" r="4" />' +
                             '<circle class="punto-mirada" cx="104" cy="98" r="4" /><circle class="punto-mirada" cx="182" cy="120" r="4" />' +
                             '<circle cx="158" cy="88" r="5" fill="#F26157" /></svg>',
-                    leyenda: '<span><i style="background:#56637C"></i>Punto de mirada</span>' +
-                             '<span><i style="background:#F26157"></i>Centroide</span>' +
-                             '<span><i style="background:transparent;border:1px dashed #E8AF52"></i>Elipse de dispersión</span>'
+                    leyenda: '<span><i style="background:#56637C"></i>[[js:visualizaciones_punto_de_mirada]]</span>' +
+                             '<span><i style="background:#F26157"></i>[[js:visualizaciones_centroide]]</span>' +
+                             '<span><i style="background:transparent;border:1px dashed #E8AF52"></i>[[js:visualizaciones_elipse_de_dispersion]]</span>'
                 },
                 atencion: {
-                    titulo: "Atención frente a distracción",
+                    titulo: "[[js:visualizaciones_atencion_frente_a_distraccion]]",
                     lienzo: '<span style="display:flex;height:100%;align-items:center;justify-content:center">' +
                             '<svg viewBox="0 0 120 120" style="height:76%">' +
                             '<circle cx="60" cy="60" r="44" fill="none" stroke="#0E1A34" stroke-width="18" />' +
                             '<circle cx="60" cy="60" r="44" fill="none" stroke="#E8AF52" stroke-width="18" stroke-dasharray="171 276" transform="rotate(-90 60 60)" />' +
                             '<text x="60" y="66" text-anchor="middle" font-size="20" font-weight="700" fill="currentColor">62%</text>' +
                             '</svg></span>',
-                    leyenda: '<span><i style="background:#E8AF52"></i>Fijación activa (62%)</span>' +
-                             '<span><i style="background:#0E1A34"></i>Movimiento sacádico (38%)</span>'
+                    leyenda: '<span><i style="background:#E8AF52"></i>[[js:visualizaciones_fijacion_activa_62]]</span>' +
+                             '<span><i style="background:#0E1A34"></i>[[js:visualizaciones_movimiento_sacadico_38]]</span>'
                 },
                 recorrido: {
-                    titulo: "Recorrido de mirada",
+                    titulo: "[[js:analisismultiple_recorrido_de_mirada]]",
                     lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
                             '<path class="linea-recorrido" d="M40 132 C 88 40, 132 150, 176 74 S 250 44, 284 96" />' +
                             '<circle cx="40" cy="132" r="5" fill="#56637C" /><circle cx="176" cy="74" r="5" fill="#0E1A34" />' +
                             '<circle cx="284" cy="96" r="5" fill="#F26157" /></svg>',
-                    leyenda: '<span><i style="background:#56637C"></i>Inicio</span>' +
-                             '<span><i style="background:#F26157"></i>Final</span>'
+                    leyenda: '<span><i style="background:#56637C"></i>[[js:default_inicio]]</span>' +
+                             '<span><i style="background:#F26157"></i>[[js:visualizaciones_final]]</span>'
                 }
             };
 
@@ -925,12 +925,12 @@
 
                 if (elegidas.length === 0) {
                     exportarAviso.className = "ayuda texto-peligro";
-                    exportarAviso.textContent = "Elige al menos una visualización para incluir en el reporte.";
+                    exportarAviso.textContent = "[[js:visualizaciones_elige_al_menos_una_visualizacion_para]]";
                     return;
                 }
 
                 exportarAviso.className = "ayuda texto-suave";
-                exportarAviso.textContent = "Se generaría un PDF con " + elegidas.length + " visualización(es).";
+                exportarAviso.textContent = "[[js:visualizaciones_se_generaria_un_pdf_con_0]]".replace("{0}", elegidas.length);
             });
         })();
     </script>

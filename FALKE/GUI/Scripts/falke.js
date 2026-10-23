@@ -4,6 +4,11 @@
 
     var CLAVE_TEMA = "falke.tema";
 
+    function texto(clave)
+    {
+        return (window.FalkeTextos && window.FalkeTextos[clave]) || "";
+    }
+
     function temaGuardado()
     {
         try
@@ -25,7 +30,7 @@
         for (var i = 0; i < botones.length; i++)
         {
             botones[i].setAttribute("aria-pressed", tema === "noche" ? "true" : "false");
-            botones[i].title = tema === "noche" ? "Cambiar a modo dia" : "Cambiar a modo noche";
+            botones[i].title = tema === "noche" ? texto("modoDia") : texto("modoNoche");
         }
 
         mostrarIconosTema(tema);
@@ -95,7 +100,7 @@
         if (boton)
         {
             boton.setAttribute("aria-expanded", plegada ? "false" : "true");
-            boton.title = plegada ? "Expandir el menu" : "Plegar el menu";
+            boton.title = plegada ? texto("expandirMenu") : texto("plegarMenu");
         }
     }
 
@@ -256,7 +261,7 @@
 
         campo.type = oculta ? "text" : "password";
         boton.setAttribute("aria-pressed", oculta ? "true" : "false");
-        boton.title = oculta ? "Ocultar la contrasena" : "Mostrar la contrasena";
+        boton.title = oculta ? texto("ocultarClave") : texto("mostrarClave");
 
         mostrarIconosClave(boton, oculta);
     }

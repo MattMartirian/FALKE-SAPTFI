@@ -10,12 +10,12 @@ namespace GUI
             string enlace = WebHelper.UrlAbsoluta("DefinirClave.aspx?token=" + Uri.EscapeDataString(token));
 
             string cuerpo =
-                "Hola " + nombre + "," + Environment.NewLine + Environment.NewLine +
+                IdiomaActual_GUI.Texto("correo_hola", nombre) + Environment.NewLine + Environment.NewLine +
                 introduccion + Environment.NewLine +
-                "Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas):" + Environment.NewLine +
+                IdiomaActual_GUI.Texto("correo_activar_enlace") + Environment.NewLine +
                 enlace + Environment.NewLine;
 
-            Email_SERVICE.Enviar(email, "Activá tu cuenta de Falke", cuerpo);
+            Email_SERVICE.Enviar(email, IdiomaActual_GUI.Texto("usuarios_mail_invitacion_asunto"), cuerpo);
         }
     }
 }

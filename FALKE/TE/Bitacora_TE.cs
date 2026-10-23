@@ -17,17 +17,19 @@ namespace TE
         public int? IdEmpresa { get; set; }
         public string ModuloBitacora { get; set; }
         public string DescripcionBitacora { get; set; }
+        public string DetalleBitacora { get; set; }
         public CriticidadBitacora CriticidadBitacora { get; set; }
         public DateTime FechaHoraBitacora { get; set; }
 
         public Bitacora_TE() { }
 
-        public Bitacora_TE(int idUsuario, string moduloBitacora, string descripcionBitacora, CriticidadBitacora criticidadBitacora, DateTime fechaHoraBitacora, int idEventoBitacora = 0)
+        public Bitacora_TE(int idUsuario, string moduloBitacora, string descripcionBitacora, CriticidadBitacora criticidadBitacora, DateTime fechaHoraBitacora, int idEventoBitacora = 0, string detalleBitacora = null)
         {
             IdEventoBitacora = idEventoBitacora;
             IdUsuario = idUsuario;
             ModuloBitacora = moduloBitacora;
             DescripcionBitacora = descripcionBitacora;
+            DetalleBitacora = detalleBitacora;
             CriticidadBitacora = criticidadBitacora;
             FechaHoraBitacora = fechaHoraBitacora;
         }
@@ -44,6 +46,7 @@ namespace TE
         public string NombreEmpresa { get; set; }
         public string ModuloBitacora { get; set; }
         public string DescripcionBitacora { get; set; }
+        public string DetalleBitacora { get; set; }
         public CriticidadBitacora CriticidadBitacora { get; set; }
     }
 

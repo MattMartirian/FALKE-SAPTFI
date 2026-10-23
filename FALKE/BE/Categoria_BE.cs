@@ -23,7 +23,7 @@ namespace BE
 
         public abstract void AplicarCampos(IDictionary<string, string> campos);
 
-        public abstract string NormalizarYValidar();
+        public abstract ErrorValidacion_BE NormalizarYValidar();
 
         public static Categoria_BE Nueva(TipoActivoCategoria tipo)
         {
@@ -61,10 +61,10 @@ namespace BE
             return resultado;
         }
 
-        protected static string ExcedeLargo(string valor, string campo, int maximo = LARGO_CAMPO)
+        protected static ErrorValidacion_BE ExcedeLargo(string valor, string campo, int maximo = LARGO_CAMPO)
         {
             return valor != null && valor.Length > maximo
-                ? "El campo \"" + campo + "\" no puede superar los " + maximo + " caracteres."
+                ? new ErrorValidacion_BE("categoria_campo_largo", campo, maximo)
                 : null;
         }
     }

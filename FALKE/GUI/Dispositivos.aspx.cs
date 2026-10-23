@@ -15,7 +15,10 @@ namespace GUI
     {
         private const string CLAVE_AVISO = "dispositivos.aviso";
         private const string CLAVE_AVISO_MODELOS = "dispositivos.aviso.modelos";
-        private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
+        private static CultureInfo Cultura
+        {
+            get { return IdiomaActual_GUI.Cultura; }
+        }
 
         private ActorUsuario_TE actor;
         private Dictionary<int, List<Prestamo_BE>> historiales = new Dictionary<int, List<Prestamo_BE>>();
@@ -81,6 +84,20 @@ namespace GUI
             }
         }
 
+        protected override void AlCambiarIdioma()
+        {
+            if (actor == null) return;
+
+            try
+            {
+                ConservandoSeleccion(CargarListas, ddlFiltroEstado, ddlFiltroModelo, ddlAltaModelo, ddlEdModelo, ddlAsigDispositivo, ddlAsigEmpresa);
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("Dispositivos.Listas", ex);
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (actor == null)
@@ -129,7 +146,7 @@ namespace GUI
 
                 if (idAbierto > 0 && !todos.Any(d => d.IdDispositivo == idAbierto) && !pnlAviso.Visible)
                 {
-                    Avisar("aviso-peligro", "El dispositivo no existe.");
+                    Avisar("aviso-peligro", IdiomaActual_GUI.Texto("disp_no_existe"));
                     idAbierto = 0;
                 }
 
@@ -149,7 +166,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Dispositivos.Listar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar el inventario de dispositivos.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("disp_error_cargar"));
             }
         }
 
@@ -160,12 +177,12 @@ namespace GUI
             List<ModeloDispositivo_BE> modelos = new ModeloDispositivo_BLL().Listar(actor);
 
             ddlFiltroEstado.Items.Clear();
-            ddlFiltroEstado.Items.Add(new ListItem("Todos", string.Empty));
+            ddlFiltroEstado.Items.Add(new ListItem(IdiomaActual_GUI.Texto("comun_todos"), string.Empty));
             foreach (EstadoDispositivo estado in Enum.GetValues(typeof(EstadoDispositivo)))
                 ddlFiltroEstado.Items.Add(new ListItem(Etiqueta(estado), ((int)estado).ToString(CultureInfo.InvariantCulture)));
 
             ddlFiltroModelo.Items.Clear();
-            ddlFiltroModelo.Items.Add(new ListItem("Todos", string.Empty));
+            ddlFiltroModelo.Items.Add(new ListItem(IdiomaActual_GUI.Texto("comun_todos"), string.Empty));
             foreach (ModeloDispositivo_BE modelo in modelos)
                 ddlFiltroModelo.Items.Add(new ListItem(modelo.Nombre, modelo.IdModelo.ToString(CultureInfo.InvariantCulture)));
 
@@ -173,14 +190,14 @@ namespace GUI
             {
                 // Un dispositivo nuevo solo puede ser de un modelo activo.
                 ddlAltaModelo.Items.Clear();
-                ddlAltaModelo.Items.Add(new ListItem(modelos.Any(m => m.Activo) ? "Elegí un modelo" : "No hay modelos cargados", "0"));
+                ddlAltaModelo.Items.Add(new ListItem(modelos.Any(m => m.Activo) ? IdiomaActual_GUI.Texto("disp_elegir_modelo_opcion") : IdiomaActual_GUI.Texto("disp_sin_modelos"), "0"));
                 foreach (ModeloDispositivo_BE modelo in modelos.Where(m => m.Activo))
                     ddlAltaModelo.Items.Add(new ListItem(modelo.Nombre, modelo.IdModelo.ToString(CultureInfo.InvariantCulture)));
 
                 // Al editar también aparecen los dados de baja: un dispositivo puede conservar el suyo.
                 ddlEdModelo.Items.Clear();
                 foreach (ModeloDispositivo_BE modelo in modelos)
-                    ddlEdModelo.Items.Add(new ListItem(modelo.Activo ? modelo.Nombre : modelo.Nombre + " (de baja)", modelo.IdModelo.ToString(CultureInfo.InvariantCulture)));
+                    ddlEdModelo.Items.Add(new ListItem(modelo.Activo ? modelo.Nombre : IdiomaActual_GUI.Texto("disp_modelo_de_baja_sufijo", modelo.Nombre), modelo.IdModelo.ToString(CultureInfo.InvariantCulture)));
             }
 
             if (!PuedeAsignar) return;
@@ -188,17 +205,17 @@ namespace GUI
             ddlAsigDispositivo.Items.Clear();
             foreach (var d in todos.Where(x => x.Estado == EstadoDispositivo.Disponible))
                 ddlAsigDispositivo.Items.Add(new ListItem(d.NumeroSerie + " — " + d.Modelo, d.IdDispositivo.ToString(CultureInfo.InvariantCulture)));
-            if (ddlAsigDispositivo.Items.Count == 0) ddlAsigDispositivo.Items.Add(new ListItem("No hay dispositivos disponibles", "0"));
+            if (ddlAsigDispositivo.Items.Count == 0) ddlAsigDispositivo.Items.Add(new ListItem(IdiomaActual_GUI.Texto("disp_sin_disponibles"), "0"));
 
             ddlAsigEmpresa.Items.Clear();
             foreach (Empresa_BE empresa in bllListas.EmpresasParaPrestar(actor))
             {
                 int? limite = Dispositivo_BLL.LimiteDelPlan(empresa.PlanSuscripcion);
-                string uso = limite.HasValue ? empresa.DispositivosPrestados + " de " + limite.Value : empresa.DispositivosPrestados + " en préstamo";
+                string uso = limite.HasValue ? IdiomaActual_GUI.Texto("disp_empresa_uso_tope", empresa.DispositivosPrestados, limite.Value) : IdiomaActual_GUI.Texto("disp_empresa_uso_prestados", empresa.DispositivosPrestados);
 
                 ddlAsigEmpresa.Items.Add(new ListItem(empresa.NombreEmpresa + " — plan " + empresa.PlanSuscripcion + " (" + uso + ")", empresa.IdEmpresa.ToString(CultureInfo.InvariantCulture)));
             }
-            if (ddlAsigEmpresa.Items.Count == 0) ddlAsigEmpresa.Items.Add(new ListItem("No hay empresas activas", "0"));
+            if (ddlAsigEmpresa.Items.Count == 0) ddlAsigEmpresa.Items.Add(new ListItem(IdiomaActual_GUI.Texto("disp_sin_empresas_activas"), "0"));
         }
 
         private EstadoDispositivo? EstadoFiltro()
@@ -245,7 +262,7 @@ namespace GUI
             if (!Ejecutar(() => new Dispositivo_BLL().Crear(actor, dispositivo), "Dispositivos.Alta", "modalAltaDispositivo")) return;
 
             Dispositivo_BE creado = new Dispositivo_BLL().Listar(actor, serie).FirstOrDefault(d => d.NumeroSerie == serie);
-            IrAlDetalle(creado != null ? creado.IdDispositivo : 0, "Se dio de alta el dispositivo " + serie + ".");
+            IrAlDetalle(creado != null ? creado.IdDispositivo : 0, IdiomaActual_GUI.Texto("disp_alta_ok", serie));
         }
 
         protected void btnAsignar_Click(object sender, EventArgs e)
@@ -257,7 +274,7 @@ namespace GUI
             if (!int.TryParse(ddlAsigDispositivo.SelectedValue, out idDispositivo) || idDispositivo <= 0 ||
                 !int.TryParse(ddlAsigEmpresa.SelectedValue, out idEmpresa) || idEmpresa <= 0)
             {
-                Fallar("Elegí un dispositivo disponible y una empresa.", "modalAsignar");
+                Fallar(IdiomaActual_GUI.Texto("disp_elegir_disponible_y_empresa"), "modalAsignar");
                 return;
             }
 
@@ -265,7 +282,7 @@ namespace GUI
 
             if (!Ejecutar(() => new Dispositivo_BLL().AsignarAEmpresa(actor, idDispositivo, idEmpresa), "Dispositivos.Asignar", "modalAsignar")) return;
 
-            IrAlDetalle(idDispositivo, "El dispositivo se prestó a «" + empresa + "».");
+            IrAlDetalle(idDispositivo, IdiomaActual_GUI.Texto("disp_prestado_ok", empresa));
         }
 
         protected void btnDevolver_Click(object sender, EventArgs e)
@@ -275,7 +292,7 @@ namespace GUI
             bool mantenimiento = chkRequiereMantenimiento.Checked;
 
             if (Ejecutar(() => new Dispositivo_BLL().RegistrarDevolucion(actor, Seleccionado, mantenimiento), "Dispositivos.Devolver", "modalDevolver"))
-                Avisar("aviso-exito", mantenimiento ? "Se registró la devolución y el dispositivo pasó a mantenimiento." : "Se registró la devolución: el dispositivo está disponible.");
+                Avisar("aviso-exito", mantenimiento ? IdiomaActual_GUI.Texto("disp_devolucion_a_mantenimiento") : IdiomaActual_GUI.Texto("disp_devolucion_disponible"));
         }
 
         protected void btnMantenimiento_Click(object sender, EventArgs e)
@@ -283,7 +300,7 @@ namespace GUI
             if (actor == null) return;
 
             if (Ejecutar(() => new Dispositivo_BLL().EnviarAMantenimiento(actor, Seleccionado), "Dispositivos.Mantenimiento", null))
-                Avisar("aviso-exito", "El dispositivo pasó a mantenimiento.");
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("disp_paso_a_mantenimiento"));
         }
 
         protected void btnTerminar_Click(object sender, EventArgs e)
@@ -291,7 +308,7 @@ namespace GUI
             if (actor == null) return;
 
             if (Ejecutar(() => new Dispositivo_BLL().TerminarMantenimiento(actor, Seleccionado), "Dispositivos.TerminarMantenimiento", null))
-                Avisar("aviso-exito", "El dispositivo terminó el mantenimiento y está disponible.");
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("disp_mantenimiento_terminado"));
         }
 
         protected void btnBaja_Click(object sender, EventArgs e)
@@ -303,7 +320,7 @@ namespace GUI
             if (Ejecutar(() => new Dispositivo_BLL().DarDeBaja(actor, Seleccionado, motivo), "Dispositivos.Baja", "modalBaja"))
             {
                 txtBajaMotivo.Text = string.Empty;
-                Avisar("aviso-exito", "El dispositivo se dio de baja.");
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("disp_baja_ok"));
             }
         }
 
@@ -322,7 +339,7 @@ namespace GUI
             };
 
             if (Ejecutar(() => new Dispositivo_BLL().Modificar(actor, Seleccionado, nuevos), "Dispositivos.Modificar", "modalEditar"))
-                Avisar("aviso-exito", "Los datos del dispositivo se actualizaron.");
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("disp_actualizado"));
         }
 
         // ---- Modelos
@@ -333,7 +350,7 @@ namespace GUI
 
             string nombre = txtNuevoModelo.Text;
 
-            EjecutarModelos(() => new ModeloDispositivo_BLL().Crear(actor, nombre), "Dispositivos.ModeloAlta", "Se agregó el modelo «" + nombre.Trim() + "».");
+            EjecutarModelos(() => new ModeloDispositivo_BLL().Crear(actor, nombre), "Dispositivos.ModeloAlta", IdiomaActual_GUI.Texto("disp_modelo_agregado", nombre.Trim()));
         }
 
         protected void rptModelos_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -349,15 +366,15 @@ namespace GUI
             {
                 case "renombrar":
                     string nombre = ((TextBox)e.Item.FindControl("txtNombreModelo")).Text;
-                    EjecutarModelos(() => bll.Renombrar(actor, idModelo, nombre), "Dispositivos.ModeloRenombrar", "Se guardó el nuevo nombre del modelo.");
+                    EjecutarModelos(() => bll.Renombrar(actor, idModelo, nombre), "Dispositivos.ModeloRenombrar", IdiomaActual_GUI.Texto("disp_modelo_nombre_guardado"));
                     break;
 
                 case "baja":
-                    EjecutarModelos(() => bll.DarDeBaja(actor, idModelo), "Dispositivos.ModeloBaja", "El modelo se dio de baja: ya no se ofrece para dispositivos nuevos.");
+                    EjecutarModelos(() => bll.DarDeBaja(actor, idModelo), "Dispositivos.ModeloBaja", IdiomaActual_GUI.Texto("disp_modelo_baja_ok"));
                     break;
 
                 case "reactivar":
-                    EjecutarModelos(() => bll.Reactivar(actor, idModelo), "Dispositivos.ModeloReactivar", "El modelo se reactivó.");
+                    EjecutarModelos(() => bll.Reactivar(actor, idModelo), "Dispositivos.ModeloReactivar", IdiomaActual_GUI.Texto("disp_modelo_reactivado"));
                     break;
             }
         }
@@ -432,12 +449,12 @@ namespace GUI
         {
             var p = (Prestamo_BE)item;
 
-            return p.Abierto ? "En curso" : Fecha(p.FechaDevolucion);
+            return p.Abierto ? IdiomaActual_GUI.Texto("disp_prestamo_en_curso") : Fecha(p.FechaDevolucion);
         }
 
         protected static string Etiqueta(EstadoDispositivo estado)
         {
-            return Dispositivo_BLL.NombreEstado(estado);
+            return IdiomaActual_GUI.Texto(Dispositivo_BLL.ClaveEstado(estado));
         }
 
         protected static string ClasePunto(EstadoDispositivo estado)

@@ -150,9 +150,6 @@
   <data name="app_empresas" xml:space="preserve">
     <value>Empresas</value>
   </data>
-  <data name="app_falke" xml:space="preserve">
-    <value>Falke</value>
-  </data>
   <data name="app_mi_empresa" xml:space="preserve">
     <value>Mi empresa</value>
   </data>
@@ -186,10 +183,7 @@
   <data name="app_sistema" xml:space="preserve">
     <value>Sistema</value>
   </data>
-  <data name="app_titulo_pagina" xml:space="preserve">
-    <value>{0} - Falke</value>
-  </data>
-  <data name="app_usuarios" xml:space="preserve">
+<data name="app_usuarios" xml:space="preserve">
     <value>Usuarios</value>
   </data>
   <data name="app_ver_mi_perfil" xml:space="preserve">
@@ -681,9 +675,6 @@
   <data name="default_resultados_en_minutos" xml:space="preserve">
     <value>Resultados en minutos</value>
   </data>
-  <data name="default_sesion_n_04_falke" xml:space="preserve">
-    <value>Sesión N.° 04 · Falke</value>
-  </data>
   <data name="default_sin_comprar_equipamiento" xml:space="preserve">
     <value>Sin comprar equipamiento</value>
   </data>
@@ -1161,9 +1152,6 @@
   <data name="empresanueva_apellido" xml:space="preserve">
     <value>Apellido</value>
   </data>
-  <data name="empresanueva_apex" xml:space="preserve">
-    <value>Apex</value>
-  </data>
   <data name="empresanueva_correo_electronico" xml:space="preserve">
     <value>Correo electrónico</value>
   </data>
@@ -1206,9 +1194,6 @@
   <data name="empresanueva_facturacion" xml:space="preserve">
     <value>Facturación</value>
   </data>
-  <data name="empresanueva_hunter" xml:space="preserve">
-    <value>Hunter</value>
-  </data>
   <data name="empresanueva_la_cuenta_queda_activa" xml:space="preserve">
     <value>La cuenta queda activa.</value>
   </data>
@@ -1250,9 +1235,6 @@
   </data>
   <data name="empresanueva_rubro_sin_completar" xml:space="preserve">
     <value>Rubro sin completar</value>
-  </data>
-  <data name="empresanueva_scout" xml:space="preserve">
-    <value>Scout</value>
   </data>
   <data name="empresanueva_se_crea_la_cuenta" xml:space="preserve">
     <value>Se crea la cuenta.</value>
@@ -1505,6 +1487,30 @@
   </data>
   <data name="faq_y_si_el_dispositivo_falla" xml:space="preserve">
     <value>¿Y si el dispositivo falla?</value>
+  </data>
+  <data name="idioma_base_inmutable" xml:space="preserve">
+    <value>El inglés es el idioma base: no se puede deshabilitar ni eliminar.</value>
+  </data>
+  <data name="idioma_codigo_invalido" xml:space="preserve">
+    <value>El código de idioma no es válido.</value>
+  </data>
+  <data name="idioma_en_uso" xml:space="preserve">
+    <value>No se puede deshabilitar ni eliminar "{0}": {1} usuario(s) lo tienen elegido.</value>
+  </data>
+  <data name="idioma_no_disponible" xml:space="preserve">
+    <value>No hay un paquete de traducciones para el idioma "{0}".</value>
+  </data>
+  <data name="idioma_no_existe" xml:space="preserve">
+    <value>El idioma no existe.</value>
+  </data>
+  <data name="idioma_ya_deshabilitado" xml:space="preserve">
+    <value>El idioma ya está deshabilitado.</value>
+  </data>
+  <data name="idioma_ya_existe" xml:space="preserve">
+    <value>El idioma "{0}" ya está agregado.</value>
+  </data>
+  <data name="idioma_ya_habilitado" xml:space="preserve">
+    <value>El idioma ya está habilitado.</value>
   </data>
   <data name="ingresar_analitica_conductual_biometrica_por_segu" xml:space="preserve">
     <value>Analítica conductual biométrica por seguimiento ocular, con hardware de precisión profesional incluido en la suscripción.</value>
@@ -1761,9 +1767,6 @@
   <data name="mantenimiento_estamos_haciendo_mantenimiento" xml:space="preserve">
     <value>Estamos haciendo mantenimiento</value>
   </data>
-  <data name="mantenimiento_estimamos_volver_a_las_20_00" xml:space="preserve">
-    <value>Estimamos volver a las 20:00</value>
-  </data>
   <data name="mantenimiento_reintentar" xml:space="preserve">
     <value>Reintentar</value>
   </data>
@@ -1911,19 +1914,13 @@
   <data name="miperfil_es_tu_identidad_de_acceso_no" xml:space="preserve">
     <value>Es tu identidad de acceso: no se cambia desde acá. Si necesitás cambiarlo, pedíselo a quien administra tu cuenta.</value>
   </data>
-  <data name="miperfil_espanol" xml:space="preserve">
-    <value>Español</value>
-  </data>
-  <data name="miperfil_guardado" xml:space="preserve">
+<data name="miperfil_guardado" xml:space="preserve">
     <value>Tus datos se guardaron.</value>
   </data>
   <data name="miperfil_idioma_de_la_interfaz" xml:space="preserve">
     <value>Idioma de la interfaz</value>
   </data>
-  <data name="miperfil_ingles" xml:space="preserve">
-    <value>Inglés</value>
-  </data>
-  <data name="miperfil_los_ultimos_movimientos_hechos_desde_tu" xml:space="preserve">
+<data name="miperfil_los_ultimos_movimientos_hechos_desde_tu" xml:space="preserve">
     <value>Los últimos movimientos hechos desde tu cuenta</value>
   </data>
   <data name="miperfil_mi_actividad_reciente" xml:space="preserve">
@@ -1938,10 +1935,7 @@
   <data name="miperfil_no_tiene_el_acceso_de_emergencia" xml:space="preserve">
     <value>No tiene: el acceso de emergencia se define en la configuración.</value>
   </data>
-  <data name="miperfil_portugues" xml:space="preserve">
-    <value>Portugués</value>
-  </data>
-  <data name="miperfil_rol" xml:space="preserve">
+<data name="miperfil_rol" xml:space="preserve">
     <value>Rol</value>
   </data>
   <data name="miperfil_todavia_no_hay_movimientos_registrados_d" xml:space="preserve">
@@ -1970,9 +1964,6 @@
   </data>
   <data name="modelo_ya_de_baja" xml:space="preserve">
     <value>El modelo ya está dado de baja.</value>
-  </data>
-  <data name="nuevagrabacion_4_0_o_superior" xml:space="preserve">
-    <value>: 4.0 o superior</value>
   </data>
   <data name="nuevagrabacion_actualizado" xml:space="preserve">
     <value>Actualizado</value>
@@ -2022,9 +2013,6 @@
   <data name="nuevagrabacion_el_procesamiento_arranca_solo_y_suele" xml:space="preserve">
     <value>El procesamiento arranca solo y suele tardar menos de cinco minutos. Cuando termine vas a recibir un aviso y la sesión queda disponible en Visualizaciones.</value>
   </data>
-  <data name="nuevagrabacion_el_tobii_4c_esta_conectado_calibrado" xml:space="preserve">
-    <value>El Tobii 4C está conectado, calibrado y con el driver actualizado.</value>
-  </data>
   <data name="nuevagrabacion_esta_accion_no_se_puede_deshacer" xml:space="preserve">
     <value>Esta acción no se puede deshacer.</value>
   </data>
@@ -2070,9 +2058,6 @@
   <data name="nuevagrabacion_objetivo_de_la_prueba_opcional" xml:space="preserve">
     <value>Objetivo de la prueba (opcional)</value>
   </data>
-  <data name="nuevagrabacion_pantalla_completa_1920_x_1080_monitor" xml:space="preserve">
-    <value>Pantalla completa (1920 x 1080 - monitor principal)</value>
-  </data>
   <data name="nuevagrabacion_pantalla_y_seguimiento_ocular_sincroniza" xml:space="preserve">
     <value>Pantalla y seguimiento ocular sincronizados con la misma marca de tiempo.</value>
   </data>
@@ -2109,20 +2094,8 @@
   <data name="nuevagrabacion_simular_un_fallo_demo" xml:space="preserve">
     <value>Simular un fallo (demo)</value>
   </data>
-  <data name="nuevagrabacion_tobii_4c_detectado_en_el_puerto" xml:space="preserve">
-    <value>Tobii 4C detectado en el puerto USB 3.0</value>
-  </data>
-  <data name="nuevagrabacion_ultima_calibracion_hace_4_minutos_calida" xml:space="preserve">
-    <value>Última calibración hace 4 minutos · calidad 92%</value>
-  </data>
   <data name="nuevagrabacion_usa_un_codigo_no_el_nombre" xml:space="preserve">
     <value>Usa un código, no el nombre real: los datos se guardan disociados de la identidad.</value>
-  </data>
-  <data name="nuevagrabacion_ventana_chrome_checkout_demo" xml:space="preserve">
-    <value>Ventana - Chrome: Checkout Demo</value>
-  </data>
-  <data name="nuevagrabacion_ventana_figma_prototipo_checkout" xml:space="preserve">
-    <value>Ventana - Figma: Prototipo checkout</value>
   </data>
   <data name="nuevagrabacion_verificacion_del_dispositivo" xml:space="preserve">
     <value>Verificación del dispositivo</value>
@@ -2132,9 +2105,6 @@
   </data>
   <data name="nuevagrabacion_volver" xml:space="preserve">
     <value>Volver</value>
-  </data>
-  <data name="panel_4_respecto_del_mes_pasado" xml:space="preserve">
-    <value>+4 respecto del mes pasado</value>
   </data>
   <data name="panel_accesos_rapidos" xml:space="preserve">
     <value>Accesos rápidos</value>
@@ -2148,20 +2118,11 @@
   <data name="panel_calibrar_el_dispositivo_y_empezar" xml:space="preserve">
     <value>Calibrar el dispositivo y empezar</value>
   </data>
-  <data name="panel_calidad_de_calibracion_92" xml:space="preserve">
-    <value>Calidad de calibración: 92%</value>
-  </data>
-  <data name="panel_calidad_de_la_calibracion_92_por" xml:space="preserve">
-    <value>Calidad de la calibración: 92 por ciento</value>
-  </data>
   <data name="panel_categorias_activas" xml:space="preserve">
     <value>Categorías activas</value>
   </data>
   <data name="panel_comparar_sesiones" xml:space="preserve">
     <value>Comparar sesiones</value>
-  </data>
-  <data name="panel_conectado_por_usb_3_0_ultima" xml:space="preserve">
-    <value>Conectado por USB 3.0 · última calibración hace 4 minutos · driver 4.2.1</value>
   </data>
   <data name="panel_dispositivos_asignados" xml:space="preserve">
     <value>Dispositivos asignados</value>
@@ -2210,12 +2171,6 @@
   </data>
   <data name="panel_sesiones_este_mes" xml:space="preserve">
     <value>Sesiones este mes</value>
-  </data>
-  <data name="panel_sobre_5_tipos_de_activo" xml:space="preserve">
-    <value>Sobre 5 tipos de activo</value>
-  </data>
-  <data name="panel_tobii_4c_calibrado" xml:space="preserve">
-    <value>Tobii 4C · calibrado</value>
   </data>
   <data name="panel_tu_dispositivo" xml:space="preserve">
     <value>Tu dispositivo</value>
@@ -2355,15 +2310,6 @@
   <data name="planes_facturacion_mensual_un_dispositivo_en_pr" xml:space="preserve">
     <value>Facturación mensual. Un dispositivo en préstamo.</value>
   </data>
-  <data name="planes_falke_apex" xml:space="preserve">
-    <value>Falke Apex</value>
-  </data>
-  <data name="planes_falke_hunter" xml:space="preserve">
-    <value>Falke Hunter</value>
-  </data>
-  <data name="planes_falke_scout" xml:space="preserve">
-    <value>Falke Scout</value>
-  </data>
   <data name="planes_funcion" xml:space="preserve">
     <value>Función</value>
   </data>
@@ -2460,12 +2406,6 @@
   <data name="planes_un_dispositivo_tobii_eye_tracker_en" xml:space="preserve">
     <value>Un dispositivo Tobii Eye Tracker en préstamo</value>
   </data>
-  <data name="planes_usd_590" xml:space="preserve">
-    <value>USD 590</value>
-  </data>
-  <data name="planes_usd_950" xml:space="preserve">
-    <value>USD 950</value>
-  </data>
   <data name="planes_usuarios_adicionales_dentro_de_la_organi" xml:space="preserve">
     <value>Usuarios adicionales dentro de la organización</value>
   </data>
@@ -2475,22 +2415,13 @@
   <data name="publico_analitica_conductual_biometrica_por_segu" xml:space="preserve">
     <value>Analítica conductual biométrica por seguimiento ocular. Un servicio de Pattern Blue.</value>
   </data>
-  <data name="publico_buenos_aires_argentina" xml:space="preserve">
-    <value>Buenos Aires, Argentina</value>
-  </data>
   <data name="publico_como_se_contrata" xml:space="preserve">
     <value>Cómo se contrata</value>
   </data>
   <data name="publico_contacto" xml:space="preserve">
     <value>Contacto</value>
   </data>
-  <data name="publico_contacto_patternblue_com_ar" xml:space="preserve">
-    <value>contacto@patternblue.com.ar</value>
-  </data>
-  <data name="publico_copyright" xml:space="preserve">
-    <value>© {0} Pattern Blue.</value>
-  </data>
-  <data name="publico_crear_cuenta" xml:space="preserve">
+<data name="publico_crear_cuenta" xml:space="preserve">
     <value>Crear cuenta</value>
   </data>
   <data name="publico_navegacion_principal" xml:space="preserve">
@@ -2647,6 +2578,12 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
   </data>
   <data name="respaldo_restauracion_en_curso" xml:space="preserve">
     <value>Ya hay una restauración en curso.</value>
+  </data>
+  <data name="respaldos_archivo_no_encontrado" xml:space="preserve">
+    <value>Archivo no encontrado</value>
+  </data>
+  <data name="respaldos_disponible" xml:space="preserve">
+    <value>Disponible</value>
   </data>
   <data name="respaldo_sin_usuario" xml:space="preserve">
     <value>Sin usuario (cuenta de emergencia)</value>
@@ -2890,6 +2827,12 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
   </data>
   <data name="sinpermiso_volver_al_panel" xml:space="preserve">
     <value>Volver al panel</value>
+  </data>
+  <data name="traduccion_marcadores" xml:space="preserve">
+    <value>La traducción debe conservar los mismos marcadores ({0}).</value>
+  </data>
+  <data name="traduccion_no_existe" xml:space="preserve">
+    <value>La traducción no existe.</value>
   </data>
   <data name="usuario_confirmar_aviso_guardar" xml:space="preserve">
     <value>Tenés que confirmar el aviso antes de guardar los cambios.</value>
@@ -3207,5 +3150,905 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   </data>
   <data name="visualizaciones_visualizaciones_a_incluir" xml:space="preserve">
     <value>Visualizaciones a incluir</value>
+  </data>
+  <data name="selector_idioma" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="app_idiomas" xml:space="preserve">
+    <value>Idiomas</value>
+  </data>
+  <data name="idiomas_bajada" xml:space="preserve">
+    <value>Idiomas de la interfaz y sus traducciones.</value>
+  </data>
+  <data name="idiomas_agregar_idioma" xml:space="preserve">
+    <value>Agregar idioma</value>
+  </data>
+  <data name="idiomas_habilitados" xml:space="preserve">
+    <value>Idiomas habilitados</value>
+  </data>
+  <data name="idiomas_textos_catalogo" xml:space="preserve">
+    <value>Textos del catálogo</value>
+  </data>
+  <data name="idiomas_traducciones_pendientes" xml:space="preserve">
+    <value>Traducciones pendientes</value>
+  </data>
+  <data name="idiomas_tabla_idiomas" xml:space="preserve">
+    <value>Idiomas de la interfaz</value>
+  </data>
+  <data name="idiomas_col_idioma" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="idiomas_col_traducciones" xml:space="preserve">
+    <value>Traducciones</value>
+  </data>
+  <data name="idiomas_col_pendientes" xml:space="preserve">
+    <value>Pendientes</value>
+  </data>
+  <data name="idiomas_base" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="idiomas_sincronizar" xml:space="preserve">
+    <value>Sincronizar</value>
+  </data>
+  <data name="idiomas_deshabilitar" xml:space="preserve">
+    <value>Deshabilitar</value>
+  </data>
+  <data name="idiomas_habilitar" xml:space="preserve">
+    <value>Habilitar</value>
+  </data>
+  <data name="idiomas_traducciones_de" xml:space="preserve">
+    <value>Traducciones de</value>
+  </data>
+  <data name="idiomas_cada_texto" xml:space="preserve">
+    <value>Cada texto del sistema con su texto base. Editar una traducción la marca como manual.</value>
+  </data>
+  <data name="idiomas_mostrar" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="idiomas_solo_pendientes" xml:space="preserve">
+    <value>Solo pendientes</value>
+  </data>
+  <data name="idiomas_tabla_traducciones" xml:space="preserve">
+    <value>Traducciones del idioma</value>
+  </data>
+  <data name="idiomas_col_base" xml:space="preserve">
+    <value>Inglés</value>
+  </data>
+  <data name="idiomas_col_clave" xml:space="preserve">
+    <value>Clave</value>
+  </data>
+  <data name="idiomas_col_traduccion" xml:space="preserve">
+    <value>Traducción</value>
+  </data>
+  <data name="idiomas_col_origen" xml:space="preserve">
+    <value>Origen</value>
+  </data>
+  <data name="idiomas_pendiente" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="idiomas_editar" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="idiomas_sin_coincidencias" xml:space="preserve">
+    <value>No hay traducciones que coincidan con el filtro.</value>
+  </data>
+  <data name="idiomas_agregar_un_idioma" xml:space="preserve">
+    <value>Agregar un idioma</value>
+  </data>
+  <data name="idiomas_se_agrega_completo" xml:space="preserve">
+    <value>Se agrega con todas sus traducciones ya cargadas.</value>
+  </data>
+  <data name="idiomas_disponibles_ayuda" xml:space="preserve">
+    <value>Son los idiomas que vienen en los paquetes de traducciones del sistema. Si falta algún texto, queda pendiente y se muestra en inglés hasta que se complete.</value>
+  </data>
+  <data name="idiomas_sin_disponibles" xml:space="preserve">
+    <value>Todos los idiomas con paquete de traducciones ya están agregados.</value>
+  </data>
+  <data name="idiomas_eliminar_el_idioma" xml:space="preserve">
+    <value>Eliminar el idioma</value>
+  </data>
+  <data name="idiomas_eliminar_subtitulo" xml:space="preserve">
+    <value>Esta acción no se puede deshacer y queda en la bitácora.</value>
+  </data>
+  <data name="idiomas_vas_a_eliminar" xml:space="preserve">
+    <value>Vas a eliminar el idioma</value>
+  </data>
+  <data name="idiomas_eliminar_consecuencia_1" xml:space="preserve">
+    <value>Se borran todas sus traducciones, incluidas las que se hayan editado a mano.</value>
+  </data>
+  <data name="idiomas_eliminar_consecuencia_2" xml:space="preserve">
+    <value>Para volver a tenerlo hay que agregarlo de nuevo desde su paquete.</value>
+  </data>
+  <data name="idiomas_editar_traduccion" xml:space="preserve">
+    <value>Editar traducción</value>
+  </data>
+  <data name="idiomas_texto_base" xml:space="preserve">
+    <value>Texto base</value>
+  </data>
+  <data name="idiomas_marcadores_ayuda" xml:space="preserve">
+    <value>Conservá los marcadores como {0} o {1}. Si la dejás vacía, queda pendiente y se muestra el texto base.</value>
+  </data>
+  <data name="idiomas_sincronizar_ayuda" xml:space="preserve">
+    <value>Incorpora los textos del paquete que faltan; los existentes no se modifican</value>
+  </data>
+  <data name="idiomas_clave_o_texto" xml:space="preserve">
+    <value>Clave o texto</value>
+  </data>
+  <data name="idiomas_eliminar_idioma" xml:space="preserve">
+    <value>Eliminar idioma</value>
+  </data>
+  <data name="idiomas_guardar_traduccion" xml:space="preserve">
+    <value>Guardar traducción</value>
+  </data>
+  <data name="idiomas_agregando" xml:space="preserve">
+    <value>Agregando...</value>
+  </data>
+  <data name="idiomas_no_se_pudo_cargar" xml:space="preserve">
+    <value>No se pudo cargar la lista de idiomas.</value>
+  </data>
+  <data name="idiomas_no_se_pudo_identificar" xml:space="preserve">
+    <value>No se pudo identificar el idioma. Volvé a intentarlo.</value>
+  </data>
+  <data name="idiomas_al_dia" xml:space="preserve">
+    <value>El idioma ya estaba al día.</value>
+  </data>
+  <data name="idiomas_sincronizado" xml:space="preserve">
+    <value>Se sincronizó el idioma: {0} texto(s) incorporado(s).</value>
+  </data>
+  <data name="idiomas_habilitado_ok" xml:space="preserve">
+    <value>El idioma se habilitó.</value>
+  </data>
+  <data name="idiomas_estado_habilitado" xml:space="preserve">
+    <value>Habilitado</value>
+  </data>
+  <data name="idiomas_estado_deshabilitado" xml:space="preserve">
+    <value>Deshabilitado</value>
+  </data>
+  <data name="idiomas_deshabilitado_ok" xml:space="preserve">
+    <value>El idioma se deshabilitó.</value>
+  </data>
+  <data name="idiomas_agregado_ok" xml:space="preserve">
+    <value>Se agregó el idioma {0} con {1} traducciones ({2} pendientes).</value>
+  </data>
+  <data name="idiomas_eliminado_ok" xml:space="preserve">
+    <value>El idioma se eliminó.</value>
+  </data>
+  <data name="idiomas_traduccion_guardada" xml:space="preserve">
+    <value>La traducción se guardó.</value>
+  </data>
+  <data name="idiomas_habilitados_de" xml:space="preserve">
+    <value>{0} de {1}</value>
+  </data>
+  <data name="idiomas_sin_resultados" xml:space="preserve">
+    <value>Sin resultados</value>
+  </data>
+  <data name="idiomas_mostrando" xml:space="preserve">
+    <value>Mostrando {0}–{1} de {2}</value>
+  </data>
+  <data name="idiomas_origen_paquete" xml:space="preserve">
+    <value>Paquete</value>
+  </data>
+  <data name="idiomas_origen_manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="idiomas_origen_automatica" xml:space="preserve">
+    <value>Automática</value>
+  </data>
+  <data name="analisismultiple_tipo_de_activo_0" xml:space="preserve">
+    <value>Tipo de activo: {0}.</value>
+  </data>
+  <data name="analisismultiple_listo_para_combinar_0_sesiones" xml:space="preserve">
+    <value>Listo para combinar {0} sesiones.</value>
+  </data>
+  <data name="categorias_registrar_categoria" xml:space="preserve">
+    <value>Registrar categoría</value>
+  </data>
+  <data name="categorias_editar_categoria" xml:space="preserve">
+    <value>Editar categoría</value>
+  </data>
+  <data name="categorias_eliminar_esta_categoria_si_tiene_sesione" xml:space="preserve">
+    <value>¿Eliminar esta categoría? Si tiene sesiones grabadas, se va a desactivar en lugar de borrarse.</value>
+  </data>
+  <data name="dispositivos_enviar_el_dispositivo_a_mantenimiento_de" xml:space="preserve">
+    <value>¿Enviar el dispositivo a mantenimiento? Deja de estar disponible para préstamos.</value>
+  </data>
+  <data name="dispositivos_terminar_el_mantenimiento_el_dispositivo" xml:space="preserve">
+    <value>¿Terminar el mantenimiento? El dispositivo vuelve a estar disponible para préstamos.</value>
+  </data>
+  <data name="empresas_0_estado_actual_1" xml:space="preserve">
+    <value>{0} · estado actual: {1}</value>
+  </data>
+  <data name="empresas_datos" xml:space="preserve">
+    <value>Datos</value>
+  </data>
+  <data name="empresas_equipo_y_dispositivos" xml:space="preserve">
+    <value>Equipo y dispositivos</value>
+  </data>
+  <data name="empresas_actividad" xml:space="preserve">
+    <value>Actividad</value>
+  </data>
+  <data name="empresas_ultimo_pago_registrado" xml:space="preserve">
+    <value>Último pago registrado</value>
+  </data>
+  <data name="empresas_limite_de_usuarios" xml:space="preserve">
+    <value>Límite de usuarios</value>
+  </data>
+  <data name="empresas_usuarios_de_la_cuenta" xml:space="preserve">
+    <value>Usuarios de la cuenta</value>
+  </data>
+  <data name="empresas_bloquear_empresa" xml:space="preserve">
+    <value>Bloquear empresa</value>
+  </data>
+  <data name="empresas_desbloquear_empresa" xml:space="preserve">
+    <value>Desbloquear empresa</value>
+  </data>
+  <data name="empresas_ver_usuarios" xml:space="preserve">
+    <value>Ver usuarios</value>
+  </data>
+  <data name="empresas_cambiar_estado" xml:space="preserve">
+    <value>Cambiar estado</value>
+  </data>
+  <data name="empresas_esta_empresa_tiene_un_pago_vencido" xml:space="preserve">
+    <value>Esta empresa tiene un pago vencido. El acceso de sus usuarios está suspendido hasta la regularización.</value>
+  </data>
+  <data name="miclave_fuerza_0" xml:space="preserve">
+    <value>Fuerza: {0}</value>
+  </data>
+  <data name="miclave_muy_debil" xml:space="preserve">
+    <value>Muy débil</value>
+  </data>
+  <data name="miclave_debil" xml:space="preserve">
+    <value>Débil</value>
+  </data>
+  <data name="miclave_aceptable" xml:space="preserve">
+    <value>Aceptable</value>
+  </data>
+  <data name="miclave_buena" xml:space="preserve">
+    <value>Buena</value>
+  </data>
+  <data name="miclave_fuerte" xml:space="preserve">
+    <value>Fuerte</value>
+  </data>
+  <data name="miclave_coinciden" xml:space="preserve">
+    <value>Coinciden.</value>
+  </data>
+  <data name="miclave_todavia_no_coinciden" xml:space="preserve">
+    <value>Todavía no coinciden.</value>
+  </data>
+  <data name="nuevagrabacion_el_dispositivo_no_esta_listo" xml:space="preserve">
+    <value>El dispositivo no está listo</value>
+  </data>
+  <data name="nuevagrabacion_el_tobii_4c_esta_conectado_calibrado" xml:space="preserve">
+    <value>El Tobii 4C está conectado, calibrado y con el driver actualizado.</value>
+  </data>
+  <data name="nuevagrabacion_resuelve_el_problema_marcado_en_rojo" xml:space="preserve">
+    <value>Resuelve el problema marcado en rojo y verifica de nuevo para poder grabar.</value>
+  </data>
+  <data name="nuevagrabacion_instalado_3_4_0_requerido_4" xml:space="preserve">
+    <value>Instalado: 3.4.0 - requerido: 4.0 o superior</value>
+  </data>
+  <data name="nuevagrabacion_instalado_4_2_1_requerido_4" xml:space="preserve">
+    <value>Instalado: 4.2.1 - requerido: 4.0 o superior</value>
+  </data>
+  <data name="nuevagrabacion_desactualizado" xml:space="preserve">
+    <value>Desactualizado</value>
+  </data>
+  <data name="nuevagrabacion_grabacion_en_pausa_los_datos_capturados" xml:space="preserve">
+    <value>Grabación en pausa. Los datos capturados hasta ahora se conservan.</value>
+  </data>
+  <data name="nuevagrabacion_la_grabacion_se_reinicio_se_descartaron" xml:space="preserve">
+    <value>La grabación se reinició. Se descartaron los datos anteriores.</value>
+  </data>
+  <data name="planes_hola_me_interesa_comunicarme_con_ustedes" xml:space="preserve">
+    <value>Hola! Me interesa comunicarme con ustedes para discutir la puesta en funcionamiento del plan {0}. Quedo a la espera de su respuesta.</value>
+  </data>
+  <data name="roles_un_grupo_ordena_permisos_y_puede" xml:space="preserve">
+    <value>Un grupo ordena permisos y puede contener otros grupos. Después lo incluís en un rol.</value>
+  </data>
+  <data name="visualizaciones_se_generaria_un_pdf_con_0" xml:space="preserve">
+    <value>Se generaría un PDF con {0} visualización(es).</value>
+  </data>
+  <data name="visualizaciones_punto_de_mirada_actual" xml:space="preserve">
+    <value>Punto de mirada actual</value>
+  </data>
+  <data name="visualizaciones_mayor_concentracion" xml:space="preserve">
+    <value>Mayor concentración</value>
+  </data>
+  <data name="visualizaciones_concentracion_media" xml:space="preserve">
+    <value>Concentración media</value>
+  </data>
+  <data name="visualizaciones_menor_concentracion" xml:space="preserve">
+    <value>Menor concentración</value>
+  </data>
+  <data name="visualizaciones_zona_de_interes" xml:space="preserve">
+    <value>Zona de interés</value>
+  </data>
+  <data name="visualizaciones_zona_ciega" xml:space="preserve">
+    <value>Zona ciega</value>
+  </data>
+  <data name="visualizaciones_punto_de_mirada" xml:space="preserve">
+    <value>Punto de mirada</value>
+  </data>
+  <data name="visualizaciones_centroide" xml:space="preserve">
+    <value>Centroide</value>
+  </data>
+  <data name="visualizaciones_elipse_de_dispersion" xml:space="preserve">
+    <value>Elipse de dispersión</value>
+  </data>
+  <data name="visualizaciones_fijacion_activa_62" xml:space="preserve">
+    <value>Fijación activa (62%)</value>
+  </data>
+  <data name="visualizaciones_movimiento_sacadico_38" xml:space="preserve">
+    <value>Movimiento sacádico (38%)</value>
+  </data>
+  <data name="visualizaciones_final" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="visualizaciones_zonas_de_interes_y_zonas_ciegas" xml:space="preserve">
+    <value>Zonas de interés y zonas ciegas</value>
+  </data>
+  <data name="visualizaciones_elige_al_menos_una_visualizacion_para" xml:space="preserve">
+    <value>Elige al menos una visualización para incluir en el reporte.</value>
+  </data>
+  <data name="visualizaciones_min_analista" xml:space="preserve">
+    <value>min · Analista:</value>
+  </data>
+  <data name="respaldos_generando_la_copia" xml:space="preserve">
+    <value>Generando la copia...</value>
+  </data>
+  <data name="respaldos_restaurando" xml:space="preserve">
+    <value>Restaurando...</value>
+  </data>
+  <data name="comun_limpiar_filtros" xml:space="preserve">
+    <value>Limpiar filtros</value>
+  </data>
+  <data name="comun_aplicar_filtros" xml:space="preserve">
+    <value>Aplicar filtros</value>
+  </data>
+  <data name="categorias_eliminar_la_categoria" xml:space="preserve">
+    <value>Eliminar la categoría</value>
+  </data>
+  <data name="categorias_aplicacion_web" xml:space="preserve">
+    <value>Aplicación web</value>
+  </data>
+  <data name="categorias_aplicacion_movil" xml:space="preserve">
+    <value>Aplicación móvil</value>
+  </data>
+  <data name="categorias_publicidad_digital" xml:space="preserve">
+    <value>Publicidad digital</value>
+  </data>
+  <data name="categorias_escritorio" xml:space="preserve">
+    <value>Escritorio</value>
+  </data>
+  <data name="categorias_movil" xml:space="preserve">
+    <value>Móvil</value>
+  </data>
+  <data name="categorias_consola" xml:space="preserve">
+    <value>Consola</value>
+  </data>
+  <data name="definirclave_guardar_la_contrasena" xml:space="preserve">
+    <value>Guardar la contraseña</value>
+  </data>
+  <data name="comun_agregar" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="comun_guardar_nombre" xml:space="preserve">
+    <value>Guardar nombre</value>
+  </data>
+  <data name="dispositivos_registrar_prestamo" xml:space="preserve">
+    <value>Registrar préstamo</value>
+  </data>
+  <data name="dispositivos_dar_de_alta" xml:space="preserve">
+    <value>Dar de alta</value>
+  </data>
+  <data name="comun_guardar_cambios" xml:space="preserve">
+    <value>Guardar cambios</value>
+  </data>
+  <data name="empresanueva_registrar_empresa" xml:space="preserve">
+    <value>Registrar empresa</value>
+  </data>
+  <data name="comun_cambiar_estado" xml:space="preserve">
+    <value>Cambiar estado</value>
+  </data>
+  <data name="ingresar_ingresar" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="integridad_recalcular_ahora" xml:space="preserve">
+    <value>Recalcular ahora</value>
+  </data>
+  <data name="miclave_cambiar_contrasena" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="comun_guardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="recuperarclave_enviarme_el_enlace" xml:space="preserve">
+    <value>Enviarme el enlace</value>
+  </data>
+  <data name="respaldos_restaurar_y_cerrar_sesiones" xml:space="preserve">
+    <value>Restaurar y cerrar sesiones</value>
+  </data>
+  <data name="roles_crear" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="usuarios_reenviar_invitacion_ayuda" xml:space="preserve">
+    <value>Genera un enlace de activación nuevo y lo envía por correo</value>
+  </data>
+  <data name="usuarios_cambiar_rol" xml:space="preserve">
+    <value>Cambiar rol</value>
+  </data>
+  <data name="usuarios_guardar_datos" xml:space="preserve">
+    <value>Guardar datos</value>
+  </data>
+  <data name="usuarios_enviar_invitacion" xml:space="preserve">
+    <value>Enviar invitación</value>
+  </data>
+  <data name="comun_si" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="comun_todos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="comun_todas" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="comun_fecha_corta" xml:space="preserve">
+    <value>d MMM yyyy</value>
+  </data>
+  <data name="comun_fecha_hora_corta" xml:space="preserve">
+    <value>d MMM yyyy, HH:mm</value>
+  </data>
+  <data name="categoria_tipo_app_web" xml:space="preserve">
+    <value>App web</value>
+  </data>
+  <data name="categoria_tipo_app_movil" xml:space="preserve">
+    <value>App móvil</value>
+  </data>
+  <data name="disp_estado_mantenimiento" xml:space="preserve">
+    <value>En mantenimiento</value>
+  </data>
+  <data name="usuarios_formato_mes_anio" xml:space="preserve">
+    <value>MMM yyyy</value>
+  </data>
+  <data name="usuarios_motivo_largo" xml:space="preserve">
+    <value>(obligatorio)</value>
+  </data>
+  <data name="autenticacion_integridad_comprometida" xml:space="preserve">
+    <value>La integridad de los datos está comprometida. Un usuario con permisos de Pattern Blue debe revisarla antes de que el resto pueda ingresar.</value>
+  </data>
+  <data name="bitacora_sin_registros_filtros" xml:space="preserve">
+    <value>No hay registros que coincidan con los filtros.</value>
+  </data>
+  <data name="roles_clase_rol" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="empresa_cuit_digito" xml:space="preserve">
+    <value>El último dígito del CUIT no coincide con los anteriores (es un número de control): revisá que no haya un error de tipeo. El formato es 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).</value>
+  </data>
+  <data name="login_quedan_uno" xml:space="preserve">
+    <value>Te queda 1 intento antes de que se bloquee la cuenta.</value>
+  </data>
+  <data name="login_quedan_varios" xml:space="preserve">
+    <value>Te quedan {0} intentos antes de que se bloquee la cuenta.</value>
+  </data>
+  <data name="usuarios_datos_actualizados_nuevo_enlace" xml:space="preserve">
+    <value>Los datos del usuario se actualizaron. Como su cuenta sigue pendiente, le enviamos un enlace de activación nuevo al correo nuevo.</value>
+  </data>
+  <data name="correo_hola" xml:space="preserve">
+    <value>Hola {0},</value>
+  </data>
+  <data name="correo_activar_enlace" xml:space="preserve">
+    <value>Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas):</value>
+  </data>
+  <data name="correo_cuenta_creada" xml:space="preserve">
+    <value>Se creó tu cuenta en Falke.</value>
+  </data>
+  <data name="correo_recuperar_pedido" xml:space="preserve">
+    <value>Recibimos un pedido para restablecer la contraseña de tu cuenta de Falke.</value>
+  </data>
+  <data name="correo_recuperar_enlace" xml:space="preserve">
+    <value>Si fuiste vos, entrá a este enlace (vence en dos horas y se usa una sola vez):</value>
+  </data>
+  <data name="correo_recuperar_ignorar" xml:space="preserve">
+    <value>Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo válida.</value>
+  </data>
+  <data name="permiso_del_sistema_eliminar" xml:space="preserve">
+    <value>"{0}" es un permiso del sistema: lo define el desarrollador y no se puede eliminar.</value>
+  </data>
+  <data name="permiso_rol_base_eliminar" xml:space="preserve">
+    <value>"{0}" es un rol base del sistema: no se puede eliminar.</value>
+  </data>
+  <data name="miperfil_espanol" xml:space="preserve">
+    <value>Español</value>
+  </data>
+  <data name="falke_js_modo_dia" xml:space="preserve">
+    <value>Cambiar a modo día</value>
+  </data>
+  <data name="falke_js_modo_noche" xml:space="preserve">
+    <value>Cambiar a modo noche</value>
+  </data>
+  <data name="falke_js_expandir_menu" xml:space="preserve">
+    <value>Expandir el menú</value>
+  </data>
+  <data name="falke_js_ocultar_contrasena" xml:space="preserve">
+    <value>Ocultar la contraseña</value>
+  </data>
+  <data name="permiso_simple_no_contiene" xml:space="preserve">
+    <value>"{0}" es un permiso Simple, no puede contener otros permisos.</value>
+  </data>
+  <data name="permiso_simple_sin_hijos" xml:space="preserve">
+    <value>"{0}" es un permiso Simple, no tiene hijos.</value>
+  </data>
+  <data name="permiso_a_si_mismo" xml:space="preserve">
+    <value>Un permiso no puede incluirse a sí mismo.</value>
+  </data>
+  <data name="permiso_ya_incluye" xml:space="preserve">
+    <value>"{0}" ya incluye a "{1}".</value>
+  </data>
+  <data name="permiso_ciclo" xml:space="preserve">
+    <value>Agregar "{0}" a "{1}" generaría un ciclo de composición.</value>
+  </data>
+  <data name="permiso_no_incluye" xml:space="preserve">
+    <value>"{0}" no incluye a "{1}".</value>
+  </data>
+  <data name="integridad_registros_agregados" xml:space="preserve">
+    <value>Se detectaron registros agregados de forma externa en la tabla {0}.</value>
+  </data>
+  <data name="integridad_registros_eliminados" xml:space="preserve">
+    <value>Se detectaron registros eliminados de forma externa en la tabla {0}.</value>
+  </data>
+  <data name="integridad_vacio" xml:space="preserve">
+    <value>(vacío)</value>
+  </data>
+  <data name="integridad_sin_clave_primaria" xml:space="preserve">
+    <value>No se encontró la clave primaria de la tabla.</value>
+  </data>
+  <data name="integridad_valores_clave_invalidos" xml:space="preserve">
+    <value>La cantidad de valores de clave no coincide con las columnas de la clave primaria.</value>
+  </data>
+  <data name="bitacora_solo_lectura" xml:space="preserve">
+    <value>La bitácora es de solo lectura: no se permite modificar eventos ya registrados.</value>
+  </data>
+  <data name="respaldo_inmutable" xml:space="preserve">
+    <value>Un respaldo no se modifica: es el registro de una copia ya hecha.</value>
+  </data>
+  <data name="respaldo_sin_carpeta" xml:space="preserve">
+    <value>El servidor de base de datos no informó su carpeta de copias de seguridad.</value>
+  </data>
+  <data name="transaccion_inactiva" xml:space="preserve">
+    <value>No hay una transacción activa para confirmar.</value>
+  </data>
+  <data name="cifrado_clave_ausente" xml:space="preserve">
+    <value>No se encontró la variable de entorno FALKE_AES_KEY.</value>
+  </data>
+  <data name="cifrado_clave_tamano" xml:space="preserve">
+    <value>La clave AES configurada no tiene el tamaño esperado.</value>
+  </data>
+  <data name="cifrado_base64_invalido" xml:space="preserve">
+    <value>El valor a descifrar no es Base64 válido.</value>
+  </data>
+  <data name="cifrado_datos_insuficientes" xml:space="preserve">
+    <value>El valor cifrado no contiene datos suficientes.</value>
+  </data>
+  <data name="cifrado_descifrado_fallido" xml:space="preserve">
+    <value>No fue posible descifrar el valor. Puede haberse alterado o haberse cifrado con otra clave.</value>
+  </data>
+  <data name="categoria_so_invalido" xml:space="preserve">
+    <value>El sistema operativo objetivo no es válido.</value>
+  </data>
+  <data name="categoria_dispositivo_invalido" xml:space="preserve">
+    <value>El dispositivo objetivo no es válido.</value>
+  </data>
+  <data name="categoria_plataforma_invalida" xml:space="preserve">
+    <value>La plataforma no es válida.</value>
+  </data>
+  <data name="categoria_campo_version_app" xml:space="preserve">
+    <value>versión de la aplicación</value>
+  </data>
+  <data name="categoria_campo_url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="categoria_campo_formato" xml:space="preserve">
+    <value>formato</value>
+  </data>
+  <data name="categoria_campo_canal" xml:space="preserve">
+    <value>canal de distribución</value>
+  </data>
+  <data name="categoria_campo_so" xml:space="preserve">
+    <value>sistema operativo</value>
+  </data>
+  <data name="categoria_campo_version_software" xml:space="preserve">
+    <value>versión del software</value>
+  </data>
+  <data name="categoria_campo_version_juego" xml:space="preserve">
+    <value>versión del juego</value>
+  </data>
+  <data name="bitacora_ev_acceso_emergencia" xml:space="preserve">
+    <value>Acceso de emergencia</value>
+  </data>
+  <data name="bitacora_ev_inicio_sesion" xml:space="preserve">
+    <value>Inicio de sesión</value>
+  </data>
+  <data name="bitacora_ev_inicio_sesion_rechazado" xml:space="preserve">
+    <value>Inicio de sesión rechazado</value>
+  </data>
+  <data name="bitacora_ev_cierre_sesion" xml:space="preserve">
+    <value>Cierre de sesión</value>
+  </data>
+  <data name="bitacora_ev_intento_fallido" xml:space="preserve">
+    <value>Intento fallido</value>
+  </data>
+  <data name="bitacora_ev_cuenta_bloqueada" xml:space="preserve">
+    <value>Cuenta bloqueada</value>
+  </data>
+  <data name="bitacora_ev_clave_cambiada" xml:space="preserve">
+    <value>Cambio de contraseña</value>
+  </data>
+  <data name="bitacora_ev_clave_recuperacion_solicitada" xml:space="preserve">
+    <value>Solicitud de recuperación de contraseña</value>
+  </data>
+  <data name="bitacora_ev_clave_establecida" xml:space="preserve">
+    <value>Contraseña establecida</value>
+  </data>
+  <data name="bitacora_ev_accion_rechazada_permiso" xml:space="preserve">
+    <value>Acción rechazada por falta de permiso</value>
+  </data>
+  <data name="bitacora_ev_intento_usuario_mas_permisos" xml:space="preserve">
+    <value>Intento sobre un usuario con más permisos</value>
+  </data>
+  <data name="bitacora_ev_intento_otra_empresa" xml:space="preserve">
+    <value>Intento en otra empresa</value>
+  </data>
+  <data name="bitacora_ev_usuario_alta" xml:space="preserve">
+    <value>Alta de usuario</value>
+  </data>
+  <data name="bitacora_ev_usuario_invitacion_reenviada" xml:space="preserve">
+    <value>Reenvío de invitación</value>
+  </data>
+  <data name="bitacora_ev_usuario_cambio_rol" xml:space="preserve">
+    <value>Cambio de rol de usuario</value>
+  </data>
+  <data name="bitacora_ev_usuario_modificacion" xml:space="preserve">
+    <value>Modificación de usuario</value>
+  </data>
+  <data name="bitacora_ev_usuario_incorporado" xml:space="preserve">
+    <value>Incorporación de usuario a la empresa</value>
+  </data>
+  <data name="bitacora_ev_empresa_alta" xml:space="preserve">
+    <value>Alta de empresa</value>
+  </data>
+  <data name="bitacora_ev_empresa_modificacion" xml:space="preserve">
+    <value>Modificación de empresa</value>
+  </data>
+  <data name="bitacora_ev_empresa_modificacion_contacto" xml:space="preserve">
+    <value>Modificación de contacto de empresa</value>
+  </data>
+  <data name="bitacora_ev_categoria_alta" xml:space="preserve">
+    <value>Alta de categoría</value>
+  </data>
+  <data name="bitacora_ev_categoria_modificacion" xml:space="preserve">
+    <value>Modificación de categoría</value>
+  </data>
+  <data name="bitacora_ev_categoria_baja" xml:space="preserve">
+    <value>Baja de categoría</value>
+  </data>
+  <data name="bitacora_ev_categoria_desactivada" xml:space="preserve">
+    <value>Desactivación de categoría</value>
+  </data>
+  <data name="bitacora_ev_modelo_alta" xml:space="preserve">
+    <value>Alta de modelo de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_modelo_modificacion" xml:space="preserve">
+    <value>Modificación de modelo de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_modelo_baja" xml:space="preserve">
+    <value>Baja de modelo de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_modelo_reactivado" xml:space="preserve">
+    <value>Reactivación de modelo de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_alta" xml:space="preserve">
+    <value>Alta de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_modificacion" xml:space="preserve">
+    <value>Modificación de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_prestamo" xml:space="preserve">
+    <value>Préstamo de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_devolucion" xml:space="preserve">
+    <value>Devolución de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_mantenimiento" xml:space="preserve">
+    <value>Envío a mantenimiento</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_fin_mantenimiento" xml:space="preserve">
+    <value>Fin de mantenimiento</value>
+  </data>
+  <data name="bitacora_ev_dispositivo_baja" xml:space="preserve">
+    <value>Baja de dispositivo</value>
+  </data>
+  <data name="bitacora_ev_rol_descripcion" xml:space="preserve">
+    <value>Cambio de descripción</value>
+  </data>
+  <data name="bitacora_ev_rol_composicion" xml:space="preserve">
+    <value>Cambio de composición</value>
+  </data>
+  <data name="bitacora_ev_rol_baja" xml:space="preserve">
+    <value>Baja de rol o grupo</value>
+  </data>
+  <data name="bitacora_ev_rol_alta" xml:space="preserve">
+    <value>Alta de rol o grupo</value>
+  </data>
+  <data name="bitacora_ev_idioma_alta" xml:space="preserve">
+    <value>Alta de idioma</value>
+  </data>
+  <data name="bitacora_ev_idioma_sincronizacion" xml:space="preserve">
+    <value>Sincronización de idioma</value>
+  </data>
+  <data name="bitacora_ev_idioma_habilitado" xml:space="preserve">
+    <value>Habilitación de idioma</value>
+  </data>
+  <data name="bitacora_ev_idioma_deshabilitado" xml:space="preserve">
+    <value>Deshabilitación de idioma</value>
+  </data>
+  <data name="bitacora_ev_idioma_baja" xml:space="preserve">
+    <value>Baja de idioma</value>
+  </data>
+  <data name="bitacora_ev_idioma_traduccion" xml:space="preserve">
+    <value>Modificación de traducción</value>
+  </data>
+  <data name="bitacora_ev_respaldo_generado" xml:space="preserve">
+    <value>Copia de seguridad generada</value>
+  </data>
+  <data name="bitacora_ev_respaldo_restaurado" xml:space="preserve">
+    <value>Restauración de la base de datos</value>
+  </data>
+  <data name="bitacora_ev_integridad_recalculo" xml:space="preserve">
+    <value>Recálculo de dígitos verificadores</value>
+  </data>
+  <data name="bitacora_mod_seguridad" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="bitacora_mod_integridad" xml:space="preserve">
+    <value>Integridad</value>
+  </data>
+  <data name="bitacora_mod_usuarios" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="bitacora_mod_empresas" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="bitacora_mod_categorias" xml:space="preserve">
+    <value>Categorías</value>
+  </data>
+  <data name="bitacora_mod_dispositivos" xml:space="preserve">
+    <value>Dispositivos</value>
+  </data>
+  <data name="bitacora_mod_roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="bitacora_mod_idiomas" xml:space="preserve">
+    <value>Idiomas</value>
+  </data>
+  <data name="bitacora_mod_respaldos" xml:space="preserve">
+    <value>Respaldos</value>
+  </data>
+  <data name="bitacora_det_cuenta_bloqueada_intentos" xml:space="preserve">
+    <value>Cuenta bloqueada por intentos fallidos</value>
+  </data>
+  <data name="bitacora_det_cuenta_pendiente" xml:space="preserve">
+    <value>Cuenta pendiente de activación</value>
+  </data>
+  <data name="bitacora_det_cuenta_inactiva" xml:space="preserve">
+    <value>Cuenta dada de baja</value>
+  </data>
+  <data name="bitacora_det_cuenta_bloqueo_estricto" xml:space="preserve">
+    <value>Cuenta con bloqueo estricto</value>
+  </data>
+  <data name="bitacora_det_empresa_baja" xml:space="preserve">
+    <value>Empresa dada de baja</value>
+  </data>
+  <data name="bitacora_det_empresa_bloqueada" xml:space="preserve">
+    <value>Empresa bloqueada</value>
+  </data>
+  <data name="bitacora_det_integridad_comprometida" xml:space="preserve">
+    <value>Inconsistencias de integridad en la base de datos ({0})</value>
+  </data>
+  <data name="bitacora_det_inicio_integridad_comprometida" xml:space="preserve">
+    <value>Con inconsistencias de integridad ({0}): se lo lleva a Dígito verificador</value>
+  </data>
+  <data name="bitacora_det_contexto_inicio_sesion" xml:space="preserve">
+    <value>Inicio de sesión</value>
+  </data>
+  <data name="bitacora_det_contexto_cambio_clave" xml:space="preserve">
+    <value>Cambio de contraseña</value>
+  </data>
+  <data name="bitacora_det_intento_fallido" xml:space="preserve">
+    <value>{0} ({1} de {2})</value>
+  </data>
+  <data name="bitacora_det_motivo" xml:space="preserve">
+    <value>Motivo: {0}</value>
+  </data>
+  <data name="bitacora_campo_nombre" xml:space="preserve">
+    <value>nombre</value>
+  </data>
+  <data name="bitacora_campo_apellido" xml:space="preserve">
+    <value>apellido</value>
+  </data>
+  <data name="bitacora_campo_idioma" xml:space="preserve">
+    <value>idioma</value>
+  </data>
+  <data name="bitacora_campo_correo" xml:space="preserve">
+    <value>correo</value>
+  </data>
+  <data name="bitacora_campo_empresa" xml:space="preserve">
+    <value>empresa</value>
+  </data>
+  <data name="bitacora_campo_razon_social" xml:space="preserve">
+    <value>razón social</value>
+  </data>
+  <data name="bitacora_campo_cuit" xml:space="preserve">
+    <value>CUIT</value>
+  </data>
+  <data name="bitacora_campo_plan" xml:space="preserve">
+    <value>plan</value>
+  </data>
+  <data name="bitacora_campo_rubro" xml:space="preserve">
+    <value>rubro</value>
+  </data>
+  <data name="bitacora_campo_domicilio" xml:space="preserve">
+    <value>domicilio</value>
+  </data>
+  <data name="bitacora_campo_telefono" xml:space="preserve">
+    <value>teléfono</value>
+  </data>
+  <data name="bitacora_campo_facturacion" xml:space="preserve">
+    <value>facturación</value>
+  </data>
+  <data name="bitacora_campo_modelo" xml:space="preserve">
+    <value>modelo</value>
+  </data>
+  <data name="bitacora_campo_firmware" xml:space="preserve">
+    <value>firmware</value>
+  </data>
+  <data name="bitacora_campo_driver" xml:space="preserve">
+    <value>driver requerido</value>
+  </data>
+  <data name="bitacora_acc_alta_usuario" xml:space="preserve">
+    <value>Alta de usuario</value>
+  </data>
+  <data name="bitacora_acc_reenviar_invitacion" xml:space="preserve">
+    <value>Reenvío de invitación</value>
+  </data>
+  <data name="bitacora_acc_cambiar_estado" xml:space="preserve">
+    <value>Cambio de estado</value>
+  </data>
+  <data name="bitacora_acc_cambiar_rol" xml:space="preserve">
+    <value>Cambio de rol</value>
+  </data>
+  <data name="bitacora_acc_modificar_datos" xml:space="preserve">
+    <value>Modificación de datos</value>
+  </data>
+  <data name="bitacora_detalle" xml:space="preserve">
+    <value>Detalle</value>
+  </data>
+  <data name="bitacora_ev_usuario_activacion" xml:space="preserve">
+    <value>Activación de usuario</value>
+  </data>
+  <data name="bitacora_ev_usuario_baja" xml:space="preserve">
+    <value>Baja de usuario</value>
+  </data>
+  <data name="bitacora_ev_usuario_bloqueo" xml:space="preserve">
+    <value>Bloqueo de usuario</value>
+  </data>
+  <data name="bitacora_ev_empresa_reactivacion" xml:space="preserve">
+    <value>Reactivación de empresa</value>
+  </data>
+  <data name="bitacora_ev_empresa_bloqueo" xml:space="preserve">
+    <value>Bloqueo de empresa</value>
+  </data>
+  <data name="bitacora_ev_empresa_baja" xml:space="preserve">
+    <value>Baja de empresa</value>
   </data>
 </root>

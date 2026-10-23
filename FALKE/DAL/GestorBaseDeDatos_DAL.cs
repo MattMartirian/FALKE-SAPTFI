@@ -44,7 +44,7 @@ namespace DAL
 
         public void Confirmar()
         {
-            if (transaccion == null) throw new InvalidOperationException("No hay una transaccion activa para confirmar.");
+            if (transaccion == null) throw new InvalidOperationException("transaccion_inactiva");
 
             nivelTransaccion--;
             if (nivelTransaccion > 0) return;

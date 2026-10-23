@@ -71,9 +71,10 @@ namespace GUI
             navIntegridad.Visible = Puede(Patentes_TLL.RECALCULAR_INTEGRIDAD);
             navRoles.Visible = Puede(Patentes_TLL.GESTIONAR_ROLES);
             navRespaldos.Visible = Puede(Patentes_TLL.VER_RESPALDOS);
+            navIdiomas.Visible = Puede(Patentes_TLL.GESTIONAR_IDIOMAS);
 
             grupoOrganizacion.Visible = navUsuarios.Visible || navMiEmpresa.Visible || navEmpresas.Visible || navDispositivos.Visible;
-            grupoSistema.Visible = navBitacora.Visible || navIntegridad.Visible || navRoles.Visible || navRespaldos.Visible;
+            grupoSistema.Visible = navBitacora.Visible || navIntegridad.Visible || navRoles.Visible || navRespaldos.Visible || navIdiomas.Visible;
         }
 
         private static bool Puede(string patente)
@@ -100,6 +101,7 @@ namespace GUI
             Marcar(navIntegridad, archivo, "Integridad.aspx");
             Marcar(navRoles, archivo, "Roles.aspx");
             Marcar(navRespaldos, archivo, "Respaldos.aspx");
+            Marcar(navIdiomas, archivo, "Idiomas.aspx");
         }
 
         private static void Marcar(HtmlAnchor link, string archivoActual, string archivoDelLink)

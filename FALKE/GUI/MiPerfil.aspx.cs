@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Web.UI.WebControls;
 using BE;
 using BLL;
 using SERVICES;
@@ -17,6 +18,19 @@ namespace GUI
         private ActorUsuario_TE actor;
         private Usuario_TE yo;
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (Idioma_TE idioma in new Idioma_TLL().ListarActivos())
+                    ddlIdioma.Items.Add(new ListItem(idioma.NombreIdioma, idioma.IdIdioma.ToString(CultureInfo.InvariantCulture)));
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("MiPerfil.Idiomas", ex);
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!SesionActual_GUI.Exigir()) return;
@@ -31,7 +45,7 @@ namespace GUI
 
                 if (yo == null)
                 {
-                    Avisar("aviso-peligro", "No se encontró tu cuenta.");
+                    Avisar("aviso-peligro", IdiomaActual_GUI.Texto("miperfil_no_encontrada"));
                     phDatos.Visible = false;
                     return;
                 }
@@ -59,7 +73,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("MiPerfil.Mostrar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar tu perfil.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("miperfil_error_cargar"));
             }
         }
 
@@ -77,7 +91,7 @@ namespace GUI
         {
             bool emergencia = actor.EsEmergencia;
 
-            string nombre = emergencia ? "Acceso de emergencia" : (yo.NombreUsuario + " " + yo.ApellidoUsuario).Trim();
+            string nombre = emergencia ? IdiomaActual_GUI.Texto("miperfil_acceso_emergencia") : (yo.NombreUsuario + " " + yo.ApellidoUsuario).Trim();
             string correo = emergencia ? SesionActual_GUI.Email : yo.EmailUsuario;
             string rol = Etiquetas_GUI.De(emergencia ? Usuario_TLL.ROL_GESTOR : SesionActual_GUI.Rol);
             string empresa = emergencia ? "Pattern Blue" : NombreEmpresa();
@@ -112,7 +126,7 @@ namespace GUI
             int idioma;
             if (!int.TryParse(ddlIdioma.SelectedValue, out idioma))
             {
-                Avisar("aviso-peligro", "Elegí un idioma.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("miperfil_elegir_idioma"));
                 return;
             }
 
@@ -120,6 +134,7 @@ namespace GUI
             {
                 var tll = new Usuario_TLL();
                 tll.ActualizarPerfil(actor.IdUsuario, txtNombre.Text, txtApellido.Text, idioma);
+                IdiomaActual_GUI.Cambiar(CodigoDe(idioma));
 
                 // El nombre de la sesión (arriba a la derecha y en los saludos) se actualiza enseguida.
                 Usuario_TE actualizado = tll.ObtenerPorId(actor.IdUsuario);
@@ -129,19 +144,26 @@ namespace GUI
                         actualizado.Rol != null ? actualizado.Rol.Nombre : string.Empty, actualizado.IdEmpresa, false, actualizado.Rol);
                 }
 
-                Session[CLAVE_AVISO] = "Tus datos se guardaron.";
+                Session[CLAVE_AVISO] = IdiomaActual_GUI.Texto("miperfil_guardado");
                 Response.Redirect("MiPerfil.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             catch (InvalidOperationException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("MiPerfil.Guardar", ex);
-                Avisar("aviso-peligro", "No se pudieron guardar los cambios. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("miperfil_error_guardar"));
             }
+        }
+
+        private static string CodigoDe(int idIdioma)
+        {
+            Idioma_TE idioma = new Idioma_TLL().ObtenerPorId(idIdioma);
+
+            return idioma == null ? null : idioma.CodigoIdioma;
         }
 
         private string NombreEmpresa()

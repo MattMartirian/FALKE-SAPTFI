@@ -30,13 +30,13 @@ namespace BE
             DispositivoAppWeb = Enumerado<DispositivoObjetivo>(campos, "dispositivo");
         }
 
-        public override string NormalizarYValidar()
+        public override ErrorValidacion_BE NormalizarYValidar()
         {
             UrlAppWeb = Limpiar(UrlAppWeb);
 
-            if (!Enum.IsDefined(typeof(DispositivoObjetivo), DispositivoAppWeb)) return "El dispositivo objetivo no es válido.";
+            if (!Enum.IsDefined(typeof(DispositivoObjetivo), DispositivoAppWeb)) return new ErrorValidacion_BE("categoria_dispositivo_invalido");
 
-            return ExcedeLargo(UrlAppWeb, "URL", LARGO_URL);
+            return ExcedeLargo(UrlAppWeb, "categoria_campo_url", LARGO_URL);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace GUI
 {
     public partial class Usuarios : PaginaConAviso_GUI
     {
-        private const int ID_IDIOMA_ESPANOL = 1;
         private const int TAMANO_PAGINA = 25;
 
         private ActorUsuario_TE actor;
@@ -29,12 +28,26 @@ namespace GUI
             set { ViewState["pagina"] = value; }
         }
 
+        private void CargarIdiomas()
+        {
+            try
+            {
+                foreach (Idioma_TE idioma in new Idioma_TLL().ListarActivos())
+                    ddlDatosIdioma.Items.Add(new ListItem(idioma.NombreIdioma, idioma.IdIdioma.ToString(CultureInfo.InvariantCulture)));
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("Usuarios.Idiomas", ex);
+            }
+        }
+
         protected void Page_Init(object sender, EventArgs e)
         {
             actor = SesionActual_GUI.ObtenerActor();
 
             if (actor == null) return;
 
+            CargarIdiomas();
 
             if (Request.QueryString["perfil"] == "1")
             {
@@ -72,13 +85,30 @@ namespace GUI
             phGestionRol.Visible = puedeRol;
             phDatosAvanzados.Visible = actor.Puede(Patentes_TLL.CAMBIAR_EMAIL_EMPRESA_USUARIO);
 
-            litBajada.Text = VeTodas
-                ? "Usuarios de todas las empresas. Los cambios de estado y de rol quedan registrados en la bitácora."
-                : PuedeGestionar
-                    ? "Gestioná las cuentas de tu empresa y el estado de cada una."
-                    : "Integrantes de tu empresa y sus roles.";
-
+            MostrarBajada();
             CargarListasFijas();
+        }
+
+        protected override void AlCambiarIdioma()
+        {
+            if (actor == null) return;
+
+            MostrarBajada();
+
+            ConservandoSeleccion(() =>
+            {
+                CargarListasFijas();
+                CargarFiltros();
+            }, ddlNuevoRol, invRol, ddlNuevoEstado, ddlRolFiltro, ddlEstadoFiltro, ddlEmpresaFiltro, invEmpresa, ddlDatosEmpresa);
+        }
+
+        private void MostrarBajada()
+        {
+            litBajada.Text = VeTodas
+                ? IdiomaActual_GUI.Texto("usuarios_titulo_todas")
+                : PuedeGestionar
+                    ? IdiomaActual_GUI.Texto("usuarios_titulo_admin")
+                    : IdiomaActual_GUI.Texto("usuarios_titulo_integrantes");
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -119,7 +149,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Usuarios.Listar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar el listado de usuarios.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_listado"));
             }
         }
 
@@ -161,11 +191,14 @@ namespace GUI
 
         private void CargarFiltros()
         {
-            ddlRolFiltro.Items.Add(new ListItem("Todos los roles", string.Empty));
+            ddlRolFiltro.Items.Clear();
+            ddlEstadoFiltro.Items.Clear();
+
+            ddlRolFiltro.Items.Add(new ListItem(IdiomaActual_GUI.Texto("usuarios_todos_roles"), string.Empty));
             foreach (string rol in new Usuario_TLL().RolesAsignables(actor))
                 ddlRolFiltro.Items.Add(new ListItem(EtiquetaRol(rol), rol));
 
-            ddlEstadoFiltro.Items.Add(new ListItem("Todos los estados", string.Empty));
+            ddlEstadoFiltro.Items.Add(new ListItem(IdiomaActual_GUI.Texto("usuarios_todos_estados"), string.Empty));
             foreach (EstadoUsuario estado in Enum.GetValues(typeof(EstadoUsuario)))
                 ddlEstadoFiltro.Items.Add(new ListItem(EtiquetaEstado(estado), ((int)estado).ToString()));
 
@@ -183,7 +216,7 @@ namespace GUI
         {
             lista.Items.Clear();
 
-            if (conTodas) lista.Items.Add(new ListItem("Todas las empresas", string.Empty));
+            if (conTodas) lista.Items.Add(new ListItem(IdiomaActual_GUI.Texto("usuarios_todas_empresas"), string.Empty));
 
             foreach (Empresa_BE empresa in new Empresa_BLL().ObtenerTodas())
                 lista.Items.Add(new ListItem(empresa.NombreEmpresa, empresa.IdEmpresa.ToString()));
@@ -215,8 +248,8 @@ namespace GUI
             int hasta = desde == 0 ? 0 : desde + pagina.Items.Count - 1;
 
             litPaginado.Text = pagina.Total == 0
-                ? "Sin resultados"
-                : "Mostrando " + desde + "–" + hasta + " de " + pagina.Total;
+                ? IdiomaActual_GUI.Texto("usuarios_sin_resultados")
+                : IdiomaActual_GUI.Texto("usuarios_mostrando", desde, hasta, pagina.Total);
 
             lnkAnterior.Visible = pagina.Pagina > 1;
             lnkSiguiente.Visible = pagina.Pagina < pagina.TotalPaginas;
@@ -233,9 +266,9 @@ namespace GUI
 
             litSigla.Text = Server.HtmlEncode(nombre.Length >= 2 ? nombre.Substring(0, 2).ToUpperInvariant() : nombre.ToUpperInvariant());
             litEmpresaNombre.Text = Server.HtmlEncode(nombre);
-            litEmpresaAlta.Text = "Cliente desde " + empresa.FechaAlta.ToString("MMM yyyy", new CultureInfo("es-AR"));
-            litEmpresaUsuarios.Text = pagina.Total + (pagina.Total == 1 ? " usuario" : " usuarios");
-            litEmpresaPlan.Text = "Plan " + empresa.PlanSuscripcion;
+            litEmpresaAlta.Text = IdiomaActual_GUI.Texto("usuarios_cliente_desde", empresa.FechaAlta.ToString("MMM yyyy", IdiomaActual_GUI.Cultura));
+            litEmpresaUsuarios.Text = pagina.Total == 1 ? Traducir("comun_usuario_singular") : Traducir("comun_usuario_plural", pagina.Total);
+            litEmpresaPlan.Text = IdiomaActual_GUI.Texto("comun_plan_etiqueta", empresa.PlanSuscripcion);
             litEmpresaEstado.Text = empresa.Estado.ToString();
         }
 
@@ -261,11 +294,11 @@ namespace GUI
 
             if (actor == null || !int.TryParse(hfIdUsuario.Value, out idUsuario) || !int.TryParse(ddlNuevoEstado.SelectedValue, out estado))
             {
-                Avisar("aviso-peligro", "No se pudo identificar al usuario. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_identificar"));
                 return;
             }
 
-            Ejecutar("Usuarios.CambiarEstado", "El estado de la cuenta se actualizó.", () =>
+            Ejecutar("Usuarios.CambiarEstado", IdiomaActual_GUI.Texto("usuarios_estado_actualizado"), () =>
                 new Usuario_TLL().CambiarEstado(actor, idUsuario, (EstadoUsuario)estado, txtMotivoEstado.Text));
         }
 
@@ -275,11 +308,11 @@ namespace GUI
 
             if (actor == null || !int.TryParse(hfIdUsuario.Value, out idUsuario))
             {
-                Avisar("aviso-peligro", "No se pudo identificar al usuario. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_identificar"));
                 return;
             }
 
-            Ejecutar("Usuarios.CambiarRol", "El rol se actualizó.", () =>
+            Ejecutar("Usuarios.CambiarRol", IdiomaActual_GUI.Texto("usuarios_rol_actualizado"), () =>
                 new Usuario_TLL().CambiarRol(actor, idUsuario, ddlNuevoRol.SelectedValue, txtMotivoRol.Text, chkConfirmaRol.Checked));
         }
 
@@ -290,7 +323,7 @@ namespace GUI
 
             if (actor == null || !int.TryParse(hfIdDatos.Value, out idUsuario) || !int.TryParse(ddlDatosIdioma.SelectedValue, out idioma))
             {
-                Avisar("aviso-peligro", "No se pudo identificar al usuario. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_identificar"));
                 return;
             }
 
@@ -299,7 +332,7 @@ namespace GUI
 
             if (actual == null)
             {
-                Avisar("aviso-peligro", "El usuario no existe.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuario_no_existe"));
                 return;
             }
 
@@ -319,23 +352,23 @@ namespace GUI
                 if (token != null)
                 {
                     CorreosCuenta_GUI.EnviarActivacion(email.Trim().ToLowerInvariant(), txtDatosNombre.Text.Trim(), token,
-                        "Actualizamos el correo de tu cuenta de Falke. Sigue pendiente de activación.");
+                        IdiomaActual_GUI.Texto("usuarios_mail_correo_actualizado"));
                 }
 
-                Avisar("aviso-exito", "Los datos del usuario se actualizaron." + (token != null ? " Como su cuenta sigue pendiente, le enviamos un enlace de activación nuevo al correo nuevo." : string.Empty));
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("usuarios_datos_actualizados") + (token != null ? IdiomaActual_GUI.Texto("usuarios_datos_actualizados_pendiente") : string.Empty));
             }
             catch (UnauthorizedAccessException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (InvalidOperationException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Usuarios.ModificarDatos", ex);
-                Avisar("aviso-peligro", "No se pudo completar la operación. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("comun_error_reintentar"));
             }
         }
 
@@ -348,7 +381,7 @@ namespace GUI
             int idUsuario;
             if (!int.TryParse(Convert.ToString(e.CommandArgument, CultureInfo.InvariantCulture), out idUsuario))
             {
-                Avisar("aviso-peligro", "No se pudo identificar al usuario. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_identificar"));
                 return;
             }
 
@@ -357,22 +390,22 @@ namespace GUI
                 SolicitudEnlace_TLL solicitud = new Usuario_TLL().ReenviarInvitacion(actor, idUsuario);
 
                 CorreosCuenta_GUI.EnviarActivacion(solicitud.Email, solicitud.Nombre, solicitud.Token,
-                    "Te enviamos de nuevo la invitación a tu cuenta de Falke.");
+                    IdiomaActual_GUI.Texto("usuarios_invitacion_reenviada"));
 
                 InvitacionesEnviadas()[idUsuario] = DateTime.Now;
             }
             catch (UnauthorizedAccessException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (InvalidOperationException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Usuarios.ReenviarInvitacion", ex);
-                Avisar("aviso-peligro", "No se pudo reenviar la invitación. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_reenviar"));
             }
         }
 
@@ -386,7 +419,7 @@ namespace GUI
 
             if (nombre.Length == 0 || apellido.Length == 0 || email.Length == 0)
             {
-                AvisarInvitacion("aviso-peligro", "Nombre, apellido y correo son obligatorios.");
+                AvisarInvitacion("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_invitar_obligatorios"));
                 return;
             }
 
@@ -403,40 +436,32 @@ namespace GUI
                     ApellidoUsuario = apellido,
                     EmailUsuario = email,
                     Rol = new PermisoCompuesto_TE(invRol.SelectedValue, true),
-                    IdIdioma = ID_IDIOMA_ESPANOL,
+                    IdIdioma = IdiomaActual_GUI.IdIdiomaBase(),
                     EsCuentaEmergencia = false
                 };
 
                 string token = new Usuario_TLL().RegistrarUsuario(actor, usuario);
 
-                string enlace = WebHelper.UrlAbsoluta("DefinirClave.aspx?token=" + Uri.EscapeDataString(token));
-
-                string cuerpo =
-                    "Hola " + nombre + "," + Environment.NewLine + Environment.NewLine +
-                    "Se creó tu cuenta en Falke." + Environment.NewLine +
-                    "Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas):" + Environment.NewLine +
-                    enlace + Environment.NewLine;
-
-                Email_SERVICE.Enviar(email, "Activá tu cuenta de Falke", cuerpo);
+                CorreosCuenta_GUI.EnviarActivacion(email, nombre, token, IdiomaActual_GUI.Texto("correo_cuenta_creada"));
 
                 invNombre.Text = string.Empty;
                 invApellido.Text = string.Empty;
                 invEmail.Text = string.Empty;
 
-                Avisar("aviso-exito", "Se creó la cuenta de " + email + " en estado «Pendiente de activación». El enlace de activación quedó en App_Data/mails/.");
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("usuarios_invitacion_ok", email));
             }
             catch (UnauthorizedAccessException ex)
             {
-                AvisarInvitacion("aviso-peligro", ex.Message);
+                AvisarInvitacion("aviso-peligro", MensajeDe(ex));
             }
             catch (InvalidOperationException ex)
             {
-                AvisarInvitacion("aviso-peligro", ex.Message);
+                AvisarInvitacion("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Usuarios.Invitar", ex);
-                AvisarInvitacion("aviso-peligro", "No se pudo registrar el usuario. Volvé a intentarlo.");
+                AvisarInvitacion("aviso-peligro", IdiomaActual_GUI.Texto("usuarios_error_registrar"));
             }
         }
 
@@ -521,11 +546,11 @@ namespace GUI
         {
             switch (estado)
             {
-                case EstadoUsuario.Pendiente: return "Pendiente de activación";
-                case EstadoUsuario.Activo: return "Activo";
-                case EstadoUsuario.BloqueadoPorIntentos: return "Bloqueado";
-                case EstadoUsuario.Inactivo: return "Inactivo";
-                case EstadoUsuario.BloqueoEstricto: return "Bloqueo estricto";
+                case EstadoUsuario.Pendiente: return IdiomaActual_GUI.Texto("comun_pendiente_activacion");
+                case EstadoUsuario.Activo: return IdiomaActual_GUI.Texto("comun_estado_activo");
+                case EstadoUsuario.BloqueadoPorIntentos: return IdiomaActual_GUI.Texto("comun_estado_bloqueado");
+                case EstadoUsuario.Inactivo: return IdiomaActual_GUI.Texto("comun_estado_inactivo");
+                case EstadoUsuario.BloqueoEstricto: return IdiomaActual_GUI.Texto("comun_estado_bloqueo_estricto");
                 default: return estado.ToString();
             }
         }

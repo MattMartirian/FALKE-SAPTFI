@@ -99,7 +99,8 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.ErrorLectura,
-                    Detalle = $"No se encontró un registro de integridad previo para la tabla {tabla}."
+                    Codigo = "integridad_sin_registro_previo",
+                    Parametros = new object[] { tabla }
                 });
                 return inconsistencias;
             }
@@ -110,7 +111,8 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.RegistrosAgregados,
-                    Detalle = $"Se detectaron registros agregados de forma externa en la tabla {tabla}."
+                    Codigo = "integridad_registros_agregados",
+                    Parametros = new object[] { tabla }
                 });
             }
 
@@ -120,7 +122,8 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.RegistrosEliminados,
-                    Detalle = $"Se detectaron registros eliminados de forma externa en la tabla {tabla}."
+                    Codigo = "integridad_registros_eliminados",
+                    Parametros = new object[] { tabla }
                 });
             }
 
@@ -145,9 +148,10 @@ namespace SERVICES
                         NumeroRegistro = numeroRegistro,
                         Columnas = columnas,
                         Datos = fila.Datos,
-                        DvhAlmacenado = string.IsNullOrEmpty(fila.Dvh) ? "(vacio)" : fila.Dvh,
+                        DvhAlmacenado = string.IsNullOrEmpty(fila.Dvh) ? null : fila.Dvh,
                         DvhRecalculado = dvhCalculado,
-                        Detalle = $"El registro #{numeroRegistro} (clave \"{clave}\") de la tabla {tabla} fue alterado o agregado externamente."
+                        Codigo = "integridad_registro_alterado",
+                        Parametros = new object[] { numeroRegistro, clave, tabla }
                     });
                 }
             }
@@ -160,7 +164,8 @@ namespace SERVICES
                 {
                     Tabla = tabla,
                     Tipo = TipoInconsistencia.FirmaTablaInvalida,
-                    Detalle = $"La tabla {tabla} posee datos corruptos (firma global inválida)."
+                    Codigo = "integridad_firma_invalida",
+                    Parametros = new object[] { tabla }
                 });
             }
 

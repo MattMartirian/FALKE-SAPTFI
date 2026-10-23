@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Salir.aspx.cs" Inherits="GUI.Salir" Title="Cerrar sesión" %>
+<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Salir.aspx.cs" Inherits="GUI.Salir" Title="[[app_cerrar_sesion]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -60,7 +60,7 @@
                     <svg width="30" height="30" aria-hidden="true"><use href="#i-salir" /></svg>
                 </span>
 
-                <h1 data-i18n="salir.confirmar.titulo">¿Cerrás tu sesión?</h1>
+                <h1 data-i18n="salir.confirmar.titulo">[[salir_cerras_tu_sesion]]</h1>
 
                 <p class="texto-suave">
                     <asp:Literal ID="litConfirmar" runat="server" />
@@ -68,8 +68,8 @@
 
                 <div class="acciones">
                     <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-primario btn-grande"
-                                OnClick="btnCerrar_Click" Text="Cerrar sesión" data-i18n="salir.confirmar.boton" />
-                    <a class="btn btn-secundario" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="salir.confirmar.seguir">Seguir en Falke</a>
+                                OnClick="btnCerrar_Click" Text="[[app_cerrar_sesion]]" data-i18n="salir.confirmar.boton" />
+                    <a class="btn btn-secundario" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="salir.confirmar.seguir">[[salir_seguir_en_falke]]</a>
                 </div>
             </asp:Panel>
 
@@ -78,19 +78,19 @@
                     <svg width="30" height="30" aria-hidden="true"><use href="#i-tilde" /></svg>
                 </span>
 
-                <h1 data-i18n="salir.titulo">Cerraste tu sesión</h1>
+                <h1 data-i18n="salir.titulo">[[salir_cerraste_tu_sesion]]</h1>
 
                 <p class="texto-suave">
                     <asp:Literal ID="litDetalle" runat="server" />
                 </p>
 
                 <div class="acciones">
-                    <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="salir.volverEntrar">Volver a entrar</a>
-                    <a class="btn btn-secundario" href="<%: ResolveUrl("~/Default.aspx") %>" data-i18n="salir.irInicio">Ir a la página de inicio</a>
+                    <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="salir.volverEntrar">[[salir_volver_a_entrar]]</a>
+                    <a class="btn btn-secundario" href="<%: ResolveUrl("~/Default.aspx") %>" data-i18n="salir.irInicio">[[salir_ir_a_la_pagina_de_inicio]]</a>
                 </div>
 
                 <p class="texto-chico texto-suave mt-24 sin-margen" data-i18n="salir.aviso">
-                    Por seguridad, cerrá también la ventana del navegador si estás en un equipo compartido.
+                    [[salir_por_seguridad_cerra_tambien_la_ventana]]
                 </p>
             </asp:Panel>
 

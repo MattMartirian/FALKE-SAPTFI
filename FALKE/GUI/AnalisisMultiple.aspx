@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="AnalisisMultiple.aspx.cs" Inherits="GUI.AnalisisMultiple" Title="Análisis múltiple" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="AnalisisMultiple.aspx.cs" Inherits="GUI.AnalisisMultiple" Title="[[analisismultiple_analisis_multiple]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -85,10 +85,9 @@
 
         <div class="pagina-cabecera">
             <div>
-                <h1 data-i18n="multiple.titulo">Análisis múltiple</h1>
+                <h1 data-i18n="multiple.titulo">[[analisismultiple_analisis_multiple]]</h1>
                 <p class="texto-suave sin-margen medida" data-i18n="multiple.bajada">
-                    Combina varias sesiones para obtener resultados promediados y ver que patrones
-                    se repiten entre distintos testers.
+                    [[analisismultiple_combina_varias_sesiones_para_obtener_res]]
                 </p>
             </div>
         </div>
@@ -96,11 +95,9 @@
         <div class="aviso aviso-info">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
             <div>
-                <strong data-i18n="multiple.regla.titulo">Todas las sesiones tienen que ser del mismo tipo de activo</strong>
+                <strong data-i18n="multiple.regla.titulo">[[analisismultiple_todas_las_sesiones_tienen_que_ser]]</strong>
                 <p class="sin-margen" data-i18n="multiple.regla.texto">
-                    Promediar sesiones de tipos distintos daria un resultado estadisticamente
-                    inválido, así que al elegir la primera se deshabilitan las que no son compatibles.
-                    Hacen falta al menos dos.
+                    [[analisismultiple_promediar_sesiones_de_tipos_distintos_da]]
                 </p>
             </div>
         </div>
@@ -110,8 +107,8 @@
             <div class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-ojo" /></svg>
-                    <span data-i18n="multiple.disponibles">Sesiones finalizadas</span>
-                    <span class="derecha texto-chico texto-suave" data-i18n="multiple.soloFinalizadas">Solo se listan las ya procesadas</span>
+                    <span data-i18n="multiple.disponibles">[[analisismultiple_sesiones_finalizadas]]</span>
+                    <span class="derecha texto-chico texto-suave" data-i18n="multiple.soloFinalizadas">[[analisismultiple_solo_se_listan_las_ya_procesadas]]</span>
                 </div>
 
                 <div id="listaElegibles">
@@ -121,7 +118,7 @@
                         <span>
                             <span class="opcion-titulo">Checkout - App e-commerce</span>
                             <span class="opcion-detalle">
-                                <span>App web</span><span>12 jul 2026</span><span>18:42 min</span><span>Maria Gomez</span>
+                                <span>[[analisismultiple_app_web]]</span><span>12 jul 2026</span><span>18:42 min</span><span>Maria Gomez</span>
                             </span>
                         </span>
                     </label>
@@ -131,7 +128,7 @@
                         <span>
                             <span class="opcion-titulo">Carrito - App e-commerce</span>
                             <span class="opcion-detalle">
-                                <span>App web</span><span>01 jul 2026</span><span>12:27 min</span><span>Valentina Ruiz</span>
+                                <span>[[analisismultiple_app_web]]</span><span>01 jul 2026</span><span>12:27 min</span><span>Valentina Ruiz</span>
                             </span>
                         </span>
                     </label>
@@ -141,7 +138,7 @@
                         <span>
                             <span class="opcion-titulo">Checkout - Tester 03</span>
                             <span class="opcion-detalle">
-                                <span>App web</span><span>28 jun 2026</span><span>15:08 min</span><span>Maria Gomez</span>
+                                <span>[[analisismultiple_app_web]]</span><span>28 jun 2026</span><span>15:08 min</span><span>Maria Gomez</span>
                             </span>
                         </span>
                     </label>
@@ -151,7 +148,7 @@
                         <span>
                             <span class="opcion-titulo">Onboarding - RPG móvil</span>
                             <span class="opcion-detalle">
-                                <span>Videojuego</span><span>10 jul 2026</span><span>09:15 min</span><span>Nicolas Castro</span>
+                                <span>[[analisismultiple_videojuego]]</span><span>10 jul 2026</span><span>09:15 min</span><span>Nicolas Castro</span>
                             </span>
                         </span>
                     </label>
@@ -161,7 +158,7 @@
                         <span>
                             <span class="opcion-titulo">Login - Panel interno</span>
                             <span class="opcion-detalle">
-                                <span>Software</span><span>05 jul 2026</span><span>06:51 min</span><span>Maria Gomez</span>
+                                <span>[[analisismultiple_software]]</span><span>05 jul 2026</span><span>06:51 min</span><span>Maria Gomez</span>
                             </span>
                         </span>
                     </label>
@@ -171,7 +168,7 @@
                         <span>
                             <span class="opcion-titulo">Alta de cuenta - App móvil</span>
                             <span class="opcion-detalle">
-                                <span>App móvil</span><span>27 jun 2026</span><span>07:40 min</span><span>Nicolas Castro</span>
+                                <span>[[analisismultiple_app_movil]]</span><span>27 jun 2026</span><span>07:40 min</span><span>Nicolas Castro</span>
                             </span>
                         </span>
                     </label>
@@ -182,23 +179,23 @@
             <aside class="tarjeta resumen-seleccion">
                 <div class="tarjeta-cabecera">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-comparar" /></svg>
-                    <span data-i18n="multiple.resumen">Selección actual</span>
+                    <span data-i18n="multiple.resumen">[[analisismultiple_seleccion_actual]]</span>
                 </div>
 
                 <p class="contador" id="contadorElegidas">0</p>
                 <p class="texto-chico texto-suave" id="tipoElegido" data-i18n="multiple.sinTipo">
-                    Todavía no elegiste ninguna sesión.
+                    [[analisismultiple_todavia_no_elegiste_ninguna_sesion]]
                 </p>
 
                 <ul class="elegidas" id="listaElegidas"></ul>
 
                 <button type="button" class="btn btn-primario btn-bloque" id="btnGenerar" disabled>
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-metricas" /></svg>
-                    <span data-i18n="multiple.generar">Generar análisis</span>
+                    <span data-i18n="multiple.generar">[[analisismultiple_generar_analisis]]</span>
                 </button>
 
                 <p class="ayuda" id="avisoSeleccion" role="status" data-i18n="multiple.minimo">
-                    Necesitas al menos dos sesiones del mismo tipo.
+                    [[analisismultiple_necesitas_al_menos_dos_sesiones_del]]
                 </p>
             </aside>
 
@@ -209,20 +206,20 @@
 
         <p class="migas">
             <button type="button" class="btn btn-fantasma btn-chico" id="btnVolverSeleccion" style="padding-left:0">
-                <span data-i18n="multiple.volver">Selección de sesiones</span>
+                <span data-i18n="multiple.volver">[[analisismultiple_seleccion_de_sesiones]]</span>
             </button>
-            / <strong data-i18n="multiple.resultado">Resultado combinado</strong>
+            / <strong data-i18n="multiple.resultado">[[analisismultiple_resultado_combinado]]</strong>
         </p>
 
         <div class="pagina-cabecera">
             <div>
-                <h1 id="tituloResultado" data-i18n="multiple.resultado.titulo">Resultado combinado</h1>
+                <h1 id="tituloResultado" data-i18n="multiple.resultado.titulo">[[analisismultiple_resultado_combinado]]</h1>
                 <p class="texto-suave sin-margen" id="subtituloResultado"></p>
             </div>
             <div class="acciones">
                 <button type="button" class="btn btn-primario">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-descarga" /></svg>
-                    <span data-i18n="multiple.exportar">Descargar reporte</span>
+                    <span data-i18n="multiple.exportar">[[analisismultiple_descargar_reporte]]</span>
                 </button>
             </div>
         </div>
@@ -230,52 +227,52 @@
         <div class="tarjeta mb-24">
             <div class="tarjeta-cabecera">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-metricas" /></svg>
-                <span data-i18n="multiple.metricas">Métricas promediadas</span>
+                <span data-i18n="multiple.metricas">[[analisismultiple_metricas_promediadas]]</span>
             </div>
 
             <div class="metricas">
                 <div>
                     <div class="metrica-valor">15:26</div>
-                    <div class="metrica-nombre" data-i18n="multiple.metrica.duracion">Duración promedio</div>
+                    <div class="metrica-nombre" data-i18n="multiple.metrica.duracion">[[analisismultiple_duracion_promedio]]</div>
                 </div>
                 <div>
                     <div class="metrica-valor">2.1 s</div>
-                    <div class="metrica-nombre" data-i18n="vis.metrica.fijacionMedia">Fijación media</div>
+                    <div class="metrica-nombre" data-i18n="vis.metrica.fijacionMedia">[[analisismultiple_fijacion_media]]</div>
                 </div>
                 <div>
                     <div class="metrica-valor">41</div>
-                    <div class="metrica-nombre" data-i18n="multiple.metrica.fijaciones">Fijaciones promedio</div>
+                    <div class="metrica-nombre" data-i18n="multiple.metrica.fijaciones">[[analisismultiple_fijaciones_promedio]]</div>
                 </div>
                 <div>
                     <div class="metrica-valor">58%</div>
-                    <div class="metrica-nombre" data-i18n="vis.metrica.atencion">Atención activa</div>
+                    <div class="metrica-nombre" data-i18n="vis.metrica.atencion">[[analisismultiple_atencion_activa]]</div>
                 </div>
                 <div>
                     <div class="metrica-valor" id="metricaSesiones">3</div>
-                    <div class="metrica-nombre" data-i18n="multiple.metrica.sesiones">Sesiones combinadas</div>
+                    <div class="metrica-nombre" data-i18n="multiple.metrica.sesiones">[[analisismultiple_sesiones_combinadas]]</div>
                 </div>
             </div>
         </div>
 
-        <h2 class="mb-16" style="font-size:1.1rem" data-i18n="multiple.graficos">Gráficos promediados</h2>
+        <h2 class="mb-16" style="font-size:1.1rem" data-i18n="multiple.graficos">[[analisismultiple_graficos_promediados]]</h2>
 
         <div class="tablero-multiple">
 
             <article class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-calor" /></svg>
-                    <span data-i18n="vis.grafico.calor">Mapa de calor</span>
+                    <span data-i18n="vis.grafico.calor">[[analisismultiple_mapa_de_calor]]</span>
                 </div>
                 <div class="grafico grafico-calor" aria-hidden="true"></div>
                 <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="multiple.calor.detalle">
-                    Densidad de fijaciones promediada entre las sesiones elegidas.
+                    [[analisismultiple_densidad_de_fijaciones_promediada_entre]]
                 </p>
             </article>
 
             <article class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-zonas" /></svg>
-                    <span data-i18n="vis.grafico.zonas">Zonas de interés y ciegas</span>
+                    <span data-i18n="vis.grafico.zonas">[[analisismultiple_zonas_de_interes_y_ciegas]]</span>
                 </div>
                 <div class="grafico" aria-hidden="true">
                     <svg viewBox="0 0 320 180" preserveAspectRatio="none">
@@ -285,14 +282,14 @@
                     </svg>
                 </div>
                 <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="multiple.zonas.detalle">
-                    Áreas que la mayoria de los testers miro y áreas que ignoraron.
+                    [[analisismultiple_areas_que_la_mayoria_de_los]]
                 </p>
             </article>
 
             <article class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-dispersion" /></svg>
-                    <span data-i18n="vis.grafico.dispersion">Dispersión de mirada</span>
+                    <span data-i18n="vis.grafico.dispersion">[[analisismultiple_dispersion_de_mirada]]</span>
                 </div>
                 <div class="grafico" aria-hidden="true">
                     <svg viewBox="0 0 320 180" preserveAspectRatio="none">
@@ -306,14 +303,14 @@
                     </svg>
                 </div>
                 <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="multiple.dispersion.detalle">
-                    Cuanto varia la atención entre los distintos participantes.
+                    [[analisismultiple_cuanto_varia_la_atencion_entre_los]]
                 </p>
             </article>
 
             <article class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-torta" /></svg>
-                    <span data-i18n="vis.grafico.atencion">Atención vs. distracción</span>
+                    <span data-i18n="vis.grafico.atencion">[[analisismultiple_atencion_vs_distraccion]]</span>
                 </div>
                 <div class="grafico" aria-hidden="true" style="display:flex;align-items:center;justify-content:center">
                     <svg viewBox="0 0 120 120" style="width:auto;height:82%">
@@ -324,14 +321,14 @@
                     </svg>
                 </div>
                 <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="multiple.atencion.detalle">
-                    Proporción media de fijación activa frente a movimiento sacádico.
+                    [[analisismultiple_proporcion_media_de_fijacion_activa_fren]]
                 </p>
             </article>
 
             <article class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-recorrido" /></svg>
-                    <span data-i18n="vis.grafico.recorrido">Recorrido de mirada</span>
+                    <span data-i18n="vis.grafico.recorrido">[[analisismultiple_recorrido_de_mirada]]</span>
                 </div>
                 <div class="grafico" aria-hidden="true">
                     <svg viewBox="0 0 320 180" preserveAspectRatio="none">
@@ -342,14 +339,14 @@
                     </svg>
                 </div>
                 <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="multiple.recorrido.detalle">
-                    Trayecto tipico: la línea llena es el promedio del conjunto.
+                    [[analisismultiple_trayecto_tipico_la_linea_llena_es]]
                 </p>
             </article>
 
             <article class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-comparar" /></svg>
-                    <span data-i18n="multiple.porSesion">Atención por sesión</span>
+                    <span data-i18n="multiple.porSesion">[[analisismultiple_atencion_por_sesion]]</span>
                 </div>
                 <div class="grafico" aria-hidden="true" style="display:flex;align-items:flex-end;gap:10px;padding:20px">
                     <span style="flex:1;height:62%;background:var(--marca-azul);border-radius:4px"></span>
@@ -357,7 +354,7 @@
                     <span style="flex:1;height:76%;background:var(--marca-dorado);border-radius:4px"></span>
                 </div>
                 <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="multiple.porSesion.detalle">
-                    Comparación directa del porcentaje de atención activa de cada sesión.
+                    [[analisismultiple_comparacion_directa_del_porcentaje_de_at]]
                 </p>
             </article>
 
@@ -380,11 +377,11 @@
             var aviso = document.getElementById("avisoSeleccion");
 
             var TIPOS = {
-                appweb: "App web",
-                appmovil: "App móvil",
-                software: "Software",
-                videojuego: "Videojuego",
-                publicidad: "Publicidad"
+                appweb: "[[js:analisismultiple_app_web]]",
+                appmovil: "[[js:analisismultiple_app_movil]]",
+                software: "[[js:analisismultiple_software]]",
+                videojuego: "[[js:analisismultiple_videojuego]]",
+                publicidad: "[[js:categorias_publicidad]]"
             };
 
             function elegidas() {
@@ -426,17 +423,17 @@
                 }
 
                 if (tipo === null) {
-                    tipoElegido.textContent = "Todavia no elegiste ninguna sesion.";
+                    tipoElegido.textContent = "[[js:analisismultiple_todavia_no_elegiste_ninguna_sesion]]";
                 } else {
-                    tipoElegido.textContent = "Tipo de activo: " + TIPOS[tipo] + ".";
+                    tipoElegido.textContent = "[[js:analisismultiple_tipo_de_activo_0]]".replace("{0}", TIPOS[tipo]);
                 }
 
                 var suficientes = marcadas.length >= 2;
 
                 btnGenerar.disabled = !suficientes;
                 aviso.textContent = suficientes
-                    ? "Listo para combinar " + marcadas.length + " sesiones."
-                    : "Necesitas al menos dos sesiones del mismo tipo.";
+                    ? "[[js:analisismultiple_listo_para_combinar_0_sesiones]]".replace("{0}", marcadas.length)
+                    : "[[js:analisismultiple_necesitas_al_menos_dos_sesiones_del]]";
             }
 
             for (var i = 0; i < casillas.length; i++) {

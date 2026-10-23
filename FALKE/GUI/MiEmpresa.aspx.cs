@@ -10,7 +10,10 @@ namespace GUI
 {
     public partial class MiEmpresa : PaginaConAviso_GUI
     {
-        private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
+        private static CultureInfo Cultura
+        {
+            get { return IdiomaActual_GUI.Cultura; }
+        }
 
         private ActorUsuario_TE actor;
         private bool edicionEnCurso;
@@ -33,7 +36,7 @@ namespace GUI
             if (actor.EsEmergencia || actor.IdEmpresa <= 0)
             {
                 actor = null;
-                MostrarError("Esta cuenta no pertenece a ninguna empresa cliente, así que no hay datos de empresa para mostrar.");
+                MostrarError(IdiomaActual_GUI.Texto("miempresa_sin_empresa"));
                 return;
             }
 
@@ -54,7 +57,7 @@ namespace GUI
 
                 if (empresa == null)
                 {
-                    MostrarError("No se encontró la empresa de tu cuenta.");
+                    MostrarError(IdiomaActual_GUI.Texto("miempresa_no_encontrada"));
                     return;
                 }
 
@@ -63,7 +66,7 @@ namespace GUI
                 litSigla.Text = Server.HtmlEncode(Sigla(nombre));
                 litNombre.Text = Server.HtmlEncode(nombre);
                 litAlta.Text = Server.HtmlEncode(Fecha(empresa.FechaAlta));
-                litPlanFicha.Text = "Plan " + empresa.PlanSuscripcion;
+                litPlanFicha.Text = IdiomaActual_GUI.Texto("comun_plan_etiqueta", empresa.PlanSuscripcion);
                 litEstadoFicha.Text = empresa.Estado.ToString();
                 badgeEstado.Attributes["class"] = "badge " + (empresa.Estado == EstadoEmpresa.Activa ? "badge-exito" : "badge-peligro");
 
@@ -98,7 +101,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("MiEmpresa", ex);
-                MostrarError("No se pudieron cargar los datos de la empresa.");
+                MostrarError(IdiomaActual_GUI.Texto("miempresa_error_cargar"));
             }
         }
 
@@ -110,21 +113,21 @@ namespace GUI
             {
                 new Empresa_BLL().ModificarContacto(actor, edRubro.Text, edDomicilio.Text, edTelefono.Text);
 
-                Avisar("aviso-exito", "Los datos de contacto se actualizaron.");
+                Avisar("aviso-exito", IdiomaActual_GUI.Texto("miempresa_contacto_actualizado"));
                 return;
             }
             catch (UnauthorizedAccessException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (InvalidOperationException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("MiEmpresa.Contacto", ex);
-                Avisar("aviso-peligro", "No se pudo guardar. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("miempresa_error_guardar"));
             }
 
             edicionEnCurso = true;

@@ -37,7 +37,7 @@ namespace BLL
             nombre = Normalizar(nombre);
             ValidarNombre(nombre);
 
-            if (modeloRepo.ExisteNombre(nombre, 0)) throw new InvalidOperationException("Ya existe un modelo con ese nombre.");
+            if (modeloRepo.ExisteNombre(nombre, 0)) throw new ExcepcionTraducible_TLL("modelo_duplicado");
 
             var modelo = new ModeloDispositivo_BE { Nombre = nombre, Activo = true };
 
@@ -46,7 +46,7 @@ namespace BLL
                 modeloRepo.Alta(modelo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.ModeloDispositivo, new[] { modelo.IdModelo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", null, "Alta del modelo de dispositivo \"" + nombre + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, EventosBitacora_TLL.MODELO_ALTA, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(nombre));
             });
         }
 
@@ -59,8 +59,8 @@ namespace BLL
             nombre = Normalizar(nombre);
             ValidarNombre(nombre);
 
-            if (string.Equals(modelo.Nombre, nombre, StringComparison.Ordinal)) throw new InvalidOperationException("No hay cambios para guardar.");
-            if (modeloRepo.ExisteNombre(nombre, idModelo)) throw new InvalidOperationException("Ya existe un modelo con ese nombre.");
+            if (string.Equals(modelo.Nombre, nombre, StringComparison.Ordinal)) throw new ExcepcionTraducible_TLL("comun_sin_cambios");
+            if (modeloRepo.ExisteNombre(nombre, idModelo)) throw new ExcepcionTraducible_TLL("modelo_duplicado");
 
             string anterior = modelo.Nombre;
             modelo.Nombre = nombre;
@@ -70,27 +70,27 @@ namespace BLL
                 modeloRepo.Modificar(modelo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.ModeloDispositivo, new[] { idModelo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", null, "El modelo de dispositivo \"" + anterior + "\" pasó a llamarse \"" + nombre + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, EventosBitacora_TLL.MODELO_MODIFICACION, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(anterior, " → ", nombre));
             });
         }
 
         public void DarDeBaja(ActorUsuario_TE actor, int idModelo)
         {
-            CambiarActivo(actor, idModelo, false, "Baja del modelo de dispositivo \"{0}\".");
+            CambiarActivo(actor, idModelo, false, EventosBitacora_TLL.MODELO_BAJA);
         }
 
         public void Reactivar(ActorUsuario_TE actor, int idModelo)
         {
-            CambiarActivo(actor, idModelo, true, "Se reactivó el modelo de dispositivo \"{0}\".");
+            CambiarActivo(actor, idModelo, true, EventosBitacora_TLL.MODELO_REACTIVADO);
         }
 
-        private void CambiarActivo(ActorUsuario_TE actor, int idModelo, bool activo, string descripcion)
+        private void CambiarActivo(ActorUsuario_TE actor, int idModelo, bool activo, string evento)
         {
             actor.Exigir(Patentes_TLL.GESTIONAR_MODELOS_DISPOSITIVO);
 
             ModeloDispositivo_BE modelo = ObtenerExistente(idModelo);
 
-            if (modelo.Activo == activo) throw new InvalidOperationException(activo ? "El modelo ya está activo." : "El modelo ya está dado de baja.");
+            if (modelo.Activo == activo) throw new ExcepcionTraducible_TLL(activo ? "modelo_ya_activo" : "modelo_ya_de_baja");
 
             modelo.Activo = activo;
 
@@ -99,7 +99,7 @@ namespace BLL
                 modeloRepo.Modificar(modelo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.ModeloDispositivo, new[] { idModelo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", null, string.Format(descripcion, modelo.Nombre), CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, evento, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(modelo.Nombre));
             });
         }
 
@@ -107,7 +107,7 @@ namespace BLL
         {
             ModeloDispositivo_BE modelo = modeloRepo.ObtenerPorPK(idModelo);
 
-            if (modelo == null) throw new InvalidOperationException("El modelo no existe.");
+            if (modelo == null) throw new ExcepcionTraducible_TLL("modelo_no_existe");
 
             return modelo;
         }
@@ -119,8 +119,8 @@ namespace BLL
 
         private static void ValidarNombre(string nombre)
         {
-            if (nombre.Length == 0) throw new InvalidOperationException("El nombre del modelo es obligatorio.");
-            if (nombre.Length > LARGO_NOMBRE) throw new InvalidOperationException("El nombre del modelo no puede superar los " + LARGO_NOMBRE + " caracteres.");
+            if (nombre.Length == 0) throw new ExcepcionTraducible_TLL("modelo_nombre_obligatorio");
+            if (nombre.Length > LARGO_NOMBRE) throw new ExcepcionTraducible_TLL("modelo_nombre_largo", LARGO_NOMBRE);
         }
     }
 }

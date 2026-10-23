@@ -2,7 +2,7 @@ using System;
 
 namespace GUI
 {
-    public partial class NuevaGrabacion : System.Web.UI.Page
+    public partial class NuevaGrabacion : PaginaBase_GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {

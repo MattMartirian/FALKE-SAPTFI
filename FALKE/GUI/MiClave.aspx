@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="MiClave.aspx.cs" Inherits="GUI.MiClave" Title="Cambiar mi contraseña" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="MiClave.aspx.cs" Inherits="GUI.MiClave" Title="[[miclave_cambiar_mi_contrasena]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -77,15 +77,15 @@
 
     <div class="pagina-cabecera">
         <div>
-            <h1 data-i18n="miClave.titulo">Cambiar mi contraseña</h1>
+            <h1 data-i18n="miClave.titulo">[[miclave_cambiar_mi_contrasena]]</h1>
             <p class="texto-suave sin-margen" data-i18n="miClave.bajada">
-                Elegí una contraseña nueva para tu cuenta. Se te va a pedir la actual.
+                [[miclave_elegi_una_contrasena_nueva_para_tu]]
             </p>
         </div>
         <div class="acciones">
             <a class="btn btn-secundario" href="<%: ResolveUrl("~/MiPerfil.aspx") %>">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-persona" /></svg>
-                <span data-i18n="miClave.volverPerfil">Volver a mi perfil</span>
+                <span data-i18n="miClave.volverPerfil">[[miclave_volver_a_mi_perfil]]</span>
             </a>
         </div>
     </div>
@@ -98,13 +98,13 @@
         </asp:Panel>
 
         <div class="campo">
-            <label for="claveActual" data-i18n="miClave.actual">Contraseña actual</label>
+            <label for="claveActual" data-i18n="miClave.actual">[[miclave_contrasena_actual]]</label>
             <div class="campo-con-boton">
                 <asp:TextBox ID="claveActual" runat="server" CssClass="entrada" TextMode="Password"
                              ClientIDMode="Static" autocomplete="current-password" />
                 <button type="button" class="boton-dentro" data-ver-clave="claveActual"
-                        aria-pressed="false" title="Mostrar la contraseña">
-                    <span class="solo-lectores" data-i18n="comun.verContrasena">Mostrar u ocultar la contraseña</span>
+                        aria-pressed="false" title="[[ingresar_mostrar_la_contrasena]]">
+                    <span class="solo-lectores" data-i18n="comun.verContrasena">[[ingresar_mostrar_u_ocultar_la_contrasena]]</span>
                     <svg width="19" height="19" aria-hidden="true" data-icono-clave="ver"><use href="#i-ojo" /></svg>
                     <svg width="19" height="19" aria-hidden="true" data-icono-clave="ocultar" style="display:none"><use href="#i-ojo-tachado" /></svg>
                 </button>
@@ -114,13 +114,13 @@
         <hr />
 
         <div class="campo">
-            <label for="claveNueva" data-i18n="miClave.nueva">Contraseña nueva</label>
+            <label for="claveNueva" data-i18n="miClave.nueva">[[definirclave_contrasena_nueva]]</label>
             <div class="campo-con-boton">
                 <asp:TextBox ID="claveNueva" runat="server" CssClass="entrada" TextMode="Password"
                              ClientIDMode="Static" autocomplete="new-password" aria-describedby="listaRequisitos" />
                 <button type="button" class="boton-dentro" data-ver-clave="claveNueva"
-                        aria-pressed="false" title="Mostrar la contraseña">
-                    <span class="solo-lectores" data-i18n="comun.verContrasena">Mostrar u ocultar la contraseña</span>
+                        aria-pressed="false" title="[[ingresar_mostrar_la_contrasena]]">
+                    <span class="solo-lectores" data-i18n="comun.verContrasena">[[ingresar_mostrar_u_ocultar_la_contrasena]]</span>
                     <svg width="19" height="19" aria-hidden="true" data-icono-clave="ver"><use href="#i-ojo" /></svg>
                     <svg width="19" height="19" aria-hidden="true" data-icono-clave="ocultar" style="display:none"><use href="#i-ojo-tachado" /></svg>
                 </button>
@@ -128,54 +128,53 @@
 
             <div class="fuerza" aria-hidden="true"><span id="barraFuerza"></span></div>
             <p class="fuerza-texto" id="textoFuerza" role="status" data-i18n="miClave.fuerza.vacia">
-                Todavía no escribiste nada.
+                [[miclave_todavia_no_escribiste_nada]]
             </p>
 
             <ul class="requisitos" id="listaRequisitos">
                 <li data-requisito="largo">
                     <span class="marca-req" aria-hidden="true"></span>
-                    <span data-i18n="miClave.req.largo">Al menos 8 caracteres</span>
+                    <span data-i18n="miClave.req.largo">[[miclave_al_menos_8_caracteres]]</span>
                 </li>
                 <li data-requisito="mayuscula">
                     <span class="marca-req" aria-hidden="true"></span>
-                    <span data-i18n="miClave.req.mayuscula">Una mayúscula</span>
+                    <span data-i18n="miClave.req.mayuscula">[[miclave_una_mayuscula]]</span>
                 </li>
                 <li data-requisito="minuscula">
                     <span class="marca-req" aria-hidden="true"></span>
-                    <span data-i18n="miClave.req.minuscula">Una minúscula</span>
+                    <span data-i18n="miClave.req.minuscula">[[miclave_una_minuscula]]</span>
                 </li>
                 <li data-requisito="numero">
                     <span class="marca-req" aria-hidden="true"></span>
-                    <span data-i18n="miClave.req.numero">Un número</span>
+                    <span data-i18n="miClave.req.numero">[[miclave_un_numero]]</span>
                 </li>
                 <li data-requisito="especial">
                     <span class="marca-req" aria-hidden="true"></span>
-                    <span data-i18n="miClave.req.especial">Un carácter especial (por ejemplo # ! @ $ %)</span>
+                    <span data-i18n="miClave.req.especial">[[miclave_un_caracter_especial_por_ejemplo]]</span>
                 </li>
             </ul>
         </div>
 
         <div class="campo">
-            <label for="claveRepetir" data-i18n="miClave.repetir">Repetir la contraseña nueva</label>
+            <label for="claveRepetir" data-i18n="miClave.repetir">[[definirclave_repetir_la_contrasena_nueva]]</label>
             <asp:TextBox ID="claveRepetir" runat="server" CssClass="entrada" TextMode="Password"
                          ClientIDMode="Static" autocomplete="new-password" />
             <p class="ayuda" id="avisoRepetir" role="status" data-i18n="miClave.repetir.ayuda">
-                Las dos tienen que coincidir.
+                [[definirclave_las_dos_tienen_que_coincidir]]
             </p>
         </div>
 
         <div class="aviso aviso-info">
             <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
             <p class="sin-margen" data-i18n="miClave.avisoSesiones">
-                Al cambiarla se cierran las sesiones abiertas en otros equipos y vas a tener
-                que volver a entrar en ellos.
+                [[miclave_al_cambiarla_se_cierran_las_sesiones]]
             </p>
         </div>
 
         <div class="fila-entre">
-            <a class="btn btn-secundario" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="comun.cancelar">Cancelar</a>
+            <a class="btn btn-secundario" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="comun.cancelar">[[categorias_cancelar]]</a>
             <asp:Button ID="btnGuardarClave" runat="server" CssClass="btn btn-primario" ClientIDMode="Static"
-                        OnClick="btnGuardarClave_Click" Text="Cambiar contraseña" data-i18n="miClave.guardar" />
+                        OnClick="btnGuardarClave_Click" Text="[[miclave_cambiar_contrasena]]" data-i18n="miClave.guardar" />
         </div>
 
     </div>
@@ -196,7 +195,7 @@
             var avisoRepetir = document.getElementById("avisoRepetir");
             var items = document.querySelectorAll("#listaRequisitos li");
 
-            var TEXTOS = ["Muy débil", "Débil", "Aceptable", "Buena", "Fuerte"];
+            var TEXTOS = ["[[js:miclave_muy_debil]]", "[[js:miclave_debil]]", "[[js:miclave_aceptable]]", "[[js:miclave_buena]]", "[[js:miclave_fuerte]]"];
             var COLORES = ["var(--peligro)", "var(--alerta)", "var(--info)", "var(--exito)", "var(--exito)"];
 
             function requisitosCumplidos(clave) {
@@ -228,22 +227,22 @@
 
                 if (clave === "")
                 {
-                    textoFuerza.textContent = "Todavía no escribiste nada.";
+                    textoFuerza.textContent = "[[js:miclave_todavia_no_escribiste_nada]]";
                 }
                 else
                 {
                     barra.style.background = COLORES[cuantos - 1] || COLORES[0];
-                    textoFuerza.textContent = "Fuerza: " + (TEXTOS[cuantos - 1] || TEXTOS[0]);
+                    textoFuerza.textContent = "[[js:miclave_fuerza_0]]".replace("{0}", (TEXTOS[cuantos - 1] || TEXTOS[0]));
                 }
 
                 var coinciden = clave !== "" && clave === repetir.value;
 
                 if (repetir.value === "")
-                    avisoRepetir.textContent = "Las dos tienen que coincidir.";
+                    avisoRepetir.textContent = "[[js:definirclave_las_dos_tienen_que_coincidir]]";
                 else if (coinciden)
-                    avisoRepetir.textContent = "Coinciden.";
+                    avisoRepetir.textContent = "[[js:miclave_coinciden]]";
                 else
-                    avisoRepetir.textContent = "Todavía no coinciden.";
+                    avisoRepetir.textContent = "[[js:miclave_todavia_no_coinciden]]";
 
                 boton.disabled = !(actual.value !== "" && cuantos === items.length && coinciden);
             }

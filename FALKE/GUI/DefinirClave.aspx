@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="DefinirClave.aspx.cs" Inherits="GUI.DefinirClave" Title="Definir contraseña" %>
+<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="DefinirClave.aspx.cs" Inherits="GUI.DefinirClave" Title="[[definirclave_definir_contrasena]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -73,9 +73,9 @@
                     <svg width="24" height="24"><use href="#i-candado" /></svg>
                 </div>
 
-                <h1 data-i18n="definir.titulo">Definir mi contraseña</h1>
+                <h1 data-i18n="definir.titulo">[[definirclave_definir_mi_contrasena]]</h1>
                 <p class="bajada" data-i18n="definir.bajada">
-                    Elegí una contraseña para tu cuenta de Falke. Con esto la cuenta queda activa.
+                    [[definirclave_elegi_una_contrasena_para_tu_cuenta]]
                 </p>
 
                 <asp:Panel ID="pnlError" runat="server" CssClass="aviso aviso-peligro" Visible="false">
@@ -86,42 +86,42 @@
                 <asp:Panel ID="pnlOk" runat="server" CssClass="aviso aviso-exito" role="status" Visible="false">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-tilde" /></svg>
                     <p class="sin-margen" data-i18n="definir.ok">
-                        Listo: tu contraseña quedó definida y la cuenta está activa. Ya podés iniciar sesión.
+                        [[definirclave_listo_tu_contrasena_quedo_definida_y]]
                     </p>
                 </asp:Panel>
 
                 <asp:Panel ID="pnlForm" runat="server">
 
                     <p class="definir-cuenta">
-                        <span data-i18n="definir.cuenta">Cuenta:</span>
+                        <span data-i18n="definir.cuenta">[[definirclave_cuenta]]</span>
                         <asp:Literal ID="litEmail" runat="server" />
                     </p>
 
                     <div class="campo">
-                        <label for="txtNueva" data-i18n="definir.nueva">Contraseña nueva</label>
+                        <label for="txtNueva" data-i18n="definir.nueva">[[definirclave_contrasena_nueva]]</label>
                         <asp:TextBox ID="txtNueva" runat="server" CssClass="entrada" TextMode="Password"
                                      ClientIDMode="Static" autocomplete="new-password" />
-                        <p class="ayuda" data-i18n="definir.requisito">Al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).</p>
+                        <p class="ayuda" data-i18n="definir.requisito">[[definirclave_al_menos_8_caracteres_con_una]]</p>
                     </div>
 
                     <div class="campo">
-                        <label for="txtRepetir" data-i18n="definir.repetir">Repetir la contraseña nueva</label>
+                        <label for="txtRepetir" data-i18n="definir.repetir">[[definirclave_repetir_la_contrasena_nueva]]</label>
                         <asp:TextBox ID="txtRepetir" runat="server" CssClass="entrada" TextMode="Password"
                                      ClientIDMode="Static" autocomplete="new-password" />
-                        <p class="ayuda" data-i18n="definir.repetir.ayuda">Las dos tienen que coincidir.</p>
+                        <p class="ayuda" data-i18n="definir.repetir.ayuda">[[definirclave_las_dos_tienen_que_coincidir]]</p>
                     </div>
 
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primario btn-grande btn-bloque"
-                                OnClick="btnGuardar_Click" Text="Guardar la contraseña" data-i18n="definir.guardar" />
+                                OnClick="btnGuardar_Click" Text="[[definirclave_guardar_la_contrasena]]" data-i18n="definir.guardar" />
 
                 </asp:Panel>
 
                 <div class="definir-pie">
                     <p class="sin-margen">
-                        <a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="definir.volver">Ir al inicio de sesión</a>
+                        <a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="definir.volver">[[definirclave_ir_al_inicio_de_sesion]]</a>
                     </p>
                     <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="definir.vencido">
-                        Si el enlace venció, pedí uno nuevo desde «Recuperar mi contraseña».
+                        [[definirclave_si_el_enlace_vencio_pedi_uno]]
                     </p>
                 </div>
 

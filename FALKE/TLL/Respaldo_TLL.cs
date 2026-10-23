@@ -43,7 +43,7 @@ namespace TLL
             {
                 r.ArchivoDisponible = servidor.ArchivoExiste(r.Ruta);
 
-                if (!r.IdUsuario.HasValue || string.IsNullOrWhiteSpace(r.NombreUsuario)) r.NombreUsuario = "Sin usuario (cuenta de emergencia)";
+                if (!r.IdUsuario.HasValue || string.IsNullOrWhiteSpace(r.NombreUsuario)) r.NombreUsuario = BitacoraGestor_TLL.ActorSinUsuario();
             }
 
             return lista;
@@ -54,7 +54,7 @@ namespace TLL
         {
             actor.Exigir(Patentes_TLL.HACER_RESPALDO);
 
-            if (RestauracionEnCurso) throw new InvalidOperationException("Hay una restauración en curso: esperá a que termine.");
+            if (RestauracionEnCurso) throw new ExcepcionTraducible_TLL("respaldo_en_curso");
 
             DateTime ahora = DateTime.Now;
             string ruta = servidor.RutaNueva(ahora);
@@ -69,7 +69,7 @@ namespace TLL
             }
             catch (SqlException ex)
             {
-                throw new InvalidOperationException("No se pudo generar la copia de seguridad. El servidor respondió: " + ex.Message, ex);
+                throw new ExcepcionTraducible_TLL("respaldo_error_generar", ex.Message);
             }
 
             var respaldo = new Respaldo_TE
@@ -86,7 +86,7 @@ namespace TLL
                 respaldoRepo.Alta(respaldo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Backup, new[] { respaldo.IdRespaldo.ToString() });
 
-                bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, MODULO, "Copia de seguridad generada: " + respaldo.NombreArchivo + ".", CriticidadBitacora.Media, DateTime.Now));
+                bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, MODULO, EventosBitacora_TLL.RESPALDO_GENERADO, CriticidadBitacora.Media, DateTime.Now, 0, DetalleBitacora_TLL.Armar(respaldo.NombreArchivo)));
             });
 
             return respaldo;
@@ -98,12 +98,12 @@ namespace TLL
             actor.Exigir(Patentes_TLL.RESTAURAR_RESPALDO);
 
             if (!string.Equals((confirmacion ?? string.Empty).Trim(), PALABRA_CONFIRMACION, StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException("Para confirmar, escribí " + PALABRA_CONFIRMACION + ".");
+                throw new ExcepcionTraducible_TLL("respaldo_confirmar", PALABRA_CONFIRMACION);
 
             Respaldo_TE respaldo = respaldoRepo.ObtenerPorPK(idRespaldo);
 
-            if (respaldo == null) throw new InvalidOperationException("El respaldo no existe.");
-            if (!servidor.ArchivoExiste(respaldo.Ruta)) throw new InvalidOperationException("El archivo de ese respaldo ya no está en el servidor.");
+            if (respaldo == null) throw new ExcepcionTraducible_TLL("respaldo_no_existe");
+            if (!servidor.ArchivoExiste(respaldo.Ruta)) throw new ExcepcionTraducible_TLL("respaldo_archivo_falta");
 
             // Antes de tocar nada se comprueba que el archivo se pueda leer: una copia dañada no debe destruir la base actual.
             try
@@ -112,13 +112,11 @@ namespace TLL
             }
             catch (SqlException ex)
             {
-                throw new InvalidOperationException("El archivo del respaldo está dañado o no se puede leer: no se restauró nada. " + ex.Message, ex);
+                throw new ExcepcionTraducible_TLL("respaldo_archivo_danado", ex.Message);
             }
 
-            string quien = DescribirActor(actor);
-
             if (Interlocked.CompareExchange(ref restauracionEnCurso, 1, 0) != 0)
-                throw new InvalidOperationException("Ya hay una restauración en curso.");
+                throw new ExcepcionTraducible_TLL("respaldo_restauracion_en_curso");
 
             try
             {
@@ -131,11 +129,11 @@ namespace TLL
                 }
                 catch (SqlException ex)
                 {
-                    throw new InvalidOperationException("No se pudo restaurar la base. El servidor respondió: " + ex.Message, ex);
+                    throw new ExcepcionTraducible_TLL("respaldo_error_restaurar", ex.Message);
                 }
 
                 Reincorporar(registrados);
-                AuditarRestauracion(actor, quien, respaldo);
+                AuditarRestauracion(actor, respaldo);
             }
             finally
             {
@@ -166,30 +164,18 @@ namespace TLL
         }
 
         // El evento se escribe en la base ya restaurada. Si el usuario no existía cuando se hizo la copia, el evento queda sin usuario y se nombra en el texto.
-        private void AuditarRestauracion(ActorUsuario_TE actor, string quien, Respaldo_TE respaldo)
+        private void AuditarRestauracion(ActorUsuario_TE actor, Respaldo_TE respaldo)
         {
             try
             {
                 int idUsuario = actor.IdUsuario > 0 && new Usuario_TLL().ObtenerPorId(actor.IdUsuario) != null ? actor.IdUsuario : 0;
 
-                string descripcion = "Restauración de la base de datos desde la copia " + respaldo.NombreArchivo + " del " + respaldo.FechaGeneracion.ToString("dd/MM/yyyy HH:mm") +
-                    ". Se cerraron las sesiones abiertas." + (idUsuario == 0 ? " La hizo " + quien + "." : string.Empty);
-
-                bitacora.Guardar(new Bitacora_TE(idUsuario, MODULO, descripcion, CriticidadBitacora.Alta, DateTime.Now));
+                bitacora.Guardar(new Bitacora_TE(idUsuario, MODULO, EventosBitacora_TLL.RESPALDO_RESTAURADO, CriticidadBitacora.Alta, DateTime.Now, 0, DetalleBitacora_TLL.Armar(respaldo.NombreArchivo)));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Respaldo.Auditar", ex);
             }
-        }
-
-        private static string DescribirActor(ActorUsuario_TE actor)
-        {
-            if (actor.EsEmergencia || actor.IdUsuario <= 0) return "la cuenta de emergencia";
-
-            Usuario_TE usuario = new Usuario_TLL().ObtenerPorId(actor.IdUsuario);
-
-            return usuario == null ? "el usuario " + actor.IdUsuario : (usuario.NombreUsuario + " " + usuario.ApellidoUsuario).Trim() + " (" + usuario.EmailUsuario + ")";
         }
     }
 }

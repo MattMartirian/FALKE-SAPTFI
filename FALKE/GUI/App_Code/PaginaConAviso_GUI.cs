@@ -2,13 +2,12 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SERVICES;
+using TLL;
 
 namespace GUI
 {
-    public abstract class PaginaConAviso_GUI : Page
+    public abstract class PaginaConAviso_GUI : PaginaBase_GUI
     {
-        private const string MENSAJE_GENERICO = "No se pudo completar la operación. Volvé a intentarlo.";
-
         protected void Avisar(string variante, string texto)
         {
             Avisar(Buscar<Panel>(this, "pnlAviso"), Buscar<Literal>(this, "litAviso"), variante, texto);
@@ -16,9 +15,7 @@ namespace GUI
 
         protected void Avisar(Panel panel, Literal literal, string variante, string texto)
         {
-            panel.CssClass = "aviso " + variante;
-            literal.Text = Server.HtmlEncode(texto);
-            panel.Visible = true;
+            PublicarAviso(panel, literal, "aviso " + variante, texto);
         }
 
         protected virtual bool EsErrorDeUsuario(Exception ex)
@@ -37,12 +34,12 @@ namespace GUI
             {
                 if (EsErrorDeUsuario(ex))
                 {
-                    alFallar(ex.Message);
+                    alFallar(MensajeDe(ex));
                 }
                 else
                 {
                     LogErrores_SERVICE.Registrar(origen, ex);
-                    alFallar(MENSAJE_GENERICO);
+                    alFallar(Traducir("comun_error_reintentar"));
                 }
             }
 

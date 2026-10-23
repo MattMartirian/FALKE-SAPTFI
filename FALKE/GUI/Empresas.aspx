@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Empresas.aspx.cs" Inherits="GUI.Empresas" Title="Empresas cliente" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Empresas.aspx.cs" Inherits="GUI.Empresas" Title="[[empresanueva_empresas_cliente]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -234,15 +234,15 @@
 
     <div class="pagina-cabecera">
         <div>
-            <h1 data-i18n="empresas.titulo">Empresas cliente</h1>
+            <h1 data-i18n="empresas.titulo">[[empresanueva_empresas_cliente]]</h1>
             <p class="texto-suave sin-margen" data-i18n="empresas.bajada">
-                Cartera de empresas que contrataron Falke, con su plan y su estado.
+                [[empresas_cartera_de_empresas_que_contrataron_falk]]
             </p>
         </div>
         <div class="acciones">
             <a class="btn btn-primario" href="<%: ResolveUrl("~/EmpresaNueva.aspx") %>">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-mas" /></svg>
-                <span data-i18n="empresas.nueva">Nueva empresa</span>
+                <span data-i18n="empresas.nueva">[[empresas_nueva_empresa]]</span>
             </a>
         </div>
     </div>
@@ -255,19 +255,19 @@
     <div class="metricas mb-24">
         <div>
             <div class="metrica-valor"><asp:Literal ID="litTotal" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="empresas.metrica.total">Empresas cliente</div>
+            <div class="metrica-nombre" data-i18n="empresas.metrica.total">[[empresanueva_empresas_cliente]]</div>
         </div>
         <div>
             <div class="metrica-valor"><asp:Literal ID="litActivas" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="empresas.metrica.activas">Activas</div>
+            <div class="metrica-nombre" data-i18n="empresas.metrica.activas">[[empresas_activas]]</div>
         </div>
         <div>
             <div class="metrica-valor"><asp:Literal ID="litDispositivos" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="empresas.metrica.dispositivos">Dispositivos prestados</div>
+            <div class="metrica-nombre" data-i18n="empresas.metrica.dispositivos">[[empresas_dispositivos_prestados]]</div>
         </div>
         <div>
             <div class="metrica-valor"><asp:Literal ID="litUsuarios" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="empresas.metrica.usuarios">Usuarios totales</div>
+            <div class="metrica-nombre" data-i18n="empresas.metrica.usuarios">[[empresas_usuarios_totales]]</div>
         </div>
     </div>
 
@@ -276,24 +276,24 @@
         <div class="emp-rail">
             <div class="emp-rail-cab">
                 <span class="titulo">
-                    <span data-i18n="empresas.registradas">Empresas registradas</span>
+                    <span data-i18n="empresas.registradas">[[empresanueva_empresas_registradas]]</span>
                     <span id="empCuenta"><asp:Literal ID="litCuenta" runat="server" /></span>
                 </span>
                 <div class="emp-buscador campo-buscar">
-                    <label class="solo-lectores" for="empBuscar" data-i18n="empresas.buscar">Buscar</label>
+                    <label class="solo-lectores" for="empBuscar" data-i18n="empresas.buscar">[[categorias_buscar]]</label>
                     <svg aria-hidden="true"><use href="#i-buscar" /></svg>
                     <input type="search" class="entrada" id="empBuscar"
-                           placeholder="Razón social, CUIT o rubro..." data-i18n-attr="placeholder:empresas.buscar.placeholder" />
+                           placeholder="[[empresas_razon_social_cuit_o_rubro]]" data-i18n-attr="placeholder:empresas.buscar.placeholder" />
                 </div>
-                <div class="chips" data-unico role="group" aria-label="Filtrar por estado">
-                    <button type="button" class="chip" aria-pressed="true" data-estado-filtro="" data-i18n="comun.todos">Todas</button>
-                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Activa" data-i18n="estado.activa">Activas</button>
-                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Bloqueada" data-i18n="estado.bloqueada">Bloqueadas</button>
-                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Deshabilitada">Dadas de baja<asp:Literal ID="litBajas" runat="server" /></button>
+                <div class="chips" data-unico role="group" aria-label="[[empresas_filtrar_por_estado]]">
+                    <button type="button" class="chip" aria-pressed="true" data-estado-filtro="" data-i18n="comun.todos">[[empresas_todas]]</button>
+                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Activa" data-i18n="estado.activa">[[empresas_activas]]</button>
+                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Bloqueada" data-i18n="estado.bloqueada">[[empresas_bloqueadas]]</button>
+                    <button type="button" class="chip" aria-pressed="false" data-estado-filtro="Deshabilitada">[[empresas_dadas_de_baja]]<asp:Literal ID="litBajas" runat="server" /></button>
                 </div>
             </div>
 
-            <div class="emp-lista" id="empLista" role="listbox" aria-label="Empresas cliente">
+            <div class="emp-lista" id="empLista" role="listbox" aria-label="[[empresanueva_empresas_cliente]]">
 
                 <asp:Repeater ID="rptEmpresas" runat="server">
                     <ItemTemplate>
@@ -328,7 +328,7 @@
 
             <div class="vacio" id="empVacio" hidden>
                 <svg width="28" height="28" aria-hidden="true"><use href="#i-empresa" /></svg>
-                <p class="sin-margen" data-i18n="empresas.vacio">No hay empresas que coincidan.</p>
+                <p class="sin-margen" data-i18n="empresas.vacio">[[empresas_no_hay_empresas_que_coincidan]]</p>
             </div>
         </div>
 
@@ -344,10 +344,10 @@
         <div class="modal ancho">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="editarEmpresaTitulo">Editar datos de la empresa</h2>
-                    <p class="subtitulo sin-margen">Cambiar la razón social, el CUIT o el plan exige indicar el motivo. Todo queda en la bitácora.</p>
+                    <h2 id="editarEmpresaTitulo">[[empresas_editar_datos_de_la_empresa]]</h2>
+                    <p class="subtitulo sin-margen">[[empresas_cambiar_la_razon_social_el_cuit]]</p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -356,38 +356,38 @@
                 <div class="aviso aviso-alerta">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
                     <div>
-                        <strong>Estás modificando los datos de un cliente: <span id="avisoEditarEmpresa"></span>.</strong>
-                        <p class="sin-margen">Lo que cambies lo ve la empresa en «Mi empresa». Cambiar el CUIT, el plan o la facturación afecta la facturación. Queda en la bitácora y la empresa lo ve como hecho por el equipo de Pattern Blue.</p>
+                        <strong>[[empresas_estas_modificando_los_datos_de_un]] <span id="avisoEditarEmpresa"></span>.</strong>
+                        <p class="sin-margen">[[empresas_lo_que_cambies_lo_ve_la]]</p>
                     </div>
                 </div>
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="edRazon">Razón social</label>
+                        <label for="edRazon">[[empresanueva_razon_social]]</label>
                         <asp:TextBox ID="edRazon" runat="server" CssClass="entrada" MaxLength="150" ClientIDMode="Static" />
                     </div>
                     <div class="campo">
-                        <label for="edCuit">CUIT</label>
+                        <label for="edCuit">[[empresanueva_cuit]]</label>
                         <asp:TextBox ID="edCuit" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" placeholder="30-12345678-1" />
-                        <p class="ayuda">11 dígitos, con o sin guiones. Empieza con 20, 23, 24, 27, 30, 33 o 34.</p>
+                        <p class="ayuda">[[empresanueva_11_digitos_con_o_sin_guiones]]</p>
                     </div>
                 </div>
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="edRubro">Rubro</label>
+                        <label for="edRubro">[[empresanueva_rubro]]</label>
                         <asp:TextBox ID="edRubro" runat="server" CssClass="entrada" MaxLength="100" ClientIDMode="Static" />
                     </div>
                     <div class="campo">
-                        <label for="edContacto">Teléfono de contacto</label>
+                        <label for="edContacto">[[empresas_telefono_de_contacto]]</label>
                         <asp:TextBox ID="edContacto" runat="server" CssClass="entrada" MaxLength="50" ClientIDMode="Static" />
                     </div>
                 </div>
                 <div class="campo">
-                    <label for="edDomicilio">Domicilio</label>
+                    <label for="edDomicilio">[[empresanueva_domicilio]]</label>
                     <asp:TextBox ID="edDomicilio" runat="server" CssClass="entrada" MaxLength="200" ClientIDMode="Static" />
                 </div>
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="edPlan">Plan de suscripción</label>
+                        <label for="edPlan">[[empresanueva_plan_de_suscripcion]]</label>
                         <asp:DropDownList ID="edPlan" runat="server" CssClass="entrada" ClientIDMode="Static">
                             <asp:ListItem Value="Scout">Scout</asp:ListItem>
                             <asp:ListItem Value="Hunter">Hunter</asp:ListItem>
@@ -395,21 +395,21 @@
                         </asp:DropDownList>
                     </div>
                     <div class="campo">
-                        <label for="edFactura">Facturación</label>
+                        <label for="edFactura">[[empresanueva_facturacion]]</label>
                         <asp:DropDownList ID="edFactura" runat="server" CssClass="entrada" ClientIDMode="Static">
-                            <asp:ListItem Value="Mensual">Mensual</asp:ListItem>
-                            <asp:ListItem Value="Anual">Anual</asp:ListItem>
+                            <asp:ListItem Value="Mensual">[[empresanueva_mensual]]</asp:ListItem>
+                            <asp:ListItem Value="Anual">[[empresanueva_anual]]</asp:ListItem>
                         </asp:DropDownList>
                     </div>
                 </div>
                 <div class="campo mb-0">
-                    <label for="edMotivo">Motivo <span class="texto-tenue">(obligatorio si cambia la razón social, el CUIT o el plan)</span></label>
+                    <label for="edMotivo">[[dispositivos_motivo]] <span class="texto-tenue">[[empresas_obligatorio_si_cambia_la_razon_social]]</span></label>
                     <asp:TextBox ID="edMotivo" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnGuardarEmpresa" runat="server" CssClass="btn btn-primario" Text="Guardar cambios" OnClick="btnGuardarEmpresa_Click" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+                <asp:Button ID="btnGuardarEmpresa" runat="server" CssClass="btn btn-primario" Text="[[comun_guardar_cambios]]" OnClick="btnGuardarEmpresa_Click" />
             </div>
         </div>
     </div>
@@ -418,10 +418,10 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="estadoEmpresaTitulo">Cambiar el estado de la empresa</h2>
+                    <h2 id="estadoEmpresaTitulo">[[empresas_cambiar_el_estado_de_la_empresa]]</h2>
                     <p class="subtitulo sin-margen" id="estadoEmpresaNombre"></p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -430,57 +430,57 @@
                 <div class="aviso aviso-alerta">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
                     <div>
-                        <strong>Esto afecta a todos los usuarios de la empresa.</strong>
-                        <p class="sin-margen">Al cambiar el estado a Bloqueada o Deshabilitada nadie de la empresa puede ingresar. Las cuentas y los datos no se alteran.</p>
+                        <strong>[[empresas_esto_afecta_a_todos_los_usuarios]]</strong>
+                        <p class="sin-margen">[[empresas_al_cambiar_el_estado_a_bloqueada]]</p>
                     </div>
                 </div>
                 <div class="campo">
-                    <label for="edEstado">Estado de la empresa</label>
+                    <label for="edEstado">[[empresas_estado_de_la_empresa]]</label>
                     <asp:DropDownList ID="edEstado" runat="server" CssClass="entrada" ClientIDMode="Static">
-                        <asp:ListItem Value="Activa">Activa</asp:ListItem>
-                        <asp:ListItem Value="Bloqueada">Bloqueada</asp:ListItem>
-                        <asp:ListItem Value="Deshabilitada">Deshabilitada</asp:ListItem>
+                        <asp:ListItem Value="Activa">[[empresas_activa]]</asp:ListItem>
+                        <asp:ListItem Value="Bloqueada">[[empresas_bloqueada]]</asp:ListItem>
+                        <asp:ListItem Value="Deshabilitada">[[empresas_deshabilitada]]</asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 <div class="campo mb-0">
-                    <label for="edMotivoEstado">Motivo <span class="texto-tenue">(obligatorio)</span></label>
+                    <label for="edMotivoEstado">[[dispositivos_motivo]] <span class="texto-tenue">[[dispositivos_obligatorio]]</span></label>
                     <asp:TextBox ID="edMotivoEstado" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnCambiarEstadoEmpresa" runat="server" CssClass="btn btn-primario" Text="Cambiar estado" OnClick="btnCambiarEstadoEmpresa_Click" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+                <asp:Button ID="btnCambiarEstadoEmpresa" runat="server" CssClass="btn btn-primario" Text="[[comun_cambiar_estado]]" OnClick="btnCambiarEstadoEmpresa_Click" />
             </div>
         </div>
     </div>
 
     <script type="application/json" id="empTextos">
     {
-        "tabDatos": "Datos",
-        "tabPlan": "Plan y facturación",
-        "tabEquipo": "Equipo y dispositivos",
-        "tabSesiones": "Actividad",
-        "razon": "Razón social",
-        "cuit": "CUIT",
-        "rubro": "Rubro",
-        "domicilio": "Domicilio",
-        "contacto": "Teléfono de contacto",
-        "estado": "Estado",
-        "alta": "Cliente desde",
-        "plan": "Plan contratado",
-        "factura": "Facturación",
-        "renovacion": "Próxima renovación",
-        "pago": "Último pago registrado",
-        "limite": "Límite de usuarios",
-        "usuarios": "Usuarios de la cuenta",
-        "dispositivos": "Dispositivos en préstamo",
-        "sesiones": "Sesiones grabadas",
-        "editar": "Editar datos",
-        "bloquear": "Bloquear empresa",
-        "desbloquear": "Desbloquear empresa",
-        "verUsuarios": "Ver usuarios",
-        "estadoEmpresa": "Cambiar estado",
-        "vencidoAviso": "Esta empresa tiene un pago vencido. El acceso de sus usuarios está suspendido hasta la regularización."
+        "tabDatos": "[[js:empresas_datos]]",
+        "tabPlan": "[[js:miempresa_plan_y_facturacion]]",
+        "tabEquipo": "[[js:empresas_equipo_y_dispositivos]]",
+        "tabSesiones": "[[js:empresas_actividad]]",
+        "razon": "[[js:empresanueva_razon_social]]",
+        "cuit": "[[js:empresanueva_cuit]]",
+        "rubro": "[[js:empresanueva_rubro]]",
+        "domicilio": "[[js:empresanueva_domicilio]]",
+        "contacto": "[[js:empresas_telefono_de_contacto]]",
+        "estado": "[[js:dispositivos_estado]]",
+        "alta": "[[js:miempresa_cliente_desde]]",
+        "plan": "[[js:miempresa_plan_contratado]]",
+        "factura": "[[js:empresanueva_facturacion]]",
+        "renovacion": "[[js:miempresa_proxima_renovacion]]",
+        "pago": "[[js:empresas_ultimo_pago_registrado]]",
+        "limite": "[[js:empresas_limite_de_usuarios]]",
+        "usuarios": "[[js:empresas_usuarios_de_la_cuenta]]",
+        "dispositivos": "[[js:miempresa_dispositivos_en_prestamo]]",
+        "sesiones": "[[js:miempresa_sesiones_grabadas]]",
+        "editar": "[[js:dispositivos_editar_datos]]",
+        "bloquear": "[[js:empresas_bloquear_empresa]]",
+        "desbloquear": "[[js:empresas_desbloquear_empresa]]",
+        "verUsuarios": "[[js:empresas_ver_usuarios]]",
+        "estadoEmpresa": "[[js:empresas_cambiar_estado]]",
+        "vencidoAviso": "[[js:empresas_esta_empresa_tiene_un_pago_vencido]]"
     }
     </script>
 
@@ -662,7 +662,7 @@
 
                 if (estado && actual) {
                     document.getElementById("hfEstId").value = actual.id;
-                    document.getElementById("estadoEmpresaNombre").textContent = actual.nombre + " · estado actual: " + actual.estado;
+                    document.getElementById("estadoEmpresaNombre").textContent = "[[js:empresas_0_estado_actual_1]]".replace("{0}", actual.nombre).replace("{1}", actual.estado);
                     var lista = document.getElementById("edEstado");
                     lista.value = actual.estado === "Activa" ? "Bloqueada" : "Activa";
                     for (var o = 0; o < lista.options.length; o++) {

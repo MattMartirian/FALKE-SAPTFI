@@ -31,8 +31,8 @@ namespace BLL
         {
             if (actor == null || !actor.Puede(Patentes_TLL.REGISTRAR_EMPRESA))
             {
-                bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + Patentes_TLL.REGISTRAR_EMPRESA + ")", CriticidadBitacora.Media);
-                throw new UnauthorizedAccessException("No tenés permiso para registrar empresas.");
+                bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", EventosBitacora_TLL.ACCION_RECHAZADA_PERMISO, CriticidadBitacora.Media, null, DetalleBitacora_TLL.Armar(Patentes_TLL.REGISTRAR_EMPRESA));
+                throw new ExcepcionNoAutorizada_TLL("empresa_sin_permiso_registrar");
             }
 
             if (empresa == null) throw new ArgumentNullException(nameof(empresa));
@@ -57,9 +57,8 @@ namespace BLL
 
                 string t = new Usuario_TLL().RegistrarUsuario(actor, adminInicial);
 
-                bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Empresas",
-                    "Alta de empresa \"" + empresa.NombreEmpresa + "\" (CUIT " + empresa.Cuit + ", plan " + empresa.PlanSuscripcion + ") con usuario administrador \"" + adminInicial.EmailUsuario + "\"",
-                    CriticidadBitacora.Alta, DateTime.Now) { IdEmpresa = empresa.IdEmpresa });
+                bitacora.Guardar(new Bitacora_TE(actor.IdUsuario, "Empresas", EventosBitacora_TLL.EMPRESA_ALTA, CriticidadBitacora.Alta, DateTime.Now, 0,
+                    DetalleBitacora_TLL.Armar(empresa.NombreEmpresa)) { IdEmpresa = empresa.IdEmpresa });
 
                 return t;
             });
@@ -70,7 +69,7 @@ namespace BLL
         public Empresa_BE ObtenerMiEmpresa(ActorUsuario_TE actor)
         {
             if (actor == null || actor.IdEmpresa <= 0 || !actor.Puede(Patentes_TLL.VER_DATOS_EMPRESA))
-                throw new UnauthorizedAccessException("No tenés permiso para ver los datos de la empresa.");
+                throw new ExcepcionNoAutorizada_TLL("empresa_sin_permiso_ver_datos");
 
             return empresaRepo.ObtenerResumenPorId(actor.IdEmpresa);
         }
@@ -83,21 +82,21 @@ namespace BLL
 
             ValidarYNormalizar(nuevos, idEmpresa, actual.Cuit);
 
-            var cambios = new List<string>();
+            var cambios = new List<ParteBitacora_TLL>();
             bool critico = false;
 
-            critico |= Registrar(cambios, "razón social", actual.NombreEmpresa, nuevos.NombreEmpresa);
-            critico |= Registrar(cambios, "CUIT", actual.Cuit, nuevos.Cuit);
-            critico |= Registrar(cambios, "plan", actual.PlanSuscripcion.ToString(), nuevos.PlanSuscripcion.ToString());
-            Registrar(cambios, "rubro", actual.Rubro, nuevos.Rubro);
-            Registrar(cambios, "domicilio", actual.Domicilio, nuevos.Domicilio);
-            Registrar(cambios, "teléfono", actual.NumContactoEmpresa, nuevos.NumContactoEmpresa);
-            bool cambiaCiclo = Registrar(cambios, "facturación", actual.Facturacion.HasValue ? actual.Facturacion.Value.ToString() : null, nuevos.Facturacion.ToString());
+            critico |= Registrar(cambios, "bitacora_campo_razon_social", actual.NombreEmpresa, nuevos.NombreEmpresa);
+            critico |= Registrar(cambios, "bitacora_campo_cuit", actual.Cuit, nuevos.Cuit);
+            critico |= Registrar(cambios, "bitacora_campo_plan", actual.PlanSuscripcion.ToString(), nuevos.PlanSuscripcion.ToString());
+            Registrar(cambios, "bitacora_campo_rubro", actual.Rubro, nuevos.Rubro);
+            Registrar(cambios, "bitacora_campo_domicilio", actual.Domicilio, nuevos.Domicilio);
+            Registrar(cambios, "bitacora_campo_telefono", actual.NumContactoEmpresa, nuevos.NumContactoEmpresa);
+            bool cambiaCiclo = Registrar(cambios, "bitacora_campo_facturacion", actual.Facturacion.HasValue ? actual.Facturacion.Value.ToString() : null, nuevos.Facturacion.ToString());
 
-            if (cambios.Count == 0) throw new InvalidOperationException("No hay cambios para guardar.");
+            if (cambios.Count == 0) throw new ExcepcionTraducible_TLL("comun_sin_cambios");
 
             string motivoLimpio = LimpiarMotivo(motivo);
-            if (critico && motivoLimpio.Length == 0) throw new InvalidOperationException("Indicá el motivo: se modifica la razón social, el CUIT o el plan.");
+            if (critico && motivoLimpio.Length == 0) throw new ExcepcionTraducible_TLL("empresa_motivo_requerido");
 
             actual.NombreEmpresa = nuevos.NombreEmpresa;
             actual.Cuit = nuevos.Cuit;
@@ -114,9 +113,8 @@ namespace BLL
                 empresaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { actual.IdEmpresa.ToString() });
 
-                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa,
-                    "Modificación de datos de la empresa \"" + actual.NombreEmpresa + "\": " + string.Join("; ", cambios) + ConMotivo(motivoLimpio),
-                    critico ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa, EventosBitacora_TLL.EMPRESA_MODIFICACION, critico ? CriticidadBitacora.Alta : CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(actual.NombreEmpresa, ": ", DetalleBitacora_TLL.Lista(cambios, ", "), DetalleBitacora_TLL.Motivo(motivoLimpio)));
             });
         }
 
@@ -124,7 +122,7 @@ namespace BLL
         {
             actor.Exigir(Patentes_TLL.MODIFICAR_CONTACTO_EMPRESA);
 
-            if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
+            if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
 
             Empresa_BE actual = ObtenerExistente(actor.IdEmpresa);
 
@@ -132,16 +130,16 @@ namespace BLL
             domicilio = Recortar(domicilio);
             telefono = Recortar(telefono);
 
-            if (Largo(rubro) > LARGO_RUBRO) throw new InvalidOperationException("El rubro no puede superar los " + LARGO_RUBRO + " caracteres.");
-            if (Largo(domicilio) > LARGO_DOMICILIO) throw new InvalidOperationException("El domicilio no puede superar los " + LARGO_DOMICILIO + " caracteres.");
-            if (Largo(telefono) > LARGO_CONTACTO) throw new InvalidOperationException("El número de contacto no puede superar los " + LARGO_CONTACTO + " caracteres.");
+            if (Largo(rubro) > LARGO_RUBRO) throw new ExcepcionTraducible_TLL("empresa_rubro_largo", LARGO_RUBRO);
+            if (Largo(domicilio) > LARGO_DOMICILIO) throw new ExcepcionTraducible_TLL("empresa_domicilio_largo", LARGO_DOMICILIO);
+            if (Largo(telefono) > LARGO_CONTACTO) throw new ExcepcionTraducible_TLL("empresa_contacto_largo", LARGO_CONTACTO);
 
-            var cambios = new List<string>();
-            Registrar(cambios, "rubro", actual.Rubro, rubro);
-            Registrar(cambios, "domicilio", actual.Domicilio, domicilio);
-            Registrar(cambios, "teléfono", actual.NumContactoEmpresa, telefono);
+            var cambios = new List<ParteBitacora_TLL>();
+            Registrar(cambios, "bitacora_campo_rubro", actual.Rubro, rubro);
+            Registrar(cambios, "bitacora_campo_domicilio", actual.Domicilio, domicilio);
+            Registrar(cambios, "bitacora_campo_telefono", actual.NumContactoEmpresa, telefono);
 
-            if (cambios.Count == 0) throw new InvalidOperationException("No hay cambios para guardar.");
+            if (cambios.Count == 0) throw new ExcepcionTraducible_TLL("comun_sin_cambios");
 
             actual.Rubro = rubro;
             actual.Domicilio = domicilio;
@@ -152,9 +150,8 @@ namespace BLL
                 empresaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { actual.IdEmpresa.ToString() });
 
-                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa,
-                    "Modificación de datos de contacto de la empresa \"" + actual.NombreEmpresa + "\" hecha por su administrador: " + string.Join("; ", cambios),
-                    CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa, EventosBitacora_TLL.EMPRESA_MODIFICACION_CONTACTO, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(actual.NombreEmpresa, ": ", DetalleBitacora_TLL.Lista(cambios, ", ")));
             });
         }
 
@@ -162,20 +159,22 @@ namespace BLL
         {
             actor.Exigir(Patentes_TLL.CAMBIAR_ESTADO_EMPRESA);
 
-            if (idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) throw new InvalidOperationException("Pattern Blue no se bloquea ni se deshabilita.");
-            if (!Enum.IsDefined(typeof(EstadoEmpresa), nuevoEstado)) throw new InvalidOperationException("El estado no es válido.");
+            if (idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) throw new ExcepcionTraducible_TLL("empresa_pattern_blue_no_se_bloquea");
+            if (!Enum.IsDefined(typeof(EstadoEmpresa), nuevoEstado)) throw new ExcepcionTraducible_TLL("empresa_estado_invalido");
 
             Empresa_BE actual = ObtenerExistente(idEmpresa);
 
-            if (actual.Estado == nuevoEstado) throw new InvalidOperationException("La empresa ya está en ese estado.");
+            if (actual.Estado == nuevoEstado) throw new ExcepcionTraducible_TLL("empresa_ya_en_ese_estado");
 
             if (actual.Estado == EstadoEmpresa.Deshabilitada && nuevoEstado != EstadoEmpresa.Activa)
-                throw new InvalidOperationException("Una empresa dada de baja solo puede volver a Activa, si retoma el servicio.");
+                throw new ExcepcionTraducible_TLL("empresa_baja_solo_activa");
 
             string motivoLimpio = LimpiarMotivo(motivo);
-            if (motivoLimpio.Length == 0) throw new InvalidOperationException("Indicá el motivo del cambio de estado.");
+            if (motivoLimpio.Length == 0) throw new ExcepcionTraducible_TLL("empresa_motivo_cambio_estado");
 
-            EstadoEmpresa anterior = actual.Estado;
+            string evento = nuevoEstado == EstadoEmpresa.Activa ? EventosBitacora_TLL.EMPRESA_REACTIVACION
+                : nuevoEstado == EstadoEmpresa.Bloqueada ? EventosBitacora_TLL.EMPRESA_BLOQUEO
+                : EventosBitacora_TLL.EMPRESA_BAJA;
             actual.Estado = nuevoEstado;
 
             Transaccion_ORM.Ejecutar(() =>
@@ -183,9 +182,8 @@ namespace BLL
                 empresaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.EmpresaCliente, new[] { actual.IdEmpresa.ToString() });
 
-                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa,
-                    "Cambio de estado de la empresa \"" + actual.NombreEmpresa + "\": " + anterior + " → " + nuevoEstado + ConMotivo(motivoLimpio),
-                    CriticidadBitacora.Alta);
+                bitacora.Auditar(actor, "Empresas", actual.IdEmpresa, evento, CriticidadBitacora.Alta,
+                    DetalleBitacora_TLL.Armar(actual.NombreEmpresa, DetalleBitacora_TLL.Motivo(motivoLimpio)));
             });
         }
 
@@ -193,31 +191,27 @@ namespace BLL
         {
             Empresa_BE empresa = empresaRepo.ObtenerPorPK(idEmpresa);
 
-            if (empresa == null) throw new InvalidOperationException("La empresa no existe.");
+            if (empresa == null) throw new ExcepcionTraducible_TLL("disp_empresa_no_existe");
 
             return empresa;
         }
 
-        private static bool Registrar(List<string> cambios, string campo, string antes, string despues)
+        private static bool Registrar(List<ParteBitacora_TLL> cambios, string campo, string antes, string despues)
         {
             if (string.Equals(antes ?? string.Empty, despues ?? string.Empty, StringComparison.Ordinal)) return false;
 
-            cambios.Add(campo + ": " + (string.IsNullOrEmpty(antes) ? "(vacío)" : antes) + " → " + (string.IsNullOrEmpty(despues) ? "(vacío)" : despues));
+            cambios.Add(DetalleBitacora_TLL.Clave(campo));
             return true;
         }
+
 
         private static string LimpiarMotivo(string motivo)
         {
             motivo = (motivo ?? string.Empty).Trim();
 
-            if (motivo.Length > 300) throw new InvalidOperationException("El motivo no puede superar los 300 caracteres.");
+            if (motivo.Length > 300) throw new ExcepcionTraducible_TLL("comun_motivo_largo_300");
 
             return motivo;
-        }
-
-        private static string ConMotivo(string motivo)
-        {
-            return motivo.Length == 0 ? string.Empty : ". Motivo: " + motivo;
         }
 
         private static DateTime ProximaRenovacion(DateTime alta, CicloFacturacion ciclo)
@@ -240,14 +234,14 @@ namespace BLL
 
         public List<Empresa_BE> ObtenerParaFiltroDeBitacora(ActorUsuario_TE actor)
         {
-            if (actor == null || !actor.VeBitacoraCompleta()) throw new UnauthorizedAccessException("No tenés permiso para ver la bitácora de todas las empresas.");
+            if (actor == null || !actor.VeBitacoraCompleta()) throw new ExcepcionNoAutorizada_TLL("empresa_sin_permiso_bitacora_todas");
 
             return empresaRepo.ObtenerTodos().Select(e => new Empresa_BE { IdEmpresa = e.IdEmpresa, NombreEmpresa = e.NombreEmpresa }).OrderBy(e => e.NombreEmpresa).ToList();
         }
 
         public List<Empresa_BE> ObtenerCartera(ActorUsuario_TE actor)
         {
-            if (actor == null || !actor.VeTodasLasEmpresas()) throw new UnauthorizedAccessException("No tenés permiso para ver todas las empresas.");
+            if (actor == null || !actor.VeTodasLasEmpresas()) throw new ExcepcionNoAutorizada_TLL("empresa_sin_permiso_ver_todas");
 
             return empresaRepo.ObtenerResumen();
         }
@@ -259,14 +253,14 @@ namespace BLL
             empresa.Rubro = Recortar(empresa.Rubro);
             empresa.Domicilio = Recortar(empresa.Domicilio);
 
-            if (empresa.NombreEmpresa.Length == 0) throw new InvalidOperationException("La razón social es obligatoria.");
-            if (empresa.NombreEmpresa.Length > LARGO_NOMBRE) throw new InvalidOperationException("La razón social no puede superar los " + LARGO_NOMBRE + " caracteres.");
-            if (Largo(empresa.NumContactoEmpresa) > LARGO_CONTACTO) throw new InvalidOperationException("El número de contacto no puede superar los " + LARGO_CONTACTO + " caracteres.");
-            if (Largo(empresa.Rubro) > LARGO_RUBRO) throw new InvalidOperationException("El rubro no puede superar los " + LARGO_RUBRO + " caracteres.");
-            if (Largo(empresa.Domicilio) > LARGO_DOMICILIO) throw new InvalidOperationException("El domicilio no puede superar los " + LARGO_DOMICILIO + " caracteres.");
+            if (empresa.NombreEmpresa.Length == 0) throw new ExcepcionTraducible_TLL("empresa_razon_obligatoria");
+            if (empresa.NombreEmpresa.Length > LARGO_NOMBRE) throw new ExcepcionTraducible_TLL("empresa_razon_larga", LARGO_NOMBRE);
+            if (Largo(empresa.NumContactoEmpresa) > LARGO_CONTACTO) throw new ExcepcionTraducible_TLL("empresa_contacto_largo", LARGO_CONTACTO);
+            if (Largo(empresa.Rubro) > LARGO_RUBRO) throw new ExcepcionTraducible_TLL("empresa_rubro_largo", LARGO_RUBRO);
+            if (Largo(empresa.Domicilio) > LARGO_DOMICILIO) throw new ExcepcionTraducible_TLL("empresa_domicilio_largo", LARGO_DOMICILIO);
 
-            if (!Enum.IsDefined(typeof(PlanSuscripcion), empresa.PlanSuscripcion)) throw new InvalidOperationException("El plan de suscripción no es válido.");
-            if (!empresa.Facturacion.HasValue || !Enum.IsDefined(typeof(CicloFacturacion), empresa.Facturacion.Value)) throw new InvalidOperationException("El tipo de facturación no es válido.");
+            if (!Enum.IsDefined(typeof(PlanSuscripcion), empresa.PlanSuscripcion)) throw new ExcepcionTraducible_TLL("empresa_plan_invalido");
+            if (!empresa.Facturacion.HasValue || !Enum.IsDefined(typeof(CicloFacturacion), empresa.Facturacion.Value)) throw new ExcepcionTraducible_TLL("empresa_facturacion_invalida");
 
             string cuitIngresado = NormalizarCuit(empresa.Cuit);
             bool cuitSinCambios = idEmpresaPropia > 0 && (cuitIngresado != null ? cuitIngresado == NormalizarCuit(cuitActual) : string.IsNullOrWhiteSpace(empresa.Cuit) && string.IsNullOrWhiteSpace(cuitActual));
@@ -278,30 +272,27 @@ namespace BLL
             else
             {
                 empresa.Cuit = cuitIngresado;
-                if (empresa.Cuit == null) throw new InvalidOperationException("El CUIT debe tener 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).");
+                if (empresa.Cuit == null) throw new ExcepcionTraducible_TLL("empresa_cuit_formato");
 
-                string motivoInvalido = MotivoCuitInvalido(empresa.Cuit);
-                if (motivoInvalido != null) throw new InvalidOperationException(motivoInvalido);
+                ValidarDigitosCuit(empresa.Cuit);
             }
 
-            if (empresaRepo.ExisteNombre(empresa.NombreEmpresa, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con esa razón social.");
-            if (empresa.Cuit != null && empresaRepo.ExisteCuit(empresa.Cuit, idEmpresaPropia)) throw new InvalidOperationException("Ya existe una empresa registrada con ese CUIT.");
+            if (empresaRepo.ExisteNombre(empresa.NombreEmpresa, idEmpresaPropia)) throw new ExcepcionTraducible_TLL("empresa_razon_duplicada");
+            if (empresa.Cuit != null && empresaRepo.ExisteCuit(empresa.Cuit, idEmpresaPropia)) throw new ExcepcionTraducible_TLL("empresa_cuit_duplicado");
         }
 
         private static readonly int[] PrefijosCuit = { 20, 23, 24, 27, 30, 33, 34 };
         private static readonly int[] PesosCuit = { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
 
-        private static string MotivoCuitInvalido(string cuitNormalizado)
+        private static void ValidarDigitosCuit(string cuitNormalizado)
         {
-            const string FORMATO = " El formato es 11 dígitos, con o sin guiones (por ejemplo 30-12345678-1).";
             string digitos = cuitNormalizado.Replace("-", string.Empty);
 
             if (!PrefijosCuit.Contains(int.Parse(digitos.Substring(0, 2))))
-                return "El CUIT tiene que empezar con 20, 23, 24, 27, 30, 33 o 34, y el tuyo empieza con " + digitos.Substring(0, 2) + "." + FORMATO;
+                throw new ExcepcionTraducible_TLL("empresa_cuit_prefijo", digitos.Substring(0, 2));
 
-            return TieneDigitoVerificadorValido(cuitNormalizado)
-                ? null
-                : "El último dígito del CUIT no coincide con los anteriores (es un número de control): revisá que no haya un error de tipeo." + FORMATO;
+            if (!TieneDigitoVerificadorValido(cuitNormalizado))
+                throw new ExcepcionTraducible_TLL("empresa_cuit_digito");
         }
 
         private static bool TieneDigitoVerificadorValido(string cuitNormalizado)

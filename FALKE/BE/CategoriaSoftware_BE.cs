@@ -27,13 +27,13 @@ namespace BE
             VersionSoftware = Valor(campos, "versionsw");
         }
 
-        public override string NormalizarYValidar()
+        public override ErrorValidacion_BE NormalizarYValidar()
         {
             SistemaOperativoSoftware = Limpiar(SistemaOperativoSoftware);
             VersionSoftware = Limpiar(VersionSoftware);
 
-            return ExcedeLargo(SistemaOperativoSoftware, "sistema operativo")
-                ?? ExcedeLargo(VersionSoftware, "versión del software");
+            return ExcedeLargo(SistemaOperativoSoftware, "categoria_campo_so")
+                ?? ExcedeLargo(VersionSoftware, "categoria_campo_version_software");
         }
     }
 }

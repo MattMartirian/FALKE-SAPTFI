@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Dispositivos.aspx.cs" Inherits="GUI.Dispositivos" Title="Dispositivos" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Dispositivos.aspx.cs" Inherits="GUI.Dispositivos" Title="[[app_dispositivos]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -182,28 +182,28 @@
 
     <div class="pagina-cabecera">
         <div>
-            <h1 data-i18n="dispositivos.titulo">Dispositivos</h1>
+            <h1 data-i18n="dispositivos.titulo">[[app_dispositivos]]</h1>
             <p class="texto-suave sin-margen" data-i18n="dispositivos.bajada">
-                Inventario de eye trackers y a qué empresa está prestado cada uno.
+                [[dispositivos_inventario_de_eye_trackers_y_a]]
             </p>
         </div>
         <div class="acciones">
             <asp:PlaceHolder ID="phBotonModelos" runat="server">
                 <button type="button" class="btn btn-secundario" data-abre-modal="modalModelos">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-engranaje" /></svg>
-                    <span>Modelos</span>
+                    <span>[[dispositivos_modelos]]</span>
                 </button>
             </asp:PlaceHolder>
             <asp:PlaceHolder ID="phBotonAsignar" runat="server">
                 <button type="button" class="btn btn-secundario" data-abre-modal="modalAsignar">
                     <svg width="17" height="17" aria-hidden="true"><use href="#i-empresa" /></svg>
-                    <span data-i18n="dispositivos.asignar">Asignar a empresa</span>
+                    <span data-i18n="dispositivos.asignar">[[dispositivos_asignar_a_empresa]]</span>
                 </button>
             </asp:PlaceHolder>
             <asp:PlaceHolder ID="phBotonAlta" runat="server">
                 <button type="button" class="btn btn-primario" data-abre-modal="modalAltaDispositivo">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-mas" /></svg>
-                    <span data-i18n="dispositivos.nuevo">Alta de dispositivo</span>
+                    <span data-i18n="dispositivos.nuevo">[[dispositivos_alta_de_dispositivo]]</span>
                 </button>
             </asp:PlaceHolder>
         </div>
@@ -217,38 +217,38 @@
     <div class="metricas mb-24">
         <div>
             <div class="metrica-valor"><asp:Literal ID="litTotal" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="dispositivos.metrica.total">En inventario</div>
+            <div class="metrica-nombre" data-i18n="dispositivos.metrica.total">[[dispositivos_en_inventario]]</div>
         </div>
         <div>
             <div class="metrica-valor"><asp:Literal ID="litPrestados" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="dispositivos.metrica.prestados">Prestados</div>
+            <div class="metrica-nombre" data-i18n="dispositivos.metrica.prestados">[[dispositivos_prestados]]</div>
         </div>
         <div>
             <div class="metrica-valor"><asp:Literal ID="litDisponibles" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="dispositivos.metrica.disponibles">Disponibles</div>
+            <div class="metrica-nombre" data-i18n="dispositivos.metrica.disponibles">[[dispositivos_disponibles]]</div>
         </div>
         <div>
             <div class="metrica-valor"><asp:Literal ID="litTaller" runat="server" /></div>
-            <div class="metrica-nombre" data-i18n="dispositivos.metrica.taller">En mantenimiento</div>
+            <div class="metrica-nombre" data-i18n="dispositivos.metrica.taller">[[dispositivos_en_mantenimiento]]</div>
         </div>
     </div>
 
     <asp:Panel ID="pnlFiltros" runat="server" DefaultButton="btnBuscar">
         <div class="filtros">
             <div class="campo">
-                <label for="txtBuscar" data-i18n="dispositivos.buscar">Buscar</label>
-                <asp:TextBox ID="txtBuscar" runat="server" CssClass="entrada" MaxLength="100" placeholder="Serie, modelo o empresa..." ClientIDMode="Static" />
+                <label for="txtBuscar" data-i18n="dispositivos.buscar">[[categorias_buscar]]</label>
+                <asp:TextBox ID="txtBuscar" runat="server" CssClass="entrada" MaxLength="100" placeholder="[[dispositivos_serie_modelo_o_empresa]]" ClientIDMode="Static" />
             </div>
             <div class="campo">
-                <label for="ddlFiltroEstado" data-i18n="dispositivos.estado">Estado</label>
+                <label for="ddlFiltroEstado" data-i18n="dispositivos.estado">[[dispositivos_estado]]</label>
                 <asp:DropDownList ID="ddlFiltroEstado" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
             <div class="campo">
-                <label for="ddlFiltroModelo" data-i18n="dispositivos.modelo">Modelo</label>
+                <label for="ddlFiltroModelo" data-i18n="dispositivos.modelo">[[dispositivos_modelo]]</label>
                 <asp:DropDownList ID="ddlFiltroModelo" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
             <div class="acciones-filtro">
-                <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario" Text="Buscar" OnClick="btnBuscar_Click" CausesValidation="false" />
+                <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario" Text="[[categorias_buscar]]" OnClick="btnBuscar_Click" CausesValidation="false" />
             </div>
         </div>
     </asp:Panel>
@@ -257,15 +257,15 @@
 
     <div class="tabla-scroll">
         <table class="tabla" id="tablaDispositivos">
-            <caption class="solo-lectores">Inventario de dispositivos</caption>
+            <caption class="solo-lectores">[[dispositivos_inventario_de_dispositivos]]</caption>
             <thead>
                 <tr>
-                    <th scope="col" data-i18n="dispositivos.col.serie">Número de serie</th>
-                    <th scope="col" data-i18n="dispositivos.col.modelo">Modelo</th>
-                    <th scope="col" data-i18n="dispositivos.col.empresa">Empresa</th>
-                    <th scope="col" data-i18n="dispositivos.col.entrega">Entregado</th>
-                    <th scope="col" data-i18n="dispositivos.col.estado">Estado</th>
-                    <th scope="col"><span class="solo-lectores" data-i18n="comun.acciones">Acciones</span></th>
+                    <th scope="col" data-i18n="dispositivos.col.serie">[[dispositivos_numero_de_serie]]</th>
+                    <th scope="col" data-i18n="dispositivos.col.modelo">[[dispositivos_modelo]]</th>
+                    <th scope="col" data-i18n="dispositivos.col.empresa">[[bitacora_empresa]]</th>
+                    <th scope="col" data-i18n="dispositivos.col.entrega">[[dispositivos_entregado]]</th>
+                    <th scope="col" data-i18n="dispositivos.col.estado">[[dispositivos_estado]]</th>
+                    <th scope="col"><span class="solo-lectores" data-i18n="comun.acciones">[[categorias_acciones]]</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -281,7 +281,7 @@
                                 <div class="acciones-fila">
                                     <button type="button" class="btn btn-secundario btn-chico btn-detalle" data-acordeon
                                             aria-controls="det-<%#: Eval("IdDispositivo") %>" aria-expanded="<%#: EstaAbierto(Container.DataItem) ? "true" : "false" %>">
-                                        <span class="t-ver">Ver detalle</span><span class="t-ocultar">Ocultar detalle</span>
+                                        <span class="t-ver">[[dispositivos_ver_detalle]]</span><span class="t-ocultar">[[dispositivos_ocultar_detalle]]</span>
                                         <svg class="signo" width="15" height="15" aria-hidden="true"><use href="#i-flecha-abajo" /></svg>
                                     </button>
                                 </div>
@@ -295,25 +295,25 @@
                                             <div>
                                                 <table class="datos-dispositivo">
                                                     <tbody>
-                                                        <tr><th scope="row">Prestado a</th><td><%#: Dato((string)Eval("EmpresaActual")) %></td></tr>
-                                                        <tr><th scope="row">Fecha de entrega</th><td><%#: Fecha((DateTime?)Eval("FechaEntregaActual")) %></td></tr>
-                                                        <tr><th scope="row">Driver requerido</th><td class="mono"><%#: Dato((string)Eval("DriverRequerido")) %></td></tr>
-                                                        <tr><th scope="row">Firmware</th><td class="mono"><%#: Dato((string)Eval("Firmware")) %></td></tr>
+                                                        <tr><th scope="row">[[dispositivos_prestado_a]]</th><td><%#: Dato((string)Eval("EmpresaActual")) %></td></tr>
+                                                        <tr><th scope="row">[[dispositivos_fecha_de_entrega]]</th><td><%#: Fecha((DateTime?)Eval("FechaEntregaActual")) %></td></tr>
+                                                        <tr><th scope="row">[[dispositivos_driver_requerido]]</th><td class="mono"><%#: Dato((string)Eval("DriverRequerido")) %></td></tr>
+                                                        <tr><th scope="row">[[dispositivos_firmware]]</th><td class="mono"><%#: Dato((string)Eval("Firmware")) %></td></tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div>
-                                                <p class="etiqueta" data-i18n="dispositivos.det.historial">Historial de préstamos</p>
+                                                <p class="etiqueta" data-i18n="dispositivos.det.historial">[[dispositivos_historial_de_prestamos]]</p>
                                                 <asp:Repeater runat="server" DataSource='<%# HistorialDe(Container.DataItem) %>' Visible='<%# HistorialDe(Container.DataItem).Count > 0 %>'>
                                                     <HeaderTemplate>
                                                         <div class="historial-scroll">
                                                             <table class="tabla">
-                                                                <caption class="solo-lectores">Historial de préstamos del dispositivo</caption>
+                                                                <caption class="solo-lectores">[[dispositivos_historial_de_prestamos_del_dispositivo]]</caption>
                                                                 <thead>
                                                                     <tr>
-                                                                        <th scope="col">Empresa</th>
-                                                                        <th scope="col">Desde</th>
-                                                                        <th scope="col">Hasta</th>
+                                                                        <th scope="col">[[bitacora_empresa]]</th>
+                                                                        <th scope="col">[[bitacora_desde]]</th>
+                                                                        <th scope="col">[[bitacora_hasta]]</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -332,7 +332,7 @@
                                                     </FooterTemplate>
                                                 </asp:Repeater>
                                                 <asp:PlaceHolder runat="server" Visible='<%# HistorialDe(Container.DataItem).Count == 0 %>'>
-                                                    <p class="texto-chico texto-suave sin-margen">Todavía no se prestó a ninguna empresa.</p>
+                                                    <p class="texto-chico texto-suave sin-margen">[[dispositivos_todavia_no_se_presto_a_ninguna]]</p>
                                                 </asp:PlaceHolder>
                                             </div>
                                         </div>
@@ -340,25 +340,25 @@
                                         <asp:PlaceHolder runat="server" Visible='<%# HayAcciones(Container.DataItem) %>'>
                                             <div class="acciones-detalle">
                                                 <asp:PlaceHolder runat="server" Visible='<%# MostrarAsignar(Container.DataItem) %>'>
-                                                    <button type="button" class="btn btn-primario btn-chico" data-abre-modal="modalAsignar" data-dispositivo="<%#: Eval("IdDispositivo") %>" data-asignar-actual>Asignar a empresa</button>
+                                                    <button type="button" class="btn btn-primario btn-chico" data-abre-modal="modalAsignar" data-dispositivo="<%#: Eval("IdDispositivo") %>" data-asignar-actual>[[dispositivos_asignar_a_empresa]]</button>
                                                 </asp:PlaceHolder>
                                                 <asp:PlaceHolder runat="server" Visible='<%# MostrarDevolver(Container.DataItem) %>'>
-                                                    <button type="button" class="btn btn-secundario btn-chico" data-abre-modal="modalDevolver" data-dispositivo="<%#: Eval("IdDispositivo") %>">Registrar devolución</button>
+                                                    <button type="button" class="btn btn-secundario btn-chico" data-abre-modal="modalDevolver" data-dispositivo="<%#: Eval("IdDispositivo") %>">[[dispositivos_registrar_devolucion]]</button>
                                                 </asp:PlaceHolder>
                                                 <asp:PlaceHolder runat="server" Visible='<%# MostrarMantenimiento(Container.DataItem) %>'>
                                                     <button type="button" class="btn btn-secundario btn-chico" data-dispositivo="<%#: Eval("IdDispositivo") %>"
-                                                            data-envia="btnMantenimiento" data-confirma="¿Enviar el dispositivo a mantenimiento? Deja de estar disponible para préstamos.">Enviar a mantenimiento</button>
+                                                            data-envia="btnMantenimiento" data-confirma="[[dispositivos_enviar_el_dispositivo_a_mantenimiento_de]]">[[dispositivos_enviar_a_mantenimiento]]</button>
                                                 </asp:PlaceHolder>
                                                 <asp:PlaceHolder runat="server" Visible='<%# MostrarTerminar(Container.DataItem) %>'>
                                                     <button type="button" class="btn btn-secundario btn-chico" data-dispositivo="<%#: Eval("IdDispositivo") %>"
-                                                            data-envia="btnTerminar" data-confirma="¿Terminar el mantenimiento? El dispositivo vuelve a estar disponible para préstamos.">Terminar mantenimiento</button>
+                                                            data-envia="btnTerminar" data-confirma="[[dispositivos_terminar_el_mantenimiento_el_dispositivo]]">[[dispositivos_terminar_mantenimiento]]</button>
                                                 </asp:PlaceHolder>
                                                 <asp:PlaceHolder runat="server" Visible='<%# MostrarEditar(Container.DataItem) %>'>
                                                     <button type="button" class="btn btn-fantasma btn-chico" data-abre-modal="modalEditar" data-dispositivo="<%#: Eval("IdDispositivo") %>"
-                                                            data-modelo="<%#: Eval("IdModelo") %>" data-firmware="<%#: Eval("Firmware") %>" data-driver="<%#: Eval("DriverRequerido") %>" data-rellena-edicion>Editar datos</button>
+                                                            data-modelo="<%#: Eval("IdModelo") %>" data-firmware="<%#: Eval("Firmware") %>" data-driver="<%#: Eval("DriverRequerido") %>" data-rellena-edicion>[[dispositivos_editar_datos]]</button>
                                                 </asp:PlaceHolder>
                                                 <asp:PlaceHolder runat="server" Visible='<%# MostrarBaja(Container.DataItem) %>'>
-                                                    <button type="button" class="btn btn-peligro btn-chico" data-abre-modal="modalBaja" data-dispositivo="<%#: Eval("IdDispositivo") %>">Dar de baja</button>
+                                                    <button type="button" class="btn btn-peligro btn-chico" data-abre-modal="modalBaja" data-dispositivo="<%#: Eval("IdDispositivo") %>">[[dispositivos_dar_de_baja]]</button>
                                                 </asp:PlaceHolder>
                                             </div>
                                         </asp:PlaceHolder>
@@ -375,14 +375,14 @@
     <asp:PlaceHolder ID="phVacio" runat="server" Visible="false">
         <div class="vacio">
             <svg width="34" height="34" aria-hidden="true"><use href="#i-dispositivo" /></svg>
-            <p class="sin-margen" data-i18n="dispositivos.vacio">No hay dispositivos que coincidan con el filtro.</p>
+            <p class="sin-margen" data-i18n="dispositivos.vacio">[[dispositivos_no_hay_dispositivos_que_coincidan_con]]</p>
         </div>
     </asp:PlaceHolder>
 
     <%-- Botones de las acciones que piden confirmación: los dispara el botón del detalle, después de confirmar. --%>
     <asp:PlaceHolder ID="phAccionesOcultas" runat="server">
-        <asp:Button ID="btnMantenimiento" runat="server" style="display:none" Text="Enviar a mantenimiento" OnClick="btnMantenimiento_Click" CausesValidation="false" ClientIDMode="Static" />
-        <asp:Button ID="btnTerminar" runat="server" style="display:none" Text="Terminar mantenimiento" OnClick="btnTerminar_Click" CausesValidation="false" ClientIDMode="Static" />
+        <asp:Button ID="btnMantenimiento" runat="server" style="display:none" Text="[[dispositivos_enviar_a_mantenimiento]]" OnClick="btnMantenimiento_Click" CausesValidation="false" ClientIDMode="Static" />
+        <asp:Button ID="btnTerminar" runat="server" style="display:none" Text="[[dispositivos_terminar_mantenimiento]]" OnClick="btnTerminar_Click" CausesValidation="false" ClientIDMode="Static" />
     </asp:PlaceHolder>
 
     <asp:PlaceHolder ID="phModalModelos" runat="server">
@@ -390,12 +390,12 @@
         <div class="modal ancho">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="modelosTitulo">Modelos de dispositivo</h2>
+                    <h2 id="modelosTitulo">[[dispositivos_modelos_de_dispositivo]]</h2>
                     <p class="subtitulo sin-margen">
-                        Un modelo no se borra: al darlo de baja deja de ofrecerse para dispositivos nuevos, y los que ya lo tienen lo conservan.
+                        [[dispositivos_un_modelo_no_se_borra_al]]
                     </p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
@@ -406,22 +406,22 @@
                 </asp:Panel>
 
                 <div class="campo">
-                    <label for="txtNuevoModelo">Agregar un modelo</label>
+                    <label for="txtNuevoModelo">[[dispositivos_agregar_un_modelo]]</label>
                     <div class="agregar-modelo">
                         <asp:TextBox ID="txtNuevoModelo" runat="server" CssClass="entrada" MaxLength="50" placeholder="Tobii Eye Tracker 5" ClientIDMode="Static" />
-                        <asp:Button ID="btnAgregarModelo" runat="server" CssClass="btn btn-primario" Text="Agregar" OnClick="btnAgregarModelo_Click" CausesValidation="false" ClientIDMode="Static" />
+                        <asp:Button ID="btnAgregarModelo" runat="server" CssClass="btn btn-primario" Text="[[comun_agregar]]" OnClick="btnAgregarModelo_Click" CausesValidation="false" ClientIDMode="Static" />
                     </div>
                 </div>
 
                 <div class="tabla-scroll">
                     <table class="tabla tabla-modelos">
-                        <caption class="solo-lectores">Modelos de dispositivo</caption>
+                        <caption class="solo-lectores">[[dispositivos_modelos_de_dispositivo]]</caption>
                         <thead>
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Dispositivos</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col"><span class="solo-lectores">Acciones</span></th>
+                                <th scope="col">[[dispositivos_nombre]]</th>
+                                <th scope="col">[[app_dispositivos]]</th>
+                                <th scope="col">[[dispositivos_estado]]</th>
+                                <th scope="col"><span class="solo-lectores">[[categorias_acciones]]</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -433,7 +433,7 @@
                                         <td><span class="badge <%#: (bool)Eval("Activo") ? "badge-exito" : "badge-neutro" %>"><%#: (bool)Eval("Activo") ? "Activo" : "De baja" %></span></td>
                                         <td>
                                             <div class="acciones-fila">
-                                                <asp:Button runat="server" CssClass="btn btn-secundario btn-chico" Text="Guardar nombre" CommandName="renombrar" CommandArgument='<%# Eval("IdModelo") %>' CausesValidation="false" data-guardar="si" />
+                                                <asp:Button runat="server" CssClass="btn btn-secundario btn-chico" Text="[[comun_guardar_nombre]]" CommandName="renombrar" CommandArgument='<%# Eval("IdModelo") %>' CausesValidation="false" data-guardar="si" />
                                                 <asp:Button runat="server" CssClass='<%# (bool)Eval("Activo") ? "btn btn-peligro btn-chico" : "btn btn-secundario btn-chico" %>'
                                                             Text='<%# (bool)Eval("Activo") ? "Dar de baja" : "Reactivar" %>' CommandName='<%# (bool)Eval("Activo") ? "baja" : "reactivar" %>'
                                                             CommandArgument='<%# Eval("IdModelo") %>' CausesValidation="false" />
@@ -446,11 +446,11 @@
                     </table>
                 </div>
                 <asp:PlaceHolder ID="phSinModelos" runat="server" Visible="false">
-                    <p class="texto-chico texto-suave mt-8 sin-margen">Todavía no hay modelos: agregá el primero para poder dar de alta dispositivos.</p>
+                    <p class="texto-chico texto-suave mt-8 sin-margen">[[dispositivos_todavia_no_hay_modelos_agrega_el]]</p>
                 </asp:PlaceHolder>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cerrar</button>
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cerrar]]</button>
             </div>
         </div>
     </div>
@@ -461,35 +461,35 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="asigTitulo" data-i18n="asignar.titulo">Asignar dispositivo</h2>
+                    <h2 id="asigTitulo" data-i18n="asignar.titulo">[[dispositivos_asignar_dispositivo]]</h2>
                     <p class="subtitulo sin-margen" data-i18n="asignar.subtitulo">
-                        El préstamo queda asociado a la empresa hasta que se registre la devolución.
+                        [[dispositivos_el_prestamo_queda_asociado_a_la]]
                     </p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
             <div class="modal-cuerpo">
                 <div class="campo">
-                    <label for="ddlAsigDispositivo" data-i18n="asignar.dispositivo">Dispositivo disponible</label>
+                    <label for="ddlAsigDispositivo" data-i18n="asignar.dispositivo">[[dispositivos_dispositivo_disponible]]</label>
                     <asp:DropDownList ID="ddlAsigDispositivo" runat="server" CssClass="entrada" ClientIDMode="Static" data-foco-inicial="si" />
                 </div>
                 <div class="campo">
-                    <label for="ddlAsigEmpresa" data-i18n="asignar.empresa">Empresa</label>
+                    <label for="ddlAsigEmpresa" data-i18n="asignar.empresa">[[bitacora_empresa]]</label>
                     <asp:DropDownList ID="ddlAsigEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
                     <p class="ayuda" data-i18n="asignar.empresa.ayuda">
-                        Solo aparecen las empresas activas, con los dispositivos que ya tienen y el tope de su plan.
+                        [[dispositivos_solo_aparecen_las_empresas_activas_con]]
                     </p>
                 </div>
                 <div class="aviso aviso-info mb-0">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
-                    <p class="sin-margen">La fecha de entrega es la de hoy. El préstamo queda en la bitácora de la empresa.</p>
+                    <p class="sin-margen">[[dispositivos_la_fecha_de_entrega_es_la]]</p>
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
-                <asp:Button ID="btnAsignar" runat="server" CssClass="btn btn-primario" Text="Registrar préstamo" OnClick="btnAsignar_Click" CausesValidation="false" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">[[categorias_cancelar]]</button>
+                <asp:Button ID="btnAsignar" runat="server" CssClass="btn btn-primario" Text="[[dispositivos_registrar_prestamo]]" OnClick="btnAsignar_Click" CausesValidation="false" />
             </div>
         </div>
     </div>
@@ -500,39 +500,39 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="altaDisTitulo" data-i18n="altaDispositivo.titulo">Alta de dispositivo</h2>
+                    <h2 id="altaDisTitulo" data-i18n="altaDispositivo.titulo">[[dispositivos_alta_de_dispositivo]]</h2>
                     <p class="subtitulo sin-margen" data-i18n="altaDispositivo.subtitulo">
-                        Se suma al inventario en estado disponible.
+                        [[dispositivos_se_suma_al_inventario_en_estado]]
                     </p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
             <div class="modal-cuerpo">
                 <div class="campo">
-                    <label for="txtAltaSerie" data-i18n="altaDispositivo.serie">Número de serie</label>
+                    <label for="txtAltaSerie" data-i18n="altaDispositivo.serie">[[dispositivos_numero_de_serie]]</label>
                     <asp:TextBox ID="txtAltaSerie" runat="server" CssClass="entrada mono" MaxLength="30" ClientIDMode="Static" data-foco-inicial="si" />
-                    <p class="ayuda">El de fábrica: figura en la etiqueta del equipo y lo informa el SDK de Tobii. No se puede repetir ni cambiar después.</p>
+                    <p class="ayuda">[[dispositivos_el_de_fabrica_figura_en_la]]</p>
                 </div>
                 <div class="fila-campos">
                     <div class="campo">
-                        <label for="ddlAltaModelo" data-i18n="altaDispositivo.modelo">Modelo</label>
+                        <label for="ddlAltaModelo" data-i18n="altaDispositivo.modelo">[[dispositivos_modelo]]</label>
                         <asp:DropDownList ID="ddlAltaModelo" runat="server" CssClass="entrada" ClientIDMode="Static" />
                     </div>
                     <div class="campo">
-                        <label for="txtAltaFirmware" data-i18n="altaDispositivo.firmware">Firmware <span class="texto-tenue">(opcional)</span></label>
+                        <label for="txtAltaFirmware" data-i18n="altaDispositivo.firmware">[[dispositivos_firmware]] <span class="texto-tenue">[[dispositivos_opcional]]</span></label>
                         <asp:TextBox ID="txtAltaFirmware" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" />
                     </div>
                 </div>
                 <div class="campo mb-0">
-                    <label for="txtAltaDriver">Driver requerido <span class="texto-tenue">(opcional)</span></label>
+                    <label for="txtAltaDriver">[[dispositivos_driver_requerido]] <span class="texto-tenue">[[dispositivos_opcional]]</span></label>
                     <asp:TextBox ID="txtAltaDriver" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" />
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">Cancelar</button>
-                <asp:Button ID="btnCrear" runat="server" CssClass="btn btn-primario" Text="Dar de alta" OnClick="btnCrear_Click" CausesValidation="false" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal data-i18n="comun.cancelar">[[categorias_cancelar]]</button>
+                <asp:Button ID="btnCrear" runat="server" CssClass="btn btn-primario" Text="[[dispositivos_dar_de_alta]]" OnClick="btnCrear_Click" CausesValidation="false" />
             </div>
         </div>
     </div>
@@ -543,32 +543,32 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="editarDisTitulo">Editar datos del dispositivo</h2>
-                    <p class="subtitulo sin-margen">El número de serie y el estado no se editan desde acá.</p>
+                    <h2 id="editarDisTitulo">[[dispositivos_editar_datos_del_dispositivo]]</h2>
+                    <p class="subtitulo sin-margen">[[dispositivos_el_numero_de_serie_y_el]]</p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
             <div class="modal-cuerpo">
                 <div class="campo">
-                    <label for="ddlEdModelo">Modelo</label>
+                    <label for="ddlEdModelo">[[dispositivos_modelo]]</label>
                     <asp:DropDownList ID="ddlEdModelo" runat="server" CssClass="entrada" ClientIDMode="Static" />
                 </div>
                 <div class="fila-campos">
                     <div class="campo mb-0">
-                        <label for="txtEdFirmware">Firmware</label>
+                        <label for="txtEdFirmware">[[dispositivos_firmware]]</label>
                         <asp:TextBox ID="txtEdFirmware" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" />
                     </div>
                     <div class="campo mb-0">
-                        <label for="txtEdDriver">Driver requerido</label>
+                        <label for="txtEdDriver">[[dispositivos_driver_requerido]]</label>
                         <asp:TextBox ID="txtEdDriver" runat="server" CssClass="entrada" MaxLength="20" ClientIDMode="Static" />
                     </div>
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-primario" Text="Guardar cambios" OnClick="btnGuardarEdicion_Click" CausesValidation="false" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+                <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-primario" Text="[[comun_guardar_cambios]]" OnClick="btnGuardarEdicion_Click" CausesValidation="false" />
             </div>
         </div>
     </div>
@@ -579,23 +579,23 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="devolverTitulo">Registrar devolución</h2>
-                    <p class="subtitulo sin-margen">Cierra el préstamo con la fecha de hoy.</p>
+                    <h2 id="devolverTitulo">[[dispositivos_registrar_devolucion]]</h2>
+                    <p class="subtitulo sin-margen">[[dispositivos_cierra_el_prestamo_con_la_fecha]]</p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
             <div class="modal-cuerpo">
                 <label class="casilla-simple">
                     <asp:CheckBox ID="chkRequiereMantenimiento" runat="server" ClientIDMode="Static" />
-                    <span>Vuelve con problemas: enviarlo a mantenimiento</span>
+                    <span>[[dispositivos_vuelve_con_problemas_enviarlo_a_mantenim]]</span>
                 </label>
-                <p class="ayuda">Si no lo marcás, queda disponible para prestarlo de nuevo.</p>
+                <p class="ayuda">[[dispositivos_si_no_lo_marcas_queda_disponible]]</p>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnDevolver" runat="server" CssClass="btn btn-primario" Text="Registrar devolución" OnClick="btnDevolver_Click" CausesValidation="false" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+                <asp:Button ID="btnDevolver" runat="server" CssClass="btn btn-primario" Text="[[dispositivos_registrar_devolucion]]" OnClick="btnDevolver_Click" CausesValidation="false" />
             </div>
         </div>
     </div>
@@ -606,26 +606,26 @@
         <div class="modal">
             <div class="modal-cabecera">
                 <div>
-                    <h2 id="bajaTitulo">Dar de baja el dispositivo</h2>
-                    <p class="subtitulo sin-margen">La baja es definitiva y queda en la bitácora.</p>
+                    <h2 id="bajaTitulo">[[dispositivos_dar_de_baja_el_dispositivo]]</h2>
+                    <p class="subtitulo sin-margen">[[dispositivos_la_baja_es_definitiva_y_queda]]</p>
                 </div>
-                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="Cerrar">
+                <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
             <div class="modal-cuerpo">
                 <div class="aviso aviso-alerta">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
-                    <p class="sin-margen">Un dispositivo dado de baja no se puede prestar ni modificar. Se conserva su historial.</p>
+                    <p class="sin-margen">[[dispositivos_un_dispositivo_dado_de_baja_no]]</p>
                 </div>
                 <div class="campo mb-0">
-                    <label for="txtBajaMotivo">Motivo <span class="texto-tenue">(obligatorio)</span></label>
+                    <label for="txtBajaMotivo">[[dispositivos_motivo]] <span class="texto-tenue">[[dispositivos_obligatorio]]</span></label>
                     <asp:TextBox ID="txtBajaMotivo" runat="server" CssClass="entrada" MaxLength="300" ClientIDMode="Static" />
                 </div>
             </div>
             <div class="modal-pie">
-                <button type="button" class="btn btn-secundario" data-cierra-modal>Cancelar</button>
-                <asp:Button ID="btnBaja" runat="server" CssClass="btn btn-peligro" Text="Dar de baja" OnClick="btnBaja_Click" CausesValidation="false" />
+                <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+                <asp:Button ID="btnBaja" runat="server" CssClass="btn btn-peligro" Text="[[dispositivos_dar_de_baja]]" OnClick="btnBaja_Click" CausesValidation="false" />
             </div>
         </div>
     </div>

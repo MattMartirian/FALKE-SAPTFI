@@ -91,29 +91,26 @@ namespace TLL
         {
             if (actor == null || !actor.Puede(Patentes_TLL.CAMBIAR_DESCRIPCION_PERMISO))
             {
-                bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + Patentes_TLL.CAMBIAR_DESCRIPCION_PERMISO + ")", CriticidadBitacora.Media);
-                throw new UnauthorizedAccessException("No tenés permiso para cambiar descripciones.");
+                bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", EventosBitacora_TLL.ACCION_RECHAZADA_PERMISO, CriticidadBitacora.Media, null, DetalleBitacora_TLL.Armar(Patentes_TLL.CAMBIAR_DESCRIPCION_PERMISO));
+                throw new ExcepcionNoAutorizada_TLL("permiso_sin_permiso_descripciones");
             }
 
             PermisoAbstracto_TE permiso = permisoRepo.ObtenerPorPK(nombre ?? string.Empty);
-            if (permiso == null) throw new PermisoInvalidoException("\"" + nombre + "\" no existe.");
+            if (permiso == null) throw new ExcepcionTraducible_TLL("permiso_no_existe", nombre);
 
             string nueva = ValidarDescripcion(descripcion);
             string anterior = string.IsNullOrWhiteSpace(permiso.Descripcion) ? null : permiso.Descripcion;
 
             if (string.Equals(anterior ?? string.Empty, nueva ?? string.Empty, StringComparison.Ordinal))
-                throw new PermisoInvalidoException("No hay cambios para guardar.");
-
-            string clase = permiso.TipoPermiso == TipoPermiso.Simple ? "permiso" : permiso.EsRolPermiso ? "rol" : "grupo";
+                throw new ExcepcionTraducible_TLL("comun_sin_cambios");
 
             Transaccion_ORM.Ejecutar(() =>
             {
                 permiso.Descripcion = nueva;
                 permisoRepo.Modificar(permiso);
 
-                bitacora.Auditar(actor, "Roles", null, "Cambio de descripción del " + clase + " \"" + permiso.Nombre + "\": " +
-                    (anterior == null ? "(sin descripción)" : "\"" + anterior + "\"") + " → " + (nueva == null ? "(sin descripción)" : "\"" + nueva + "\""),
-                    CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_DESCRIPCION, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(permiso.Nombre));
             });
         }
 
@@ -123,9 +120,9 @@ namespace TLL
 
             if (descripcion.Length == 0) return null;
 
-            if (descripcion.Length > 200) throw new PermisoInvalidoException("El nombre no puede superar los 200 caracteres.");
+            if (descripcion.Length > 200) throw new ExcepcionTraducible_TLL("permiso_nombre_largo");
 
-            if (descripcion.Any(char.IsControl)) throw new PermisoInvalidoException("El nombre no puede tener saltos de línea ni caracteres de control.");
+            if (descripcion.Any(char.IsControl)) throw new ExcepcionTraducible_TLL("permiso_nombre_control");
 
             return descripcion;
         }
@@ -145,26 +142,25 @@ namespace TLL
                 PermisoAbstracto_TE nodo;
                 PermisoCompuesto_TE objetivo = arbol.TryGetValue(nombre ?? string.Empty, out nodo) ? nodo as PermisoCompuesto_TE : null;
 
-                if (objetivo == null) throw new PermisoInvalidoException("Solo los roles y los grupos pueden contener permisos.");
+                if (objetivo == null) throw new ExcepcionTraducible_TLL("permiso_solo_roles_grupos");
 
-                if (EsRolFijo(nombre) && !actor.EsEmergencia) throw new PermisoInvalidoException("El rol " + nombre + " es fijo: su composición no se modifica.");
+                if (EsRolFijo(nombre) && !actor.EsEmergencia) throw new ExcepcionTraducible_TLL("permiso_rol_fijo", nombre);
 
                 foreach (string inc in nuevos)
                 {
-                    if (!arbol.ContainsKey(inc)) throw new PermisoInvalidoException("El permiso \"" + inc + "\" no existe.");
+                    if (!arbol.ContainsKey(inc)) throw new ExcepcionTraducible_TLL("permiso_incluido_no_existe", inc);
 
-                    if (inc != nombre && arbol[inc].EsRolPermiso) throw new PermisoInvalidoException("\"" + inc + "\" es un rol: ni un rol ni un grupo pueden incluir roles.");
+                    if (inc != nombre && arbol[inc].EsRolPermiso) throw new ExcepcionTraducible_TLL("permiso_es_un_rol", inc);
                 }
 
                 var actuales = new HashSet<string>(objetivo.ObtenerHijos().Select(h => h.Nombre));
                 var aQuitar = actuales.Except(nuevos).OrderBy(x => x).ToList();
                 var aAgregar = nuevos.Except(actuales).OrderBy(x => x).ToList();
 
-                if (aQuitar.Count == 0 && aAgregar.Count == 0) throw new PermisoInvalidoException("No hay cambios para guardar.");
+                if (aQuitar.Count == 0 && aAgregar.Count == 0) throw new ExcepcionTraducible_TLL("comun_sin_cambios");
 
                 var roles = arbol.Values.Where(p => p.EsRolPermiso).ToList();
                 var patentesDeRolesAntes = roles.ToDictionary(r => r.Nombre, r => r.ObtenerPatentes());
-                var efectivosAntes = objetivo.ObtenerPatentes();
 
                 foreach (string q in aQuitar) objetivo.Quitar(arbol[q]);
                 foreach (string a in aAgregar) objetivo.Agregar(arbol[a]);
@@ -177,23 +173,14 @@ namespace TLL
                     {
                         var etiquetas = permisoRepo.ObtenerDescripciones();
 
-                        throw new PermisoInvalidoException("El rol \"" + Etiqueta(etiquetas, rol.Nombre) + "\" es un rol general y quedaría con permisos reservados a Pattern Blue (" +
-                            string.Join(", ", nuevosReservados.Select(p => Etiqueta(etiquetas, p))) + "). Esos permisos solo van en roles de gestión.");
+                        throw new ExcepcionTraducible_TLL("permiso_rol_general_reservados", Etiqueta(etiquetas, rol.Nombre), string.Join(", ", nuevosReservados.Select(p => Etiqueta(etiquetas, p))));
                     }
                 }
 
-                var efectivosDespues = objetivo.ObtenerPatentes();
-                var ganados = efectivosDespues.Except(efectivosAntes).OrderBy(x => x).ToList();
-                var perdidos = efectivosAntes.Except(efectivosDespues).OrderBy(x => x).ToList();
-                string tipo = objetivo.EsRolPermiso ? "rol" : "grupo";
-
                 permisoRepo.Modificar(objetivo);
 
-                bitacora.Auditar(actor, "Roles", null, "Cambio de composición del " + tipo + " \"" + nombre + "\"" +
-                    (aAgregar.Count > 0 ? ". Agrega: " + string.Join(", ", aAgregar) : string.Empty) +
-                    (aQuitar.Count > 0 ? ". Quita: " + string.Join(", ", aQuitar) : string.Empty) +
-                    ". Permisos efectivos" + (ganados.Count > 0 ? " +[" + string.Join(", ", ganados) + "]" : string.Empty) + (perdidos.Count > 0 ? " -[" + string.Join(", ", perdidos) + "]" : string.Empty),
-                    CriticidadBitacora.Alta);
+                bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_COMPOSICION, CriticidadBitacora.Alta,
+                    DetalleBitacora_TLL.Armar(nombre));
             });
         }
 
@@ -208,28 +195,26 @@ namespace TLL
                 var arbol = permisoRepo.ConstruirArbol();
 
                 PermisoAbstracto_TE permiso;
-                if (!arbol.TryGetValue(nombre ?? string.Empty, out permiso)) throw new PermisoInvalidoException("\"" + nombre + "\" no existe.");
+                if (!arbol.TryGetValue(nombre ?? string.Empty, out permiso)) throw new ExcepcionTraducible_TLL("permiso_no_existe", nombre);
 
-                ExigirEditable(permiso, "eliminar");
+                ExigirEditable(permiso);
 
                 if (permiso.EsRolPermiso && usuarioRepo.ExisteUsuarioConRol(nombre))
-                    throw new PermisoInvalidoException("El rol \"" + nombre + "\" está asignado a usuarios: reasignalos antes de eliminarlo.");
+                    throw new ExcepcionTraducible_TLL("permiso_rol_asignado", nombre);
 
                 var padres = IndexarPadres(arbol.Values);
                 var enUso = padres.ContainsKey(nombre) ? padres[nombre].OrderBy(x => x).ToList() : new List<string>();
 
-                if (enUso.Count > 0) throw new PermisoInvalidoException("\"" + nombre + "\" está incluido en: " + string.Join(", ", enUso) + ". Quitalo de ahí antes de eliminarlo.");
+                if (enUso.Count > 0) throw new ExcepcionTraducible_TLL("permiso_incluido_en", nombre, string.Join(", ", enUso));
 
                 var compuesto = (PermisoCompuesto_TE)permiso;
-                var propios = compuesto.ObtenerHijos().Select(h => h.Nombre).OrderBy(x => x).ToList();
-                string tipo = permiso.EsRolPermiso ? "rol" : "grupo";
-
                 foreach (PermisoAbstracto_TE hijo in compuesto.ObtenerHijos().ToList()) compuesto.Quitar(hijo);
 
                 permisoRepo.Modificar(compuesto);
                 permisoRepo.Eliminar(nombre);
 
-                bitacora.Auditar(actor, "Roles", null, "Baja del " + tipo + " \"" + nombre + "\"" + (propios.Count > 0 ? " (incluía: " + string.Join(", ", propios) + ")" : string.Empty), CriticidadBitacora.Alta);
+                bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_BAJA, CriticidadBitacora.Alta,
+                    DetalleBitacora_TLL.Armar(nombre));
             });
         }
 
@@ -246,13 +231,14 @@ namespace TLL
             nombre = ValidarNombre(nombre);
             descripcion = ValidarDescripcion(descripcion);
 
-            if (permisoRepo.Existe(nombre)) throw new PermisoInvalidoException("Ya existe un permiso, rol o grupo con el nombre \"" + nombre + "\".");
+            if (permisoRepo.Existe(nombre)) throw new ExcepcionTraducible_TLL("permiso_nombre_duplicado", nombre);
 
             Transaccion_ORM.Ejecutar(() =>
             {
                 permisoRepo.Alta(new PermisoCompuesto_TE(nombre, esRol) { Descripcion = descripcion, EsDeGestion = esRol && deGestion });
 
-                bitacora.Auditar(actor, "Roles", null, "Alta del " + (esRol ? (deGestion ? "rol de gestión" : "rol general") : "grupo") + " \"" + nombre + "\"" + (descripcion == null ? string.Empty : " (descripción: \"" + descripcion + "\")"), CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_ALTA, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(nombre));
             });
         }
 
@@ -261,7 +247,7 @@ namespace TLL
             nombre = (nombre ?? string.Empty).Trim();
 
             if (!Regex.IsMatch(nombre, @"^[\p{L}\p{N}][\p{L}\p{N} _\.\-]{1,58}[\p{L}\p{N}]$"))
-                throw new PermisoInvalidoException("El nombre debe tener entre 3 y 60 caracteres (letras, números, espacios, guiones o puntos).");
+                throw new ExcepcionTraducible_TLL("permiso_nombre_formato");
 
             return nombre;
         }
@@ -278,21 +264,21 @@ namespace TLL
             return nombre == Usuario_TLL.ROL_GESTOR || nombre == Usuario_TLL.ROL_WEBMASTER;
         }
 
-        private static void ExigirEditable(PermisoAbstracto_TE permiso, string accion)
+        private static void ExigirEditable(PermisoAbstracto_TE permiso)
         {
             if (permiso.TipoPermiso == TipoPermiso.Simple)
-                throw new PermisoInvalidoException("\"" + permiso.Nombre + "\" es un permiso del sistema: lo define el desarrollador y no se puede " + accion + ".");
+                throw new ExcepcionTraducible_TLL("permiso_del_sistema_eliminar", permiso.Nombre);
 
             if (EsRolBase(permiso.Nombre))
-                throw new PermisoInvalidoException("\"" + permiso.Nombre + "\" es un rol base del sistema: no se puede " + accion + ".");
+                throw new ExcepcionTraducible_TLL("permiso_rol_base_eliminar", permiso.Nombre);
         }
 
         private void ExigirGestionar(ActorUsuario_TE actor)
         {
             if (actor != null && actor.Puede(Patentes_TLL.GESTIONAR_ROLES)) return;
 
-            bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + Patentes_TLL.GESTIONAR_ROLES + ")", CriticidadBitacora.Media);
-            throw new UnauthorizedAccessException("No tenés permiso para gestionar roles y permisos.");
+            bitacora.Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", EventosBitacora_TLL.ACCION_RECHAZADA_PERMISO, CriticidadBitacora.Media, null, DetalleBitacora_TLL.Armar(Patentes_TLL.GESTIONAR_ROLES));
+            throw new ExcepcionNoAutorizada_TLL("permiso_sin_permiso_gestionar");
         }
 
         // Para cada permiso, los roles y grupos que lo incluyen directamente.

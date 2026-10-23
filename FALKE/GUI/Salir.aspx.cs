@@ -5,7 +5,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class Salir : System.Web.UI.Page
+    public partial class Salir : PaginaBase_GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -15,14 +15,30 @@ namespace GUI
 
             if (SesionActual_GUI.HayUsuario)
             {
-                litConfirmar.Text = "Vas a cerrar la sesión de " + Server.HtmlEncode(SesionActual_GUI.Email) + " en este navegador.";
+                litConfirmar.Text = IdiomaActual_GUI.Texto("salir_confirmar", Server.HtmlEncode(SesionActual_GUI.Email));
                 pnlConfirmar.Visible = true;
             }
             else
             {
-                litDetalle.Text = "No había ninguna sesión abierta en este navegador.";
+                MostrarDetalle("salir_sin_sesion", null);
                 pnlHecho.Visible = true;
             }
+        }
+
+        protected override void AlCambiarIdioma()
+        {
+            if (pnlConfirmar.Visible) litConfirmar.Text = IdiomaActual_GUI.Texto("salir_confirmar", Server.HtmlEncode(SesionActual_GUI.Email));
+
+            string clave = ViewState["detalle"] as string;
+
+            if (clave != null) MostrarDetalle(clave, ViewState["email"] as string);
+        }
+
+        private void MostrarDetalle(string clave, string email)
+        {
+            ViewState["detalle"] = clave;
+            ViewState["email"] = email;
+            litDetalle.Text = email == null ? IdiomaActual_GUI.Texto(clave) : IdiomaActual_GUI.Texto(clave, Server.HtmlEncode(email));
         }
 
         protected void btnCerrar_Click(object sender, EventArgs e)
@@ -33,11 +49,11 @@ namespace GUI
             {
                 RegistrarEnBitacora();
                 SesionActual_GUI.Cerrar();
-                litDetalle.Text = "Se cerró la sesión de " + Server.HtmlEncode(email) + ".";
+                MostrarDetalle("salir_cerrada", email);
             }
             else
             {
-                litDetalle.Text = "No había ninguna sesión abierta en este navegador.";
+                MostrarDetalle("salir_sin_sesion", null);
             }
 
             pnlConfirmar.Visible = false;
@@ -48,7 +64,7 @@ namespace GUI
         {
             try
             {
-                new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Seguridad", "Cierre de sesión", CriticidadBitacora.Baja);
+                new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Seguridad", EventosBitacora_TLL.CIERRE_SESION, CriticidadBitacora.Baja);
             }
             catch (Exception ex)
             {

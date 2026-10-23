@@ -26,7 +26,7 @@ namespace ORM
             var dt = Gestor.EjecutarQueryEnMaster("SELECT CAST(SERVERPROPERTY('InstanceDefaultBackupPath') AS nvarchar(260))");
             string carpeta = dt.Rows.Count == 0 || dt.Rows[0][0] == DBNull.Value ? null : Convert.ToString(dt.Rows[0][0]);
 
-            if (string.IsNullOrWhiteSpace(carpeta)) throw new InvalidOperationException("El servidor de base de datos no informó su carpeta de copias de seguridad.");
+            if (string.IsNullOrWhiteSpace(carpeta)) throw new InvalidOperationException("respaldo_sin_carpeta");
 
             return carpeta;
         }

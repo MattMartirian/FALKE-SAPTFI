@@ -1,11 +1,11 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="Mantenimiento.aspx.cs" Inherits="GUI.Mantenimiento" %>
 <%@ Register Src="~/Controles/Iconos.ascx" TagPrefix="falke" TagName="Iconos" %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%: GUI.IdiomaActual_GUI.Codigo %>">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sistema en mantenimiento - Falke</title>
+    <title>[[mantenimiento_sistema_en_mantenimiento_falke]]</title>
 
     <script>
         (function () {
@@ -114,11 +114,10 @@
                     <svg width="36" height="36"><use href="#i-engranaje" /></svg>
                 </div>
 
-                <h1 data-i18n="mantenimientoPagina.titulo">Estamos haciendo mantenimiento</h1>
+                <h1 data-i18n="mantenimientoPagina.titulo">[[mantenimiento_estamos_haciendo_mantenimiento]]</h1>
 
                 <p class="texto-suave" data-i18n="mantenimientoPagina.texto">
-                    El sistema no está disponible por unos minutos mientras realizamos tareas
-                    programadas. Tus datos y tus grabaciones están a salvo.
+                    [[mantenimiento_el_sistema_no_esta_disponible_por]]
                 </p>
 
                 <p class="estimado">
@@ -129,19 +128,18 @@
                 <div class="aviso aviso-info" style="text-align:left">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
                     <p class="sin-margen" data-i18n="mantenimientoPagina.aviso">
-                        Si estabas grabando una sesión, la grabación quedó guardada y va a estar
-                        disponible cuando el sistema vuelva.
+                        [[mantenimiento_si_estabas_grabando_una_sesion_la]]
                     </p>
                 </div>
 
                 <button type="button" class="btn btn-primario btn-grande mt-16" id="btnReintentar"
                         data-i18n="mantenimientoPagina.reintentar">
-                    Reintentar
+                    [[mantenimiento_reintentar]]
                 </button>
 
                 <div class="caja-mant-pie">
                     <p class="sin-margen" data-i18n="mantenimientoPagina.contacto">
-                        Si es urgente, escríbenos a soporte@patternblue.com
+                        [[mantenimiento_si_es_urgente_escribenos_a_soporte]]
                     </p>
                 </div>
 
@@ -150,6 +148,7 @@
 
     </form>
 
+    <script>window.FalkeTextos = { modoDia: "[[js:falke_js_modo_dia]]", modoNoche: "[[js:falke_js_modo_noche]]", expandirMenu: "[[js:falke_js_expandir_menu]]", plegarMenu: "[[js:app_plegar_el_menu]]", ocultarClave: "[[js:falke_js_ocultar_contrasena]]", mostrarClave: "[[js:ingresar_mostrar_la_contrasena]]" };</script>
     <script src="<%: ResolveUrl("~/Scripts/falke.js") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Scripts/falke.js")).Ticks %>"></script>
     <script>
         (function () {

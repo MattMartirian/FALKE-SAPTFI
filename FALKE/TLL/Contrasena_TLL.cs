@@ -10,8 +10,8 @@ namespace TLL
     // Contraseñas: cambio con la clave actual, recuperación por correo, activación de cuenta con token y política de calidad.
     public class Contrasena_TLL
     {
+        public const string POLITICA_CONTRASENA = "clave_politica";
         private const int LARGO_MINIMO_CONTRASENA = 8;
-        public const string POLITICA_CONTRASENA = "La contraseña debe tener al menos 8 caracteres, con una mayúscula, una minúscula, un número y un carácter especial (por ejemplo # ! @ $ %).";
 
         private readonly UsuarioRepository usuarioRepo;
         private readonly Cifrador_SECURITY cifrador;
@@ -41,10 +41,10 @@ namespace TLL
             {
                 if (usuario != null && !Autenticacion_TLL.EstaBloqueado(usuario))
                 {
-                    autenticacion.RegistrarIntentoFallido(usuario, "cambio de contraseña");
+                    autenticacion.RegistrarIntentoFallido(usuario, Autenticacion_TLL.CONTEXTO_CAMBIO_CLAVE);
                 }
 
-                error = "No se pudo cambiar la contraseña. Verificá los datos ingresados.";
+                error = "clave_no_se_pudo_cambiar";
                 return false;
             }
 
@@ -56,7 +56,7 @@ namespace TLL
 
             if (contrasenaNueva == contrasenaActual)
             {
-                error = "La nueva contraseña no puede ser igual a la actual.";
+                error = "clave_igual_a_actual";
                 return false;
             }
 
@@ -71,7 +71,7 @@ namespace TLL
                 usuarioRepo.Modificar(usuario);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
 
-                bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Cambio de contraseña", CriticidadBitacora.Media, DateTime.Now));
+                bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.CLAVE_CAMBIADA, CriticidadBitacora.Media, DateTime.Now));
             });
 
             return true;
@@ -91,7 +91,7 @@ namespace TLL
             Transaccion_ORM.Ejecutar(() =>
             {
                 token = tokens.EmitirRecuperacion(usuario.IdUsuario);
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Solicitud de recuperación de contraseña", CriticidadBitacora.Baja);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.CLAVE_RECUPERACION_SOLICITADA, CriticidadBitacora.Baja);
             });
 
             return new SolicitudEnlace_TLL { Token = token, Nombre = usuario.NombreUsuario };
@@ -118,8 +118,6 @@ namespace TLL
             if (usuario.Estado == EstadoUsuario.Pendiente || usuario.Estado == EstadoUsuario.BloqueadoPorIntentos)
                 usuario.Estado = EstadoUsuario.Activo;
 
-            string via = info.Tipo == TokenCuenta_TLL.TOKEN_ACTIVACION ? "activación" : "recuperación";
-
             Transaccion_ORM.Ejecutar(() =>
             {
                 usuarioRepo.Modificar(usuario);
@@ -127,7 +125,7 @@ namespace TLL
 
                 tokens.Consumir(info);
 
-                bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Contraseña establecida mediante token de " + via + "; la cuenta queda activa", CriticidadBitacora.Media, DateTime.Now));
+                bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.CLAVE_ESTABLECIDA, CriticidadBitacora.Media, DateTime.Now));
             });
 
             return ResultadoToken_TLL.Ok(usuario.EmailUsuario);

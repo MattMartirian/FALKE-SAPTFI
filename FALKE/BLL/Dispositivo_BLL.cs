@@ -88,7 +88,7 @@ namespace BLL
         public List<Dispositivo_BE> ObtenerDeMiEmpresa(ActorUsuario_TE actor)
         {
             if (actor == null || actor.IdEmpresa <= 0 || !actor.Puede(Patentes_TLL.VER_DATOS_EMPRESA))
-                throw new UnauthorizedAccessException("No tenés permiso para ver los dispositivos de la empresa.");
+                throw new ExcepcionNoAutorizada_TLL("disp_sin_permiso_ver");
 
             return dispositivoRepo.ObtenerDeEmpresa(actor.IdEmpresa);
         }
@@ -103,11 +103,11 @@ namespace BLL
 
 
             ModeloDispositivo_BE modelo = ObtenerModelo(dispositivo.IdModelo);
-            if (!modelo.Activo) throw new InvalidOperationException("El modelo \"" + modelo.Nombre + "\" está dado de baja: elegí otro.");
+            if (!modelo.Activo) throw new ExcepcionTraducible_TLL("disp_modelo_de_baja", modelo.Nombre);
             dispositivo.Modelo = modelo.Nombre;
 
             dispositivo.NumeroSerie = (dispositivo.NumeroSerie ?? string.Empty).Trim();
-            if (dispositivoRepo.ExisteSerie(dispositivo.NumeroSerie)) throw new InvalidOperationException("Ya existe un dispositivo con ese número de serie.");
+            if (dispositivoRepo.ExisteSerie(dispositivo.NumeroSerie)) throw new ExcepcionTraducible_TLL("disp_serie_duplicada");
 
             dispositivo.Estado = EstadoDispositivo.Disponible;
 
@@ -116,7 +116,7 @@ namespace BLL
                 dispositivoRepo.Alta(dispositivo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { dispositivo.IdDispositivo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", null, "Alta del dispositivo " + dispositivo.NumeroSerie + " (" + dispositivo.Modelo + ").", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", null, EventosBitacora_TLL.DISPOSITIVO_ALTA, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(dispositivo.NumeroSerie));
             });
         }
 
@@ -133,14 +133,14 @@ namespace BLL
             ValidarYNormalizar(nuevos);
 
             ModeloDispositivo_BE modelo = ObtenerModelo(nuevos.IdModelo);
-            if (!modelo.Activo && modelo.IdModelo != actual.IdModelo) throw new InvalidOperationException("El modelo \"" + modelo.Nombre + "\" está dado de baja: elegí otro.");
+            if (!modelo.Activo && modelo.IdModelo != actual.IdModelo) throw new ExcepcionTraducible_TLL("disp_modelo_de_baja", modelo.Nombre);
 
-            var cambios = new List<string>();
-            Registrar(cambios, "modelo", actual.Modelo, modelo.Nombre);
-            Registrar(cambios, "firmware", actual.Firmware, nuevos.Firmware);
-            Registrar(cambios, "driver requerido", actual.DriverRequerido, nuevos.DriverRequerido);
+            var cambios = new List<ParteBitacora_TLL>();
+            Registrar(cambios, "bitacora_campo_modelo", actual.Modelo, modelo.Nombre);
+            Registrar(cambios, "bitacora_campo_firmware", actual.Firmware, nuevos.Firmware);
+            Registrar(cambios, "bitacora_campo_driver", actual.DriverRequerido, nuevos.DriverRequerido);
 
-            if (cambios.Count == 0) throw new InvalidOperationException("No hay cambios para guardar.");
+            if (cambios.Count == 0) throw new ExcepcionTraducible_TLL("comun_sin_cambios");
 
             actual.IdModelo = modelo.IdModelo;
             actual.Modelo = modelo.Nombre;
@@ -152,7 +152,8 @@ namespace BLL
                 dispositivoRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { actual.IdDispositivo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", actual.IdEmpresaActual, "Modificación del dispositivo " + actual.NumeroSerie + ": " + string.Join("; ", cambios) + ".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", actual.IdEmpresaActual, EventosBitacora_TLL.DISPOSITIVO_MODIFICACION, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(actual.NumeroSerie, ": ", DetalleBitacora_TLL.Lista(cambios, ", ")));
             });
         }
 
@@ -163,20 +164,19 @@ namespace BLL
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
 
             if (dispositivo.Estado != EstadoDispositivo.Disponible)
-                throw new InvalidOperationException("Solo se puede prestar un dispositivo disponible (este está " + NombreEstado(dispositivo.Estado).ToLowerInvariant() + ").");
+                throw new ExcepcionTraducible_TLL("disp_solo_prestar_disponible", new ClaveTexto_TLL(ClaveEstado(dispositivo.Estado), true));
 
-            if (idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) throw new InvalidOperationException("Los dispositivos se prestan a empresas cliente, no a Pattern Blue.");
+            if (idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) throw new ExcepcionTraducible_TLL("disp_prestar_a_pattern_blue");
 
             Empresa_BE empresa = empresaRepo.ObtenerPorPK(idEmpresa);
-            if (empresa == null) throw new InvalidOperationException("La empresa no existe.");
-            if (empresa.Estado != EstadoEmpresa.Activa) throw new InvalidOperationException("Solo se prestan dispositivos a empresas activas.");
+            if (empresa == null) throw new ExcepcionTraducible_TLL("disp_empresa_no_existe");
+            if (empresa.Estado != EstadoEmpresa.Activa) throw new ExcepcionTraducible_TLL("disp_solo_empresas_activas");
 
             int? limite = LimiteDelPlan(empresa.PlanSuscripcion);
             int enPrestamo = prestamoRepo.ContarAbiertosDeEmpresa(idEmpresa);
 
             if (limite.HasValue && enPrestamo >= limite.Value)
-                throw new InvalidOperationException("El plan " + empresa.PlanSuscripcion + " de \"" + empresa.NombreEmpresa + "\" incluye " + limite.Value +
-                    (limite.Value == 1 ? " dispositivo" : " dispositivos") + " y ya tiene " + enPrestamo + " en préstamo.");
+                throw new ExcepcionTraducible_TLL(limite.Value == 1 ? "disp_tope_plan_uno" : "disp_tope_plan_varios", empresa.PlanSuscripcion, empresa.NombreEmpresa, limite.Value, enPrestamo);
 
             var prestamo = new Prestamo_BE { IdDispositivo = idDispositivo, IdEmpresa = idEmpresa, FechaEntrega = DateTime.Now };
             dispositivo.Estado = EstadoDispositivo.EnUso;
@@ -189,7 +189,8 @@ namespace BLL
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Prestamo, new[] { prestamo.IdPrestamo.ToString() });
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { idDispositivo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", idEmpresa, "Préstamo del dispositivo " + dispositivo.NumeroSerie + " (" + dispositivo.Modelo + ") a la empresa \"" + empresa.NombreEmpresa + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", idEmpresa, EventosBitacora_TLL.DISPOSITIVO_PRESTAMO, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(dispositivo.NumeroSerie));
             });
         }
 
@@ -201,7 +202,7 @@ namespace BLL
             Prestamo_BE prestamo = prestamoRepo.ObtenerAbierto(idDispositivo);
 
             if (dispositivo.Estado != EstadoDispositivo.EnUso || prestamo == null)
-                throw new InvalidOperationException("El dispositivo no está en préstamo.");
+                throw new ExcepcionTraducible_TLL("disp_no_esta_prestado");
 
             string empresa = prestamo.NombreEmpresa;
 
@@ -216,8 +217,8 @@ namespace BLL
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Prestamo, new[] { prestamo.IdPrestamo.ToString() });
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { idDispositivo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", prestamo.IdEmpresa, "Devolución del dispositivo " + dispositivo.NumeroSerie + " por la empresa \"" + empresa + "\"" +
-                    (requiereMantenimiento ? "; pasa a mantenimiento." : "."), CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Dispositivos", prestamo.IdEmpresa, EventosBitacora_TLL.DISPOSITIVO_DEVOLUCION, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(dispositivo.NumeroSerie));
             });
         }
 
@@ -227,10 +228,10 @@ namespace BLL
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
 
-            if (dispositivo.Estado == EstadoDispositivo.EnUso) throw new InvalidOperationException("El dispositivo está en préstamo: registrá primero la devolución.");
-            if (dispositivo.Estado != EstadoDispositivo.Disponible) throw new InvalidOperationException("Solo se envía a mantenimiento un dispositivo disponible.");
+            if (dispositivo.Estado == EstadoDispositivo.EnUso) throw new ExcepcionTraducible_TLL("disp_prestado_registrar_devolucion");
+            if (dispositivo.Estado != EstadoDispositivo.Disponible) throw new ExcepcionTraducible_TLL("disp_solo_mantenimiento_disponible");
 
-            CambiarEstado(actor, dispositivo, EstadoDispositivo.EnMantenimiento, "Se envió el dispositivo " + dispositivo.NumeroSerie + " a mantenimiento.", CriticidadBitacora.Media);
+            CambiarEstado(actor, dispositivo, EstadoDispositivo.EnMantenimiento, EventosBitacora_TLL.DISPOSITIVO_MANTENIMIENTO, DetalleBitacora_TLL.Armar(dispositivo.NumeroSerie), CriticidadBitacora.Media);
         }
 
         public void TerminarMantenimiento(ActorUsuario_TE actor, int idDispositivo)
@@ -239,10 +240,9 @@ namespace BLL
 
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
 
-            if (dispositivo.Estado != EstadoDispositivo.EnMantenimiento) throw new InvalidOperationException("El dispositivo no está en mantenimiento.");
+            if (dispositivo.Estado != EstadoDispositivo.EnMantenimiento) throw new ExcepcionTraducible_TLL("disp_no_esta_en_mantenimiento");
 
-            CambiarEstado(actor, dispositivo, EstadoDispositivo.Disponible,
-                "El dispositivo " + dispositivo.NumeroSerie + " terminó el mantenimiento y vuelve a estar disponible.", CriticidadBitacora.Media);
+            CambiarEstado(actor, dispositivo, EstadoDispositivo.Disponible, EventosBitacora_TLL.DISPOSITIVO_FIN_MANTENIMIENTO, DetalleBitacora_TLL.Armar(dispositivo.NumeroSerie), CriticidadBitacora.Media);
         }
 
         public void DarDeBaja(ActorUsuario_TE actor, int idDispositivo, string motivo)
@@ -252,27 +252,27 @@ namespace BLL
             Dispositivo_BE dispositivo = ObtenerExistente(idDispositivo);
             ExigirNoDadoDeBaja(dispositivo);
 
-            if (dispositivo.Estado == EstadoDispositivo.EnUso) throw new InvalidOperationException("El dispositivo está en préstamo: registrá primero la devolución.");
+            if (dispositivo.Estado == EstadoDispositivo.EnUso) throw new ExcepcionTraducible_TLL("disp_prestado_registrar_devolucion");
 
             motivo = (motivo ?? string.Empty).Trim();
-            if (motivo.Length == 0) throw new InvalidOperationException("Indicá el motivo de la baja.");
-            if (motivo.Length > LARGO_MOTIVO) throw new InvalidOperationException("El motivo no puede superar los " + LARGO_MOTIVO + " caracteres.");
+            if (motivo.Length == 0) throw new ExcepcionTraducible_TLL("disp_motivo_baja");
+            if (motivo.Length > LARGO_MOTIVO) throw new ExcepcionTraducible_TLL("comun_motivo_largo", LARGO_MOTIVO);
 
-            CambiarEstado(actor, dispositivo, EstadoDispositivo.DeBaja, "Baja del dispositivo " + dispositivo.NumeroSerie + ". Motivo: " + motivo, CriticidadBitacora.Alta);
+            CambiarEstado(actor, dispositivo, EstadoDispositivo.DeBaja, EventosBitacora_TLL.DISPOSITIVO_BAJA, DetalleBitacora_TLL.Armar(dispositivo.NumeroSerie, DetalleBitacora_TLL.Motivo(motivo)), CriticidadBitacora.Alta);
         }
 
-        public static string NombreEstado(EstadoDispositivo estado)
+        public static string ClaveEstado(EstadoDispositivo estado)
         {
             switch (estado)
             {
-                case EstadoDispositivo.EnUso: return "En uso";
-                case EstadoDispositivo.EnMantenimiento: return "En mantenimiento";
-                case EstadoDispositivo.DeBaja: return "De baja";
-                default: return "Disponible";
+                case EstadoDispositivo.EnUso: return "disp_estado_en_uso";
+                case EstadoDispositivo.EnMantenimiento: return "disp_estado_mantenimiento";
+                case EstadoDispositivo.DeBaja: return "disp_estado_de_baja";
+                default: return "disp_estado_disponible";
             }
         }
 
-        private void CambiarEstado(ActorUsuario_TE actor, Dispositivo_BE dispositivo, EstadoDispositivo nuevo, string descripcion, CriticidadBitacora criticidad)
+        private void CambiarEstado(ActorUsuario_TE actor, Dispositivo_BE dispositivo, EstadoDispositivo nuevo, string evento, string detalle, CriticidadBitacora criticidad)
         {
             dispositivo.Estado = nuevo;
 
@@ -281,7 +281,7 @@ namespace BLL
                 dispositivoRepo.Modificar(dispositivo);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Dispositivo, new[] { dispositivo.IdDispositivo.ToString() });
 
-                bitacora.Auditar(actor, "Dispositivos", null, descripcion, criticidad);
+                bitacora.Auditar(actor, "Dispositivos", null, evento, criticidad, detalle);
             });
         }
 
@@ -289,7 +289,7 @@ namespace BLL
         {
             Dispositivo_BE dispositivo = dispositivoRepo.ObtenerPorPK(idDispositivo);
 
-            if (dispositivo == null) throw new InvalidOperationException("El dispositivo no existe.");
+            if (dispositivo == null) throw new ExcepcionTraducible_TLL("disp_no_existe");
 
             return dispositivo;
         }
@@ -298,14 +298,14 @@ namespace BLL
         {
             ModeloDispositivo_BE modelo = idModelo > 0 ? modeloRepo.ObtenerPorPK(idModelo) : null;
 
-            if (modelo == null) throw new InvalidOperationException("Elegí el modelo del dispositivo.");
+            if (modelo == null) throw new ExcepcionTraducible_TLL("disp_elegir_modelo");
 
             return modelo;
         }
 
         private static void ExigirNoDadoDeBaja(Dispositivo_BE dispositivo)
         {
-            if (dispositivo.Estado == EstadoDispositivo.DeBaja) throw new InvalidOperationException("El dispositivo está dado de baja.");
+            if (dispositivo.Estado == EstadoDispositivo.DeBaja) throw new ExcepcionTraducible_TLL("disp_ya_de_baja");
         }
 
         private static void ValidarYNormalizar(Dispositivo_BE d)
@@ -314,22 +314,22 @@ namespace BLL
             d.Firmware = Recortar(d.Firmware);
             d.DriverRequerido = Recortar(d.DriverRequerido);
 
-            if (d.NumeroSerie.Length == 0) throw new InvalidOperationException("El número de serie es obligatorio.");
-            if (d.NumeroSerie.Length > LARGO_SERIE) throw new InvalidOperationException("El número de serie no puede superar los " + LARGO_SERIE + " caracteres.");
-            if (!FormatoSerie.IsMatch(d.NumeroSerie)) throw new InvalidOperationException("El número de serie solo admite letras, números, espacios y . _ / -");
+            if (d.NumeroSerie.Length == 0) throw new ExcepcionTraducible_TLL("disp_serie_obligatoria");
+            if (d.NumeroSerie.Length > LARGO_SERIE) throw new ExcepcionTraducible_TLL("disp_serie_larga", LARGO_SERIE);
+            if (!FormatoSerie.IsMatch(d.NumeroSerie)) throw new ExcepcionTraducible_TLL("disp_serie_caracteres");
 
-            if ((d.Firmware ?? string.Empty).Length > LARGO_FIRMWARE) throw new InvalidOperationException("El firmware no puede superar los " + LARGO_FIRMWARE + " caracteres.");
-            if ((d.DriverRequerido ?? string.Empty).Length > LARGO_DRIVER) throw new InvalidOperationException("El driver requerido no puede superar los " + LARGO_DRIVER + " caracteres.");
+            if ((d.Firmware ?? string.Empty).Length > LARGO_FIRMWARE) throw new ExcepcionTraducible_TLL("disp_firmware_largo", LARGO_FIRMWARE);
+            if ((d.DriverRequerido ?? string.Empty).Length > LARGO_DRIVER) throw new ExcepcionTraducible_TLL("disp_driver_largo", LARGO_DRIVER);
         }
 
-        private static void Registrar(List<string> cambios, string campo, string antes, string despues)
+        private static void Registrar(List<ParteBitacora_TLL> cambios, string campo, string antes, string despues)
         {
             antes = string.IsNullOrEmpty(antes) ? null : antes;
             despues = string.IsNullOrEmpty(despues) ? null : despues;
 
             if (string.Equals(antes, despues, StringComparison.Ordinal)) return;
 
-            cambios.Add(campo + ": " + (antes ?? "(vacío)") + " → " + (despues ?? "(vacío)"));
+            cambios.Add(DetalleBitacora_TLL.Clave(campo));
         }
 
         private static bool Contiene(string texto, string buscado)

@@ -127,7 +127,7 @@ namespace ORM
         {
             var dt = Gestor.EjecutarQuery("SELECT tipo_activo_digital_categoria FROM CategoriaTable WHERE id_categoria = @id", new SqlParameter("@id", idCategoria));
 
-            if (dt.Rows.Count == 0) throw new InvalidOperationException("La categoría no existe.");
+            if (dt.Rows.Count == 0) throw new InvalidOperationException("categoria_no_existe");
 
             return (TipoActivoCategoria)Enum.Parse(typeof(TipoActivoCategoria), dt.Rows[0]["tipo_activo_digital_categoria"].ToString(), true);
         }

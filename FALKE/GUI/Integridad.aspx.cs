@@ -9,15 +9,9 @@ using TLL;
 
 namespace GUI
 {
-    public partial class Integridad : System.Web.UI.Page
+    public partial class Integridad : PaginaBase_GUI
     {
         private const string PATENTE_RECALCULO = "RECALCULAR_INTEGRIDAD";
-
-        private static readonly NumberFormatInfo FormatoMiles = new NumberFormatInfo
-        {
-            NumberGroupSeparator = ".",
-            NumberGroupSizes = new[] { 3 }
-        };
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,11 +20,16 @@ namespace GUI
             if (!IsPostBack) CargarEstado();
         }
 
+        protected override void AlCambiarIdioma()
+        {
+            if (SesionActual_GUI.ExigirPermiso(PATENTE_RECALCULO)) CargarEstado();
+        }
+
         protected void btnRecalcular_Click(object sender, EventArgs e)
         {
             if (!SesionActual_GUI.Puede(PATENTE_RECALCULO))
             {
-                MostrarAviso("aviso-peligro", "Tu cuenta no tiene permiso para recalcular los dígitos verificadores.");
+                MostrarAviso("aviso-peligro", IdiomaActual_GUI.Texto("integridad_sin_permiso"));
                 return;
             }
 
@@ -64,25 +63,20 @@ namespace GUI
                 var restantes = gestor.VerificarIntegridadTodasLasTablas();
                 string motivo = txtMotivo.Text.Trim();
 
-                new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad",
-                    "Recálculo de dígitos verificadores (" + alcance + "): " + tablasProcesadas + " tabla(s), " +
-                    registrosProcesados + " registro(s)." + (motivo.Length > 0 ? " Motivo: " + motivo : string.Empty),
-                    CriticidadBitacora.Alta);
+                new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Integridad", EventosBitacora_TLL.INTEGRIDAD_RECALCULO, CriticidadBitacora.Alta, null,
+                    motivo.Length > 0 ? DetalleBitacora_TLL.Clave("bitacora_det_motivo", motivo).Valor : null);
 
                 if (restantes.Count == 0)
-                    MostrarAviso("aviso-exito", "Recálculo completo: " + tablasProcesadas + " tabla(s), " +
-                        registrosProcesados + " registro(s). La verificación posterior no encontró inconsistencias.");
+                    MostrarAviso("aviso-exito", IdiomaActual_GUI.Texto("integridad_recalculo_ok", tablasProcesadas, registrosProcesados));
                 else
-                    MostrarAviso("aviso-alerta", "Recálculo completo: " + tablasProcesadas + " tabla(s), " +
-                        registrosProcesados + " registro(s). La verificación posterior todavía encuentra " +
-                        restantes.Count + " inconsistencia(s).");
+                    MostrarAviso("aviso-alerta", IdiomaActual_GUI.Texto("integridad_recalculo_con_problemas", tablasProcesadas, registrosProcesados, restantes.Count));
 
                 txtMotivo.Text = string.Empty;
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Integridad/Recalcular", ex);
-                MostrarAviso("aviso-peligro", "Ocurrió un error al recalcular la integridad.");
+                MostrarAviso("aviso-peligro", IdiomaActual_GUI.Texto("integridad_error_recalcular"));
             }
 
             CargarEstado();
@@ -127,12 +121,12 @@ namespace GUI
                     string nombre = Prettify(tabla.ToString());
 
                     var registro = integridadRepo.LeerRegistroIntegridad(tabla);
-                    string registros = registro.HasValue ? registro.Value.Item2.ToString("#,0", FormatoMiles) : "—";
+                    string registros = registro.HasValue ? registro.Value.Item2.ToString("#,0", IdiomaActual_GUI.Cultura) : "—";
 
                     // La columna Detalle solo dice si la tabla está bien o no; qué registros son los que no cierran se ve en «Ver detalle».
                     string detalle = inconsistente
-                        ? "La tabla se encuentra corrupta"
-                        : "El DVV coincide y los DVH de todos los registros son válidos.";
+                        ? IdiomaActual_GUI.Texto("integridad_tabla_corrupta")
+                        : IdiomaActual_GUI.Texto("integridad_tabla_ok");
 
                     filas.Add(new FilaIntegridad
                     {
@@ -160,7 +154,7 @@ namespace GUI
                     for (int k = 0; k < generales.Count; k++)
                     {
                         if (k > 0) json.Append(',');
-                        AppendJsonString(json, generales[k].Detalle);
+                        AppendJsonString(json, IdiomaActual_GUI.Texto(generales[k].Codigo, generales[k].Parametros));
                     }
 
                     json.Append("],\"registros\":[");
@@ -175,7 +169,7 @@ namespace GUI
                         json.Append(",\"clave\":");
                         AppendJsonString(json, a.ClaveRegistro);
                         json.Append(",\"guardado\":");
-                        AppendJsonString(json, a.DvhAlmacenado);
+                        AppendJsonString(json, string.IsNullOrEmpty(a.DvhAlmacenado) ? IdiomaActual_GUI.Texto("integridad_vacio") : a.DvhAlmacenado);
                         json.Append(",\"calculado\":");
                         AppendJsonString(json, a.DvhRecalculado);
                         json.Append('}');
@@ -198,7 +192,7 @@ namespace GUI
                 bool comprometida = conProblemas > 0;
                 pnlAlertaProblema.Visible = comprometida;
                 pnlAlertaOk.Visible = !comprometida;
-                litResumenAlerta.Text = "Se detectaron inconsistencias en " + conProblemas + " de " + total + " tablas.";
+                litResumenAlerta.Text = IdiomaActual_GUI.Texto("integridad_resumen_alerta", conProblemas, total);
 
                 cardConProblemas.Attributes["class"] = comprometida ? "int-metrica alerta" : "int-metrica";
                 cardRegistros.Attributes["class"] = registrosAfectados > 0 ? "int-metrica alerta" : "int-metrica";
@@ -208,15 +202,13 @@ namespace GUI
                 LogErrores_SERVICE.Registrar("Integridad/CargarEstado", ex);
                 pnlAlertaProblema.Visible = false;
                 pnlAlertaOk.Visible = false;
-                MostrarAviso("aviso-peligro", "No se pudo leer el estado de integridad de la base.");
+                MostrarAviso("aviso-peligro", IdiomaActual_GUI.Texto("integridad_error_leer"));
             }
         }
 
         private void MostrarAviso(string variante, string texto)
         {
-            pnlAviso.CssClass = "aviso mb-24 " + variante;
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
+            PublicarAviso(pnlAviso, litAviso, "aviso mb-24 " + variante, texto);
         }
 
         private static string Prettify(string nombre)
@@ -292,8 +284,8 @@ namespace GUI
                 get
                 {
                     return Inconsistente
-                        ? "<span class=\"badge badge-peligro\">Inconsistente</span>"
-                        : "<span class=\"badge badge-exito\">Íntegra</span>";
+                        ? "<span class=\"badge badge-peligro\">" + IdiomaActual_GUI.Texto("integridad_badge_inconsistente") + "</span>"
+                        : "<span class=\"badge badge-exito\">" + IdiomaActual_GUI.Texto("integridad_badge_integra") + "</span>";
                 }
             }
 

@@ -7,9 +7,8 @@ using TLL;
 
 namespace GUI
 {
-    public partial class EmpresaNueva : System.Web.UI.Page
+    public partial class EmpresaNueva : PaginaBase_GUI
     {
-        private const int ID_IDIOMA_ESPANOL = 1;
 
         private ActorUsuario_TE actor;
 
@@ -47,7 +46,7 @@ namespace GUI
 
             if (!Enum.TryParse(aePlan.SelectedValue, out plan) || !Enum.TryParse(aeFacturacion.SelectedValue, out facturacion))
             {
-                Avisar("El plan o la facturación no son válidos.");
+                Avisar(IdiomaActual_GUI.Texto("empresa_nueva_plan_invalido"));
                 return;
             }
 
@@ -67,12 +66,12 @@ namespace GUI
                 NombreUsuario = aeAdminNombre.Text.Trim(),
                 ApellidoUsuario = aeAdminApellido.Text.Trim(),
                 EmailUsuario = aeAdminEmail.Text.Trim(),
-                IdIdioma = ID_IDIOMA_ESPANOL
+                IdIdioma = IdiomaActual_GUI.IdIdiomaBase()
             };
 
             if (admin.NombreUsuario.Length == 0 || admin.ApellidoUsuario.Length == 0 || admin.EmailUsuario.Length == 0)
             {
-                Avisar("El nombre, el apellido y el correo del administrador son obligatorios.");
+                Avisar(IdiomaActual_GUI.Texto("empresa_nueva_admin_obligatorio"));
                 return;
             }
 
@@ -84,35 +83,34 @@ namespace GUI
             }
             catch (UnauthorizedAccessException ex)
             {
-                Avisar(ex.Message);
+                Avisar(MensajeDe(ex));
                 return;
             }
             catch (InvalidOperationException ex)
             {
-                Avisar(ex.Message);
+                Avisar(MensajeDe(ex));
                 return;
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("EmpresaNueva.Registrar", ex);
-                Avisar("No se pudo registrar la empresa. Volvé a intentarlo.");
+                Avisar(IdiomaActual_GUI.Texto("empresa_nueva_error"));
                 return;
             }
 
-            string resultado = "Se registró la empresa «" + empresa.NombreEmpresa + "» y su administrador " + admin.EmailUsuario +
-                               " (pendiente de activación).";
+            string resultado = IdiomaActual_GUI.Texto("empresa_nueva_ok", empresa.NombreEmpresa, admin.EmailUsuario);
 
             try
             {
                 CorreosCuenta_GUI.EnviarActivacion(admin.EmailUsuario, admin.NombreUsuario, token,
-                    "Se creó la empresa \"" + empresa.NombreEmpresa + "\" en Falke y sos su administrador.");
+                    IdiomaActual_GUI.Texto("empresa_nueva_mail_intro", empresa.NombreEmpresa));
 
-                resultado += " El enlace de activación quedó en App_Data/mails/.";
+                resultado += IdiomaActual_GUI.Texto("empresa_nueva_ok_enlace");
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("EmpresaNueva.Correo", ex);
-                resultado += " No se pudo enviar el correo de activación: desde Usuarios se puede reenviar la invitación.";
+                resultado += IdiomaActual_GUI.Texto("empresa_nueva_ok_correo_falla");
             }
 
             Session["AvisoEmpresas"] = resultado;
@@ -123,8 +121,7 @@ namespace GUI
 
         private void Avisar(string texto)
         {
-            litAviso.Text = Server.HtmlEncode(texto);
-            pnlAviso.Visible = true;
+            PublicarAviso(pnlAviso, litAviso, null, texto);
         }
 
         protected static string Sigla(string nombre)

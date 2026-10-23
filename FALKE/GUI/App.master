@@ -1,7 +1,8 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="App.master.cs" Inherits="GUI.AppMaster" %>
 <%@ Register Src="~/Controles/Iconos.ascx" TagPrefix="falke" TagName="Iconos" %>
+<%@ Register Src="~/Controles/SelectorIdioma.ascx" TagPrefix="falke" TagName="SelectorIdioma" %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%: GUI.IdiomaActual_GUI.Codigo %>">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +31,7 @@
 
         <falke:Iconos runat="server" ID="ucIconos" />
 
-        <a class="salto-contenido" href="#contenido-principal" data-i18n="comun.saltar">Saltar al contenido</a>
+        <a class="salto-contenido" href="#contenido-principal" data-i18n="comun.saltar">[[app_saltar_al_contenido]]</a>
 
         <header class="topbar">
 
@@ -42,20 +43,22 @@
 
             <div class="topbar-acciones">
 
+                <falke:SelectorIdioma runat="server" ID="ucSelectorIdioma" />
+
                 <button type="button" class="icono-boton" data-accion="cambiar-tema"
-                        aria-pressed="false" title="Cambiar entre modo día y modo noche">
-                    <span class="solo-lectores" data-i18n="comun.cambiar.tema">Cambiar el tema de color</span>
+                        aria-pressed="false" title="[[app_cambiar_entre_modo_dia_y_modo]]">
+                    <span class="solo-lectores" data-i18n="comun.cambiar.tema">[[app_cambiar_el_tema_de_color]]</span>
                     <svg width="20" height="20" aria-hidden="true" data-icono-tema="dia"><use href="#i-sol" /></svg>
                     <svg width="20" height="20" aria-hidden="true" data-icono-tema="noche"><use href="#i-luna" /></svg>
                 </button>
 
-                <a id="lnkPerfil" runat="server" class="icono-boton" href="~/MiPerfil.aspx" title="Mi perfil">
-                    <span class="solo-lectores" data-i18n="usuario.verPerfil">Ver mi perfil</span>
+                <a id="lnkPerfil" runat="server" class="icono-boton" href="~/MiPerfil.aspx" title="[[app_mi_perfil]]">
+                    <span class="solo-lectores" data-i18n="usuario.verPerfil">[[app_ver_mi_perfil]]</span>
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-persona" /></svg>
                 </a>
 
-                <a class="icono-boton" href="<%: ResolveUrl("~/Salir.aspx") %>" title="Cerrar sesión">
-                    <span class="solo-lectores" data-i18n="usuario.salir">Cerrar sesión</span>
+                <a class="icono-boton" href="<%: ResolveUrl("~/Salir.aspx") %>" title="[[app_cerrar_sesion]]">
+                    <span class="solo-lectores" data-i18n="usuario.salir">[[app_cerrar_sesion]]</span>
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-salir" /></svg>
                 </a>
 
@@ -65,72 +68,76 @@
         <div class="app">
 
             <aside class="sidebar">
-                <nav class="sidebar-nav" aria-label="Secciones de la aplicación">
+                <nav class="sidebar-nav" aria-label="[[app_secciones_de_la_aplicacion]]">
 
                     <div class="sidebar-grupo">
-                        <p class="sidebar-titulo" data-i18n="menu.grupo.analisis">Análisis</p>
+                        <p class="sidebar-titulo" data-i18n="menu.grupo.analisis">[[app_analisis]]</p>
 
                         <a id="navPanel" runat="server" class="sidebar-item" href="~/Panel.aspx">
                             <svg aria-hidden="true"><use href="#i-casa" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.panel">Página principal</span>
+                            <span class="sidebar-texto" data-i18n="menu.panel">[[app_pagina_principal]]</span>
                         </a>
                         <a id="navVisualizaciones" runat="server" class="sidebar-item" href="~/Visualizaciones.aspx">
                             <svg aria-hidden="true"><use href="#i-ojo" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.visualizaciones">Visualizaciones</span>
+                            <span class="sidebar-texto" data-i18n="menu.visualizaciones">[[app_visualizaciones]]</span>
                         </a>
                         <a id="navNuevaGrabacion" runat="server" class="sidebar-item" href="~/NuevaGrabacion.aspx">
                             <svg aria-hidden="true"><use href="#i-video" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.nuevaGrabacion">Nueva grabación</span>
+                            <span class="sidebar-texto" data-i18n="menu.nuevaGrabacion">[[app_nueva_grabacion]]</span>
                         </a>
                         <a id="navCategorias" runat="server" class="sidebar-item" href="~/Categorias.aspx">
                             <svg aria-hidden="true"><use href="#i-carpeta" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.categorias">Categorías</span>
+                            <span class="sidebar-texto" data-i18n="menu.categorias">[[app_categorias]]</span>
                         </a>
                         <a id="navAnalisisMultiple" runat="server" class="sidebar-item" href="~/AnalisisMultiple.aspx">
                             <svg aria-hidden="true"><use href="#i-comparar" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.analisisMultiple">Análisis múltiple</span>
+                            <span class="sidebar-texto" data-i18n="menu.analisisMultiple">[[analisismultiple_analisis_multiple]]</span>
                         </a>
                     </div>
 
                     <div id="grupoOrganizacion" runat="server" class="sidebar-grupo">
-                        <p class="sidebar-titulo" data-i18n="menu.grupo.organizacion">Organización</p>
+                        <p class="sidebar-titulo" data-i18n="menu.grupo.organizacion">[[app_organizacion]]</p>
 
                         <a id="navUsuarios" runat="server" class="sidebar-item" href="~/Usuarios.aspx">
                             <svg aria-hidden="true"><use href="#i-usuarios" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.usuarios">Usuarios</span>
+                            <span class="sidebar-texto" data-i18n="menu.usuarios">[[app_usuarios]]</span>
                         </a>
                         <a id="navMiEmpresa" runat="server" class="sidebar-item" href="~/MiEmpresa.aspx">
                             <svg aria-hidden="true"><use href="#i-empresa" /></svg>
-                            <span class="sidebar-texto">Mi empresa</span>
+                            <span class="sidebar-texto">[[app_mi_empresa]]</span>
                         </a>
                         <a id="navEmpresas" runat="server" class="sidebar-item" href="~/Empresas.aspx">
                             <svg aria-hidden="true"><use href="#i-empresa" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.empresas">Empresas</span>
+                            <span class="sidebar-texto" data-i18n="menu.empresas">[[app_empresas]]</span>
                         </a>
                         <a id="navDispositivos" runat="server" class="sidebar-item" href="~/Dispositivos.aspx">
                             <svg aria-hidden="true"><use href="#i-dispositivo" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.dispositivos">Dispositivos</span>
+                            <span class="sidebar-texto" data-i18n="menu.dispositivos">[[app_dispositivos]]</span>
                         </a>
                     </div>
 
                     <div id="grupoSistema" runat="server" class="sidebar-grupo">
-                        <p class="sidebar-titulo" data-i18n="menu.grupo.sistema">Sistema</p>
+                        <p class="sidebar-titulo" data-i18n="menu.grupo.sistema">[[app_sistema]]</p>
 
                         <a id="navBitacora" runat="server" class="sidebar-item" href="~/Bitacora.aspx">
                             <svg aria-hidden="true"><use href="#i-libro" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.bitacora">Bitácora</span>
+                            <span class="sidebar-texto" data-i18n="menu.bitacora">[[app_bitacora]]</span>
                         </a>
                         <a id="navRoles" runat="server" class="sidebar-item" href="~/Roles.aspx">
                             <svg aria-hidden="true"><use href="#i-candado" /></svg>
-                            <span class="sidebar-texto">Roles y permisos</span>
+                            <span class="sidebar-texto">[[app_roles_y_permisos]]</span>
+                        </a>
+                        <a id="navIdiomas" runat="server" class="sidebar-item" href="~/Idiomas.aspx">
+                            <svg aria-hidden="true"><use href="#i-idioma" /></svg>
+                            <span class="sidebar-texto">[[app_idiomas]]</span>
                         </a>
                         <a id="navIntegridad" runat="server" class="sidebar-item" href="~/Integridad.aspx">
                             <svg aria-hidden="true"><use href="#i-escudo" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.integridad">Dígito verificador</span>
+                            <span class="sidebar-texto" data-i18n="menu.integridad">[[app_digito_verificador]]</span>
                         </a>
                         <a id="navRespaldos" runat="server" class="sidebar-item" href="~/Respaldos.aspx">
                             <svg aria-hidden="true"><use href="#i-base" /></svg>
-                            <span class="sidebar-texto" data-i18n="menu.respaldos">Copias de seguridad</span>
+                            <span class="sidebar-texto" data-i18n="menu.respaldos">[[app_copias_de_seguridad]]</span>
                         </a>
                     </div>
 
@@ -140,7 +147,7 @@
                     <button type="button" class="sidebar-item ancho-total boton-plegar" data-accion="plegar-sidebar"
                             aria-expanded="true">
                         <svg aria-hidden="true"><use href="#i-menu" /></svg>
-                        <span class="sidebar-texto" data-i18n="menu.plegar">Plegar el menú</span>
+                        <span class="sidebar-texto" data-i18n="menu.plegar">[[app_plegar_el_menu]]</span>
                     </button>
                 </div>
             </aside>
@@ -151,6 +158,7 @@
 
         </div>
 
+        <script>window.FalkeTextos = { modoDia: "[[js:falke_js_modo_dia]]", modoNoche: "[[js:falke_js_modo_noche]]", expandirMenu: "[[js:falke_js_expandir_menu]]", plegarMenu: "[[js:app_plegar_el_menu]]", ocultarClave: "[[js:falke_js_ocultar_contrasena]]", mostrarClave: "[[js:ingresar_mostrar_la_contrasena]]" };</script>
         <script src="<%: ResolveUrl("~/Scripts/falke.js") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Scripts/falke.js")).Ticks %>"></script>
 
         <asp:ContentPlaceHolder ID="scripts" runat="server" />

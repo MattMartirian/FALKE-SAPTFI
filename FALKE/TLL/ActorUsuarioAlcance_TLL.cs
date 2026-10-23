@@ -19,8 +19,8 @@ namespace TLL
         {
             if (actor != null && actor.Puede(patente)) return;
 
-            new BitacoraGestor_TLL().Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", "Acción rechazada por falta de permiso (" + patente + ")", CriticidadBitacora.Media);
-            throw new UnauthorizedAccessException("No tenés permiso para realizar esta acción.");
+            new BitacoraGestor_TLL().Registrar(actor != null ? actor.IdUsuario : 0, "Seguridad", EventosBitacora_TLL.ACCION_RECHAZADA_PERMISO, CriticidadBitacora.Media, null, DetalleBitacora_TLL.Armar(patente));
+            throw new ExcepcionNoAutorizada_TLL("comun_sin_permiso");
         }
     }
 }

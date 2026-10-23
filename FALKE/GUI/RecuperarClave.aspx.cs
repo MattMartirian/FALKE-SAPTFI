@@ -4,7 +4,7 @@ using TLL;
 
 namespace GUI
 {
-    public partial class RecuperarClave : System.Web.UI.Page
+    public partial class RecuperarClave : PaginaBase_GUI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -16,7 +16,7 @@ namespace GUI
 
             if (email.Length == 0)
             {
-                litError.Text = "Escribí el correo de tu cuenta para continuar.";
+                litError.Text = IdiomaActual_GUI.Texto("recuperar_escribir_correo");
                 avisoError.Visible = true;
                 return;
             }
@@ -30,12 +30,12 @@ namespace GUI
                     string enlace = WebHelper.UrlAbsoluta("DefinirClave.aspx?token=" + Uri.EscapeDataString(solicitud.Token));
 
                     string cuerpo =
-                        "Recibimos un pedido para restablecer la contraseña de tu cuenta de Falke." + Environment.NewLine +
-                        "Si fuiste vos, entrá a este enlace (vence en dos horas y se usa una sola vez):" + Environment.NewLine +
+                        IdiomaActual_GUI.Texto("correo_recuperar_pedido") + Environment.NewLine +
+                        IdiomaActual_GUI.Texto("correo_recuperar_enlace") + Environment.NewLine +
                         enlace + Environment.NewLine + Environment.NewLine +
-                        "Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo válida." + Environment.NewLine;
+                        IdiomaActual_GUI.Texto("correo_recuperar_ignorar") + Environment.NewLine;
 
-                    Email_SERVICE.Enviar(email, "Restablecer la contraseña de Falke", cuerpo);
+                    Email_SERVICE.Enviar(email, IdiomaActual_GUI.Texto("recuperar_mail_asunto"), cuerpo);
                 }
 
                 bloqueFormulario.Visible = false;
@@ -44,7 +44,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("RecuperarClave", ex);
-                litError.Text = "Ocurrió un error al procesar la solicitud. Volvé a intentarlo.";
+                litError.Text = IdiomaActual_GUI.Texto("comun_error_procesar");
                 avisoError.Visible = true;
             }
         }

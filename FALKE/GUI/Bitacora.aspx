@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Bitacora.aspx.cs" Inherits="GUI.Bitacora" Title="Bitácora" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Bitacora.aspx.cs" Inherits="GUI.Bitacora" Title="[[app_bitacora]]" %>
 <%@ MasterType VirtualPath="~/App.master" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
@@ -17,7 +17,7 @@
             vertical-align: middle;
             background: var(--borde-fuerte);
         }
-
+/**/
         .fila-critica td:first-child::before { background: var(--peligro); }
         .fila-media td:first-child::before { background: var(--alerta); }
 
@@ -46,7 +46,7 @@
 
     <div class="pagina-cabecera">
         <div>
-            <h1 data-i18n="bitacora.titulo">Bitácora</h1>
+            <h1 data-i18n="bitacora.titulo">[[app_bitacora]]</h1>
             <p class="texto-suave sin-margen">
                 <asp:Literal ID="litBajada" runat="server" />
             </p>
@@ -70,49 +70,49 @@
         <div class="filtros-bitacora mb-16">
 
             <div class="campo">
-                <label for="txtDesde" data-i18n="bitacora.desde">Desde</label>
+                <label for="txtDesde" data-i18n="bitacora.desde">[[bitacora_desde]]</label>
                 <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="txtHasta" data-i18n="bitacora.hasta">Hasta</label>
+                <label for="txtHasta" data-i18n="bitacora.hasta">[[bitacora_hasta]]</label>
                 <asp:TextBox ID="txtHasta" runat="server" TextMode="Date" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="txtHoraDesde" data-i18n="bitacora.horaDesde">Hora desde</label>
+                <label for="txtHoraDesde" data-i18n="bitacora.horaDesde">[[bitacora_hora_desde]]</label>
                 <asp:TextBox ID="txtHoraDesde" runat="server" TextMode="Time" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="txtHoraHasta" data-i18n="bitacora.horaHasta">Hora hasta</label>
+                <label for="txtHoraHasta" data-i18n="bitacora.horaHasta">[[bitacora_hora_hasta]]</label>
                 <asp:TextBox ID="txtHoraHasta" runat="server" TextMode="Time" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="ddlModulo" data-i18n="bitacora.modulo">Módulo</label>
+                <label for="ddlModulo" data-i18n="bitacora.modulo">[[bitacora_modulo]]</label>
                 <asp:DropDownList ID="ddlModulo" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="ddlAccion" data-i18n="bitacora.accion">Acción</label>
+                <label for="ddlAccion" data-i18n="bitacora.accion">[[bitacora_accion]]</label>
                 <asp:DropDownList ID="ddlAccion" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
             <div class="campo">
-                <label for="txtUsuario" data-i18n="bitacora.usuario">Usuario</label>
-                <asp:TextBox ID="txtUsuario" runat="server" CssClass="entrada" MaxLength="100" placeholder="Nombre o correo" autocomplete="off" ClientIDMode="Static" />
+                <label for="txtUsuario" data-i18n="bitacora.usuario">[[bitacora_usuario]]</label>
+                <asp:TextBox ID="txtUsuario" runat="server" CssClass="entrada" MaxLength="100" placeholder="[[bitacora_nombre_o_correo]]" autocomplete="off" ClientIDMode="Static" />
             </div>
 
             <asp:PlaceHolder ID="phFiltroEmpresa" runat="server">
                 <div class="campo">
-                    <label for="ddlEmpresa" data-i18n="bitacora.empresa">Empresa</label>
+                    <label for="ddlEmpresa" data-i18n="bitacora.empresa">[[bitacora_empresa]]</label>
                     <asp:DropDownList ID="ddlEmpresa" runat="server" CssClass="entrada" ClientIDMode="Static" />
                 </div>
             </asp:PlaceHolder>
 
             <div class="campo">
-                <label for="ddlCriticidad" data-i18n="bitacora.criticidad">Criticidad</label>
+                <label for="ddlCriticidad" data-i18n="bitacora.criticidad">[[bitacora_criticidad]]</label>
                 <asp:DropDownList ID="ddlCriticidad" runat="server" CssClass="entrada" ClientIDMode="Static" />
             </div>
 
@@ -121,8 +121,8 @@
         <div class="fila-entre">
             <p class="texto-chico texto-suave sin-margen" role="status" id="contadorBitacora"><asp:Literal ID="litContador" runat="server" /></p>
             <div class="fila">
-                <asp:Button ID="btnLimpiar" runat="server" CssClass="btn btn-fantasma btn-chico" Text="Limpiar filtros" OnClick="btnLimpiar_Click" CausesValidation="false" />
-                <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario btn-chico" Text="Aplicar filtros" OnClick="btnBuscar_Click" />
+                <asp:Button ID="btnLimpiar" runat="server" CssClass="btn btn-fantasma btn-chico" Text="[[comun_limpiar_filtros]]" OnClick="btnLimpiar_Click" CausesValidation="false" />
+                <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-secundario btn-chico" Text="[[comun_aplicar_filtros]]" OnClick="btnBuscar_Click" />
             </div>
         </div>
 
@@ -131,26 +131,28 @@
     <div id="resultadosBitacora">
     <div class="tabla-scroll">
         <table class="tabla" id="tablaBitacora">
-            <caption class="solo-lectores">Registros de la bitácora</caption>
+            <caption class="solo-lectores">[[bitacora_registros_de_la_bitacora]]</caption>
             <thead>
                 <tr>
-                    <th scope="col" data-i18n="bitacora.col.fecha">Fecha y hora</th>
-                    <th scope="col" data-i18n="bitacora.col.usuario">Usuario</th>
-                    <th scope="col" data-i18n="bitacora.col.empresa">Empresa</th>
-                    <th scope="col" data-i18n="bitacora.col.modulo">Módulo</th>
-                    <th scope="col" data-i18n="bitacora.col.descripcion">Descripción</th>
-                    <th scope="col" data-i18n="bitacora.col.criticidad">Criticidad</th>
+                    <th scope="col" data-i18n="bitacora.col.fecha">[[bitacora_fecha_y_hora]]</th>
+                    <th scope="col" data-i18n="bitacora.col.usuario">[[bitacora_usuario]]</th>
+                    <th scope="col" data-i18n="bitacora.col.empresa">[[bitacora_empresa]]</th>
+                    <th scope="col" data-i18n="bitacora.col.modulo">[[bitacora_modulo]]</th>
+                    <th scope="col" data-i18n="bitacora.col.descripcion">[[bitacora_descripcion]]</th>
+                    <th scope="col" data-i18n="bitacora.col.detalle">[[bitacora_detalle]]</th>
+                    <th scope="col" data-i18n="bitacora.col.criticidad">[[bitacora_criticidad]]</th>
                 </tr>
             </thead>
             <tbody>
                 <asp:Repeater ID="rptBitacora" runat="server">
                     <ItemTemplate>
                         <tr class="<%#: ClaseFila((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %>">
-                            <td class="celda-fecha"><%#: ((DateTime)Eval("FechaHoraBitacora")).ToString("dd/MM/yyyy HH:mm") %></td>
+                            <td class="celda-fecha"><%#: ((DateTime)Eval("FechaHoraBitacora")).ToString("g", GUI.IdiomaActual_GUI.Cultura) %></td>
                             <td><%#: Eval("Actor") %><%# string.IsNullOrEmpty((string)Eval("EmailActor")) ? "" : "<br /><span class=\"texto-chico texto-suave\">" + HttpUtility.HtmlEncode((string)Eval("EmailActor")) + "</span>" %></td>
                             <td class="texto-suave"><%#: Eval("NombreEmpresa") %></td>
-                            <td><span class="badge badge-neutro"><%#: Eval("ModuloBitacora") %></span></td>
-                            <td><%#: Eval("DescripcionBitacora") %></td>
+                            <td><span class="badge badge-neutro"><%#: GUI.TextoBitacora_GUI.Modulo(Eval("ModuloBitacora")) %></span></td>
+                            <td><%#: GUI.TextoBitacora_GUI.Descripcion(Eval("DescripcionBitacora")) %></td>
+                            <td class="texto-suave"><%#: GUI.TextoBitacora_GUI.Detalle(Eval("DetalleBitacora")) %></td>
                             <td><span class="badge <%#: ClaseBadge((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %>"><%#: EtiquetaCriticidad((TE.CriticidadBitacora)Eval("CriticidadBitacora")) %></span></td>
                         </tr>
                     </ItemTemplate>
@@ -162,22 +164,21 @@
     <div class="paginado-bitacora fila-entre mt-16">
         <span class="texto-chico texto-suave"><asp:Literal ID="litPaginado" runat="server" /></span>
         <div class="fila">
-            <asp:LinkButton ID="lnkAnterior" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkAnterior_Click" CausesValidation="false">Anterior</asp:LinkButton>
-            <asp:LinkButton ID="lnkSiguiente" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkSiguiente_Click" CausesValidation="false">Siguiente</asp:LinkButton>
+            <asp:LinkButton ID="lnkAnterior" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkAnterior_Click" CausesValidation="false">[[bitacora_anterior]]</asp:LinkButton>
+            <asp:LinkButton ID="lnkSiguiente" runat="server" CssClass="btn btn-fantasma btn-chico" OnClick="lnkSiguiente_Click" CausesValidation="false">[[bitacora_siguiente]]</asp:LinkButton>
         </div>
     </div>
 
     <asp:PlaceHolder ID="phVacio" runat="server" Visible="false">
         <div class="vacio">
             <svg width="34" height="34" aria-hidden="true"><use href="#i-libro" /></svg>
-            <p class="sin-margen" data-i18n="bitacora.vacio">No hay registros que coincidan con los filtros.</p>
+            <p class="sin-margen" data-i18n="bitacora.vacio">[[bitacora_no_hay_registros_que_coincidan_con]]</p>
         </div>
     </asp:PlaceHolder>
     </div>
 
     <p class="texto-chico texto-suave mt-16" data-i18n="bitacora.retencion">
-        Los registros de la bitácora no se pueden editar ni borrar. Se conservan por el
-        plazo que fije la política de retención del sistema.
+        [[bitacora_los_registros_de_la_bitacora_no]]
     </p>
 
 

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Panel.aspx.cs" Inherits="GUI.PaginaPrincipal" Title="Página principal" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Panel.aspx.cs" Inherits="GUI.PaginaPrincipal" Title="[[app_pagina_principal]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -151,46 +151,46 @@
     <div class="pagina-cabecera saludo">
         <div>
 
-            <h1><span data-i18n="panel.saludo">Hola</span>, <asp:Literal ID="litNombre" runat="server" /></h1>
+            <h1><span data-i18n="panel.saludo">[[panel_hola]]</span>, <asp:Literal ID="litNombre" runat="server" /></h1>
             <p class="texto-suave sin-margen" data-i18n="panel.bajada">
-                Este es el resumen de la actividad de tu empresa en Falke.
+                [[panel_este_es_el_resumen_de_la]]
             </p>
         </div>
         <div class="acciones">
             <a class="btn btn-primario" href="<%: ResolveUrl("~/NuevaGrabacion.aspx") %>">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-video" /></svg>
-                <span data-i18n="panel.nuevaGrabacion">Nueva grabación</span>
+                <span data-i18n="panel.nuevaGrabacion">[[app_nueva_grabacion]]</span>
             </a>
         </div>
     </div>
 
-    <nav class="accesos" aria-label="Accesos rápidos">
+    <nav class="accesos" aria-label="[[panel_accesos_rapidos]]">
 
         <a class="acceso" href="<%: ResolveUrl("~/NuevaGrabacion.aspx") %>">
             <span>
-                <span class="titulo" data-i18n="panel.acceso1.titulo">Grabar una sesión</span>
-                <span class="detalle" data-i18n="panel.acceso1.detalle">Calibrar el dispositivo y empezar</span>
+                <span class="titulo" data-i18n="panel.acceso1.titulo">[[panel_grabar_una_sesion]]</span>
+                <span class="detalle" data-i18n="panel.acceso1.detalle">[[panel_calibrar_el_dispositivo_y_empezar]]</span>
             </span>
         </a>
 
         <a class="acceso" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">
             <span>
-                <span class="titulo" data-i18n="panel.acceso2.titulo">Auditar resultados</span>
-                <span class="detalle" data-i18n="panel.acceso2.detalle">Mapas, zonas y recorridos</span>
+                <span class="titulo" data-i18n="panel.acceso2.titulo">[[panel_auditar_resultados]]</span>
+                <span class="detalle" data-i18n="panel.acceso2.detalle">[[panel_mapas_zonas_y_recorridos]]</span>
             </span>
         </a>
 
         <a class="acceso" href="<%: ResolveUrl("~/AnalisisMultiple.aspx") %>">
             <span>
-                <span class="titulo" data-i18n="panel.acceso3.titulo">Comparar sesiones</span>
-                <span class="detalle" data-i18n="panel.acceso3.detalle">Promediar varios testers</span>
+                <span class="titulo" data-i18n="panel.acceso3.titulo">[[panel_comparar_sesiones]]</span>
+                <span class="detalle" data-i18n="panel.acceso3.detalle">[[panel_promediar_varios_testers]]</span>
             </span>
         </a>
 
         <a class="acceso" href="<%: ResolveUrl("~/Categorias.aspx") %>">
             <span>
-                <span class="titulo" data-i18n="panel.acceso4.titulo">Categorías</span>
-                <span class="detalle" data-i18n="panel.acceso4.detalle">Organizar los activos digitales</span>
+                <span class="titulo" data-i18n="panel.acceso4.titulo">[[app_categorias]]</span>
+                <span class="detalle" data-i18n="panel.acceso4.detalle">[[panel_organizar_los_activos_digitales]]</span>
             </span>
         </a>
 
@@ -199,25 +199,25 @@
     <div class="tira-metricas">
 
         <div>
-            <div class="metrica-nombre" data-i18n="panel.metrica1">Sesiones este mes</div>
+            <div class="metrica-nombre" data-i18n="panel.metrica1">[[panel_sesiones_este_mes]]</div>
             <div class="metrica-valor">14</div>
             <p class="texto-chico texto-exito sin-margen mt-8" data-i18n="panel.metrica1.detalle">+4 respecto del mes pasado</p>
         </div>
 
         <div>
-            <div class="metrica-nombre" data-i18n="panel.metrica2">En procesamiento</div>
+            <div class="metrica-nombre" data-i18n="panel.metrica2">[[panel_en_procesamiento]]</div>
             <div class="metrica-valor">1</div>
-            <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica2.detalle">Queda disponible en unos minutos</p>
+            <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica2.detalle">[[panel_queda_disponible_en_unos_minutos]]</p>
         </div>
 
         <div>
-            <div class="metrica-nombre" data-i18n="panel.metrica3">Categorías activas</div>
+            <div class="metrica-nombre" data-i18n="panel.metrica3">[[panel_categorias_activas]]</div>
             <div class="metrica-valor">6</div>
             <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica3.detalle">Sobre 5 tipos de activo</p>
         </div>
 
         <div>
-            <div class="metrica-nombre" data-i18n="panel.metrica4">Dispositivos asignados</div>
+            <div class="metrica-nombre" data-i18n="panel.metrica4">[[panel_dispositivos_asignados]]</div>
             <div class="metrica-valor">1</div>
             <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica4.detalle">Tobii 4C &middot; calibrado</p>
         </div>
@@ -229,60 +229,60 @@
         <section class="tarjeta">
             <div class="tarjeta-cabecera">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-metricas" /></svg>
-                <span data-i18n="panel.ultimas.titulo">Últimas sesiones</span>
+                <span data-i18n="panel.ultimas.titulo">[[panel_ultimas_sesiones]]</span>
                 <a class="derecha enlace-detalle" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">
-                    <span data-i18n="panel.ultimas.verTodas">Ver todas</span>
+                    <span data-i18n="panel.ultimas.verTodas">[[panel_ver_todas]]</span>
                     <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                 </a>
             </div>
 
             <div class="tabla-scroll" style="border:0">
                 <table class="tabla">
-                    <caption class="solo-lectores">Últimas sesiones grabadas</caption>
+                    <caption class="solo-lectores">[[panel_ultimas_sesiones_grabadas]]</caption>
                     <thead>
                         <tr>
-                            <th scope="col" data-i18n="panel.tabla.sesion">Sesión</th>
-                            <th scope="col" data-i18n="panel.tabla.tipo">Tipo de activo</th>
-                            <th scope="col" data-i18n="panel.tabla.fecha">Fecha</th>
-                            <th scope="col" data-i18n="panel.tabla.duracion">Duración</th>
-                            <th scope="col" data-i18n="panel.tabla.estado">Estado</th>
+                            <th scope="col" data-i18n="panel.tabla.sesion">[[panel_sesion]]</th>
+                            <th scope="col" data-i18n="panel.tabla.tipo">[[categorias_tipo_de_activo]]</th>
+                            <th scope="col" data-i18n="panel.tabla.fecha">[[panel_fecha]]</th>
+                            <th scope="col" data-i18n="panel.tabla.duracion">[[panel_duracion]]</th>
+                            <th scope="col" data-i18n="panel.tabla.estado">[[dispositivos_estado]]</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Checkout - App e-commerce</a></td>
-                            <td>App web</td>
+                            <td>[[analisismultiple_app_web]]</td>
                             <td>12 jul 2026</td>
                             <td>18:42</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span></td>
+                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
                         </tr>
                         <tr>
                             <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Onboarding - RPG móvil</a></td>
-                            <td>Videojuego</td>
+                            <td>[[analisismultiple_videojuego]]</td>
                             <td>10 jul 2026</td>
                             <td>09:15</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span></td>
+                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
                         </tr>
                         <tr>
                             <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Landing - Campaña Q3</a></td>
-                            <td>Publicidad</td>
+                            <td>[[categorias_publicidad]]</td>
                             <td>08 jul 2026</td>
                             <td>04:03</td>
-                            <td><span class="badge badge-alerta" data-i18n="estado.procesando">Procesando</span></td>
+                            <td><span class="badge badge-alerta" data-i18n="estado.procesando">[[panel_procesando]]</span></td>
                         </tr>
                         <tr>
                             <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Login - Panel interno</a></td>
-                            <td>Software</td>
+                            <td>[[analisismultiple_software]]</td>
                             <td>05 jul 2026</td>
                             <td>06:51</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span></td>
+                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
                         </tr>
                         <tr>
                             <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Carrito - App e-commerce</a></td>
-                            <td>App web</td>
+                            <td>[[analisismultiple_app_web]]</td>
                             <td>01 jul 2026</td>
                             <td>12:27</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">Finalizado</span></td>
+                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -294,12 +294,12 @@
             <section class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg>
-                    <span data-i18n="panel.dispositivo.titulo">Tu dispositivo</span>
+                    <span data-i18n="panel.dispositivo.titulo">[[panel_tu_dispositivo]]</span>
                 </div>
 
                 <div class="fila-entre mb-8">
                     <strong>Tobii Eye Tracker 4C</strong>
-                    <span class="badge badge-exito" data-i18n="estado.listo">Listo</span>
+                    <span class="badge badge-exito" data-i18n="estado.listo">[[panel_listo]]</span>
                 </div>
                 <p class="texto-chico texto-suave" data-i18n="panel.dispositivo.detalle">
                     Conectado por USB 3.0 &middot; última calibración hace 4 minutos &middot; driver 4.2.1
@@ -312,7 +312,7 @@
 
                 <div class="tarjeta-pie">
                     <a class="enlace-detalle" href="<%: ResolveUrl("~/NuevaGrabacion.aspx") %>">
-                        <span data-i18n="panel.dispositivo.verificar">Verificar el dispositivo</span>
+                        <span data-i18n="panel.dispositivo.verificar">[[panel_verificar_el_dispositivo]]</span>
                         <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
                     </a>
                 </div>
@@ -321,7 +321,7 @@
             <section class="tarjeta">
                 <div class="tarjeta-cabecera">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-reloj" /></svg>
-                    <span data-i18n="panel.actividad.titulo">Actividad reciente</span>
+                    <span data-i18n="panel.actividad.titulo">[[panel_actividad_reciente]]</span>
                 </div>
 
                 <ul class="actividad">

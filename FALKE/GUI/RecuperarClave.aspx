@@ -1,11 +1,11 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="RecuperarClave.aspx.cs" Inherits="GUI.RecuperarClave" %>
 <%@ Register Src="~/Controles/Iconos.ascx" TagPrefix="falke" TagName="Iconos" %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<%: GUI.IdiomaActual_GUI.Codigo %>">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Recuperar contraseña - Falke</title>
+    <title>[[recuperarclave_recuperar_contrasena_falke]]</title>
 
     <script>
         (function () {
@@ -106,25 +106,22 @@
 
                 <a class="recuperar-volver" href="<%: ResolveUrl("~/Default.aspx") %>">
                     <svg aria-hidden="true"><use href="#i-atras" /></svg>
-                    <span data-i18n="recuperar.volverInicio">Volver al inicio</span>
+                    <span data-i18n="recuperar.volverInicio">[[ingresar_volver_al_inicio]]</span>
                 </a>
 
                 <div class="recuperar-icono" aria-hidden="true">
                     <svg width="26" height="26"><use href="#i-mail" /></svg>
                 </div>
 
-                <h1 data-i18n="recuperar.titulo">Recuperar mi contraseña</h1>
+                <h1 data-i18n="recuperar.titulo">[[recuperarclave_recuperar_mi_contrasena]]</h1>
                 <p class="bajada" data-i18n="recuperar.bajada">
-                    Escribí el correo con el que entrás a Falke y te enviamos un enlace para
-                    definir una contraseña nueva.
+                    [[recuperarclave_escribi_el_correo_con_el_que]]
                 </p>
 
                 <asp:Panel ID="avisoEnviado" runat="server" CssClass="aviso aviso-exito" role="status" Visible="false">
                     <svg width="20" height="20" aria-hidden="true"><use href="#i-tilde" /></svg>
                     <p class="sin-margen" data-i18n="recuperar.enviado">
-                        Si ese correo pertenece a una cuenta registrada, vas a recibir el enlace
-                        para definir una contraseña nueva. El aviso se genera como archivo en
-                        App_Data/mails/.
+                        [[recuperarclave_si_ese_correo_pertenece_a_una]]
                     </p>
                 </asp:Panel>
 
@@ -136,38 +133,38 @@
                     </asp:Panel>
 
                     <div class="campo">
-                        <label for="recEmail" data-i18n="recuperar.email">Correo de la cuenta</label>
+                        <label for="recEmail" data-i18n="recuperar.email">[[recuperarclave_correo_de_la_cuenta]]</label>
                         <asp:TextBox ID="recEmail" runat="server" CssClass="entrada" TextMode="Email"
                                      ClientIDMode="Static" autocomplete="email"
                                      placeholder="nombre@empresa.com"
                                      data-i18n-attr="placeholder:recuperar.email.placeholder" />
                         <p class="ayuda" data-i18n="recuperar.email.ayuda">
-                            Tiene que ser el mismo correo con el que te dieron de alta.
+                            [[recuperarclave_tiene_que_ser_el_mismo_correo]]
                         </p>
                     </div>
 
                     <asp:Button ID="btnEnviarEnlace" runat="server" CssClass="btn btn-primario btn-grande btn-bloque"
-                                OnClick="btnEnviarEnlace_Click" Text="Enviarme el enlace" data-i18n="recuperar.enviar" />
+                                OnClick="btnEnviarEnlace_Click" Text="[[recuperarclave_enviarme_el_enlace]]" data-i18n="recuperar.enviar" />
 
                     <p class="texto-chico texto-suave mt-16 sin-margen" data-i18n="recuperar.vigencia">
-                        El enlace vence a las dos horas de haberse generado y se puede usar una sola vez.
+                        [[recuperarclave_el_enlace_vence_a_las_dos]]
                     </p>
 
                 </asp:Panel>
 
                 <div class="recuperar-pie">
                     <p class="sin-margen">
-                        <a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="recuperar.volver">Volver al inicio de sesión</a>
+                        <a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="recuperar.volver">[[recuperarclave_volver_al_inicio_de_sesion]]</a>
                     </p>
                     <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="recuperar.bloqueada">
-                        Si tu cuenta fue dada de baja o tiene un bloqueo estricto, no se envía ningún enlace:
-                        lo resuelve el administrador de tu empresa.
+                        [[recuperarclave_si_tu_cuenta_fue_dada_de]]
                     </p>
                 </div>
 
             </div>
         </main>
 
+        <script>window.FalkeTextos = { modoDia: "[[js:falke_js_modo_dia]]", modoNoche: "[[js:falke_js_modo_noche]]", expandirMenu: "[[js:falke_js_expandir_menu]]", plegarMenu: "[[js:app_plegar_el_menu]]", ocultarClave: "[[js:falke_js_ocultar_contrasena]]", mostrarClave: "[[js:ingresar_mostrar_la_contrasena]]" };</script>
         <script src="<%: ResolveUrl("~/Scripts/falke.js") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Scripts/falke.js")).Ticks %>"></script>
     </form>
 </body>

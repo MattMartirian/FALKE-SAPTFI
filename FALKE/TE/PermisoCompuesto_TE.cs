@@ -22,12 +22,12 @@ namespace TE
         {
             if (hijo == null) throw new ArgumentNullException(nameof(hijo));
 
-            if (hijo.Nombre == Nombre) throw new PermisoInvalidoException("Un permiso no puede incluirse a sí mismo.");
+            if (hijo.Nombre == Nombre) throw new PermisoInvalidoException("Un permiso no puede incluirse a sí mismo.", "permiso_a_si_mismo");
 
-            if (hijos.Any(h => h.Nombre == hijo.Nombre)) throw new PermisoInvalidoException($"\"{Nombre}\" ya incluye a \"{hijo.Nombre}\".");
+            if (hijos.Any(h => h.Nombre == hijo.Nombre)) throw new PermisoInvalidoException($"\"{Nombre}\" ya incluye a \"{hijo.Nombre}\".", "permiso_ya_incluye", Nombre, hijo.Nombre);
 
             // Hay ciclo si el candidato ya contiene, directa o indirectamente, a este permiso.
-            if (hijo.Contiene(Nombre)) throw new PermisoInvalidoException($"Agregar \"{hijo.Nombre}\" a \"{Nombre}\" generaría un ciclo de composición.");
+            if (hijo.Contiene(Nombre)) throw new PermisoInvalidoException($"Agregar \"{hijo.Nombre}\" a \"{Nombre}\" generaría un ciclo de composición.", "permiso_ciclo", hijo.Nombre, Nombre);
 
             hijos.Add(hijo);
         }
@@ -38,7 +38,7 @@ namespace TE
 
             PermisoAbstracto_TE actual = hijos.FirstOrDefault(h => h.Nombre == hijo.Nombre);
 
-            if (actual == null) throw new PermisoInvalidoException($"\"{Nombre}\" no incluye a \"{hijo.Nombre}\".");
+            if (actual == null) throw new PermisoInvalidoException($"\"{Nombre}\" no incluye a \"{hijo.Nombre}\".", "permiso_no_incluye", Nombre, hijo.Nombre);
 
             hijos.Remove(actual);
         }

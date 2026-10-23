@@ -12,7 +12,10 @@ namespace GUI
     public partial class Respaldos : PaginaConAviso_GUI
     {
         private const string CLAVE_AVISO = "respaldos.aviso";
-        private static readonly CultureInfo Cultura = new CultureInfo("es-AR");
+        private static CultureInfo Cultura
+        {
+            get { return IdiomaActual_GUI.Cultura; }
+        }
 
         private ActorUsuario_TE actor;
 
@@ -77,7 +80,7 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Respaldos.Listar", ex);
-                Avisar("aviso-peligro", "No se pudo cargar la lista de respaldos.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("respaldos_error_lista"));
             }
         }
 
@@ -89,23 +92,23 @@ namespace GUI
             {
                 Respaldo_TE creado = new Respaldo_TLL().Generar(actor);
 
-                Session[CLAVE_AVISO] = "Se generó el respaldo " + creado.NombreArchivo + ".";
+                Session[CLAVE_AVISO] = IdiomaActual_GUI.Texto("respaldos_generado", creado.NombreArchivo);
                 Response.Redirect("Respaldos.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             catch (UnauthorizedAccessException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (InvalidOperationException ex)
             {
                 LogErrores_SERVICE.Registrar("Respaldos.Generar", ex);
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Respaldos.Generar", ex);
-                Avisar("aviso-peligro", "No se pudo generar el respaldo. Volvé a intentarlo.");
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("respaldos_error_generar"));
             }
         }
 
@@ -122,19 +125,19 @@ namespace GUI
             }
             catch (UnauthorizedAccessException ex)
             {
-                Fallar(ex.Message);
+                Fallar(MensajeDe(ex));
                 return;
             }
             catch (InvalidOperationException ex)
             {
                 LogErrores_SERVICE.Registrar("Respaldos.Restaurar", ex);
-                Fallar(ex.Message);
+                Fallar(MensajeDe(ex));
                 return;
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Respaldos.Restaurar", ex);
-                Fallar("No se pudo restaurar la base. Volvé a intentarlo.");
+                Fallar(IdiomaActual_GUI.Texto("respaldos_error_restaurar"));
                 return;
             }
 

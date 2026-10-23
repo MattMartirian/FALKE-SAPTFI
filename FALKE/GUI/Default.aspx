@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="GUI.Inicio" Title="Inicio" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Publico.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="GUI.Inicio" Title="[[default_inicio]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -329,17 +329,15 @@
         <div class="contenedor">
 
             <div>
-                <h1 data-i18n="inicio.titulo">Descubre lo que tus usuarios <em>realmente observan</em></h1>
+                <h1 data-i18n="inicio.titulo">[[default_descubre_lo_que_tus_usuarios]] <em>[[default_realmente_observan]]</em></h1>
 
                 <p class="bajada" data-i18n="inicio.bajada">
-                    Falke mide la atención visual real sobre tus productos digitales con
-                    seguimiento ocular de precisión profesional. Tú realizas las pruebas con tus
-                    propios usuarios; nosotros ponemos el dispositivo, el procesamiento y los informes.
+                    [[default_falke_mide_la_atencion_visual_real]]
                 </p>
 
                 <div class="fila">
-                    <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="inicio.cta.planes">Ver los planes</a>
-                    <a class="btn btn-secundario btn-grande" href="<%: ResolveUrl("~/Registro.aspx") %>" data-i18n="inicio.cta.demo">Pedir una demostración</a>
+                    <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="inicio.cta.planes">[[default_ver_los_planes]]</a>
+                    <a class="btn btn-secundario btn-grande" href="<%: ResolveUrl("~/Registro.aspx") %>" data-i18n="inicio.cta.demo">[[default_pedir_una_demostracion]]</a>
                 </div>
             </div>
 
@@ -350,7 +348,7 @@
                 <span class="esquina esquina-id"></span>
                 <div class="previa-barra">
                     <span>Sesión N.&deg; 04 &middot; Falke</span>
-                    <span class="previa-vivo">En vivo</span>
+                    <span class="previa-vivo">[[default_en_vivo]]</span>
                 </div>
                 <svg class="previa-pieza" viewBox="0 0 480 240">
                     <defs>
@@ -422,9 +420,9 @@
                 </svg>
 
                 <div class="previa-datos">
-                    <span><b>18:42</b>duración</span>
-                    <span><b>62%</b>atención activa</span>
-                    <span><b>47</b>fijaciones</span>
+                    <span><b>18:42</b>[[default_duracion]]</span>
+                    <span><b>62%</b>[[default_atencion_activa]]</span>
+                    <span><b>47</b>[[default_fijaciones]]</span>
                 </div>
             </div>
 
@@ -435,59 +433,53 @@
         <div class="contenedor">
 
             <div class="seccion-titulo">
-                <h2 data-i18n="inicio.problema.titulo">Las métricas que usas hoy no revelan dónde mira el usuario</h2>
+                <h2 data-i18n="inicio.problema.titulo">[[default_las_metricas_que_usas_hoy_no]]</h2>
                 <p data-i18n="inicio.problema.bajada">
-                    Los clics, el tiempo de sesión y las encuestas son información indirecta.
-                    Ninguna muestra qué elemento capta la atención y cuál pasa desapercibido.
+                    [[default_los_clics_el_tiempo_de_sesion]]
                 </p>
             </div>
 
             <div class="valores">
 
                 <article class="valor">
-                    <h3 data-i18n="inicio.valor1.titulo">Evidencia real</h3>
+                    <h3 data-i18n="inicio.valor1.titulo">[[default_evidencia_real]]</h3>
                     <p data-i18n="inicio.valor1.texto">
-                        Uso de hardware Tobii con infrarrojos que registra la
-                        mirada con precisión de nivel profesional.
+                        [[default_uso_de_hardware_tobii_con_infrarrojos]]
                     </p>
                 </article>
 
                 <article class="valor">
-                    <h3 data-i18n="inicio.valor2.titulo">Tus usuarios, tu entorno</h3>
+                    <h3 data-i18n="inicio.valor2.titulo">[[default_tus_usuarios_tu_entorno]]</h3>
                     <p data-i18n="inicio.valor2.texto">
-                        Las sesiones las realizas tú, con tus propios testers, sobre tu producto real, asegurandote un control total.
+                        [[default_las_sesiones_las_realizas_tu_con]]
                     </p>
                 </article>
 
                 <article class="valor">
-                    <h3 data-i18n="inicio.valor3.titulo">Informes que se entienden</h3>
+                    <h3 data-i18n="inicio.valor3.titulo">[[default_informes_que_se_entienden]]</h3>
                     <p data-i18n="inicio.valor3.texto">
-                        Nadie necesita interpretar datos biométricos crudos: la plataforma
-                        devuelve mapas y métricas listas para interpretar y utilizar.
+                        [[default_nadie_necesita_interpretar_datos_biometr]]
                     </p>
                 </article>
 
                 <article class="valor">
-                    <h3 data-i18n="inicio.valor4.titulo">Sin comprar equipamiento</h3>
+                    <h3 data-i18n="inicio.valor4.titulo">[[default_sin_comprar_equipamiento]]</h3>
                     <p data-i18n="inicio.valor4.texto">
-                        El dispositivo Tobii es dado en préstamo con la suscripción y vuelve al
-                        terminar el contrato. Sin inversión inicial.
+                        [[default_el_dispositivo_tobii_es_dado_en]]
                     </p>
                 </article>
 
                 <article class="valor">
-                    <h3 data-i18n="inicio.valor5.titulo">Resultados en minutos</h3>
+                    <h3 data-i18n="inicio.valor5.titulo">[[default_resultados_en_minutos]]</h3>
                     <p data-i18n="inicio.valor5.texto">
-                        Al terminar la grabación, el procesamiento arranca solo. Los
-                        análisis quedan disponibles en menos de cinco minutos.
+                        [[default_al_terminar_la_grabacion_el_procesamient]]
                     </p>
                 </article>
 
                 <article class="valor">
-                    <h3 data-i18n="inicio.valor6.titulo">Datos protegidos</h3>
+                    <h3 data-i18n="inicio.valor6.titulo">[[default_datos_protegidos]]</h3>
                     <p data-i18n="inicio.valor6.texto">
-                        Los datos de mirada se disocian de la identidad del tester al guardarse,
-                        conforme a lo estipulado en la Ley N.&deg; 25.326.
+                        [[default_los_datos_de_mirada_se_disocian]]
                     </p>
                 </article>
 
@@ -499,41 +491,37 @@
         <div class="contenedor">
 
             <div class="seccion-titulo">
-                <h2 data-i18n="inicio.comoFunciona.titulo">¿Cómo funciona Falke?</h2>
-                <p data-i18n="inicio.comoFunciona.bajada">Cuatro pasos entre la firma del contrato y el primer informe.</p>
+                <h2 data-i18n="inicio.comoFunciona.titulo">[[default_como_funciona_falke]]</h2>
+                <p data-i18n="inicio.comoFunciona.bajada">[[default_cuatro_pasos_entre_la_firma_del]]</p>
             </div>
 
             <div class="pasos">
                 <div class="paso">
                     <span class="n" aria-hidden="true">1</span>
-                    <h3 data-i18n="inicio.paso1.titulo">Recibo del dispositivo</h3>
+                    <h3 data-i18n="inicio.paso1.titulo">[[default_recibo_del_dispositivo]]</h3>
                     <p class="texto-suave" data-i18n="inicio.paso1.texto">
-                        Enviamos el Tobii en préstamo con su guía de instalación. Llega dentro de
-                        los diez días de firmado del contrato.
+                        [[default_enviamos_el_tobii_en_prestamo_con]]
                     </p>
                 </div>
                 <div class="paso">
                     <span class="n" aria-hidden="true">2</span>
-                    <h3 data-i18n="inicio.paso2.titulo">Configurado del análisis</h3>
+                    <h3 data-i18n="inicio.paso2.titulo">[[default_configurado_del_analisis]]</h3>
                     <p class="texto-suave" data-i18n="inicio.paso2.texto">
-                        Registras la categoría del activo a evaluar (software, aplicación web, móvil,
-                        videojuego o publicidad).
+                        [[default_registras_la_categoria_del_activo_a]]
                     </p>
                 </div>
                 <div class="paso">
                     <span class="n" aria-hidden="true">3</span>
-                    <h3 data-i18n="inicio.paso3.titulo">Grabas la sesión</h3>
+                    <h3 data-i18n="inicio.paso3.titulo">[[default_grabas_la_sesion]]</h3>
                     <p class="texto-suave" data-i18n="inicio.paso3.texto">
-                        La pantalla y el seguimiento ocular se graban sincronizados. Puedes pausar,
-                        reanudar o reiniciar en cualquier momento.
+                        [[default_la_pantalla_y_el_seguimiento_ocular]]
                     </p>
                 </div>
                 <div class="paso">
                     <span class="n" aria-hidden="true">4</span>
-                    <h3 data-i18n="inicio.paso4.titulo">Auditas los resultados</h3>
+                    <h3 data-i18n="inicio.paso4.titulo">[[default_auditas_los_resultados]]</h3>
                     <p class="texto-suave" data-i18n="inicio.paso4.texto">
-                        Mapa de calor, zonas de interés y ciegas, dispersión, recorrido y atención
-                        frente a distracción. Todo exportable a PDF.
+                        [[default_mapa_de_calor_zonas_de_interes]]
                     </p>
                 </div>
             </div>
@@ -544,28 +532,25 @@
     <section class="franja">
         <div class="contenedor">
 
-            <h2 data-i18n="inicio.comparativa.titulo">Precisión profesional, <em>al alcance de tu empresa</em></h2>
+            <h2 data-i18n="inicio.comparativa.titulo">[[default_precision_profesional]] <em>[[default_al_alcance_de_tu_empresa]]</em></h2>
 
             <div class="comparativa">
                 <div>
-                    <h3 data-i18n="inicio.comparativa.webcam.titulo">Soluciones por cámara web</h3>
+                    <h3 data-i18n="inicio.comparativa.webcam.titulo">[[default_soluciones_por_camara_web]]</h3>
                     <p data-i18n="inicio.comparativa.webcam.texto">
-                        Económicas, pero la precisión depende de la postura y la iluminación, y
-                        limitan la duración del estudio.
+                        [[default_economicas_pero_la_precision_depende_de]]
                     </p>
                 </div>
                 <div class="destacada">
                     <h3 data-i18n="inicio.comparativa.falke.titulo">Falke</h3>
                     <p data-i18n="inicio.comparativa.falke.texto">
-                        Infrarrojo dedicado, sin límite de duración ni de tipo de activo,
-                        bajo suscripción y con el hardware incluido.
+                        [[default_infrarrojo_dedicado_sin_limite_de_duraci]]
                     </p>
                 </div>
                 <div>
-                    <h3 data-i18n="inicio.comparativa.propio.titulo">Equipo propio</h3>
+                    <h3 data-i18n="inicio.comparativa.propio.titulo">[[default_equipo_propio]]</h3>
                     <p data-i18n="inicio.comparativa.propio.texto">
-                        La misma calidad de dato, pero exige comprar equipos, licencias y
-                        formar gente antes del primer estudio.
+                        [[default_la_misma_calidad_de_dato_pero]]
                     </p>
                 </div>
             </div>
@@ -577,26 +562,26 @@
         <div class="contenedor">
 
             <div class="seccion-titulo">
-                <h2 data-i18n="inicio.paraQuien.titulo">Pensado para ti</h2>
+                <h2 data-i18n="inicio.paraQuien.titulo">[[default_pensado_para_ti]]</h2>
             </div>
 
             <div class="segmentos">
                 <article class="segmento">
-                    <h3 data-i18n="inicio.segmento1.titulo">Estudios de videojuegos</h3>
+                    <h3 data-i18n="inicio.segmento1.titulo">[[default_estudios_de_videojuegos]]</h3>
                     <p data-i18n="inicio.segmento1.texto">
-                        Validar tutoriales, HUD y elementos críticos de escena antes del lanzamiento.
+                        [[default_validar_tutoriales_hud_y_elementos_criti]]
                     </p>
                 </article>
                 <article class="segmento">
-                    <h3 data-i18n="inicio.segmento2.titulo">Agencias de publicidad digital</h3>
+                    <h3 data-i18n="inicio.segmento2.titulo">[[default_agencias_de_publicidad_digital]]</h3>
                     <p data-i18n="inicio.segmento2.texto">
-                        Demostrar con evidencia si la pieza dirige la atención al mensaje que importa.
+                        [[default_demostrar_con_evidencia_si_la_pieza]]
                     </p>
                 </article>
                 <article class="segmento">
-                    <h3 data-i18n="inicio.segmento3.titulo">Empresas de software</h3>
+                    <h3 data-i18n="inicio.segmento3.titulo">[[default_empresas_de_software]]</h3>
                     <p data-i18n="inicio.segmento3.texto">
-                        Detectar problemas de usabilidad durante el desarrollo y no después del lanzamiento.
+                        [[default_detectar_problemas_de_usabilidad_durante]]
                     </p>
                 </article>
             </div>
@@ -611,11 +596,11 @@
             <span class="esquina esquina-ii" aria-hidden="true"></span>
             <span class="esquina esquina-id" aria-hidden="true"></span>
 
-            <h2 data-i18n="inicio.cierre.titulo">Empieza a decidir con evidencia</h2>
+            <h2 data-i18n="inicio.cierre.titulo">[[default_empieza_a_decidir_con_evidencia]]</h2>
 
             <div class="fila">
-                <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="inicio.cta.planes">Ver los planes</a>
-                <a class="btn btn-secundario btn-grande" href="<%: ResolveUrl("~/Faq.aspx") %>" data-i18n="inicio.cta.faq">Leer las preguntas frecuentes</a>
+                <a class="btn btn-primario btn-grande" href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="inicio.cta.planes">[[default_ver_los_planes]]</a>
+                <a class="btn btn-secundario btn-grande" href="<%: ResolveUrl("~/Faq.aspx") %>" data-i18n="inicio.cta.faq">[[default_leer_las_preguntas_frecuentes]]</a>
             </div>
         </div>
     </section>

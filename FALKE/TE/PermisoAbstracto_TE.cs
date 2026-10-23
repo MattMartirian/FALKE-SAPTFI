@@ -29,12 +29,12 @@ namespace TE
 
         public virtual void Agregar(PermisoAbstracto_TE hijo)
         {
-            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no puede contener otros permisos.");
+            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no puede contener otros permisos.", "permiso_simple_no_contiene", Nombre);
         }
 
         public virtual void Quitar(PermisoAbstracto_TE hijo)
         {
-            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no tiene hijos.");
+            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no tiene hijos.", "permiso_simple_sin_hijos", Nombre);
         }
 
         public virtual IReadOnlyList<PermisoAbstracto_TE> ObtenerHijos()
@@ -71,6 +71,13 @@ namespace TE
 
     public class PermisoInvalidoException : System.Exception
     {
-        public PermisoInvalidoException(string mensaje) : base(mensaje) { }
+        public string Codigo { get; private set; }
+        public object[] Parametros { get; private set; }
+
+        public PermisoInvalidoException(string mensaje, string codigo = null, params object[] parametros) : base(mensaje)
+        {
+            Codigo = codigo;
+            Parametros = parametros ?? new object[0];
+        }
     }
 }

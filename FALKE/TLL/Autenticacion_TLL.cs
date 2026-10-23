@@ -10,6 +10,8 @@ namespace TLL
     public class Autenticacion_TLL
     {
         private const int MAX_INTENTOS_FALLIDOS = 5;
+        internal const string CONTEXTO_INICIO_SESION = "bitacora_det_contexto_inicio_sesion";
+        internal const string CONTEXTO_CAMBIO_CLAVE = "bitacora_det_contexto_cambio_clave";
 
         public const string MOTIVO_EMPRESA_BLOQUEADA = "EMPRESA_BLOQUEADA";
         public const string MOTIVO_EMPRESA_DESHABILITADA = "EMPRESA_DESHABILITADA";
@@ -35,7 +37,7 @@ namespace TLL
             {
                 var usuarioEmergencia = emergencia.ConstruirUsuarioEnMemoria(email);
                 emergencia.LoguearAccesoAArchivo(email);
-                bitacora.Registrar(0, "Seguridad", "Acceso de emergencia (break-glass) con identificador '" + email + "'", CriticidadBitacora.Alta);
+                bitacora.Registrar(0, "Seguridad", EventosBitacora_TLL.ACCESO_EMERGENCIA, CriticidadBitacora.Alta);
                 return ResultadoLogin_TLL.Exitoso(usuarioEmergencia, HayInconsistenciasDeIntegridad());
             }
 
@@ -47,25 +49,25 @@ namespace TLL
 
             if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos)
             {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta bloqueada por intentos fallidos", CriticidadBitacora.Media);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INICIO_SESION_RECHAZADO, CriticidadBitacora.Media, null, DetalleBitacora_TLL.Clave("bitacora_det_cuenta_bloqueada_intentos"));
                 return ResultadoLogin_TLL.BloqueadoPorIntentos();
             }
 
             if (usuario.Estado == EstadoUsuario.Pendiente)
             {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta pendiente de activación", CriticidadBitacora.Baja);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INICIO_SESION_RECHAZADO, CriticidadBitacora.Baja, null, DetalleBitacora_TLL.Clave("bitacora_det_cuenta_pendiente"));
                 return ResultadoLogin_TLL.UsuarioPendienteActivacion();
             }
 
             if (usuario.Estado == EstadoUsuario.Inactivo)
             {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta inactiva (dada de baja)", CriticidadBitacora.Baja, usuario.IdEmpresa);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INICIO_SESION_RECHAZADO, CriticidadBitacora.Baja, usuario.IdEmpresa, DetalleBitacora_TLL.Clave("bitacora_det_cuenta_inactiva"));
                 return ResultadoLogin_TLL.Inactivo();
             }
 
             if (usuario.Estado == EstadoUsuario.BloqueoEstricto)
             {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Intento de inicio de sesión sobre una cuenta con bloqueo estricto", CriticidadBitacora.Media, usuario.IdEmpresa);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INICIO_SESION_RECHAZADO, CriticidadBitacora.Media, usuario.IdEmpresa, DetalleBitacora_TLL.Clave("bitacora_det_cuenta_bloqueo_estricto"));
                 return ResultadoLogin_TLL.BloqueoEstricto();
             }
 
@@ -81,9 +83,8 @@ namespace TLL
             string motivoEmpresa = MotivoEmpresaSinIngreso(usuario.IdEmpresa);
             if (motivoEmpresa != null)
             {
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad",
-                    "Inicio de sesión rechazado: la empresa del usuario está " + (motivoEmpresa == MOTIVO_EMPRESA_DESHABILITADA ? "dada de baja" : "bloqueada"),
-                    CriticidadBitacora.Media, usuario.IdEmpresa);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INICIO_SESION_RECHAZADO, CriticidadBitacora.Media, usuario.IdEmpresa,
+                    DetalleBitacora_TLL.Clave(motivoEmpresa == MOTIVO_EMPRESA_DESHABILITADA ? "bitacora_det_empresa_baja" : "bitacora_det_empresa_bloqueada"));
                 return ResultadoLogin_TLL.EmpresaNoActiva(motivoEmpresa);
             }
 
@@ -94,17 +95,17 @@ namespace TLL
             {
                 if (!Permiso_TLL.ComprobarPermiso(Patentes_TLL.RECALCULAR_INTEGRIDAD, usuario.Rol))
                 {
-                    bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión rechazado: la integridad de los datos está comprometida (" + inconsistencias.Count + " inconsistencia/s)", CriticidadBitacora.Alta);
+                    bitacora.Registrar(usuario.IdUsuario, "Integridad", EventosBitacora_TLL.INICIO_SESION_RECHAZADO, CriticidadBitacora.Alta, null, DetalleBitacora_TLL.Clave("bitacora_det_integridad_comprometida", inconsistencias.Count));
                     return ResultadoLogin_TLL.IntegridadComprometida();
                 }
 
-                bitacora.Registrar(usuario.IdUsuario, "Integridad", "Inicio de sesión con la integridad de los datos comprometida (" + inconsistencias.Count + " inconsistencia/s): se lo lleva a Dígito verificador para revisarla", CriticidadBitacora.Alta);
+                bitacora.Registrar(usuario.IdUsuario, "Integridad", EventosBitacora_TLL.INICIO_SESION, CriticidadBitacora.Alta, null, DetalleBitacora_TLL.Clave("bitacora_det_inicio_integridad_comprometida", inconsistencias.Count));
             }
 
             Transaccion_ORM.Ejecutar(() =>
             {
                 ResetearIntentosFallidos(usuario);
-                bitacora.Registrar(usuario.IdUsuario, "Seguridad", "Inicio de sesión exitoso", CriticidadBitacora.Baja);
+                bitacora.Registrar(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INICIO_SESION, CriticidadBitacora.Baja);
             });
 
             return ResultadoLogin_TLL.Exitoso(usuario, revisarIntegridad);
@@ -144,7 +145,7 @@ namespace TLL
             return cifrador.Encoder(contrasenaPlana) == hashAlmacenado;
         }
 
-        internal void RegistrarIntentoFallido(Usuario_TE usuario, string contexto = "inicio de sesión")
+        internal void RegistrarIntentoFallido(Usuario_TE usuario, string contexto = CONTEXTO_INICIO_SESION)
         {
             usuario.IntentosFallidosUsuario++;
 
@@ -160,11 +161,12 @@ namespace TLL
 
                 if (seBloqueo)
                 {
-                    bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Cuenta bloqueada por superar el máximo de intentos fallidos", CriticidadBitacora.Alta, DateTime.Now));
+                    bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.CUENTA_BLOQUEADA, CriticidadBitacora.Alta, DateTime.Now));
                 }
                 else
                 {
-                    bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", "Intento fallido de " + contexto + " (" + usuario.IntentosFallidosUsuario + " de " + MAX_INTENTOS_FALLIDOS + ")", CriticidadBitacora.Baja, DateTime.Now));
+                    bitacora.Guardar(new Bitacora_TE(usuario.IdUsuario, "Seguridad", EventosBitacora_TLL.INTENTO_FALLIDO, CriticidadBitacora.Baja, DateTime.Now, 0,
+                        DetalleBitacora_TLL.Clave("bitacora_det_intento_fallido", DetalleBitacora_TLL.Clave(contexto), usuario.IntentosFallidosUsuario, MAX_INTENTOS_FALLIDOS)));
                 }
             });
         }

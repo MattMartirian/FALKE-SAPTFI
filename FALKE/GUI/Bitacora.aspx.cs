@@ -56,6 +56,14 @@ namespace GUI
             MostrarAlcance();
         }
 
+        protected override void AlCambiarIdioma()
+        {
+            if (actor == null) return;
+
+            MostrarAlcance();
+            EtiquetarListas();
+        }
+
         protected void Page_PreRender(object sender, EventArgs e)
         {
             if (actor == null) return;
@@ -77,9 +85,9 @@ namespace GUI
                 int hasta = desde == 0 ? 0 : desde + pagina.Items.Count - 1;
 
                 litContador.Text = pagina.Total == 0
-                    ? "No hay registros que coincidan con los filtros."
-                    : "Registros " + desde + "–" + hasta + " de " + pagina.Total + ".";
-                litPaginado.Text = pagina.Total == 0 ? "Sin registros" : "Página " + pagina.Pagina + " de " + pagina.TotalPaginas;
+                    ? IdiomaActual_GUI.Texto("bitacora_sin_registros_filtros")
+                    : IdiomaActual_GUI.Texto("bitacora_registros_rango", desde, hasta, pagina.Total);
+                litPaginado.Text = pagina.Total == 0 ? IdiomaActual_GUI.Texto("bitacora_sin_registros") : IdiomaActual_GUI.Texto("bitacora_pagina", pagina.Pagina, pagina.TotalPaginas);
                 phVacio.Visible = pagina.Total == 0;
                 lnkAnterior.Visible = pagina.Pagina > 1;
                 lnkSiguiente.Visible = pagina.Pagina < pagina.TotalPaginas;
@@ -87,7 +95,7 @@ namespace GUI
             }
             catch (InvalidOperationException ex)
             {
-                Avisar("aviso-peligro", ex.Message);
+                Avisar("aviso-peligro", MensajeDe(ex));
                 rptBitacora.DataSource = null;
                 rptBitacora.DataBind();
                 litContador.Text = string.Empty;
@@ -98,41 +106,72 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Bitacora.Listar", ex);
-                litContador.Text = "No se pudo cargar la bitácora.";
+                litContador.Text = IdiomaActual_GUI.Texto("bitacora_error_cargar");
             }
         }
 
         private void CargarListas()
         {
             ddlModulo.Items.Clear();
-            ddlModulo.Items.Add(new ListItem("Todos", string.Empty));
+            ddlModulo.Items.Add(new ListItem(IdiomaActual_GUI.Texto("comun_todos"), string.Empty));
             foreach (string modulo in new BitacoraGestor_TLL().ObtenerModulos(actor))
-                ddlModulo.Items.Add(new ListItem(modulo, modulo));
+                ddlModulo.Items.Add(new ListItem(TextoBitacora_GUI.Modulo(modulo), modulo));
 
             ddlAccion.Items.Clear();
-            ddlAccion.Items.Add(new ListItem("Todas", string.Empty));
-            ddlAccion.Items.Add(new ListItem("Inicio de sesión", BitacoraGestor_TLL.ACCION_INICIO_SESION));
-            ddlAccion.Items.Add(new ListItem("Cierre de sesión", BitacoraGestor_TLL.ACCION_CIERRE_SESION));
-            ddlAccion.Items.Add(new ListItem("Alta", BitacoraGestor_TLL.ACCION_ALTA));
-            ddlAccion.Items.Add(new ListItem("Modificación", BitacoraGestor_TLL.ACCION_MODIFICACION));
-            ddlAccion.Items.Add(new ListItem("Baja", BitacoraGestor_TLL.ACCION_BAJA));
+            ddlAccion.Items.Add(new ListItem(IdiomaActual_GUI.Texto("comun_todas"), string.Empty));
+            ddlAccion.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_accion_inicio_sesion"), BitacoraGestor_TLL.ACCION_INICIO_SESION));
+            ddlAccion.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_accion_cierre_sesion"), BitacoraGestor_TLL.ACCION_CIERRE_SESION));
+            ddlAccion.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_accion_alta"), BitacoraGestor_TLL.ACCION_ALTA));
+            ddlAccion.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_accion_modificacion"), BitacoraGestor_TLL.ACCION_MODIFICACION));
+            ddlAccion.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_accion_baja"), BitacoraGestor_TLL.ACCION_BAJA));
 
             ddlCriticidad.Items.Clear();
-            ddlCriticidad.Items.Add(new ListItem("Todas", string.Empty));
-            ddlCriticidad.Items.Add(new ListItem("Alta", ((int)CriticidadBitacora.Alta).ToString()));
-            ddlCriticidad.Items.Add(new ListItem("Media", ((int)CriticidadBitacora.Media).ToString()));
-            ddlCriticidad.Items.Add(new ListItem("Baja", ((int)CriticidadBitacora.Baja).ToString()));
+            ddlCriticidad.Items.Add(new ListItem(IdiomaActual_GUI.Texto("comun_todas"), string.Empty));
+            ddlCriticidad.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_criticidad_alta"), ((int)CriticidadBitacora.Alta).ToString()));
+            ddlCriticidad.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_criticidad_media"), ((int)CriticidadBitacora.Media).ToString()));
+            ddlCriticidad.Items.Add(new ListItem(IdiomaActual_GUI.Texto("bitacora_criticidad_baja"), ((int)CriticidadBitacora.Baja).ToString()));
 
             phFiltroEmpresa.Visible = actor.VeBitacoraCompleta();
 
             if (actor.VeBitacoraCompleta())
             {
                 ddlEmpresa.Items.Clear();
-                ddlEmpresa.Items.Add(new ListItem("Todas", string.Empty));
+                ddlEmpresa.Items.Add(new ListItem(IdiomaActual_GUI.Texto("comun_todas"), string.Empty));
 
                 foreach (Empresa_BE empresa in new Empresa_BLL().ObtenerParaFiltroDeBitacora(actor))
                     ddlEmpresa.Items.Add(new ListItem(empresa.NombreEmpresa, empresa.IdEmpresa.ToString()));
             }
+        }
+
+        private void EtiquetarListas()
+        {
+            foreach (ListItem item in ddlModulo.Items)
+                item.Text = item.Value.Length == 0 ? IdiomaActual_GUI.Texto("comun_todos") : TextoBitacora_GUI.Modulo(item.Value);
+
+            var acciones = new Dictionary<string, string>
+            {
+                { BitacoraGestor_TLL.ACCION_INICIO_SESION, "bitacora_accion_inicio_sesion" },
+                { BitacoraGestor_TLL.ACCION_CIERRE_SESION, "bitacora_accion_cierre_sesion" },
+                { BitacoraGestor_TLL.ACCION_ALTA, "bitacora_accion_alta" },
+                { BitacoraGestor_TLL.ACCION_MODIFICACION, "bitacora_accion_modificacion" },
+                { BitacoraGestor_TLL.ACCION_BAJA, "bitacora_accion_baja" }
+            };
+
+            foreach (ListItem item in ddlAccion.Items)
+                item.Text = acciones.ContainsKey(item.Value) ? IdiomaActual_GUI.Texto(acciones[item.Value]) : IdiomaActual_GUI.Texto("comun_todas");
+
+            var criticidades = new Dictionary<string, string>
+            {
+                { ((int)CriticidadBitacora.Alta).ToString(), "bitacora_criticidad_alta" },
+                { ((int)CriticidadBitacora.Media).ToString(), "bitacora_criticidad_media" },
+                { ((int)CriticidadBitacora.Baja).ToString(), "bitacora_criticidad_baja" }
+            };
+
+            foreach (ListItem item in ddlCriticidad.Items)
+                item.Text = criticidades.ContainsKey(item.Value) ? IdiomaActual_GUI.Texto(criticidades[item.Value]) : IdiomaActual_GUI.Texto("comun_todas");
+
+            if (actor.VeBitacoraCompleta() && ddlEmpresa.Items.Count > 0)
+                ddlEmpresa.Items[0].Text = IdiomaActual_GUI.Texto("comun_todas");
         }
 
         private FiltroBitacora_TE ArmarFiltro()
@@ -176,20 +215,23 @@ namespace GUI
         {
             if (actor.VeBitacoraCompleta())
             {
-                litBajada.Text = "Todos los movimientos registrados en el sistema.";
-                litAlcance.Text = "Ves la bitácora completa de todas las empresas " +
-                                  "cliente y de Pattern Blue.";
+                litBajada.Text = IdiomaActual_GUI.Texto("bitacora_bajada_completa");
+                litAlcance.Text = IdiomaActual_GUI.Texto("bitacora_alcance_completa");
                 return;
             }
 
-            litBajada.Text = "Movimientos registrados en tu empresa.";
-            litAlcance.Text = "Estás viendo los movimientos que afectan a tu empresa. Lo que hace el " +
-                              "equipo de Pattern Blue aparece sin nombre. Los registros no se pueden editar ni borrar.";
+            litBajada.Text = IdiomaActual_GUI.Texto("bitacora_bajada_empresa");
+            litAlcance.Text = IdiomaActual_GUI.Texto("bitacora_alcance_empresa");
         }
 
         protected static string EtiquetaCriticidad(CriticidadBitacora criticidad)
         {
-            return criticidad.ToString();
+            switch (criticidad)
+            {
+                case CriticidadBitacora.Alta: return IdiomaActual_GUI.Texto("bitacora_criticidad_alta");
+                case CriticidadBitacora.Media: return IdiomaActual_GUI.Texto("bitacora_criticidad_media");
+                default: return IdiomaActual_GUI.Texto("bitacora_criticidad_baja");
+            }
         }
 
         protected static string ClaseFila(CriticidadBitacora criticidad)

@@ -25,14 +25,14 @@ namespace SECURITY
 
             if (string.IsNullOrWhiteSpace(keyBase64))
             {
-                throw new InvalidOperationException("No se encontró la variable de entorno FALKE_AES_KEY.");
+                throw new InvalidOperationException("cifrado_clave_ausente");
             }
 
             key = Convert.FromBase64String(keyBase64);
 
             if (key.Length * 8 != AesKeySizeBits)
             {
-                throw new InvalidOperationException($"La clave AES configurada no tiene el tamaño esperado ({AesKeySizeBits} bits).");
+                throw new InvalidOperationException("cifrado_clave_tamano");
             }
         }
 
@@ -110,12 +110,12 @@ namespace SECURITY
             }
             catch (FormatException ex)
             {
-                throw new CryptographicException("El valor a descifrar no es Base64 válido.", ex);
+                throw new CryptographicException("cifrado_base64_invalido", ex);
             }
 
             if (fullCipher.Length <= AesBlockSizeBytes)
             {
-                throw new CryptographicException("El valor cifrado no contiene datos suficientes.");
+                throw new CryptographicException("cifrado_datos_insuficientes");
             }
 
             int cipherLength = fullCipher.Length - AesBlockSizeBytes;
@@ -142,7 +142,7 @@ namespace SECURITY
                     }
                     catch (CryptographicException ex)
                     {
-                        throw new CryptographicException("No fue posible descifrar el valor. Puede haberse alterado o haberse cifrado con otra clave.", ex);
+                        throw new CryptographicException("cifrado_descifrado_fallido", ex);
                     }
                 }
             }

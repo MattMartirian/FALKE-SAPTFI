@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BE;
 using ORM;
 using SERVICES;
@@ -30,7 +31,7 @@ namespace BLL
         {
             actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
 
-            if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
+            if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
 
             return categoriaRepo.ObtenerPorEmpresa(actor.IdEmpresa);
         }
@@ -47,7 +48,7 @@ namespace BLL
             actor.Exigir(Patentes_TLL.GESTIONAR_CATEGORIAS);
 
             if (categoria == null) throw new ArgumentNullException(nameof(categoria));
-            if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
+            if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
 
             categoria.IdEmpresa = actor.IdEmpresa;
 
@@ -63,7 +64,7 @@ namespace BLL
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Categoria, new[] { categoria.IdCategoria.ToString() });
                 gestorIntegridad.ActualizarDVHRegistro(categoriaRepo.TablaEspecifica(categoria.Tipo), new[] { categoria.IdCategoria.ToString() });
 
-                bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, "Alta de la categoría \"" + categoria.NombreCategoria + "\" (" + categoria.Tipo + ").", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, EventosBitacora_TLL.CATEGORIA_ALTA, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(categoria.NombreCategoria));
             });
         }
 
@@ -93,7 +94,7 @@ namespace BLL
 
                 if (tipoAnterior != nuevos.Tipo) gestorIntegridad.GuardarIntegridadTabla(categoriaRepo.TablaEspecifica(tipoAnterior));
 
-                bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, "Modificación de la categoría \"" + nuevos.NombreCategoria + "\".", CriticidadBitacora.Media);
+                bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, EventosBitacora_TLL.CATEGORIA_MODIFICACION, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(nuevos.NombreCategoria));
             });
         }
 
@@ -114,13 +115,13 @@ namespace BLL
                     gestorIntegridad.GuardarIntegridadTabla(TablasBD.Categoria);
                     gestorIntegridad.GuardarIntegridadTabla(categoriaRepo.TablaEspecifica(actual.Tipo));
 
-                    bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, "Baja de la categoría \"" + actual.NombreCategoria + "\".", CriticidadBitacora.Alta);
+                    bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, EventosBitacora_TLL.CATEGORIA_BAJA, CriticidadBitacora.Alta, DetalleBitacora_TLL.Armar(actual.NombreCategoria));
                 });
 
                 return;
             }
 
-            if (!actual.Activa) throw new InvalidOperationException("La categoría ya está desactivada.");
+            if (!actual.Activa) throw new ExcepcionTraducible_TLL("categoria_ya_desactivada");
 
             actual.Activa = false;
 
@@ -129,7 +130,8 @@ namespace BLL
                 categoriaRepo.Modificar(actual);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Categoria, new[] { idCategoria.ToString() });
 
-                bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, "La categoría \"" + actual.NombreCategoria + "\" tiene " + sesiones + " sesión(es) grabada(s): se desactivó en lugar de eliminarla.", CriticidadBitacora.Alta);
+                bitacora.Auditar(actor, "Categorías", actor.IdEmpresa, EventosBitacora_TLL.CATEGORIA_DESACTIVADA, CriticidadBitacora.Alta,
+                        DetalleBitacora_TLL.Armar(actual.NombreCategoria));
             });
         }
 
@@ -137,10 +139,10 @@ namespace BLL
         {
             Categoria_BE categoria = categoriaRepo.ObtenerPorPK(idCategoria);
 
-            if (categoria == null) throw new InvalidOperationException("La categoría no existe.");
+            if (categoria == null) throw new ExcepcionTraducible_TLL("categoria_no_existe");
 
             if (!actor.EsEmergencia && categoria.IdEmpresa != actor.IdEmpresa)
-                throw new UnauthorizedAccessException("La categoría no pertenece a tu empresa.");
+                throw new ExcepcionNoAutorizada_TLL("categoria_otra_empresa");
 
             return categoria;
         }
@@ -151,17 +153,18 @@ namespace BLL
             c.NombreActivo = Recortar(c.NombreActivo);
             c.FlujoEsperado = Recortar(c.FlujoEsperado);
 
-            if (c.NombreCategoria.Length == 0) throw new InvalidOperationException("El nombre de la categoría es obligatorio.");
-            if (c.NombreCategoria.Length > LARGO_NOMBRE) throw new InvalidOperationException("El nombre de la categoría no puede superar los " + LARGO_NOMBRE + " caracteres.");
-            if (Largo(c.NombreActivo) > LARGO_NOMBRE_ACTIVO) throw new InvalidOperationException("El nombre del activo no puede superar los " + LARGO_NOMBRE_ACTIVO + " caracteres.");
-            if (Largo(c.FlujoEsperado) > LARGO_FLUJO) throw new InvalidOperationException("El flujo a analizar no puede superar los " + LARGO_FLUJO + " caracteres.");
+            if (c.NombreCategoria.Length == 0) throw new ExcepcionTraducible_TLL("categoria_nombre_obligatorio");
+            if (c.NombreCategoria.Length > LARGO_NOMBRE) throw new ExcepcionTraducible_TLL("categoria_nombre_largo", LARGO_NOMBRE);
+            if (Largo(c.NombreActivo) > LARGO_NOMBRE_ACTIVO) throw new ExcepcionTraducible_TLL("categoria_activo_largo", LARGO_NOMBRE_ACTIVO);
+            if (Largo(c.FlujoEsperado) > LARGO_FLUJO) throw new ExcepcionTraducible_TLL("categoria_flujo_largo", LARGO_FLUJO);
 
             if (categoriaRepo.ExisteNombre(c.IdEmpresa, c.NombreCategoria, idCategoriaPropia))
-                throw new InvalidOperationException("Ya existe una categoría con ese nombre en tu empresa.");
+                throw new ExcepcionTraducible_TLL("categoria_duplicada");
 
-            string errorEspecifico = c.NormalizarYValidar();
+            ErrorValidacion_BE errorEspecifico = c.NormalizarYValidar();
 
-            if (errorEspecifico != null) throw new InvalidOperationException(errorEspecifico);
+            if (errorEspecifico != null)
+                throw new ExcepcionTraducible_TLL(errorEspecifico.Codigo, errorEspecifico.Parametros.Select(p => p is string ? new ClaveTexto_TLL((string)p) : p).ToArray());
         }
     }
 }

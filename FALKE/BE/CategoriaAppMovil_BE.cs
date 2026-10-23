@@ -28,13 +28,13 @@ namespace BE
             VersionAppMovil = Valor(campos, "versionapp");
         }
 
-        public override string NormalizarYValidar()
+        public override ErrorValidacion_BE NormalizarYValidar()
         {
             VersionAppMovil = Limpiar(VersionAppMovil);
 
-            if (!Enum.IsDefined(typeof(SistemaOperativoMovil), SoAppMovil)) return "El sistema operativo objetivo no es válido.";
+            if (!Enum.IsDefined(typeof(SistemaOperativoMovil), SoAppMovil)) return new ErrorValidacion_BE("categoria_so_invalido");
 
-            return ExcedeLargo(VersionAppMovil, "versión de la aplicación");
+            return ExcedeLargo(VersionAppMovil, "categoria_campo_version_app");
         }
     }
 }

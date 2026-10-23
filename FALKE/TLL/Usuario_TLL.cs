@@ -18,6 +18,12 @@ namespace TLL
         public const string ROL_ADMINISTRADOR = "Administrador";
         public const string ROL_ANALISTA = "Analista";
 
+        private const string ACCION_ALTA_USUARIO = "bitacora_acc_alta_usuario";
+        private const string ACCION_REENVIAR_INVITACION = "bitacora_acc_reenviar_invitacion";
+        private const string ACCION_CAMBIAR_ESTADO = "bitacora_acc_cambiar_estado";
+        private const string ACCION_CAMBIAR_ROL = "bitacora_acc_cambiar_rol";
+        private const string ACCION_MODIFICAR_DATOS = "bitacora_acc_modificar_datos";
+
         private readonly UsuarioRepository usuarioRepo;
         private readonly Cifrador_SECURITY cifrador;
         private readonly GestorIntegridad_SERVICE gestorIntegridad;
@@ -38,12 +44,12 @@ namespace TLL
             actor.Exigir(Patentes_TLL.REGISTRAR_USUARIO);
 
             if (!actor.Puede(Patentes_TLL.CREAR_USUARIO_OTRA_EMPRESA))
-                ExigirAlcance(actor, usuario.IdEmpresa, "dar de alta un usuario");
+                ExigirAlcance(actor, usuario.IdEmpresa, ACCION_ALTA_USUARIO);
 
-            if (!usuarioRepo.ExisteEmpresa(usuario.IdEmpresa)) throw new InvalidOperationException("La empresa indicada no existe.");
+            if (!usuarioRepo.ExisteEmpresa(usuario.IdEmpresa)) throw new ExcepcionTraducible_TLL("usuario_empresa_no_existe");
 
             string rol = usuario.Rol != null ? usuario.Rol.Nombre : null;
-            if (!RolesAsignables(actor).Contains(rol)) throw new InvalidOperationException("Ese rol no se puede asignar desde tu cuenta.");
+            if (!RolesAsignables(actor).Contains(rol)) throw new ExcepcionTraducible_TLL("usuario_rol_no_asignable");
 
             ExigirRolCompatibleConEmpresa(rol, usuario.IdEmpresa);
 
@@ -54,15 +60,14 @@ namespace TLL
         {
             usuario.EmailUsuario = TextoHelper_TLL.NormalizarEmail(usuario.EmailUsuario);
 
-            if (!TextoHelper_TLL.EsEmailValido(usuario.EmailUsuario)) throw new InvalidOperationException("El email no tiene un formato valido.");
+            if (!TextoHelper_TLL.EsEmailValido(usuario.EmailUsuario)) throw new ExcepcionTraducible_TLL("usuario_email_invalido");
 
-            if (usuarioRepo.ObtenerPorEmail(usuario.EmailUsuario) != null) throw new InvalidOperationException("Ya existe un usuario registrado con ese email.");
+            if (usuarioRepo.ObtenerPorEmail(usuario.EmailUsuario) != null) throw new ExcepcionTraducible_TLL("usuario_email_duplicado");
 
             usuario.ContrasenaHashUsuario = cifrador.Encoder(Cifrador_SECURITY.GenerarSecretoUrlSafe());
             usuario.IntentosFallidosUsuario = 0;
             usuario.Estado = EstadoUsuario.Pendiente;
 
-            string rolNombre = usuario.Rol != null ? usuario.Rol.Nombre : "(sin rol)";
 
             string token = Transaccion_ORM.Ejecutar(() =>
             {
@@ -71,8 +76,8 @@ namespace TLL
 
                 string t = tokens.EmitirActivacion(usuario.IdUsuario);
 
-                bitacora.Auditar(idActor > 0 ? idActor : usuario.IdUsuario, "Usuarios", usuario.IdEmpresa,
-                    "Alta de usuario '" + usuario.EmailUsuario + "' (rol " + rolNombre + "); queda pendiente de activación", CriticidadBitacora.Media);
+                bitacora.Auditar(idActor > 0 ? idActor : usuario.IdUsuario, "Usuarios", usuario.IdEmpresa, EventosBitacora_TLL.USUARIO_ALTA, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(usuario.EmailUsuario));
 
                 return t;
             });
@@ -85,22 +90,19 @@ namespace TLL
             actor.Exigir(Patentes_TLL.REGISTRAR_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
-            ExigirAlcance(actor, objetivo.IdEmpresa, "reenviar una invitación");
-            ExigirJerarquia(actor, objetivo, "reenviar la invitación a");
+            ExigirAlcance(actor, objetivo.IdEmpresa, ACCION_REENVIAR_INVITACION);
+            ExigirJerarquia(actor, objetivo, ACCION_REENVIAR_INVITACION);
 
-            if (objetivo.IdUsuario == actor.IdUsuario) throw new InvalidOperationException("No podés reenviarte una invitación a vos mismo.");
+            if (objetivo.IdUsuario == actor.IdUsuario) throw new ExcepcionTraducible_TLL("usuario_no_reenviar_a_si_mismo");
 
-            if (objetivo.Estado != EstadoUsuario.Pendiente) throw new InvalidOperationException("La invitación solo se reenvía a una cuenta que sigue pendiente de activación.");
-
-            string empresa = usuarioRepo.ObtenerNombreEmpresa(objetivo.IdEmpresa);
+            if (objetivo.Estado != EstadoUsuario.Pendiente) throw new ExcepcionTraducible_TLL("usuario_reenvio_solo_pendiente");
 
             string token = Transaccion_ORM.Ejecutar(() =>
             {
                 string t = tokens.EmitirActivacion(objetivo.IdUsuario, false);
 
-                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
-                    "Reenvío de la invitación al usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): se emitió un enlace de activación nuevo",
-                    CriticidadBitacora.Media);
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa, EventosBitacora_TLL.USUARIO_INVITACION_REENVIADA, CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(objetivo.EmailUsuario));
 
                 return t;
             });
@@ -116,7 +118,7 @@ namespace TLL
 
             if (!actor.VeTodasLasEmpresas())
             {
-                if (actor.IdEmpresa <= 0) throw new UnauthorizedAccessException("La sesión no tiene una empresa asociada.");
+                if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
 
                 f.IdEmpresa = actor.IdEmpresa;
             }
@@ -140,27 +142,26 @@ namespace TLL
             actor.Exigir(Patentes_TLL.CAMBIAR_ESTADO_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
-            ExigirAlcance(actor, objetivo.IdEmpresa, "cambiar el estado de un usuario");
-            ExigirJerarquia(actor, objetivo, "cambiar el estado de");
+            ExigirAlcance(actor, objetivo.IdEmpresa, ACCION_CAMBIAR_ESTADO);
+            ExigirJerarquia(actor, objetivo, ACCION_CAMBIAR_ESTADO);
 
-            if (objetivo.IdUsuario == actor.IdUsuario) throw new InvalidOperationException("No podés cambiar tu propio estado.");
-            if (nuevoEstado == objetivo.Estado) throw new InvalidOperationException("El usuario ya está en ese estado.");
+            if (objetivo.IdUsuario == actor.IdUsuario) throw new ExcepcionTraducible_TLL("usuario_no_cambiar_propio_estado");
+            if (nuevoEstado == objetivo.Estado) throw new ExcepcionTraducible_TLL("usuario_ya_en_ese_estado");
 
             if (nuevoEstado != EstadoUsuario.Activo && nuevoEstado != EstadoUsuario.Inactivo && nuevoEstado != EstadoUsuario.BloqueoEstricto)
-                throw new InvalidOperationException("Ese estado no se asigna manualmente.");
+                throw new ExcepcionTraducible_TLL("usuario_estado_no_manual");
 
             if (objetivo.Estado == EstadoUsuario.Pendiente && nuevoEstado == EstadoUsuario.Activo)
-                throw new InvalidOperationException("La cuenta todavía no fue activada: la activa el propio usuario con el enlace que recibió.");
+                throw new ExcepcionTraducible_TLL("usuario_cuenta_no_activada");
 
             string motivoLimpio = ValidarMotivo(actor, objetivo.IdEmpresa, motivo);
 
             if (EsAdministradorActivo(objetivo) && nuevoEstado != EstadoUsuario.Activo) ExigirOtroAdministradorActivo(objetivo);
 
-            string anterior = NombreEstado(objetivo.Estado);
-            string nuevo = NombreEstado(nuevoEstado);
+            string evento = nuevoEstado == EstadoUsuario.Activo ? EventosBitacora_TLL.USUARIO_ACTIVACION
+                : nuevoEstado == EstadoUsuario.Inactivo ? EventosBitacora_TLL.USUARIO_BAJA
+                : EventosBitacora_TLL.USUARIO_BLOQUEO;
             bool restringe = nuevoEstado == EstadoUsuario.Inactivo || nuevoEstado == EstadoUsuario.BloqueoEstricto;
-            string empresa = usuarioRepo.ObtenerNombreEmpresa(objetivo.IdEmpresa);
-
             Transaccion_ORM.Ejecutar(() =>
             {
                 usuarioRepo.ActualizarEstado(objetivo.IdUsuario, (int)nuevoEstado);
@@ -169,9 +170,8 @@ namespace TLL
 
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { objetivo.IdUsuario.ToString() });
 
-                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
-                    "Cambio de estado del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): " + anterior + " → " + nuevo + ConMotivo(motivoLimpio),
-                    restringe ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa, evento, restringe ? CriticidadBitacora.Alta : CriticidadBitacora.Media,
+                    DetalleBitacora_TLL.Armar(objetivo.EmailUsuario, DetalleBitacora_TLL.Motivo(motivoLimpio)));
             });
         }
 
@@ -180,28 +180,26 @@ namespace TLL
             actor.Exigir(Patentes_TLL.CAMBIAR_ROL_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
-            ExigirAlcance(actor, objetivo.IdEmpresa, "cambiar el rol de un usuario");
-            ExigirJerarquia(actor, objetivo, "cambiar el rol de");
+            ExigirAlcance(actor, objetivo.IdEmpresa, ACCION_CAMBIAR_ROL);
+            ExigirJerarquia(actor, objetivo, ACCION_CAMBIAR_ROL);
 
-            if (objetivo.IdUsuario == actor.IdUsuario) throw new InvalidOperationException("No podés cambiar tu propio rol.");
+            if (objetivo.IdUsuario == actor.IdUsuario) throw new ExcepcionTraducible_TLL("usuario_no_cambiar_propio_rol");
 
             nuevoRol = (nuevoRol ?? string.Empty).Trim();
-            if (!RolesAsignables(actor).Contains(nuevoRol)) throw new InvalidOperationException("Ese rol no se puede asignar desde tu cuenta.");
+            if (!RolesAsignables(actor).Contains(nuevoRol)) throw new ExcepcionTraducible_TLL("usuario_rol_no_asignable");
 
-            string anterior = objetivo.Rol != null ? objetivo.Rol.Nombre : "(sin rol)";
-            if (anterior == nuevoRol) throw new InvalidOperationException("El usuario ya tiene ese rol.");
+            string anterior = objetivo.Rol != null ? objetivo.Rol.Nombre : null;
+            if (anterior == nuevoRol) throw new ExcepcionTraducible_TLL("usuario_ya_tiene_rol");
 
             ExigirRolCompatibleConEmpresa(nuevoRol, objetivo.IdEmpresa);
 
             bool tocaOtraEmpresa = actor.IdEmpresa != objetivo.IdEmpresa;
             if ((tocaOtraEmpresa || EsRolDeGestion(nuevoRol)) && !confirmado)
-                throw new InvalidOperationException("Tenés que confirmar el aviso antes de cambiar el rol.");
+                throw new ExcepcionTraducible_TLL("usuario_confirmar_aviso_rol");
 
             string motivoLimpio = ValidarMotivo(actor, objetivo.IdEmpresa, motivo);
 
             if (EsAdministradorActivo(objetivo) && nuevoRol != ROL_ADMINISTRADOR) ExigirOtroAdministradorActivo(objetivo);
-
-            string empresa = usuarioRepo.ObtenerNombreEmpresa(objetivo.IdEmpresa);
 
             Transaccion_ORM.Ejecutar(() =>
             {
@@ -209,9 +207,8 @@ namespace TLL
 
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { objetivo.IdUsuario.ToString() });
 
-                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa,
-                    "Cambio de rol del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresa + "): " + anterior + " → " + nuevoRol + ConMotivo(motivoLimpio),
-                    CriticidadBitacora.Alta);
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa, EventosBitacora_TLL.USUARIO_CAMBIO_ROL, CriticidadBitacora.Alta,
+                    DetalleBitacora_TLL.Armar(objetivo.EmailUsuario, " → ", nuevoRol, DetalleBitacora_TLL.Motivo(motivoLimpio)));
             });
         }
 
@@ -223,7 +220,7 @@ namespace TLL
             {
                 var etiquetas = new Permiso_TLL().ObtenerEtiquetas();
 
-                throw new InvalidOperationException("El rol \"" + Permiso_TLL.Etiqueta(etiquetas, nombreRol) + "\" es un rol de gestión, solo para usuarios de Pattern Blue: no se puede asignar a usuarios de empresas cliente.");
+                throw new ExcepcionTraducible_TLL("usuario_rol_gestion_solo_pb", Permiso_TLL.Etiqueta(etiquetas, nombreRol));
             }
         }
 
@@ -244,8 +241,8 @@ namespace TLL
             nombre = (nombre ?? string.Empty).Trim();
             apellido = (apellido ?? string.Empty).Trim();
 
-            if (nombre.Length == 0 || apellido.Length == 0) throw new InvalidOperationException("El nombre y el apellido son obligatorios.");
-            if (nombre.Length > 100 || apellido.Length > 100) throw new InvalidOperationException("El nombre y el apellido no pueden superar los 100 caracteres.");
+            if (nombre.Length == 0 || apellido.Length == 0) throw new ExcepcionTraducible_TLL("usuario_nombre_apellido_obligatorios");
+            if (nombre.Length > 100 || apellido.Length > 100) throw new ExcepcionTraducible_TLL("usuario_nombre_apellido_largos");
 
             var usuario = ObtenerObjetivo(idUsuario);
 
@@ -254,7 +251,18 @@ namespace TLL
                 usuarioRepo.ActualizarPerfil(usuario.IdUsuario, nombre, apellido, idIdioma);
                 gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
 
-                bitacora.Auditar(usuario.IdUsuario, "Usuarios", usuario.IdEmpresa, "Modificación de los datos personales del usuario '" + usuario.EmailUsuario + "'", CriticidadBitacora.Baja);
+                bitacora.Auditar(usuario.IdUsuario, "Usuarios", usuario.IdEmpresa, EventosBitacora_TLL.USUARIO_MODIFICACION, CriticidadBitacora.Baja, DetalleBitacora_TLL.Armar(usuario.EmailUsuario));
+            });
+        }
+
+        public void CambiarIdioma(int idUsuario, int idIdioma)
+        {
+            var usuario = ObtenerObjetivo(idUsuario);
+
+            Transaccion_ORM.Ejecutar(() =>
+            {
+                usuarioRepo.ActualizarPerfil(usuario.IdUsuario, usuario.NombreUsuario, usuario.ApellidoUsuario, idIdioma);
+                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Usuario, new[] { usuario.IdUsuario.ToString() });
             });
         }
 
@@ -266,8 +274,9 @@ namespace TLL
 
             if (Permiso_TLL.ObtenerPatentes(objetivo.Rol).Where(p => !Patentes_TLL.EsDeInfraestructura(p)).All(propios.Contains)) return;
 
-            bitacora.Registrar(actor.IdUsuario, "Seguridad", "Intento de " + accion + " un usuario con más permisos que el suyo (usuario " + objetivo.IdUsuario + ")", CriticidadBitacora.Alta, objetivo.IdEmpresa);
-            throw new UnauthorizedAccessException("No podés modificar a un usuario con más permisos que vos.");
+            bitacora.Registrar(actor.IdUsuario, "Seguridad", EventosBitacora_TLL.INTENTO_USUARIO_MAS_PERMISOS, CriticidadBitacora.Alta, objetivo.IdEmpresa,
+                DetalleBitacora_TLL.Armar(DetalleBitacora_TLL.Clave(accion), ": ", objetivo.EmailUsuario));
+            throw new ExcepcionNoAutorizada_TLL("usuario_no_modificar_con_mas_permisos");
         }
 
         public string ModificarDatosUsuario(ActorUsuario_TE actor, int idUsuario, string nombre, string apellido, int idIdioma, string email, int idEmpresa, string motivo, bool confirmado)
@@ -275,17 +284,17 @@ namespace TLL
             actor.Exigir(Patentes_TLL.MODIFICAR_USUARIO);
 
             var objetivo = ObtenerObjetivo(idUsuario);
-            ExigirAlcance(actor, objetivo.IdEmpresa, "modificar los datos de un usuario");
+            ExigirAlcance(actor, objetivo.IdEmpresa, ACCION_MODIFICAR_DATOS);
 
-            if (objetivo.IdUsuario == actor.IdUsuario) throw new InvalidOperationException("Tus propios datos se cambian desde «Mi perfil».");
+            if (objetivo.IdUsuario == actor.IdUsuario) throw new ExcepcionTraducible_TLL("usuario_propios_datos_en_perfil");
 
-            ExigirJerarquia(actor, objetivo, "modificar los datos de");
+            ExigirJerarquia(actor, objetivo, ACCION_MODIFICAR_DATOS);
 
             nombre = (nombre ?? string.Empty).Trim();
             apellido = (apellido ?? string.Empty).Trim();
 
-            if (nombre.Length == 0 || apellido.Length == 0) throw new InvalidOperationException("El nombre y el apellido son obligatorios.");
-            if (nombre.Length > 100 || apellido.Length > 100) throw new InvalidOperationException("El nombre y el apellido no pueden superar los 100 caracteres.");
+            if (nombre.Length == 0 || apellido.Length == 0) throw new ExcepcionTraducible_TLL("usuario_nombre_apellido_obligatorios");
+            if (nombre.Length > 100 || apellido.Length > 100) throw new ExcepcionTraducible_TLL("usuario_nombre_apellido_largos");
 
             string emailNuevo = TextoHelper_TLL.NormalizarEmail(email);
             bool cambiaEmail = emailNuevo != objetivo.EmailUsuario;
@@ -296,37 +305,35 @@ namespace TLL
 
             if (cambiaEmail)
             {
-                if (!TextoHelper_TLL.EsEmailValido(emailNuevo)) throw new InvalidOperationException("El email no tiene un formato valido.");
-                if (usuarioRepo.ObtenerPorEmail(emailNuevo) != null) throw new InvalidOperationException("Ya existe un usuario registrado con ese email.");
+                if (!TextoHelper_TLL.EsEmailValido(emailNuevo)) throw new ExcepcionTraducible_TLL("usuario_email_invalido");
+                if (usuarioRepo.ObtenerPorEmail(emailNuevo) != null) throw new ExcepcionTraducible_TLL("usuario_email_duplicado");
             }
 
             if (cambiaEmpresa)
             {
-                if (!usuarioRepo.ExisteEmpresa(idEmpresa)) throw new InvalidOperationException("La empresa indicada no existe.");
+                if (!usuarioRepo.ExisteEmpresa(idEmpresa)) throw new ExcepcionTraducible_TLL("usuario_empresa_no_existe");
 
                 ExigirRolCompatibleConEmpresa(objetivo.Rol != null ? objetivo.Rol.Nombre : null, idEmpresa);
 
                 if (EsAdministradorActivo(objetivo)) ExigirOtroAdministradorActivo(objetivo);
             }
 
-            var cambios = new List<string>();
-            if (nombre != objetivo.NombreUsuario) cambios.Add("nombre: " + objetivo.NombreUsuario + " → " + nombre);
-            if (apellido != objetivo.ApellidoUsuario) cambios.Add("apellido: " + objetivo.ApellidoUsuario + " → " + apellido);
-            if (idIdioma != objetivo.IdIdioma) cambios.Add("idioma: " + objetivo.IdIdioma + " → " + idIdioma);
-            if (cambiaEmail) cambios.Add("correo: " + objetivo.EmailUsuario + " → " + emailNuevo);
+            var cambios = new List<ParteBitacora_TLL>();
+            if (nombre != objetivo.NombreUsuario) cambios.Add(DetalleBitacora_TLL.Clave("bitacora_campo_nombre"));
+            if (apellido != objetivo.ApellidoUsuario) cambios.Add(DetalleBitacora_TLL.Clave("bitacora_campo_apellido"));
+            if (idIdioma != objetivo.IdIdioma) cambios.Add(DetalleBitacora_TLL.Clave("bitacora_campo_idioma"));
+            if (cambiaEmail) cambios.Add(DetalleBitacora_TLL.Clave("bitacora_campo_correo"));
 
-            string empresaAnterior = usuarioRepo.ObtenerNombreEmpresa(objetivo.IdEmpresa);
-            string empresaNueva = cambiaEmpresa ? usuarioRepo.ObtenerNombreEmpresa(idEmpresa) : empresaAnterior;
-            if (cambiaEmpresa) cambios.Add("empresa: " + empresaAnterior + " → " + empresaNueva);
+            if (cambiaEmpresa) cambios.Add(DetalleBitacora_TLL.Clave("bitacora_campo_empresa"));
 
-            if (cambios.Count == 0) throw new InvalidOperationException("No hay cambios para guardar.");
+            if (cambios.Count == 0) throw new ExcepcionTraducible_TLL("comun_sin_cambios");
 
             bool otraEmpresa = actor.IdEmpresa != objetivo.IdEmpresa;
 
-            if ((otraEmpresa || sensible) && !confirmado) throw new InvalidOperationException("Tenés que confirmar el aviso antes de guardar los cambios.");
+            if ((otraEmpresa || sensible) && !confirmado) throw new ExcepcionTraducible_TLL("usuario_confirmar_aviso_guardar");
 
             string motivoLimpio = ValidarMotivo(actor, objetivo.IdEmpresa, motivo);
-            if (sensible && motivoLimpio.Length == 0) throw new InvalidOperationException("Indicá el motivo del cambio de correo o de empresa.");
+            if (sensible && motivoLimpio.Length == 0) throw new ExcepcionTraducible_TLL("usuario_motivo_correo_empresa");
 
             bool reemitirActivacion = cambiaEmail && objetivo.Estado == EstadoUsuario.Pendiente;
 
@@ -337,12 +344,13 @@ namespace TLL
 
                 string token = reemitirActivacion ? tokens.EmitirActivacion(objetivo.IdUsuario) : null;
 
-                string detalle = "Modificación de datos del usuario '" + objetivo.EmailUsuario + "' (empresa " + empresaAnterior + "): " + string.Join("; ", cambios) + ConMotivo(motivoLimpio);
+                string detalle = DetalleBitacora_TLL.Armar(objetivo.EmailUsuario, ": ", DetalleBitacora_TLL.Lista(cambios, ", "), DetalleBitacora_TLL.Motivo(motivoLimpio));
 
-                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa, detalle, sensible ? CriticidadBitacora.Alta : CriticidadBitacora.Media);
+                bitacora.Auditar(actor.IdUsuario, "Usuarios", objetivo.IdEmpresa, EventosBitacora_TLL.USUARIO_MODIFICACION, sensible ? CriticidadBitacora.Alta : CriticidadBitacora.Media, detalle);
 
                 if (cambiaEmpresa)
-                    bitacora.Auditar(actor.IdUsuario, "Usuarios", idEmpresa, "Se incorporó a la empresa el usuario '" + emailNuevo + "' (venía de " + empresaAnterior + ")" + ConMotivo(motivoLimpio), CriticidadBitacora.Alta);
+                    bitacora.Auditar(actor.IdUsuario, "Usuarios", idEmpresa, EventosBitacora_TLL.USUARIO_INCORPORADO, CriticidadBitacora.Alta,
+                        DetalleBitacora_TLL.Armar(emailNuevo, DetalleBitacora_TLL.Motivo(motivoLimpio)));
 
                 return token;
             });
@@ -352,7 +360,7 @@ namespace TLL
         {
             var usuario = usuarioRepo.ObtenerPorPK(idUsuario);
 
-            if (usuario == null) throw new InvalidOperationException("El usuario no existe.");
+            if (usuario == null) throw new ExcepcionTraducible_TLL("usuario_no_existe");
 
             return usuario;
         }
@@ -362,24 +370,20 @@ namespace TLL
             if (actor.VeTodasLasEmpresas()) return;
             if (actor.IdEmpresa > 0 && actor.IdEmpresa == idEmpresaObjetivo) return;
 
-            bitacora.Registrar(actor.IdUsuario, "Seguridad", "Intento de " + accion + " en otra empresa (empresa " + idEmpresaObjetivo + ")", CriticidadBitacora.Alta, idEmpresaObjetivo);
-            throw new UnauthorizedAccessException("No tenés permiso sobre ese usuario.");
+            bitacora.Registrar(actor.IdUsuario, "Seguridad", EventosBitacora_TLL.INTENTO_OTRA_EMPRESA, CriticidadBitacora.Alta, idEmpresaObjetivo,
+                DetalleBitacora_TLL.Armar(DetalleBitacora_TLL.Clave(accion), " (", idEmpresaObjetivo, ")"));
+            throw new ExcepcionNoAutorizada_TLL("usuario_sin_permiso_sobre");
         }
 
         private static string ValidarMotivo(ActorUsuario_TE actor, int idEmpresaObjetivo, string motivo)
         {
             motivo = (motivo ?? string.Empty).Trim();
 
-            if (motivo.Length > 300) throw new InvalidOperationException("El motivo no puede superar los 300 caracteres.");
+            if (motivo.Length > 300) throw new ExcepcionTraducible_TLL("comun_motivo_largo_300");
 
-            if (motivo.Length == 0 && actor.IdEmpresa != idEmpresaObjetivo) throw new InvalidOperationException("Indicá el motivo del cambio.");
+            if (motivo.Length == 0 && actor.IdEmpresa != idEmpresaObjetivo) throw new ExcepcionTraducible_TLL("comun_motivo_obligatorio");
 
             return motivo;
-        }
-
-        private static string ConMotivo(string motivo)
-        {
-            return motivo.Length == 0 ? string.Empty : ". Motivo: " + motivo;
         }
 
         private static bool EsAdministradorActivo(Usuario_TE usuario)
@@ -390,20 +394,7 @@ namespace TLL
         private void ExigirOtroAdministradorActivo(Usuario_TE objetivo)
         {
             if (usuarioRepo.ContarAdministradoresActivos(objetivo.IdEmpresa, ROL_ADMINISTRADOR, objetivo.IdUsuario) == 0)
-                throw new InvalidOperationException("No se puede: la empresa quedaría sin un administrador activo.");
-        }
-
-        private static string NombreEstado(EstadoUsuario estado)
-        {
-            switch (estado)
-            {
-                case EstadoUsuario.Pendiente: return "Pendiente de activación";
-                case EstadoUsuario.Activo: return "Activo";
-                case EstadoUsuario.BloqueadoPorIntentos: return "Bloqueado";
-                case EstadoUsuario.Inactivo: return "Inactivo";
-                case EstadoUsuario.BloqueoEstricto: return "Bloqueo estricto";
-                default: return estado.ToString();
-            }
+                throw new ExcepcionTraducible_TLL("usuario_empresa_sin_admin");
         }
 
         public Usuario_TE ObtenerPorId(int idUsuario) => usuarioRepo.ObtenerPorPK(idUsuario);

@@ -15,17 +15,18 @@ namespace ORM
         {
             string sql = @"
                 INSERT INTO BitacoraTable
-                    (id_usuario, id_empresa, modulo_bitacora, descripcion_bitacora, criticidad_bitacora, fecha_hora_bitacora)
+                    (id_usuario, id_empresa, modulo_bitacora, descripcion_bitacora, detalle_bitacora, criticidad_bitacora, fecha_hora_bitacora)
                 VALUES
                     (@idUsuario,
                      COALESCE(@idEmpresa, (SELECT id_empresa FROM UsuarioTable WHERE id_usuario = @idUsuario)),
-                     @modulo, @descripcion, @criticidad, @fecha)";
+                     @modulo, @descripcion, @detalle, @criticidad, @fecha)";
 
             Gestor.EjecutarNonQuery(sql,
                 new SqlParameter("@idUsuario", b.IdUsuario > 0 ? (object)b.IdUsuario : DBNull.Value),
                 new SqlParameter("@idEmpresa", b.IdEmpresa.HasValue ? (object)b.IdEmpresa.Value : DBNull.Value),
                 new SqlParameter("@modulo", ValorONulo(b.ModuloBitacora)),
                 new SqlParameter("@descripcion", ValorONulo(b.DescripcionBitacora)),
+                new SqlParameter("@detalle", ValorONulo(b.DetalleBitacora)),
                 new SqlParameter("@criticidad", (int)b.CriticidadBitacora),
                 new SqlParameter("@fecha", b.FechaHoraBitacora)
             );
@@ -34,7 +35,7 @@ namespace ORM
         public override void Modificar(Bitacora_TE b)
         {
             //TODO: Traducir.
-            throw new NotSupportedException("La bitácora es de solo lectura: no se permite modificar eventos ya registrados.");
+            throw new NotSupportedException("bitacora_solo_lectura");
         }
 
         public override Bitacora_TE ObtenerPorPK(int pk)
@@ -84,13 +85,13 @@ namespace ORM
 
         // Con ocultarProveedor el actor de Pattern Blue sale como la etiqueta, sin nombre: se resuelve en la consulta, no en la pantalla.
         // Devuelve todo lo que el alcance permite ver; el filtrado y la paginación los hace la capa de negocio.
-        public List<BitacoraVista_TE> ObtenerVista(int? idEmpresa, bool ocultarProveedor, int idEmpresaProveedor, string rolProveedor, string etiquetaProveedor)
+        public List<BitacoraVista_TE> ObtenerVista(int? idEmpresa, bool ocultarProveedor, int idEmpresaProveedor, string rolProveedor, string etiquetaProveedor, string actorSinUsuario)
         {
             var dt = Gestor.EjecutarQuery(@"
-                SELECT b.id_evento_bitacora, b.fecha_hora_bitacora, b.modulo_bitacora, b.descripcion_bitacora,
+                SELECT b.id_evento_bitacora, b.fecha_hora_bitacora, b.modulo_bitacora, b.descripcion_bitacora, b.detalle_bitacora,
                        b.criticidad_bitacora, b.id_empresa, e.nombre_empresa,
                        CASE
-                           WHEN b.id_usuario IS NULL THEN N'Sistema'
+                           WHEN b.id_usuario IS NULL THEN @sinUsuario
                            WHEN @ocultar = 1 AND (u.rol_permiso = @rolProveedor OR u.id_empresa = @empresaProveedor) THEN @etiqueta
                            ELSE LTRIM(RTRIM(ISNULL(u.nombre_usuario, N'') + N' ' + ISNULL(u.apellido_usuario, N'')))
                        END AS actor,
@@ -108,7 +109,8 @@ namespace ORM
                 new SqlParameter("@ocultar", ocultarProveedor ? 1 : 0),
                 new SqlParameter("@empresaProveedor", idEmpresaProveedor),
                 new SqlParameter("@rolProveedor", rolProveedor),
-                new SqlParameter("@etiqueta", etiquetaProveedor));
+                new SqlParameter("@etiqueta", etiquetaProveedor),
+                new SqlParameter("@sinUsuario", actorSinUsuario));
 
             var resultado = new List<BitacoraVista_TE>();
 
@@ -124,6 +126,7 @@ namespace ORM
                     NombreEmpresa = Valor<string>(dr, "nombre_empresa"),
                     ModuloBitacora = Valor<string>(dr, "modulo_bitacora"),
                     DescripcionBitacora = Valor<string>(dr, "descripcion_bitacora"),
+                    DetalleBitacora = Valor<string>(dr, "detalle_bitacora"),
                     CriticidadBitacora = Valor<CriticidadBitacora>(dr, "criticidad_bitacora")
                 });
             }
@@ -142,6 +145,7 @@ namespace ORM
                 IdEmpresa = Valor<int?>(dr, "id_empresa"),
                 ModuloBitacora = Valor<string>(dr, "modulo_bitacora"),
                 DescripcionBitacora = Valor<string>(dr, "descripcion_bitacora"),
+                DetalleBitacora = Valor<string>(dr, "detalle_bitacora"),
                 CriticidadBitacora = Valor<CriticidadBitacora>(dr, "criticidad_bitacora"),
                 FechaHoraBitacora = Valor<DateTime>(dr, "fecha_hora_bitacora")
             };

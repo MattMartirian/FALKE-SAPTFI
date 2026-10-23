@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="SinPermiso.aspx.cs" Inherits="GUI.SinPermiso" Title="Sin permiso" %>
+<%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="SinPermiso.aspx.cs" Inherits="GUI.SinPermiso" Title="[[sinpermiso_sin_permiso]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
     <style>
@@ -39,24 +39,22 @@
             <svg width="30" height="30"><use href="#i-candado" /></svg>
         </div>
 
-        <h1 data-i18n="sinPermiso.titulo">No tienes permiso para entrar aquí</h1>
+        <h1 data-i18n="sinPermiso.titulo">[[sinpermiso_no_tienes_permiso_para_entrar_aqui]]</h1>
 
         <p class="texto-suave" data-i18n="sinPermiso.texto">
-            Tu rol no incluye esta sección. Si necesitas acceder, solicítalo al administrador
-            de tu empresa: es quien puede solicitar el cambio de permisos.
+            [[sinpermiso_tu_rol_no_incluye_esta_seccion]]
         </p>
 
         <div class="aviso aviso-info" style="text-align:left">
             <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
             <p class="sin-margen" data-i18n="sinPermiso.registro">
-                El intento de acceso queda registrado en la bitácora. No es un problema:
-                se anota para poder revisar después quién necesita qué permisos.
+                [[sinpermiso_el_intento_de_acceso_queda_registrado]]
             </p>
         </div>
 
         <div class="acciones">
-            <a class="btn btn-primario" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="sinPermiso.volver">Volver al panel</a>
-            <a class="btn btn-secundario" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">Cerrar sesión</a>
+            <a class="btn btn-primario" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="sinPermiso.volver">[[sinpermiso_volver_al_panel]]</a>
+            <a class="btn btn-secundario" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">[[app_cerrar_sesion]]</a>
         </div>
 
     </section>

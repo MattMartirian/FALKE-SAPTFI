@@ -28,7 +28,7 @@ namespace ORM
 
         public override void Modificar(Respaldo_TE entidad)
         {
-            throw new NotSupportedException("Un respaldo no se modifica: es el registro de una copia ya hecha.");
+            throw new NotSupportedException("respaldo_inmutable");
         }
 
         public override Respaldo_TE ObtenerPorPK(int pk)
