@@ -142,23 +142,44 @@ namespace GUI
             base.OnUnload(e);
         }
 
+        // aca se traducen las cosas en una pagina X
         protected override void Render(HtmlTextWriter writer)
         {
-            var html = new StringWriter();
+            // la pagina se dibuja primero en un texto en memoria para poder reemplazar los textos
+            StringWriter textoPagina = new StringWriter();
+            HtmlTextWriter escritorTemporal = new HtmlTextWriter(textoPagina);
 
-            using (var intermedio = new HtmlTextWriter(html))
-            {
-                base.Render(intermedio);
-            }
+            base.Render(escritorTemporal);
+            escritorTemporal.Flush();
 
-            writer.Write(Marcador.Replace(html.ToString(), Reemplazar));
+            string html = textoPagina.ToString();
+
+            // por cada [[clave]] o [[js:clave]] se llama a reemplazar
+            html = Marcador.Replace(html, Reemplazar);
+
+            writer.Write(html);
         }
 
         private string Reemplazar(Match marcador)
         {
-            string texto = Traductor_TLL.Traducir(marcador.Groups[2].Value, codigo);
+            // grupo 2: la clave a traducir          grupo 1: el prefijo "js:" por [[js:clave]]
+            string clave = marcador.Groups[2].Value;
+            bool esParaJavaScript = marcador.Groups[1].Success;
 
-            return marcador.Groups[1].Success ? HttpUtility.JavaScriptStringEncode(texto).Replace("\\'", "\\u0027") : HttpUtility.HtmlEncode(texto);
+            string texto = Traductor_TLL.Traducir(clave, codigo);
+
+            if (esParaJavaScript)
+            {
+                // para textos dentro de un <script> ignora comillas, barras y saltos de linea para que el texto no rompa el js
+                texto = HttpUtility.JavaScriptStringEncode(texto);
+
+                // elimina las comillas simples '
+                texto = texto.Replace("\\'", "\\u0027");
+                return texto;
+            }
+
+            // convierte <, >, & y comillas en entidades para que el texto no se interprete como codigo
+            return HttpUtility.HtmlEncode(texto);
         }
     }
 }

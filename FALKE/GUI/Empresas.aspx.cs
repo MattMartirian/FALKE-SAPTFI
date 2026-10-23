@@ -50,7 +50,6 @@ namespace GUI
             {
                 List<Empresa_BE> empresas = new Empresa_BLL().ObtenerCartera(actor);
 
-                // Las dadas de baja ya no son clientes: no cuentan en los totales de arriba, pero el listado las incluye en «Todas».
                 var clientes = empresas.Where(x => x.Estado != EstadoEmpresa.Deshabilitada).ToList();
 
                 litTotal.Text = clientes.Count.ToString();

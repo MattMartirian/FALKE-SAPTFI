@@ -70,8 +70,7 @@ namespace GUI
 
             if (idioma == null) return;
 
-            if (SesionActual_GUI.HayUsuario && !SesionActual_GUI.EsEmergencia)
-                new Usuario_TLL().CambiarIdioma(SesionActual_GUI.IdUsuario, idioma.IdIdioma);
+            if (SesionActual_GUI.HayUsuario && !SesionActual_GUI.EsEmergencia) new Usuario_TLL().CambiarIdioma(SesionActual_GUI.IdUsuario, idioma.IdIdioma);
 
             if (SesionActual_GUI.HayUsuario && SesionActual_GUI.EsEmergencia) GuardarCookie(COOKIE_EMERGENCIA, idioma.CodigoIdioma);
 

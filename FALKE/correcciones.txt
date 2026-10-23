@@ -1,1 +1,0 @@
-- En el diagrama de paquetes, la DAL apunta a la ORM, deberia ser al revés.
