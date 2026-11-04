@@ -85,6 +85,10 @@
                             <svg aria-hidden="true"><use href="#i-video" /></svg>
                             <span class="sidebar-texto" data-i18n="menu.nuevaGrabacion">[[app_nueva_grabacion]]</span>
                         </a>
+                        <a id="navDescargas" runat="server" class="sidebar-item" href="~/Descargas.aspx">
+                            <svg aria-hidden="true"><use href="#i-descarga" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.descargas">[[app_instalacion]]</span>
+                        </a>
                         <a id="navCategorias" runat="server" class="sidebar-item" href="~/Categorias.aspx">
                             <svg aria-hidden="true"><use href="#i-carpeta" /></svg>
                             <span class="sidebar-texto" data-i18n="menu.categorias">[[app_categorias]]</span>

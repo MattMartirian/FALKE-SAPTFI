@@ -4051,4 +4051,91 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="bitacora_ev_empresa_baja" xml:space="preserve">
     <value>Baja de empresa</value>
   </data>
+  <data name="app_instalacion" xml:space="preserve">
+    <value>Instalación</value>
+  </data>
+  <data name="descargas_titulo" xml:space="preserve">
+    <value>Primera vez en esta PC</value>
+  </data>
+  <data name="descargas_primera_vez" xml:space="preserve">
+    <value>Si es tu primera vez, descarga esto</value>
+  </data>
+  <data name="descargas_explicacion" xml:space="preserve">
+    <value>Para registrar la mirada, esta PC necesita el software del eye tracker y el agente de Falke. Se instalan una sola vez.</value>
+  </data>
+  <data name="descargas_descargar_todo" xml:space="preserve">
+    <value>Descargar todo (.zip)</value>
+  </data>
+  <data name="descargas_descargar" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="descargas_disponible" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="descargas_no_disponible" xml:space="preserve">
+    <value>No disponible en el servidor</value>
+  </data>
+  <data name="descargas_sitio_oficial" xml:space="preserve">
+    <value>Sitio oficial</value>
+  </data>
+  <data name="descargas_sin_instaladores" xml:space="preserve">
+    <value>El servidor no tiene ningún instalador cargado.</value>
+  </data>
+  <data name="descargas_tobii_titulo" xml:space="preserve">
+    <value>Tobii Experience</value>
+  </data>
+  <data name="descargas_tobii_descripcion" xml:space="preserve">
+    <value>Controlador y servicios del Tobii Eye Tracker 5. Sin esto la PC no detecta el dispositivo.</value>
+  </data>
+  <data name="descargas_agente_titulo" xml:space="preserve">
+    <value>Agente de mirada de Falke</value>
+  </data>
+  <data name="descargas_agente_descripcion" xml:space="preserve">
+    <value>Programa que lee la mirada del Tobii y la envía a esta página. Se ejecuta en la PC donde se graba.</value>
+  </data>
+  <data name="descargas_despues_de_descargar" xml:space="preserve">
+    <value>Después de descargar</value>
+  </data>
+  <data name="descargas_paso_1" xml:space="preserve">
+    <value>Instala Tobii Experience y reinicia la PC si te lo pide.</value>
+  </data>
+  <data name="descargas_paso_2" xml:space="preserve">
+    <value>Conecta el Tobii Eye Tracker 5 y completa su calibración.</value>
+  </data>
+  <data name="descargas_paso_3" xml:space="preserve">
+    <value>Descomprime AgenteMirada.zip en una carpeta y ejecuta AgenteMirada.exe.</value>
+  </data>
+  <data name="descargas_paso_4" xml:space="preserve">
+    <value>Deja el agente abierto y entra a Nueva grabación.</value>
+  </data>
+  <data name="descargas_requisitos" xml:space="preserve">
+    <value>Requiere Windows 10 u 11 de 64 bits y el Tobii Eye Tracker 5 conectado por USB.</value>
+  </data>
+  <data name="idioma_nombre_invalido" xml:space="preserve">
+    <value>El nombre del idioma no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="idioma_traduccion_base_obligatoria" xml:space="preserve">
+    <value>El texto del idioma base no puede quedar vacío: es el que se muestra cuando falta una traducción.</value>
+  </data>
+  <data name="idiomas_desde_cero" xml:space="preserve">
+    <value>Otro idioma (crear desde cero)</value>
+  </data>
+  <data name="idiomas_codigo" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="idiomas_nombre" xml:space="preserve">
+    <value>Nombre del idioma</value>
+  </data>
+  <data name="idiomas_agregar_ayuda" xml:space="preserve">
+    <value>Si elegís un paquete incluido se cargan sus traducciones. Si lo creás desde cero queda sin textos: cada uno que falte se muestra en el idioma base.</value>
+  </data>
+  <data name="idiomas_fallback_ayuda" xml:space="preserve">
+    <value>Si un texto no está traducido en este idioma se muestra el del idioma base; si tampoco existe ahí, se muestra la clave.</value>
+  </data>
+  <data name="descargas_bienvenida_titulo" xml:space="preserve">
+    <value>Prepara esta PC antes de tu primera grabación</value>
+  </data>
+  <data name="descargas_bienvenida_mensaje" xml:space="preserve">
+    <value>Para registrar la mirada, esta PC necesita dos programas: el controlador del Tobii Eye Tracker 5 y el agente de Falke. Descárgalos juntos en un solo archivo; se instalan una única vez.</value>
+  </data>
 </root>

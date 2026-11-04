@@ -12,14 +12,48 @@ namespace TLL
         public const string CODIGO_BASE = "en";
         public const string CODIGO_DIAGNOSTICO = "es";
 
+        private static readonly TimeSpan VIGENCIA = TimeSpan.FromSeconds(30);
+
         private static readonly object bloqueo = new object();
+        private static string codigoBase;
+        private static DateTime baseLeidaEn;
+        private static readonly Dictionary<string, DateTime> cargadosEn = new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, Dictionary<string, string>> catalogos = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
+
+        public static string CodigoBase
+        {
+            get
+            {
+                lock (bloqueo)
+                {
+                    if (codigoBase == null || DateTime.UtcNow - baseLeidaEn > VIGENCIA)
+                    {
+                        string leido = LeerCodigoBase();
+
+                        if (leido != null) codigoBase = leido;
+
+                        baseLeidaEn = DateTime.UtcNow;
+                    }
+
+                    return codigoBase ?? CODIGO_BASE;
+                }
+            }
+        }
 
         public static string Traducir(string clave, string codigoIdioma, params object[] parametros)
         {
             if (string.IsNullOrEmpty(clave)) return string.Empty;
 
-            string texto = Buscar(clave, codigoIdioma) ?? Buscar(clave, CODIGO_BASE) ?? clave;
+            string codigoUsado = codigoIdioma;
+            string texto = Buscar(clave, codigoIdioma);
+
+            if (texto == null)
+            {
+                codigoUsado = CodigoBase;
+                texto = Buscar(clave, codigoUsado);
+            }
+
+            if (texto == null) return clave;
 
             if (parametros == null || parametros.Length == 0) return texto;
 
@@ -27,7 +61,7 @@ namespace TLL
 
             try
             {
-                return string.Format(Cultura(codigoIdioma), texto, resueltos);
+                return string.Format(Cultura(codigoUsado), texto, resueltos);
             }
             catch (FormatException)
             {
@@ -37,7 +71,7 @@ namespace TLL
 
         public static bool Existe(string clave)
         {
-            return !string.IsNullOrEmpty(clave) && Buscar(clave, CODIGO_BASE) != null;
+            return !string.IsNullOrEmpty(clave) && Buscar(clave, CodigoBase) != null;
         }
 
         public static CultureInfo Cultura(string codigoIdioma)
@@ -62,6 +96,8 @@ namespace TLL
             lock (bloqueo)
             {
                 catalogos.Clear();
+                cargadosEn.Clear();
+                codigoBase = null;
             }
         }
 
@@ -79,33 +115,55 @@ namespace TLL
             {
                 Dictionary<string, string> catalogo;
 
-                if (!catalogos.TryGetValue(codigoIdioma, out catalogo))
-                {
-                    catalogo = Cargar(codigoIdioma);
-                    catalogos[codigoIdioma] = catalogo;
-                }
+                DateTime cargadoEn;
+                bool existe = catalogos.TryGetValue(codigoIdioma, out catalogo);
 
-                return catalogo;
+                if (existe && cargadosEn.TryGetValue(codigoIdioma, out cargadoEn) && DateTime.UtcNow - cargadoEn <= VIGENCIA) return catalogo;
+
+                bool leido;
+                Dictionary<string, string> nuevo = Cargar(codigoIdioma, out leido);
+
+                if (!leido) return existe ? catalogo : nuevo;
+
+                catalogos[codigoIdioma] = nuevo;
+                cargadosEn[codigoIdioma] = DateTime.UtcNow;
+
+                return nuevo;
             }
         }
 
-        private static Dictionary<string, string> Cargar(string codigoIdioma)
+        private static Dictionary<string, string> Cargar(string codigoIdioma, out bool leido)
         {
+            var vacio = new Dictionary<string, string>(StringComparer.Ordinal);
+
             try
             {
                 Idioma_TE idioma = new IdiomaRepository().ObtenerPorCodigo(codigoIdioma);
 
-                if (idioma != null)
-                {
-                    Dictionary<string, string> textos = new TraduccionRepository().ObtenerTextos(idioma.IdIdioma);
-                    if (textos.Count > 0) return textos;
-                }
+                leido = true;
+
+                return idioma == null ? vacio : new TraduccionRepository().ObtenerTextos(idioma.IdIdioma);
             }
             catch (Exception)
             {
-            }
+                leido = false;
 
-            return new TraductorResx_TLL().ObtenerTraducciones(codigoIdioma);
+                return vacio;
+            }
+        }
+
+        private static string LeerCodigoBase()
+        {
+            try
+            {
+                Idioma_TE idiomaBase = new IdiomaRepository().ObtenerBase();
+
+                return idiomaBase == null ? null : idiomaBase.CodigoIdioma;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

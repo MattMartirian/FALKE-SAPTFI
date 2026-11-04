@@ -150,6 +150,7 @@
             <div>
                 <h2>[[idiomas_traducciones_de]] <asp:Literal ID="litIdiomaNombre" runat="server" /></h2>
                 <p class="texto-suave sin-margen">[[idiomas_cada_texto]]</p>
+                <p class="texto-suave sin-margen">[[idiomas_fallback_ayuda]]</p>
             </div>
         </div>
 
@@ -230,26 +231,25 @@
             <div class="modal-cabecera">
                 <div>
                     <h2 id="agregarTitulo">[[idiomas_agregar_un_idioma]]</h2>
-                    <p class="subtitulo sin-margen">[[idiomas_se_agrega_completo]]</p>
+                    <p class="subtitulo sin-margen">[[idiomas_agregar_ayuda]]</p>
                 </div>
                 <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
                 </button>
             </div>
             <div class="modal-cuerpo">
-                <asp:PlaceHolder ID="phDisponibles" runat="server">
-                    <div class="campo mb-0">
-                        <label for="ddlDisponibles">[[idiomas_col_idioma]]</label>
-                        <asp:DropDownList ID="ddlDisponibles" runat="server" CssClass="entrada" ClientIDMode="Static" data-foco-inicial="si" />
-                        <p class="ayuda texto-suave">[[idiomas_disponibles_ayuda]]</p>
-                    </div>
-                </asp:PlaceHolder>
-                <asp:PlaceHolder ID="phSinDisponibles" runat="server" Visible="false">
-                    <div class="aviso aviso-info">
-                        <svg width="20" height="20" aria-hidden="true"><use href="#i-info" /></svg>
-                        <p class="sin-margen">[[idiomas_sin_disponibles]]</p>
-                    </div>
-                </asp:PlaceHolder>
+                <div class="campo">
+                    <label for="ddlDisponibles">[[idiomas_col_idioma]]</label>
+                    <asp:DropDownList ID="ddlDisponibles" runat="server" CssClass="entrada" ClientIDMode="Static" data-foco-inicial="si" />
+                </div>
+                <div class="campo">
+                    <label for="txtCodigo">[[idiomas_codigo]]</label>
+                    <asp:TextBox ID="txtCodigo" runat="server" CssClass="entrada" MaxLength="12" ClientIDMode="Static" placeholder="it" />
+                </div>
+                <div class="campo mb-0">
+                    <label for="txtNombre">[[idiomas_nombre]]</label>
+                    <asp:TextBox ID="txtNombre" runat="server" CssClass="entrada" MaxLength="60" ClientIDMode="Static" placeholder="Italiano" />
+                </div>
             </div>
             <div class="modal-pie">
                 <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
@@ -328,6 +328,17 @@
             "use strict";
 
             function porId(id) { return document.getElementById(id); }
+
+            var lista = porId("ddlDisponibles");
+
+            if (lista) {
+                lista.addEventListener("change", function () {
+                    var opcion = lista.options[lista.selectedIndex];
+
+                    porId("txtCodigo").value = opcion.value;
+                    porId("txtNombre").value = opcion.getAttribute("data-nombre") || "";
+                });
+            }
 
             document.addEventListener("click", function (e) {
                 var boton = e.target.closest ? e.target.closest("[data-abre-modal]") : null;

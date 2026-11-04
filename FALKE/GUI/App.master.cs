@@ -59,6 +59,7 @@ namespace GUI
             navVisualizaciones.Visible = operaAnalisis;
             navNuevaGrabacion.Visible = operaAnalisis;
             navCategorias.Visible = operaAnalisis;
+            navDescargas.Visible = operaAnalisis;
             navAnalisisMultiple.Visible = operaAnalisis;
 
             navUsuarios.Visible = Puede(Patentes_TLL.VER_USUARIOS);
@@ -92,6 +93,7 @@ namespace GUI
             Marcar(navVisualizaciones, archivo, "Visualizaciones.aspx");
             Marcar(navNuevaGrabacion, archivo, "NuevaGrabacion.aspx");
             Marcar(navCategorias, archivo, "Categorias.aspx");
+            Marcar(navDescargas, archivo, "Descargas.aspx");
             Marcar(navAnalisisMultiple, archivo, "AnalisisMultiple.aspx");
             Marcar(navUsuarios, archivo, "Usuarios.aspx");
             Marcar(navMiEmpresa, archivo, "MiEmpresa.aspx");

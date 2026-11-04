@@ -11,6 +11,7 @@ namespace TLL
     public class Idioma_TLL
     {
         public const string MODULO = "Idiomas";
+        private const int LARGO_MAXIMO_NOMBRE = 60;
 
         private static readonly Regex formatoCodigo = new Regex(@"^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})?$", RegexOptions.Compiled);
         private static readonly Regex marcadores = new Regex(@"\{\d+\}", RegexOptions.Compiled);
@@ -38,6 +39,11 @@ namespace TLL
         public Idioma_TE ObtenerPorCodigo(string codigo)
         {
             return idiomaRepo.ObtenerPorCodigo(NormalizarCodigo(codigo));
+        }
+
+        public Idioma_TE ObtenerBase()
+        {
+            return idiomaRepo.ObtenerBase();
         }
 
         public Idioma_TE ObtenerPorId(int idIdioma)
@@ -70,18 +76,24 @@ namespace TLL
 
         public Idioma_TE Agregar(ActorUsuario_TE actor, string codigo)
         {
+            return Agregar(actor, codigo, null);
+        }
+
+        public Idioma_TE Agregar(ActorUsuario_TE actor, string codigo, string nombre)
+        {
             actor.Exigir(Patentes_TLL.GESTIONAR_IDIOMAS);
 
             codigo = NormalizarCodigo(codigo);
+            nombre = string.IsNullOrWhiteSpace(nombre) ? NombreNativo(codigo) : nombre.Trim();
 
             if (!formatoCodigo.IsMatch(codigo)) throw new ExcepcionTraducible_TLL("idioma_codigo_invalido");
+            if (nombre.Length > LARGO_MAXIMO_NOMBRE) throw new ExcepcionTraducible_TLL("idioma_nombre_invalido", LARGO_MAXIMO_NOMBRE);
             if (idiomaRepo.ExisteCodigo(codigo)) throw new ExcepcionTraducible_TLL("idioma_ya_existe", codigo);
-            if (!traductor.Disponible(codigo)) throw new ExcepcionTraducible_TLL("idioma_no_disponible", codigo);
 
             var idioma = new Idioma_TE
             {
                 CodigoIdioma = codigo,
-                NombreIdioma = NombreNativo(codigo),
+                NombreIdioma = nombre,
                 Activo = true,
                 EsBase = false
             };
@@ -97,38 +109,6 @@ namespace TLL
             Traductor_TLL.Invalidar();
 
             return idiomaRepo.ObtenerPorPK(idioma.IdIdioma);
-        }
-
-        public int Sincronizar(ActorUsuario_TE actor, int idIdioma)
-        {
-            actor.Exigir(Patentes_TLL.GESTIONAR_IDIOMAS);
-
-            Idioma_TE idioma = Obtener(idIdioma);
-
-            if (!traductor.Disponible(idioma.CodigoIdioma)) throw new ExcepcionTraducible_TLL("idioma_no_disponible", idioma.CodigoIdioma);
-
-            List<Traduccion_TE> nuevas = Faltantes(idioma);
-
-            if (nuevas.Count == 0) return 0;
-
-            Transaccion_ORM.Ejecutar(() =>
-            {
-                traduccionRepo.AltaMasiva(nuevas);
-
-                bitacora.Auditar(actor, MODULO, null, EventosBitacora_TLL.IDIOMA_SINCRONIZACION, CriticidadBitacora.Baja,
-                    DetalleBitacora_TLL.Armar(idioma.NombreIdioma));
-            });
-
-            Traductor_TLL.Invalidar();
-
-            return nuevas.Count;
-        }
-
-        private List<Traduccion_TE> Faltantes(Idioma_TE idioma)
-        {
-            HashSet<string> guardadas = new HashSet<string>(traduccionRepo.ObtenerPorIdioma(idioma.IdIdioma).Select(t => t.CodigoClave), StringComparer.Ordinal);
-
-            return Armar(idioma.IdIdioma, idioma.CodigoIdioma).Where(t => !guardadas.Contains(t.CodigoClave)).ToList();
         }
 
         public void CambiarEstado(ActorUsuario_TE actor, int idIdioma, bool activo)
@@ -179,9 +159,24 @@ namespace TLL
         {
             actor.Exigir(Patentes_TLL.GESTIONAR_IDIOMAS);
 
-            Obtener(idIdioma);
+            Idioma_TE idioma = Obtener(idIdioma);
+            Idioma_TE idiomaBase = idiomaRepo.ObtenerBase();
 
-            return soloPendientes ? traduccionRepo.ObtenerPendientes(idIdioma) : traduccionRepo.ObtenerPorIdioma(idIdioma);
+            var porClave = traduccionRepo.ObtenerPorIdioma(idIdioma).ToDictionary(x => x.CodigoClave, StringComparer.Ordinal);
+
+            if (idiomaBase != null && idiomaBase.IdIdioma != idioma.IdIdioma)
+            {
+                foreach (Traduccion_TE deLaBase in traduccionRepo.ObtenerPorIdioma(idiomaBase.IdIdioma))
+                {
+                    if (!porClave.ContainsKey(deLaBase.CodigoClave)) porClave[deLaBase.CodigoClave] = new Traduccion_TE(deLaBase.CodigoClave, idIdioma, null, true, OrigenTraduccion.Manual);
+                }
+            }
+
+            IEnumerable<Traduccion_TE> lista = porClave.Values;
+
+            if (soloPendientes) lista = lista.Where(x => x.Pendiente);
+
+            return lista.OrderBy(x => x.CodigoClave, StringComparer.Ordinal).ToList();
         }
 
         public void GuardarTraduccion(ActorUsuario_TE actor, int idIdioma, string codigoClave, string texto)
@@ -190,10 +185,20 @@ namespace TLL
 
             Idioma_TE idioma = Obtener(idIdioma);
             Traduccion_TE actual = traduccionRepo.ObtenerPorPK(new TraduccionClave_TE(codigoClave, idIdioma));
+            bool esNueva = actual == null;
 
-            if (actual == null) throw new ExcepcionTraducible_TLL("traduccion_no_existe");
+            if (esNueva)
+            {
+                Idioma_TE idiomaBase = idiomaRepo.ObtenerBase();
+
+                if (idiomaBase == null || !traduccionRepo.Existe(codigoClave, idiomaBase.IdIdioma)) throw new ExcepcionTraducible_TLL("traduccion_no_existe");
+
+                actual = new Traduccion_TE { CodigoClave = codigoClave, IdIdioma = idIdioma };
+            }
 
             texto = string.IsNullOrWhiteSpace(texto) ? null : texto.Trim();
+
+            if (texto == null && idioma.EsBase) throw new ExcepcionTraducible_TLL("idioma_traduccion_base_obligatoria");
 
             if (texto != null) ExigirMarcadores(codigoClave, texto);
 
@@ -203,7 +208,8 @@ namespace TLL
 
             Transaccion_ORM.Ejecutar(() =>
             {
-                traduccionRepo.Modificar(actual);
+                if (esNueva) traduccionRepo.Alta(actual);
+                else traduccionRepo.Modificar(actual);
 
                 bitacora.Auditar(actor, MODULO, null, EventosBitacora_TLL.IDIOMA_TRADUCCION, CriticidadBitacora.Baja, DetalleBitacora_TLL.Armar(codigoClave, " (", idioma.NombreIdioma, ")"));
             });
@@ -231,11 +237,21 @@ namespace TLL
 
         private List<Traduccion_TE> Armar(int idIdioma, string codigoIdioma)
         {
-            Dictionary<string, string> baseTextos = traductor.ObtenerTraducciones(Traductor_TLL.CODIGO_BASE);
+            Idioma_TE idiomaBase = idiomaRepo.ObtenerBase();
+            var claves = new HashSet<string>(StringComparer.Ordinal);
+
+            if (idiomaBase != null)
+            {
+                foreach (Traduccion_TE deLaBase in traduccionRepo.ObtenerPorIdioma(idiomaBase.IdIdioma)) claves.Add(deLaBase.CodigoClave);
+            }
+
             Dictionary<string, string> paquete = traductor.ObtenerTraducciones(codigoIdioma);
+
+            foreach (string clave in traductor.ObtenerTraducciones(Traductor_TLL.CODIGO_BASE).Keys) claves.Add(clave);
+
             var lista = new List<Traduccion_TE>();
 
-            foreach (string clave in baseTextos.Keys.OrderBy(k => k, StringComparer.Ordinal))
+            foreach (string clave in claves.OrderBy(k => k, StringComparer.Ordinal))
             {
                 string texto;
 

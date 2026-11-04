@@ -43,7 +43,7 @@ namespace GUI
 
         public static int IdIdiomaBase()
         {
-            return new Idioma_TLL().ObtenerPorCodigo(Traductor_TLL.CODIGO_BASE).IdIdioma;
+            return new Idioma_TLL().ObtenerBase().IdIdioma;
         }
 
         public static SujetoIdioma_TLL Sujeto
@@ -54,7 +54,7 @@ namespace GUI
 
                 if (sujeto == null)
                 {
-                    sujeto = new SujetoIdioma_TLL(Traductor_TLL.CODIGO_BASE);
+                    sujeto = new SujetoIdioma_TLL(Traductor_TLL.CodigoBase);
                     Ctx.Session[K_SUJETO] = sujeto;
                 }
 
@@ -125,7 +125,7 @@ namespace GUI
                 LogErrores_SERVICE.Registrar("IdiomaActual.Resolver", ex);
             }
 
-            return Traductor_TLL.CODIGO_BASE;
+            return Traductor_TLL.CodigoBase;
         }
 
         private static Idioma_TE DelNavegador(List<Idioma_TE> activos)

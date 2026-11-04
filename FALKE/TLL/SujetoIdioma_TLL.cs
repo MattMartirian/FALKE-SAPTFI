@@ -9,7 +9,7 @@ namespace TLL
 
         public string CodigoIdioma { get; private set; }
 
-        public SujetoIdioma_TLL() : this(Traductor_TLL.CODIGO_BASE) { }
+        public SujetoIdioma_TLL() : this(Traductor_TLL.CodigoBase) { }
 
         public SujetoIdioma_TLL(string codigoIdioma)
         {

@@ -1,0 +1,3 @@
+Colocar aqui los instaladores que la pagina Descargas ofrece:
+  TobiiExperience.exe  (instalador de Tobii Experience)
+  AgenteMirada.zip    (AgenteMirada.exe + tobii_stream_engine.dll x64)

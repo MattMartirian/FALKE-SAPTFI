@@ -124,11 +124,15 @@ namespace GUI
 
             pnlAviso.Visible = false;
 
-            string codigo = ddlDisponibles.SelectedValue;
+            string codigo = string.IsNullOrWhiteSpace(txtCodigo.Text) ? ddlDisponibles.SelectedValue : txtCodigo.Text;
+            string nombre = txtNombre.Text;
             Idioma_TE agregado = null;
 
-            if (Ejecutar(() => agregado = new Idioma_TLL().Agregar(actor, codigo), "Idiomas.Agregar", "modalAgregar"))
+            if (Ejecutar(() => agregado = new Idioma_TLL().Agregar(actor, codigo, nombre), "Idiomas.Agregar", "modalAgregar"))
             {
+                txtCodigo.Text = string.Empty;
+                txtNombre.Text = string.Empty;
+
                 IdiomaSeleccionado = agregado.IdIdioma;
                 PaginaActual = 1;
                 Avisar("aviso-exito", Traducir("idiomas_agregado_ok", agregado.NombreIdioma, agregado.CantidadTraducciones, agregado.CantidadPendientes));
@@ -210,13 +214,18 @@ namespace GUI
         {
             List<Idioma_TE> disponibles = new Idioma_TLL().ListarDisponibles(actor);
 
-            ddlDisponibles.Items.Clear();
+            ConservandoSeleccion(() =>
+            {
+                ddlDisponibles.Items.Clear();
+                ddlDisponibles.Items.Add(new ListItem(Traducir("idiomas_desde_cero"), string.Empty));
 
-            foreach (Idioma_TE d in disponibles) ddlDisponibles.Items.Add(new ListItem(d.NombreIdioma + " (" + d.CodigoIdioma + ")", d.CodigoIdioma));
-
-            phDisponibles.Visible = disponibles.Count > 0;
-            phSinDisponibles.Visible = disponibles.Count == 0;
-            btnAgregar.Visible = disponibles.Count > 0;
+                foreach (Idioma_TE d in disponibles)
+                {
+                    var item = new ListItem(d.NombreIdioma + " (" + d.CodigoIdioma + ")", d.CodigoIdioma);
+                    item.Attributes["data-nombre"] = d.NombreIdioma;
+                    ddlDisponibles.Items.Add(item);
+                }
+            }, ddlDisponibles);
         }
 
         private void MostrarTraducciones()
