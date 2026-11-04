@@ -45,11 +45,12 @@ namespace AgenteMirada
         {
             string mensaje = string.Format(
                 CultureInfo.InvariantCulture,
-                "{{\"tipo\":\"mirada\",\"x\":{0:0.0000},\"y\":{1:0.0000},\"valida\":{2},\"t\":{3}}}",
+                "{{\"v\":1,\"tipo\":\"mirada\",\"x\":{0:0.0000},\"y\":{1:0.0000},\"valida\":{2},\"t\":{3},\"utc\":{4}}}",
                 muestra.X,
                 muestra.Y,
                 muestra.Valida ? "true" : "false",
-                muestra.TiempoUs);
+                muestra.TiempoUs,
+                muestra.UtcMs);
 
             Enviar(mensaje);
         }
@@ -63,7 +64,7 @@ namespace AgenteMirada
 
         private static string ArmarEstado(string estado)
         {
-            return "{\"tipo\":\"estado\",\"estado\":\"" + estado + "\"}";
+            return "{\"v\":1,\"tipo\":\"estado\",\"estado\":\"" + estado + "\"}";
         }
 
         private void Enviar(string mensaje)

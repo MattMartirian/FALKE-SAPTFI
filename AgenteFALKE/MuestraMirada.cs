@@ -6,5 +6,6 @@ namespace AgenteMirada
         public double Y;
         public bool Valida;
         public long TiempoUs;
+        public long UtcMs;
     }
 }

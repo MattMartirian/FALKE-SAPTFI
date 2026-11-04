@@ -39,7 +39,8 @@ namespace AgenteMirada
                 X = 0.5 + 0.35 * Math.Sin(segundos * 0.9),
                 Y = 0.5 + 0.30 * Math.Sin(segundos * 1.3),
                 Valida = true,
-                TiempoUs = reloj.ElapsedTicks * 1000000L / Stopwatch.Frequency
+                TiempoUs = reloj.ElapsedTicks * 1000000L / Stopwatch.Frequency,
+                UtcMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
             };
 
             MuestraRecibida?.Invoke(muestra);

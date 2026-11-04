@@ -109,7 +109,8 @@ namespace AgenteMirada
                 X = punto.position.x,
                 Y = punto.position.y,
                 Valida = punto.validity == tobii_validity_t.TOBII_VALIDITY_VALID,
-                TiempoUs = punto.timestamp_us
+                TiempoUs = punto.timestamp_us,
+                UtcMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
             };
 
             fuente.MuestraRecibida?.Invoke(muestra);

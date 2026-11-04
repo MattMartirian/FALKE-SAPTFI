@@ -20,7 +20,8 @@ namespace AgenteMirada
             }
 
             var servidor = new ServidorMirada(PUERTO, origenes);
-            IFuenteMirada fuente = simulado ? (IFuenteMirada)new FuenteSimulada() : new FuenteTobii();
+            IFuenteMirada fuente = FabricaFuente.Crear(simulado);
+            simulado = simulado || !FabricaFuente.TobiiDisponible;
 
             fuente.MuestraRecibida += servidor.Difundir;
             fuente.EstadoCambiado += servidor.DifundirEstado;
