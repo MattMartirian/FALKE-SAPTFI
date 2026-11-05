@@ -1,3 +1,0 @@
-Colocar aqui los instaladores que la pagina Descargas ofrece:
-  TobiiExperience.exe  (instalador de Tobii Experience)
-  AgenteMirada.exe   (agente de mirada: un solo archivo, lleva la dll adentro)
