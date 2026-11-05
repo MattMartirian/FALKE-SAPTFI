@@ -2,6 +2,15 @@ using System;
 
 namespace AgenteMirada
 {
+    public static class Estados
+    {
+        public const string Iniciando = "iniciando";
+        public const string Conectado = "conectado";
+        public const string ConectadoSimulado = "conectado_simulado";
+        public const string SinTracker = "sin_tracker";
+        public const string ErrorSdk = "error_sdk";
+    }
+
     public struct MuestraMirada
     {
         public double X;

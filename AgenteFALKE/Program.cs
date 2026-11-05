@@ -33,7 +33,7 @@ namespace AgenteMirada
             {
                 if (!nueva) return;
 
-                var grabador = new Grabador(Path.Combine(Path.GetTempPath(), "falke-mirada.jsonl"));
+                var grabador = new Grabador(Path.Combine(Path.GetTempPath(), "falke-mirada.json"));
                 var servidor = new ServidorAgente(PUERTO, grabador);
                 IFuenteMirada fuente = simulado ? (IFuenteMirada)new FuenteSimulada() : new FuenteTobii();
 

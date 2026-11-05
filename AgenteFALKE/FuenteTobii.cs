@@ -10,8 +10,7 @@ namespace AgenteMirada
         private const int ESPERA_CIERRE_MS = 3000;
         private const int INTERVALO_LECTURA_MS = 5;
 
-        private static FuenteTobii instancia;
-        private static readonly tobii_gaze_point_callback_t receptorMirada = AlRecibirMirada;
+        private readonly tobii_gaze_point_callback_t receptorMirada;
 
         private Thread hilo;
         private volatile bool detener;
@@ -20,9 +19,13 @@ namespace AgenteMirada
         public event Action<MuestraMirada> MuestraRecibida;
         public event Action<string> EstadoCambiado;
 
+        public FuenteTobii()
+        {
+            receptorMirada = AlRecibirMirada;
+        }
+
         public void Iniciar()
         {
-            instancia = this;
             detener = false;
 
             hilo = new Thread(Ejecutar);
@@ -40,48 +43,48 @@ namespace AgenteMirada
 
         private void Ejecutar()
         {
-            IntPtr api;
-            tobii_error_t creado;
+            while (!detener)
+            {
+                IntPtr api;
+                tobii_error_t creado;
 
-            try
-            {
-                creado = Interop.tobii_api_create(out api, IntPtr.Zero, IntPtr.Zero);
-            }
-            catch (DllNotFoundException)
-            {
-                Registro.Escribir("Falta tobii_stream_engine.dll junto a AgenteMirada.exe.");
-                Publicar("error_sdk");
-                return;
-            }
-            catch (BadImageFormatException)
-            {
-                Registro.Escribir("tobii_stream_engine.dll no es de 64 bits.");
-                Publicar("error_sdk");
-                return;
-            }
-
-            if (!Correcto(creado))
-            {
-                Registro.Escribir("tobii_api_create: " + creado);
-                Publicar("error_sdk");
-                return;
-            }
-
-            try
-            {
-                while (!detener)
+                try
                 {
-                    LeerDispositivo(api);
-
-                    if (detener) break;
-
-                    Publicar("sin_tracker");
-                    Thread.Sleep(ESPERA_REINTENTO_MS);
+                    creado = Interop.tobii_api_create(out api, IntPtr.Zero, IntPtr.Zero);
                 }
-            }
-            finally
-            {
-                Interop.tobii_api_destroy(api);
+                catch (DllNotFoundException)
+                {
+                    Registro.Escribir("Falta tobii_stream_engine.dll junto a AgenteMirada.exe.");
+                    Publicar(Estados.ErrorSdk);
+                    return;
+                }
+                catch (BadImageFormatException)
+                {
+                    Registro.Escribir("tobii_stream_engine.dll no es de 64 bits.");
+                    Publicar(Estados.ErrorSdk);
+                    return;
+                }
+
+                if (Correcto(creado))
+                {
+                    try
+                    {
+                        LeerDispositivo(api);
+                    }
+                    finally
+                    {
+                        Interop.tobii_api_destroy(api);
+                    }
+
+                    Publicar(Estados.SinTracker);
+                }
+                else
+                {
+                    Registro.Escribir("tobii_api_create: " + creado);
+                    Publicar(Estados.ErrorSdk);
+                }
+
+                if (!detener) Thread.Sleep(ESPERA_REINTENTO_MS);
             }
         }
 
@@ -89,29 +92,45 @@ namespace AgenteMirada
         {
             List<string> urls = Interop.ListarDispositivos(api);
 
-            if (urls.Count == 0) return;
+            if (urls.Count == 0)
+            {
+                Registro.Escribir("El SDK de Tobii no lista ningun eye tracker.");
+                return;
+            }
 
             IntPtr dispositivo;
 
-            tobii_error_t creado = Interop.tobii_device_create(api, urls[0], tobii_field_of_use_t.TOBII_FIELD_OF_USE_STORE_OR_TRANSFER_FALSE, out dispositivo);
+            tobii_error_t resultado = Interop.tobii_device_create(api, urls[0], tobii_field_of_use_t.TOBII_FIELD_OF_USE_STORE_OR_TRANSFER_FALSE, out dispositivo);
 
-            if (!Correcto(creado))
+            if (!Correcto(resultado))
             {
-                Registro.Escribir("tobii_device_create: " + creado);
+                Registro.Escribir("tobii_device_create: " + resultado);
                 return;
             }
 
             try
             {
-                if (!Correcto(Interop.tobii_gaze_point_subscribe(dispositivo, receptorMirada, IntPtr.Zero))) return;
+                resultado = Interop.tobii_gaze_point_subscribe(dispositivo, receptorMirada, IntPtr.Zero);
 
-                Publicar("conectado");
+                if (!Correcto(resultado))
+                {
+                    Registro.Escribir("tobii_gaze_point_subscribe: " + resultado);
+                    return;
+                }
+
+                Publicar(Estados.Conectado);
 
                 while (!detener)
                 {
                     Thread.Sleep(INTERVALO_LECTURA_MS);
 
-                    if (!Correcto(Interop.tobii_device_process_callbacks(dispositivo))) break;
+                    resultado = Interop.tobii_device_process_callbacks(dispositivo);
+
+                    if (!Correcto(resultado))
+                    {
+                        Registro.Escribir("tobii_device_process_callbacks: " + resultado);
+                        break;
+                    }
                 }
 
                 Interop.tobii_gaze_point_unsubscribe(dispositivo);
@@ -122,12 +141,8 @@ namespace AgenteMirada
             }
         }
 
-        private static void AlRecibirMirada(ref tobii_gaze_point_t punto, IntPtr usuario)
+        private void AlRecibirMirada(ref tobii_gaze_point_t punto, IntPtr usuario)
         {
-            FuenteTobii fuente = instancia;
-
-            if (fuente == null) return;
-
             var muestra = new MuestraMirada
             {
                 X = punto.x,
@@ -137,7 +152,7 @@ namespace AgenteMirada
                 UtcMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
             };
 
-            fuente.MuestraRecibida?.Invoke(muestra);
+            MuestraRecibida?.Invoke(muestra);
         }
 
         private void Publicar(string estado)

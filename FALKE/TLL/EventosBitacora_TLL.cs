@@ -32,6 +32,7 @@ namespace TLL
         public const string CATEGORIA_MODIFICACION = "bitacora_ev_categoria_modificacion";
         public const string CATEGORIA_BAJA = "bitacora_ev_categoria_baja";
         public const string CATEGORIA_DESACTIVADA = "bitacora_ev_categoria_desactivada";
+        public const string SESION_GRABADA = "bitacora_ev_sesion_grabada";
         public const string MODELO_ALTA = "bitacora_ev_modelo_alta";
         public const string MODELO_MODIFICACION = "bitacora_ev_modelo_modificacion";
         public const string MODELO_BAJA = "bitacora_ev_modelo_baja";

@@ -4219,4 +4219,202 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="grabacion_prep_verificando" xml:space="preserve">
     <value>Wird geprüft…</value>
   </data>
+  <data name="grabacion_tester_titulo" xml:space="preserve">
+    <value>Tester-Profil</value>
+  </data>
+  <data name="grabacion_tester_ayuda" xml:space="preserve">
+    <value>Anonyme Daten für Statistiken. Fragen Sie nicht nach Namen oder anderen Kennungen.</value>
+  </data>
+  <data name="grabacion_tester_edad" xml:space="preserve">
+    <value>Altersgruppe</value>
+  </data>
+  <data name="grabacion_tester_genero" xml:space="preserve">
+    <value>Geschlecht</value>
+  </data>
+  <data name="grabacion_tester_familiaridad" xml:space="preserve">
+    <value>Vertrautheit</value>
+  </data>
+  <data name="grabacion_tester_seleccionar" xml:space="preserve">
+    <value>Auswählen…</value>
+  </data>
+  <data name="grabacion_tester_genero_femenino" xml:space="preserve">
+    <value>Weiblich</value>
+  </data>
+  <data name="grabacion_tester_genero_masculino" xml:space="preserve">
+    <value>Männlich</value>
+  </data>
+  <data name="grabacion_tester_genero_no_binario" xml:space="preserve">
+    <value>Nicht-binär</value>
+  </data>
+  <data name="grabacion_tester_genero_no_informa" xml:space="preserve">
+    <value>Keine Angabe</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_baja" xml:space="preserve">
+    <value>Niedrig</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_media" xml:space="preserve">
+    <value>Mittel</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_alta" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="grabacion_rec_titulo" xml:space="preserve">
+    <value>Aufnahme</value>
+  </data>
+  <data name="grabacion_rec_fuente" xml:space="preserve">
+    <value>Gewählter Bildschirm</value>
+  </data>
+  <data name="grabacion_rec_elegir" xml:space="preserve">
+    <value>Bildschirm wählen</value>
+  </data>
+  <data name="grabacion_rec_sin_pantalla" xml:space="preserve">
+    <value>Sie haben noch keinen Bildschirm zum Aufnehmen gewählt.</value>
+  </data>
+  <data name="grabacion_rec_fuente_monitor" xml:space="preserve">
+    <value>Gesamter Bildschirm</value>
+  </data>
+  <data name="grabacion_rec_fuente_window" xml:space="preserve">
+    <value>Fenster</value>
+  </data>
+  <data name="grabacion_rec_fuente_browser" xml:space="preserve">
+    <value>Browser-Tab</value>
+  </data>
+  <data name="grabacion_rec_aviso_no_completa" xml:space="preserve">
+    <value>Sie haben ein Fenster oder einen Tab gewählt. Der Blick wird über den gesamten Bildschirm gemessen und passt möglicherweise nicht zum Video. Wir empfehlen, den gesamten Bildschirm aufzunehmen.</value>
+  </data>
+  <data name="grabacion_rec_retraso" xml:space="preserve">
+    <value>Aufnahme starten</value>
+  </data>
+  <data name="grabacion_rec_sin_retraso" xml:space="preserve">
+    <value>Sofort</value>
+  </data>
+  <data name="grabacion_rec_retraso_n" xml:space="preserve">
+    <value>In {0} Sekunden</value>
+  </data>
+  <data name="grabacion_rec_cuenta_ayuda" xml:space="preserve">
+    <value>Wechseln Sie zum Bildschirm oder zur Anwendung, die Sie testen werden.</value>
+  </data>
+  <data name="grabacion_rec_mirada_perdida" xml:space="preserve">
+    <value>Die Verbindung zum Eye Tracker ist abgebrochen. Die Aufnahme läuft weiter, aber der Blick dieses Abschnitts wird nicht erfasst. Prüfen Sie das Kabel.</value>
+  </data>
+  <data name="grabacion_rec_error_agente" xml:space="preserve">
+    <value>Die Blickaufzeichnung konnte nicht gestartet werden. Prüfen Sie das lokale Programm und den Eye Tracker und versuchen Sie es erneut.</value>
+  </data>
+  <data name="grabacion_rec_listo_titulo" xml:space="preserve">
+    <value>Aufnahme beendet</value>
+  </data>
+  <data name="grabacion_rec_listo_ayuda" xml:space="preserve">
+    <value>Prüfen Sie das Video und entscheiden Sie, ob Sie es speichern. Wenn Sie es verwerfen, wird nichts gespeichert.</value>
+  </data>
+  <data name="grabacion_rec_duracion" xml:space="preserve">
+    <value>Dauer</value>
+  </data>
+  <data name="grabacion_rec_muestras" xml:space="preserve">
+    <value>Blickproben</value>
+  </data>
+  <data name="grabacion_rec_tamano" xml:space="preserve">
+    <value>Videogröße</value>
+  </data>
+  <data name="grabacion_rec_sin_muestras" xml:space="preserve">
+    <value>In dieser Aufnahme wurde kein Blick erfasst. Prüfen Sie den Eye Tracker, bevor Sie speichern.</value>
+  </data>
+  <data name="grabacion_rec_guardar" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="grabacion_rec_descartar" xml:space="preserve">
+    <value>Verwerfen</value>
+  </data>
+  <data name="grabacion_rec_guardada" xml:space="preserve">
+    <value>Aufnahme gespeichert</value>
+  </data>
+  <data name="grabacion_rec_error_guardar" xml:space="preserve">
+    <value>Die Blickdatei konnte nicht abgerufen werden. Prüfen Sie das lokale Programm und versuchen Sie es erneut.</value>
+  </data>
+  <data name="grabacion_rec_no_descartar" xml:space="preserve">
+    <value>Nein, zurück</value>
+  </data>
+  <data name="grabacion_rec_guia_elegir" xml:space="preserve">
+    <value>Wählen Sie, welchen Bildschirm Sie aufnehmen.</value>
+  </data>
+  <data name="grabacion_rec_guia_listo" xml:space="preserve">
+    <value>Wählen Sie den Start und drücken Sie "Aufnahme starten".</value>
+  </data>
+  <data name="grabacion_rec_guia_cuenta" xml:space="preserve">
+    <value>Machen Sie sich bereit: Wechseln Sie zu dem, was Sie testen. Die Aufnahme startet von selbst.</value>
+  </data>
+  <data name="grabacion_rec_guia_grabando" xml:space="preserve">
+    <value>Arbeiten Sie wie gewohnt. Wenn Sie fertig sind, drücken Sie "Beenden".</value>
+  </data>
+  <data name="grabacion_rec_cambiar" xml:space="preserve">
+    <value>Bildschirm wechseln</value>
+  </data>
+  <data name="grabacion_rec_chip_pantalla" xml:space="preserve">
+    <value>Bildschirm</value>
+  </data>
+  <data name="grabacion_rec_chip_mirada" xml:space="preserve">
+    <value>Blick</value>
+  </data>
+  <data name="grabacion_rec_mirada_ok" xml:space="preserve">
+    <value>Verbunden · {0} Proben</value>
+  </data>
+  <data name="grabacion_rec_mirada_sin_senal" xml:space="preserve">
+    <value>Keine Verbindung</value>
+  </data>
+  <data name="sesion_sin_video" xml:space="preserve">
+    <value>Das Aufnahmevideo wurde nicht empfangen.</value>
+  </data>
+  <data name="sesion_video_muy_grande" xml:space="preserve">
+    <value>Das Video ist zu groß zum Speichern.</value>
+  </data>
+  <data name="sesion_mirada_muy_grande" xml:space="preserve">
+    <value>Die Blickdatei ist zu groß.</value>
+  </data>
+  <data name="sesion_categoria_inactiva" xml:space="preserve">
+    <value>Die Kategorie ist deaktiviert. Aktivieren Sie sie oder wählen Sie eine andere.</value>
+  </data>
+  <data name="sesion_nombre_obligatorio" xml:space="preserve">
+    <value>Der Sitzungsname ist erforderlich.</value>
+  </data>
+  <data name="sesion_nombre_largo" xml:space="preserve">
+    <value>Der Sitzungsname darf {0} Zeichen nicht überschreiten.</value>
+  </data>
+  <data name="sesion_objetivo_largo" xml:space="preserve">
+    <value>Das Ziel darf {0} Zeichen nicht überschreiten.</value>
+  </data>
+  <data name="sesion_perfil_invalido" xml:space="preserve">
+    <value>Die Testerdaten fehlen oder sind ungültig.</value>
+  </data>
+  <data name="sesion_video_invalido" xml:space="preserve">
+    <value>Die Videodatei hat kein gültiges Format.</value>
+  </data>
+  <data name="sesion_error_guardado" xml:space="preserve">
+    <value>Die Aufnahme konnte nicht gespeichert werden. Versuchen Sie es erneut.</value>
+  </data>
+  <data name="comun_solicitud_invalida" xml:space="preserve">
+    <value>Die Anfrage ist ungültig.</value>
+  </data>
+  <data name="comun_sesion_expirada" xml:space="preserve">
+    <value>Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an.</value>
+  </data>
+  <data name="bitacora_ev_sesion_grabada" xml:space="preserve">
+    <value>Sitzung aufgenommen</value>
+  </data>
+  <data name="grabacion_rec_subiendo" xml:space="preserve">
+    <value>Aufnahme wird auf dem Server gespeichert… Schließen Sie diese Seite nicht.</value>
+  </data>
+  <data name="grabacion_ok_texto" xml:space="preserve">
+    <value>Die Sitzung „{0}“ wurde gespeichert. Was möchten Sie jetzt tun?</value>
+  </data>
+  <data name="grabacion_ok_ver" xml:space="preserve">
+    <value>Analyse ansehen</value>
+  </data>
+  <data name="grabacion_ok_otra" xml:space="preserve">
+    <value>Weiteren Teil aufnehmen</value>
+  </data>
+  <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
+    <value>Es werden dieselben Sitzungs- und Testerdaten verwendet. Die neue Aufnahme heißt „{0}“.</value>
+  </data>
+  <data name="grabacion_responsable_tu" xml:space="preserve">
+    <value>Verantwortlich (Sie)</value>
+  </data>
 </root>

@@ -4219,4 +4219,202 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="grabacion_prep_verificando" xml:space="preserve">
     <value>Verificando…</value>
   </data>
+  <data name="grabacion_tester_titulo" xml:space="preserve">
+    <value>Perfil del tester</value>
+  </data>
+  <data name="grabacion_tester_ayuda" xml:space="preserve">
+    <value>Datos anónimos para estadísticas. No pidas nombre ni ningún identificador.</value>
+  </data>
+  <data name="grabacion_tester_edad" xml:space="preserve">
+    <value>Rango de edad</value>
+  </data>
+  <data name="grabacion_tester_genero" xml:space="preserve">
+    <value>Género</value>
+  </data>
+  <data name="grabacion_tester_familiaridad" xml:space="preserve">
+    <value>Familiaridad</value>
+  </data>
+  <data name="grabacion_tester_seleccionar" xml:space="preserve">
+    <value>Selecciona…</value>
+  </data>
+  <data name="grabacion_tester_genero_femenino" xml:space="preserve">
+    <value>Femenino</value>
+  </data>
+  <data name="grabacion_tester_genero_masculino" xml:space="preserve">
+    <value>Masculino</value>
+  </data>
+  <data name="grabacion_tester_genero_no_binario" xml:space="preserve">
+    <value>No binario</value>
+  </data>
+  <data name="grabacion_tester_genero_no_informa" xml:space="preserve">
+    <value>Prefiero no decirlo</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_baja" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_media" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_alta" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="grabacion_rec_titulo" xml:space="preserve">
+    <value>Grabación</value>
+  </data>
+  <data name="grabacion_rec_fuente" xml:space="preserve">
+    <value>Pantalla elegida</value>
+  </data>
+  <data name="grabacion_rec_elegir" xml:space="preserve">
+    <value>Elegir pantalla</value>
+  </data>
+  <data name="grabacion_rec_sin_pantalla" xml:space="preserve">
+    <value>Todavía no elegiste qué pantalla grabar.</value>
+  </data>
+  <data name="grabacion_rec_fuente_monitor" xml:space="preserve">
+    <value>Pantalla completa</value>
+  </data>
+  <data name="grabacion_rec_fuente_window" xml:space="preserve">
+    <value>Ventana</value>
+  </data>
+  <data name="grabacion_rec_fuente_browser" xml:space="preserve">
+    <value>Pestaña del navegador</value>
+  </data>
+  <data name="grabacion_rec_aviso_no_completa" xml:space="preserve">
+    <value>Elegiste una ventana o una pestaña. La mirada se mide sobre toda la pantalla y puede no coincidir con el video. Recomendamos grabar la pantalla completa.</value>
+  </data>
+  <data name="grabacion_rec_retraso" xml:space="preserve">
+    <value>Empezar a grabar</value>
+  </data>
+  <data name="grabacion_rec_sin_retraso" xml:space="preserve">
+    <value>Ahora</value>
+  </data>
+  <data name="grabacion_rec_retraso_n" xml:space="preserve">
+    <value>En {0} segundos</value>
+  </data>
+  <data name="grabacion_rec_cuenta_ayuda" xml:space="preserve">
+    <value>Cambia a la pantalla o aplicación que vas a probar.</value>
+  </data>
+  <data name="grabacion_rec_mirada_perdida" xml:space="preserve">
+    <value>Se perdió la conexión con el eye tracker. La grabación sigue, pero la mirada de este tramo no queda registrada. Revisa el cable.</value>
+  </data>
+  <data name="grabacion_rec_error_agente" xml:space="preserve">
+    <value>No se pudo iniciar el registro de la mirada. Revisa el programa local y el eye tracker, y vuelve a intentar.</value>
+  </data>
+  <data name="grabacion_rec_listo_titulo" xml:space="preserve">
+    <value>Grabación terminada</value>
+  </data>
+  <data name="grabacion_rec_listo_ayuda" xml:space="preserve">
+    <value>Revisa el video y decide si guardarla. Si la descartas, no se guarda nada.</value>
+  </data>
+  <data name="grabacion_rec_duracion" xml:space="preserve">
+    <value>Duración</value>
+  </data>
+  <data name="grabacion_rec_muestras" xml:space="preserve">
+    <value>Muestras de mirada</value>
+  </data>
+  <data name="grabacion_rec_tamano" xml:space="preserve">
+    <value>Tamaño del video</value>
+  </data>
+  <data name="grabacion_rec_sin_muestras" xml:space="preserve">
+    <value>No se registró mirada en esta grabación. Revisa el eye tracker antes de guardar.</value>
+  </data>
+  <data name="grabacion_rec_guardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="grabacion_rec_descartar" xml:space="preserve">
+    <value>Descartar</value>
+  </data>
+  <data name="grabacion_rec_guardada" xml:space="preserve">
+    <value>Grabación guardada</value>
+  </data>
+  <data name="grabacion_rec_error_guardar" xml:space="preserve">
+    <value>No se pudo obtener el archivo de la mirada. Revisa el programa local y vuelve a intentar.</value>
+  </data>
+  <data name="grabacion_rec_no_descartar" xml:space="preserve">
+    <value>No, volver</value>
+  </data>
+  <data name="grabacion_rec_guia_elegir" xml:space="preserve">
+    <value>Elige qué pantalla vas a grabar.</value>
+  </data>
+  <data name="grabacion_rec_guia_listo" xml:space="preserve">
+    <value>Elige cuándo empezar y presiona «Iniciar la grabación».</value>
+  </data>
+  <data name="grabacion_rec_guia_cuenta" xml:space="preserve">
+    <value>Prepárate: cambia a lo que vas a probar. La grabación empieza sola.</value>
+  </data>
+  <data name="grabacion_rec_guia_grabando" xml:space="preserve">
+    <value>Trabaja con normalidad. Cuando termines, presiona «Finalizar».</value>
+  </data>
+  <data name="grabacion_rec_cambiar" xml:space="preserve">
+    <value>Cambiar pantalla</value>
+  </data>
+  <data name="grabacion_rec_chip_pantalla" xml:space="preserve">
+    <value>Pantalla</value>
+  </data>
+  <data name="grabacion_rec_chip_mirada" xml:space="preserve">
+    <value>Mirada</value>
+  </data>
+  <data name="grabacion_rec_mirada_ok" xml:space="preserve">
+    <value>Conectada · {0} muestras</value>
+  </data>
+  <data name="grabacion_rec_mirada_sin_senal" xml:space="preserve">
+    <value>Sin conexión</value>
+  </data>
+  <data name="sesion_sin_video" xml:space="preserve">
+    <value>No se recibió el video de la grabación.</value>
+  </data>
+  <data name="sesion_video_muy_grande" xml:space="preserve">
+    <value>El video es demasiado grande para guardarlo.</value>
+  </data>
+  <data name="sesion_mirada_muy_grande" xml:space="preserve">
+    <value>El archivo de mirada es demasiado grande.</value>
+  </data>
+  <data name="sesion_categoria_inactiva" xml:space="preserve">
+    <value>La categoría está desactivada. Actívala o elige otra.</value>
+  </data>
+  <data name="sesion_nombre_obligatorio" xml:space="preserve">
+    <value>El nombre de la sesión es obligatorio.</value>
+  </data>
+  <data name="sesion_nombre_largo" xml:space="preserve">
+    <value>El nombre de la sesión no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="sesion_objetivo_largo" xml:space="preserve">
+    <value>El objetivo no puede superar los {0} caracteres.</value>
+  </data>
+  <data name="sesion_perfil_invalido" xml:space="preserve">
+    <value>Faltan datos del tester o no son válidos.</value>
+  </data>
+  <data name="sesion_video_invalido" xml:space="preserve">
+    <value>El archivo de video no tiene un formato válido.</value>
+  </data>
+  <data name="sesion_error_guardado" xml:space="preserve">
+    <value>No se pudo guardar la grabación. Intenta de nuevo.</value>
+  </data>
+  <data name="comun_solicitud_invalida" xml:space="preserve">
+    <value>La solicitud no es válida.</value>
+  </data>
+  <data name="comun_sesion_expirada" xml:space="preserve">
+    <value>Tu sesión expiró. Ingresa de nuevo.</value>
+  </data>
+  <data name="bitacora_ev_sesion_grabada" xml:space="preserve">
+    <value>Sesión grabada</value>
+  </data>
+  <data name="grabacion_rec_subiendo" xml:space="preserve">
+    <value>Guardando la grabación en el servidor… No cierres esta página.</value>
+  </data>
+  <data name="grabacion_ok_texto" xml:space="preserve">
+    <value>La sesión «{0}» quedó guardada. ¿Qué quieres hacer ahora?</value>
+  </data>
+  <data name="grabacion_ok_ver" xml:space="preserve">
+    <value>Ver análisis</value>
+  </data>
+  <data name="grabacion_ok_otra" xml:space="preserve">
+    <value>Grabar otra parte</value>
+  </data>
+  <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
+    <value>Usa los mismos datos de la sesión y del tester. La nueva grabación se llamará «{0}».</value>
+  </data>
+  <data name="grabacion_responsable_tu" xml:space="preserve">
+    <value>Responsable (tú)</value>
+  </data>
 </root>

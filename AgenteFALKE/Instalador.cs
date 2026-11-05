@@ -59,7 +59,7 @@ namespace AgenteMirada
 
                 Process.Start(exe);
 
-                MessageBox.Show("El agente de FALKE quedo instalado y se inicia con Windows. Ya podes volver a la pagina.", TITULO);
+                MessageBox.Show("El agente de FALKE qued\u00f3 instalado y se inicia con Windows. Ya puedes volver a la p\u00e1gina.", TITULO);
             }
             catch (Exception error)
             {
@@ -77,12 +77,12 @@ namespace AgenteMirada
                 if (clave != null) clave.DeleteValue(VALOR_INICIO, false);
             }
 
+            MessageBox.Show("El agente de FALKE fue desinstalado.", TITULO);
+
             var borrado = new ProcessStartInfo("cmd.exe", "/c ping 127.0.0.1 -n 3 >nul & rmdir /s /q \"" + Carpeta + "\"");
             borrado.CreateNoWindow = true;
             borrado.UseShellExecute = false;
             Process.Start(borrado);
-
-            MessageBox.Show("El agente de FALKE fue desinstalado.", TITULO);
         }
 
         private static void CerrarOtrasCopias()

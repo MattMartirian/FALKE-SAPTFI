@@ -50,6 +50,8 @@
     <Compile Include="Dispositivo_BE.cs" />
     <Compile Include="ErrorValidacion_BE.cs" />
     <Compile Include="Empresa_BE.cs" />
+    <Compile Include="PerfilTester_BE.cs" />
+    <Compile Include="SesionGrabada_BE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

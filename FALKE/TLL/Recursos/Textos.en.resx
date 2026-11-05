@@ -4219,4 +4219,202 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="grabacion_prep_verificando" xml:space="preserve">
     <value>Checking…</value>
   </data>
+  <data name="grabacion_tester_titulo" xml:space="preserve">
+    <value>Tester profile</value>
+  </data>
+  <data name="grabacion_tester_ayuda" xml:space="preserve">
+    <value>Anonymous data for statistics. Do not ask for a name or any identifier.</value>
+  </data>
+  <data name="grabacion_tester_edad" xml:space="preserve">
+    <value>Age range</value>
+  </data>
+  <data name="grabacion_tester_genero" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="grabacion_tester_familiaridad" xml:space="preserve">
+    <value>Familiarity</value>
+  </data>
+  <data name="grabacion_tester_seleccionar" xml:space="preserve">
+    <value>Select…</value>
+  </data>
+  <data name="grabacion_tester_genero_femenino" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="grabacion_tester_genero_masculino" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="grabacion_tester_genero_no_binario" xml:space="preserve">
+    <value>Non-binary</value>
+  </data>
+  <data name="grabacion_tester_genero_no_informa" xml:space="preserve">
+    <value>Prefer not to say</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_baja" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_media" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="grabacion_tester_familiaridad_alta" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="grabacion_rec_titulo" xml:space="preserve">
+    <value>Recording</value>
+  </data>
+  <data name="grabacion_rec_fuente" xml:space="preserve">
+    <value>Selected screen</value>
+  </data>
+  <data name="grabacion_rec_elegir" xml:space="preserve">
+    <value>Choose screen</value>
+  </data>
+  <data name="grabacion_rec_sin_pantalla" xml:space="preserve">
+    <value>You have not chosen a screen to record yet.</value>
+  </data>
+  <data name="grabacion_rec_fuente_monitor" xml:space="preserve">
+    <value>Entire screen</value>
+  </data>
+  <data name="grabacion_rec_fuente_window" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="grabacion_rec_fuente_browser" xml:space="preserve">
+    <value>Browser tab</value>
+  </data>
+  <data name="grabacion_rec_aviso_no_completa" xml:space="preserve">
+    <value>You chose a window or a tab. Gaze is measured over the whole screen and may not match the video. We recommend recording the entire screen.</value>
+  </data>
+  <data name="grabacion_rec_retraso" xml:space="preserve">
+    <value>Start recording</value>
+  </data>
+  <data name="grabacion_rec_sin_retraso" xml:space="preserve">
+    <value>Now</value>
+  </data>
+  <data name="grabacion_rec_retraso_n" xml:space="preserve">
+    <value>In {0} seconds</value>
+  </data>
+  <data name="grabacion_rec_cuenta_ayuda" xml:space="preserve">
+    <value>Switch to the screen or application you are going to test.</value>
+  </data>
+  <data name="grabacion_rec_mirada_perdida" xml:space="preserve">
+    <value>The connection with the eye tracker was lost. Recording continues, but gaze for this stretch is not captured. Check the cable.</value>
+  </data>
+  <data name="grabacion_rec_error_agente" xml:space="preserve">
+    <value>Gaze recording could not be started. Check the local program and the eye tracker, then try again.</value>
+  </data>
+  <data name="grabacion_rec_listo_titulo" xml:space="preserve">
+    <value>Recording finished</value>
+  </data>
+  <data name="grabacion_rec_listo_ayuda" xml:space="preserve">
+    <value>Review the video and decide whether to save it. If you discard it, nothing is saved.</value>
+  </data>
+  <data name="grabacion_rec_duracion" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="grabacion_rec_muestras" xml:space="preserve">
+    <value>Gaze samples</value>
+  </data>
+  <data name="grabacion_rec_tamano" xml:space="preserve">
+    <value>Video size</value>
+  </data>
+  <data name="grabacion_rec_sin_muestras" xml:space="preserve">
+    <value>No gaze was recorded in this recording. Check the eye tracker before saving.</value>
+  </data>
+  <data name="grabacion_rec_guardar" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="grabacion_rec_descartar" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="grabacion_rec_guardada" xml:space="preserve">
+    <value>Recording saved</value>
+  </data>
+  <data name="grabacion_rec_error_guardar" xml:space="preserve">
+    <value>The gaze file could not be retrieved. Check the local program and try again.</value>
+  </data>
+  <data name="grabacion_rec_no_descartar" xml:space="preserve">
+    <value>No, go back</value>
+  </data>
+  <data name="grabacion_rec_guia_elegir" xml:space="preserve">
+    <value>Choose which screen you are going to record.</value>
+  </data>
+  <data name="grabacion_rec_guia_listo" xml:space="preserve">
+    <value>Choose when to start and press "Start recording".</value>
+  </data>
+  <data name="grabacion_rec_guia_cuenta" xml:space="preserve">
+    <value>Get ready: switch to what you are going to test. Recording starts on its own.</value>
+  </data>
+  <data name="grabacion_rec_guia_grabando" xml:space="preserve">
+    <value>Work as usual. When you are done, press "Finish".</value>
+  </data>
+  <data name="grabacion_rec_cambiar" xml:space="preserve">
+    <value>Change screen</value>
+  </data>
+  <data name="grabacion_rec_chip_pantalla" xml:space="preserve">
+    <value>Screen</value>
+  </data>
+  <data name="grabacion_rec_chip_mirada" xml:space="preserve">
+    <value>Gaze</value>
+  </data>
+  <data name="grabacion_rec_mirada_ok" xml:space="preserve">
+    <value>Connected · {0} samples</value>
+  </data>
+  <data name="grabacion_rec_mirada_sin_senal" xml:space="preserve">
+    <value>No connection</value>
+  </data>
+  <data name="sesion_sin_video" xml:space="preserve">
+    <value>The recording video was not received.</value>
+  </data>
+  <data name="sesion_video_muy_grande" xml:space="preserve">
+    <value>The video is too large to be saved.</value>
+  </data>
+  <data name="sesion_mirada_muy_grande" xml:space="preserve">
+    <value>The gaze file is too large.</value>
+  </data>
+  <data name="sesion_categoria_inactiva" xml:space="preserve">
+    <value>The category is deactivated. Activate it or choose another one.</value>
+  </data>
+  <data name="sesion_nombre_obligatorio" xml:space="preserve">
+    <value>The session name is required.</value>
+  </data>
+  <data name="sesion_nombre_largo" xml:space="preserve">
+    <value>The session name cannot exceed {0} characters.</value>
+  </data>
+  <data name="sesion_objetivo_largo" xml:space="preserve">
+    <value>The objective cannot exceed {0} characters.</value>
+  </data>
+  <data name="sesion_perfil_invalido" xml:space="preserve">
+    <value>The tester data is missing or invalid.</value>
+  </data>
+  <data name="sesion_video_invalido" xml:space="preserve">
+    <value>The video file is not in a valid format.</value>
+  </data>
+  <data name="sesion_error_guardado" xml:space="preserve">
+    <value>The recording could not be saved. Try again.</value>
+  </data>
+  <data name="comun_solicitud_invalida" xml:space="preserve">
+    <value>The request is not valid.</value>
+  </data>
+  <data name="comun_sesion_expirada" xml:space="preserve">
+    <value>Your session has expired. Sign in again.</value>
+  </data>
+  <data name="bitacora_ev_sesion_grabada" xml:space="preserve">
+    <value>Session recorded</value>
+  </data>
+  <data name="grabacion_rec_subiendo" xml:space="preserve">
+    <value>Saving the recording to the server… Do not close this page.</value>
+  </data>
+  <data name="grabacion_ok_texto" xml:space="preserve">
+    <value>The session "{0}" was saved. What would you like to do now?</value>
+  </data>
+  <data name="grabacion_ok_ver" xml:space="preserve">
+    <value>View analysis</value>
+  </data>
+  <data name="grabacion_ok_otra" xml:space="preserve">
+    <value>Record another part</value>
+  </data>
+  <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
+    <value>It reuses the same session and tester data. The new recording will be named "{0}".</value>
+  </data>
+  <data name="grabacion_responsable_tu" xml:space="preserve">
+    <value>Responsible (you)</value>
+  </data>
 </root>

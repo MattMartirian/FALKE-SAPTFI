@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Repos\BitacoraRepository.cs" />
     <Compile Include="Repos\CategoriaRepository.cs" />
+    <Compile Include="Repos\SesionGrabadaRepository.cs" />
     <Compile Include="Repos\DispositivoRepository.cs" />
     <Compile Include="Repos\ModeloDispositivoRepository.cs" />
     <Compile Include="Repos\EmpresaRepository.cs" />

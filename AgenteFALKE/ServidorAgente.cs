@@ -70,7 +70,7 @@ namespace AgenteMirada
                 switch (contexto.Request.Url.AbsolutePath)
                 {
                     case "/estado":
-                        Responder(respuesta, "{\"estado\":\"" + grabador.EstadoFuente + "\",\"grabando\":" + (grabador.Grabando ? "true" : "false") + "}");
+                        Responder(respuesta, ArmarEstado());
                         break;
                     case "/iniciar":
                         Responder(respuesta, "{\"inicio_utc\":" + grabador.Iniciar() + "}");
@@ -101,6 +101,20 @@ namespace AgenteMirada
             }
         }
 
+        private string ArmarEstado()
+        {
+            string estado = grabador.EstadoFuente;
+            bool simulado = estado == Estados.ConectadoSimulado;
+            bool conectado = estado == Estados.Conectado || simulado;
+
+            return "{\"estado\":\"" + estado + "\",\"conectado\":" + Json(conectado) + ",\"simulado\":" + Json(simulado) + ",\"grabando\":" + Json(grabador.Grabando) + ",\"muestras\":" + grabador.Muestras + "}";
+        }
+
+        private static string Json(bool valor)
+        {
+            return valor ? "true" : "false";
+        }
+
         private void EntregarArchivo(HttpListenerResponse respuesta)
         {
             if (grabador.Grabando || !File.Exists(grabador.Ruta))
@@ -111,7 +125,7 @@ namespace AgenteMirada
 
             byte[] datos = File.ReadAllBytes(grabador.Ruta);
 
-            respuesta.ContentType = "application/x-ndjson";
+            respuesta.ContentType = "application/json";
             respuesta.ContentLength64 = datos.Length;
             respuesta.OutputStream.Write(datos, 0, datos.Length);
         }

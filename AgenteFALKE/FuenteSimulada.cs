@@ -18,7 +18,7 @@ namespace AgenteMirada
         {
             reloj.Start();
 
-            EstadoCambiado?.Invoke("conectado_simulado");
+            EstadoCambiado?.Invoke(Estados.ConectadoSimulado);
 
             temporizador = new Timer(Emitir, null, 0, INTERVALO_MS);
         }

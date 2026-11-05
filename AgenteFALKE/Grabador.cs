@@ -5,37 +5,51 @@ using System.Text;
 
 namespace AgenteMirada
 {
+    /// <summary>
+    /// Junta las muestras en memoria (10 por segundo) y, al detener, escribe un unico JSON valido.
+    /// Si la grabacion se interrumpe antes de detener, no queda archivo: se pierde.
+    /// </summary>
     public class Grabador
     {
+        private const int INTERVALO_MUESTREO_MS = 100;
+
         private readonly object candado = new object();
-        private StreamWriter escritor;
+        private StringBuilder muestrasJson;
+        private bool grabando;
         private long inicioUtc;
+        private long proximoUtc;
         private int muestras;
 
         public Grabador(string ruta)
         {
             Ruta = ruta;
-            EstadoFuente = "iniciando";
+            EstadoFuente = Estados.Iniciando;
         }
 
         public string Ruta { get; private set; }
         public volatile string EstadoFuente;
 
+        public int Muestras
+        {
+            get { lock (candado) { return muestras; } }
+        }
+
         public bool Grabando
         {
-            get { lock (candado) { return escritor != null; } }
+            get { lock (candado) { return grabando; } }
         }
 
         public long Iniciar()
         {
             lock (candado)
             {
-                if (escritor != null) escritor.Dispose();
-
                 inicioUtc = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                proximoUtc = inicioUtc;
                 muestras = 0;
-                escritor = new StreamWriter(Ruta, false, new UTF8Encoding(false));
-                escritor.WriteLine("{\"v\":1,\"inicio_utc\":" + inicioUtc + "}");
+                muestrasJson = new StringBuilder();
+                grabando = true;
+
+                if (File.Exists(Ruta)) File.Delete(Ruta);
 
                 return inicioUtc;
             }
@@ -45,9 +59,13 @@ namespace AgenteMirada
         {
             lock (candado)
             {
-                if (escritor == null) return;
+                if (!grabando || m.UtcMs < proximoUtc) return;
 
-                escritor.WriteLine(string.Format(
+                proximoUtc = Math.Max(proximoUtc + INTERVALO_MUESTREO_MS, m.UtcMs + 1);
+
+                if (muestras > 0) muestrasJson.Append(',');
+
+                muestrasJson.Append(string.Format(
                     CultureInfo.InvariantCulture,
                     "{{\"u\":{0},\"t\":{1},\"x\":{2:0.0000},\"y\":{3:0.0000},\"ok\":{4}}}",
                     m.UtcMs,
@@ -64,13 +82,15 @@ namespace AgenteMirada
         {
             lock (candado)
             {
-                if (escritor == null) return null;
+                if (!grabando) return null;
 
                 long fin = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-                escritor.WriteLine("{\"fin_utc\":" + fin + "}");
-                escritor.Dispose();
-                escritor = null;
+                string contenido = "{\"v\":1,\"inicio_utc\":" + inicioUtc + ",\"fin_utc\":" + fin + ",\"muestras\":[" + muestrasJson + "]}";
+                File.WriteAllText(Ruta, contenido, new UTF8Encoding(false));
+
+                grabando = false;
+                muestrasJson = null;
 
                 return "{\"inicio_utc\":" + inicioUtc + ",\"fin_utc\":" + fin + ",\"muestras\":" + muestras + "}";
             }
