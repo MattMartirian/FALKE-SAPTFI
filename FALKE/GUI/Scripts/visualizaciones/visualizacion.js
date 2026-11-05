@@ -1,14 +1,6 @@
 "use strict";
 
-// VISUALIZACION (clase base)
-// Es todo lo que tienen en comun las ventanas del visor: el video, el canvas encima, los controles y el bucle de reproduccion.
-// Cada visualizacion (grabacion, calor, zonas...) hereda de esta con "extends" y solo define lo suyo:
-//   - this.titulo y this.leyenda
-//   - dibujar(): que se dibuja encima del video
-//   - alAbrir() / alCerrar() / alCambiarTamano(): ganchos opcionales para hacer algo extra
-// Nota: en los eventos uso funciones flecha (() => ...) porque asi "this" sigue siendo la visualizacion.
 
-// pasa segundos a "mm:ss" (o "h:mm:ss")
 function aMinutos(segundos) {
     segundos = Math.max(0, segundos || 0);
 
@@ -23,7 +15,6 @@ function aMinutos(segundos) {
 
 class Visualizacion {
     constructor() {
-        // las partes del modal son siempre las mismas para todas las visualizaciones
         this.elTitulo = document.getElementById("visorTitulo");
         this.lienzo = document.getElementById("visorLienzo");
         this.elLeyenda = document.getElementById("visorLeyenda");
@@ -32,16 +23,14 @@ class Visualizacion {
         this.elTiempo = document.getElementById("visorTiempo");
         this.btnReproducir = document.getElementById("btnReproducir");
 
-        this.titulo = "";       // lo define cada visualizacion
-        this.leyenda = "";      // html de la leyenda, lo define cada visualizacion
-        this.sesion = null;     // la sesion que se esta viendo (ahi estan el video y el analisis)
+        this.titulo = "";       
+        this.leyenda = "";      
+        this.sesion = null;     
         this.abierta = false;
         this.video = null;
         this.canvas = null;
-        this.cuadro = 0;        // id del requestAnimationFrame, para poder cancelarlo
+        this.cuadro = 0;        
     }
-
-    // ------------------------------------------------------------------ abrir y cerrar
 
     abrir(sesion) {
         this.sesion = sesion;
@@ -80,21 +69,19 @@ class Visualizacion {
         this.alCerrar();
     }
 
-    // arma el <video>, el <canvas> que va encima (donde se dibuja) y el cartel de error
     crearLienzo() {
         var video = document.createElement("video");
         var canvas = document.createElement("canvas");
         var error = document.createElement("p");
 
-        // sin controles del navegador (los nuestros estan abajo), sin audio, sin descarga ni picture-in-picture
-        video.muted = true;
+        
         video.playsInline = true;
         video.preload = "auto";
         video.disablePictureInPicture = true;
         video.setAttribute("controlslist", "nodownload noplaybackrate");
         video.addEventListener("contextmenu", (e) => e.preventDefault());
 
-        // el canvas tiene 960 de ancho; el alto sale de la proporcion del video cuando carga
+       
         canvas.width = 960;
         canvas.height = 540;
 
@@ -118,11 +105,9 @@ class Visualizacion {
         video.addEventListener("ended", () => this.ponerIcono(false));
         video.addEventListener("error", () => { error.hidden = false; });
 
-        // tocar el video lo pausa / lo reproduce
         canvas.addEventListener("click", () => this.alternar());
     }
 
-    // cuando el video informa su tamano, el lienzo toma su proporcion real (asi lo que va de 0 a 1 cae donde corresponde)
     alCargarVideo() {
         var v = this.video;
 
@@ -135,7 +120,6 @@ class Visualizacion {
         this.arreglarDuracion();
     }
 
-    // un webm grabado en el navegador dice que dura "Infinity": saltando al final y volviendo se calcula la duracion real
     arreglarDuracion() {
         var v = this.video;
 
@@ -150,14 +134,10 @@ class Visualizacion {
         v.currentTime = 1e101;
     }
 
-    // ------------------------------------------------------------------ ganchos (cada visualizacion redefine los que necesite)
-
     alAbrir() { }
     alCerrar() { }
     alCambiarTamano() { }
     dibujar() { }
-
-    // ------------------------------------------------------------------ reproduccion
 
     duracion() {
         var v = this.video;
@@ -165,7 +145,6 @@ class Visualizacion {
         return isFinite(v.duration) && v.duration > 0 ? v.duration : this.sesion.duracionSeg;
     }
 
-    // se llama en cada cambio del video: actualiza el tiempo, la linea y vuelve a dibujar
     actualizar() {
         if (!this.video) return;
 
@@ -178,7 +157,6 @@ class Visualizacion {
         this.dibujar();
     }
 
-    // mientras el video corre, se redibuja en cada cuadro de pantalla
     bucle() {
         this.actualizar();
 
@@ -199,7 +177,6 @@ class Visualizacion {
         this.video.currentTime = Math.max(0, Math.min(this.duracion() || 0, this.video.currentTime + segundos));
     }
 
-    // la linea de tiempo va de 0 a 1000: la paso a segundos del video
     irA(valorLinea) {
         if (!this.video) return;
 

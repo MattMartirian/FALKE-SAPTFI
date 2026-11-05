@@ -2,7 +2,6 @@
 
 // VISOR
 // maneja el modal donde se ven las visualizaciones
-// los botones de abajo (reproducir, +-10 s, linea de tiempo) y el teclado con ella.
 
 var Visor = {
     tipos: {},      
@@ -13,7 +12,6 @@ var Visor = {
 
         if (!nueva || !sesion) return;
 
-        // si habia otra abierta, la cierro antes
         if (Visor.activa) Visor.activa.cerrar();
 
         Visor.activa = nueva;

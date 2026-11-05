@@ -63,7 +63,6 @@ class VisualizacionTramo extends Visualizacion {
     alAbrir() {
         this.video.style.opacity = "0.55";
 
-        // arranca con el video entero y con el tiempo real activado
         this.barraDesde.value = 0;
         this.barraHasta.value = 1000;
         this.checkTiempoReal.checked = true;
@@ -84,7 +83,6 @@ class VisualizacionTramo extends Visualizacion {
         this.aviso = null;
     }
 
-    // al cambiar el alto el canvas se borra: hay que volver a dibujar
     alCambiarTamano() {
         this.clave = "";
     }
@@ -102,27 +100,23 @@ class VisualizacionTramo extends Visualizacion {
         var ctx = this.canvas.getContext("2d");
         var pts = this.sesion.analisis ? this.sesion.analisis.pts : null;
 
-        // todavia no llego el JSON de la mirada, o la sesion no tiene
         if (!pts) {
             ctx.clearRect(0, 0, w, h);
             this.aviso.hidden = !this.sesion.sinMirada;
             return;
         }
 
-        // posiciones de la lista pts donde empieza y termina el tramo
         var primera = buscarMuestra(pts, desdeSeg * 1000 - 1) + 1;
         var ultimaTramo = buscarMuestra(pts, hastaSeg * 1000);
 
         this.aviso.hidden = ultimaTramo >= primera;
 
-        // en tiempo real el calor llega solo hasta donde va el video; si no, usa el tramo entero
         var ultima = ultimaTramo;
 
         if (this.tieneTiempoReal && this.checkTiempoReal.checked) {
             ultima = Math.min(ultimaTramo, buscarMuestra(pts, this.video.currentTime * 1000));
         }
 
-        // si es el mismo tramo que ya esta dibujado no recalculo (con el video corriendo y sin tiempo real no cambia nada)
         var clave = primera + "-" + ultima;
 
         if (clave === this.clave) return;
@@ -137,7 +131,6 @@ class VisualizacionTramo extends Visualizacion {
         if (calor.max > 0) this.dibujarTramo(ctx, w, h, calor, pts, primera, ultima);
     }
 
-    // suma el calor de las muestras desde la posicion "desde" hasta la posicion "hasta" de la lista pts
     armarCalor(pts, desde, hasta) {
         var grilla = new Float32Array(CALOR_ANCHO * CALOR_ALTO);
         var max = 0;
@@ -147,11 +140,9 @@ class VisualizacionTramo extends Visualizacion {
 
             if (!p.ok) continue;
 
-            // x e y van de 0 a 1: las paso a la celda de la grilla donde cae la muestra
             var cx = Math.min(CALOR_ANCHO - 1, Math.max(0, Math.floor(p.x * CALOR_ANCHO)));
             var cy = Math.min(CALOR_ALTO - 1, Math.max(0, Math.floor(p.y * CALOR_ALTO)));
 
-            // pongo el molde sobre esa celda, sumando el peso a cada vecina
             for (var k = 0; k < MOLDE_CALOR.length; k++) {
                 var gx = cx + MOLDE_CALOR[k].dx;
                 var gy = cy + MOLDE_CALOR[k].dy;
@@ -169,6 +160,5 @@ class VisualizacionTramo extends Visualizacion {
         return { grilla: grilla, max: max };
     }
 
-    // lo redefine cada hija: pintar la grilla de calor sobre el canvas
     dibujarTramo(ctx, w, h, calor, pts, primera, ultima) { }
 }

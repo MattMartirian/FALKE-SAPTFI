@@ -2,12 +2,12 @@
 
 // ANALISIS
 
-var INTERVALO_MS = 100;      // el agente guarda 10 muestras por segundo
-var UMBRAL_FIJACION = 0.04;  // dispersion maxima (ancho + alto, en fraccion de pantalla) para decir que la mirada esta quieta
-var ATENCION_MIN_MS = 1500;  // para contar como "atencion" la mirada tiene que quedarse en un punto al menos 1,5 segundos
-var HUECO_MAX_MS = 350;      // si falta mas que esto entre dos muestras, se corta la fijacion
+var INTERVALO_MS = 100;     
+var UMBRAL_FIJACION = 0.04;  
+var ATENCION_MIN_MS = 1500;  
+var HUECO_MAX_MS = 350;      
 
-// pasa el JSON que viene del servidor a una lista de muestras y calcula las metricas generales
+
 function analizar(datos, desfase) {
     var inicio = datos.inicio_utc;
     var lista = datos.muestras || [];
@@ -24,7 +24,7 @@ function analizar(datos, desfase) {
 
     for (var k = 0; k < fijs.length; k++) tFij += fijs[k].dur;
 
-    // atencion: solo cuentan las fijaciones largas (>= ATENCION_MIN_MS), las mas cortas son miradas de paso
+
     var tAtencion = 0;
 
     for (var n = 0; n < fijs.length; n++) {
@@ -44,7 +44,7 @@ function analizar(datos, desfase) {
     };
 }
 
-// agrupa muestras seguidas que quedan juntas (algoritmo I-DT): cada grupo es una fijacion
+
 function fijaciones(v) {
     var res = [];
     var i = 0;
@@ -80,22 +80,22 @@ function fijaciones(v) {
     return res;
 }
 
-// devuelve la posicion de la ultima muestra cuyo tiempo es <= tiempoMs (o -1 si no hay ninguna)
+
 function buscarMuestra(muestras, tiempoMs) {
     var desde = 0;
     var hasta = muestras.length - 1;
     var encontrada = -1;
 
-    // busqueda binaria: miro la del medio y descarto la mitad que no sirve
+    // busqueda binaria
     while (desde <= hasta) {
         var medio = Math.floor((desde + hasta) / 2);
 
         if (muestras[medio].t <= tiempoMs) {
-            // esta sirve, pero puede haber una mejor mas adelante
+            // esta sirve
             encontrada = medio;
             desde = medio + 1;
         } else {
-            // se paso del tiempo, busco en la parte de atras
+            // se pasó
             hasta = medio - 1;
         }
     }

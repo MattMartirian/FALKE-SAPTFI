@@ -15,7 +15,6 @@ class VisualizacionCalor extends VisualizacionTramo {
         this.capa.height = CALOR_ALTO;
     }
 
-    // color de una celda segun cuanto calor tiene
     colorDeCelda(v) {
         //rgb
         var FRIO = [86, 99, 124], MEDIO = [232, 175, 82], CALIENTE = [242, 97, 87];
