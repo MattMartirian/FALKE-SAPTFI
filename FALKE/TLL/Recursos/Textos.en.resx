@@ -4403,7 +4403,7 @@ To activate it and set your password, open this link (it expires in 48 hours):
     <value>Saving the recording to the server… Do not close this page.</value>
   </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
-    <value>The session "{0}" was saved. What would you like to do now?</value>
+    <value>The session "{0}" is now saved in your account.</value>
   </data>
   <data name="grabacion_ok_ver" xml:space="preserve">
     <value>View analysis</value>
@@ -4412,9 +4412,12 @@ To activate it and set your password, open this link (it expires in 48 hours):
     <value>Record another part</value>
   </data>
   <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
-    <value>It reuses the same session and tester data. The new recording will be named "{0}".</value>
+    <value>Continue with another part of the same test. The category and tester data are kept, and it will be named "{0}".</value>
   </data>
   <data name="grabacion_responsable_tu" xml:space="preserve">
     <value>Responsible (you)</value>
+  </data>
+  <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
+    <value>Watch the video and gaze data of what you just recorded.</value>
   </data>
 </root>

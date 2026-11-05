@@ -4403,7 +4403,7 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
     <value>Salvando a gravação no servidor… Não feche esta página.</value>
   </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
-    <value>A sessão "{0}" foi salva. O que deseja fazer agora?</value>
+    <value>A sessão "{0}" já está salva na sua conta.</value>
   </data>
   <data name="grabacion_ok_ver" xml:space="preserve">
     <value>Ver análise</value>
@@ -4412,9 +4412,12 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
     <value>Gravar outra parte</value>
   </data>
   <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
-    <value>Usa os mesmos dados da sessão e do testador. A nova gravação se chamará "{0}".</value>
+    <value>Continue com outra parte do mesmo teste. A categoria e os dados do testador são mantidos, e se chamará "{0}".</value>
   </data>
   <data name="grabacion_responsable_tu" xml:space="preserve">
     <value>Responsável (você)</value>
+  </data>
+  <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
+    <value>Veja o vídeo e o olhar do que você acabou de gravar.</value>
   </data>
 </root>

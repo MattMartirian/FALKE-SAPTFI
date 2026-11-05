@@ -356,6 +356,7 @@
             line-height: 1;
         }
 
+        /* el grabando es todo CSS, sin js. el circulo rojo late con keyframes */
         .indicador-rec
         {
             display: inline-flex;
@@ -375,9 +376,11 @@
             height: 11px;
             border-radius: 50%;
             background: var(--marca-coral);
+             /* aca le digo la animacion y cuanto tarda */
             animation: latir 1.4s ease-in-out infinite;
         }
 
+        /* esta es la animacion */
         @keyframes latir
         {
             0%, 100% { opacity: 1; }
@@ -544,19 +547,59 @@
             text-align: left;
         }
 
-        #panelPaso3[data-estado="preparar"] [data-solo]:not([data-solo~="preparar"]),
-        #panelPaso3[data-estado="cuenta"] [data-solo]:not([data-solo~="cuenta"]),
-        #panelPaso3[data-estado="grabando"] [data-solo]:not([data-solo~="grabando"]),
-        #panelPaso3[data-estado="revisar"] [data-solo]:not([data-solo~="revisar"]),
+        /* barra de la subidam, el relleno se pinta solo segun "value" (0 a 100) */
         .subida { margin: 0 0 12px; }
         .subida progress { width: 100%; height: 10px; }
         .exito-grabacion { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 28px 16px; border: 1px solid var(--borde, #d9dee5); border-radius: 12px; margin-bottom: 12px; color: var(--exito, #1a7f45); }
         .exito-grabacion p { color: inherit; }
         .exito-grabacion .ayuda { color: var(--texto-suave, #5b6675); }
+        .exito-opciones { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; max-width: 720px; margin-top: 12px; }
+        .exito-opcion { flex: 1 1 280px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .exito-opcion .btn { width: 100%; }
+
+        #panelPaso3[data-estado="preparar"] [data-solo]:not([data-solo~="preparar"]),
+        #panelPaso3[data-estado="cuenta"] [data-solo]:not([data-solo~="cuenta"]),
+        #panelPaso3[data-estado="grabando"] [data-solo]:not([data-solo~="grabando"]),
+        #panelPaso3[data-estado="revisar"] [data-solo]:not([data-solo~="revisar"]),
         #panelPaso3[data-estado="guardado"] [data-solo]:not([data-solo~="guardado"]),
         #panelPaso3 [hidden]
         {
             display: none !important;
+        }
+
+        .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden])))
+        {
+            padding: 24px;
+        }
+
+        .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden]))) .asistente .pagina-cabecera,
+        .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden]))) .asistente .pasos-barra,
+        .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden]))) .asistente .controles-grabacion
+        {
+            display: none;
+        }
+
+        .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden]))) .asistente #panelPaso3
+        {
+            flex: 1 1 auto;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden]))) .exito-grabacion
+        {
+            width: 100%;
+            max-width: 680px;
+            margin: 0;
+            padding: 36px 32px 32px;
+            background: var(--superficie);
+            border: 1px solid var(--borde);
+            border-radius: var(--radio-lg);
+            box-shadow: var(--sombra-lg);
         }
 
         .contenido:has(.asistente):not(:has(#panelPaso2:not([hidden])))
@@ -912,6 +955,8 @@
             <p class="sin-margen">[[grabacion_rec_error_guardar]]</p>
         </div>
 
+        <!-- <progress> arranca en 0 y el script le va subiendo "value" (0-100) a medida
+             que el servidor confirma cada parte del video -->
         <div class="subida" id="subida" data-solo="revisar" hidden>
             <progress id="barraSubida" max="100" value="0"></progress>
             <p class="sin-margen" id="textoSubida">[[grabacion_rec_subiendo]]</p>
@@ -921,7 +966,17 @@
             <svg width="44" height="44" aria-hidden="true"><use href="#i-tilde" /></svg>
             <h3 class="sin-margen">[[grabacion_rec_guardada]]</h3>
             <p class="sin-margen" id="exitoTexto"></p>
-            <p class="ayuda sin-margen" id="exitoOtra"></p>
+
+            <div class="exito-opciones">
+                <div class="exito-opcion">
+                    <a class="btn btn-primario btn-grande" href='<%: ResolveUrl("~/Visualizaciones.aspx") %>'>[[grabacion_ok_ver]]</a>
+                    <p class="ayuda sin-margen">[[grabacion_ok_ver_ayuda]]</p>
+                </div>
+                <div class="exito-opcion">
+                    <button type="button" class="btn btn-secundario btn-grande" id="btnOtraParte">[[grabacion_ok_otra]]</button>
+                    <p class="ayuda sin-margen" id="exitoOtra"></p>
+                </div>
+            </div>
         </div>
 
         <div class="aviso aviso-peligro" id="avisoAgente" data-solo="preparar" hidden>
@@ -948,8 +1003,6 @@
             </button>
             <button type="button" class="btn btn-peligro izquierda" id="btnDescartarRec" data-abre-modal="modalCancelar" data-solo="revisar">[[grabacion_rec_descartar]]</button>
             <button type="button" class="btn btn-primario btn-grande" id="btnGuardar" data-solo="revisar">[[grabacion_rec_guardar]]</button>
-            <a class="btn btn-secundario" href='<%: ResolveUrl("~/Visualizaciones.aspx") %>' data-solo="guardado">[[grabacion_ok_ver]]</a>
-            <button type="button" class="btn btn-primario btn-grande" id="btnOtraParte" data-solo="guardado">[[grabacion_ok_otra]]</button>
         </div>
     </section>
 
@@ -1043,8 +1096,11 @@
             var perfil = document.querySelectorAll("[data-perfil]");
             var btnContinuar = document.getElementById("btnContinuar");
 
+            var campoNombre = document.getElementById("grNombre");
+
+            // habilita "Continuar" solo si estan la categoria, el perfil del tester y el nombre
             function revisarPerfil() {
-                var completo = true;
+                var completo = campoNombre.value.trim() !== "";
 
                 for (var i = 0; i < perfil.length; i++) {
                     if (!perfil[i].value) completo = false;
@@ -1056,6 +1112,13 @@
             for (var i = 0; i < perfil.length; i++) {
                 perfil[i].addEventListener("change", revisarPerfil);
             }
+
+            campoNombre.addEventListener("input", revisarPerfil);
+
+            // el navegador puede restaurar los valores (recargar, volver atras) SIN avisar con "change":
+            // por eso se revisa una vez al cargar y cada vez que la pagina se muestra de nuevo
+            revisarPerfil();
+            window.addEventListener("pageshow", revisarPerfil);
 
             var panel = document.getElementById("panelPaso2");
             var resumen = document.getElementById("resumenDispositivo");
@@ -1319,8 +1382,6 @@
                 ponerEstado("preparar");
             }
 
-            // Boton "Iniciar la grabacion": si se eligio un retraso, hace una cuenta regresiva con setInterval
-            // (1 vez por segundo) y recien despues llama a empezar().
             function comenzar() {
                 var retraso = Number(document.querySelector("input[name='grRetraso']:checked").value);
 
@@ -1472,6 +1533,7 @@
             var INTENTOS = 3;
 
             function llamar(metodo, cuerpo) {
+                // aca se hace el fetch con el ajax para actualizar la barra
                 return fetch(urlMetodos + metodo, {
                     method: "POST",
                     headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -1512,6 +1574,9 @@
                 });
             }
 
+            // como avanza la barra :
+            //   - El video se corta en partes de 2 MB (TAMANO_PARTE) con video.slice
+            //   - Cada parte se sube con SubirParte y cuando el servidor responde OK se actualiza la barra
             function subirPartes(token, video, desde) {
                 if (desde >= video.size) return Promise.resolve();
 
@@ -1541,7 +1606,7 @@
                 };
                 var token = null;
 
-                barraSubida.value = 0;
+                barraSubida.value = 0; // empieza vacia; bloquear(true) hace visible el contenedor .subida
                 textoSubida.textContent = "[[js:grabacion_rec_subiendo]]";
                 bloquear(true);
 

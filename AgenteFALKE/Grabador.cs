@@ -6,7 +6,7 @@ using System.Text;
 namespace AgenteMirada
 {
     /// <summary>
-    /// Junta las muestras en memoria (10 por segundo) y, al detener, escribe un unico JSON valido.
+    /// Junta las muestras en memoria (10 por segundo) y, al detener, escribe un unico JSON valido (una muestra por linea, para que se lea bien).
     /// Si la grabacion se interrumpe antes de detener, no queda archivo: se pierde.
     /// </summary>
     public class Grabador
@@ -63,7 +63,7 @@ namespace AgenteMirada
 
                 proximoUtc = Math.Max(proximoUtc + INTERVALO_MUESTREO_MS, m.UtcMs + 1);
 
-                if (muestras > 0) muestrasJson.Append(',');
+                muestrasJson.Append(muestras > 0 ? ",\n" : "\n");
 
                 muestrasJson.Append(string.Format(
                     CultureInfo.InvariantCulture,
@@ -86,7 +86,7 @@ namespace AgenteMirada
 
                 long fin = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-                string contenido = "{\"v\":1,\"inicio_utc\":" + inicioUtc + ",\"fin_utc\":" + fin + ",\"muestras\":[" + muestrasJson + "]}";
+                string contenido = "{\"v\":1,\"inicio_utc\":" + inicioUtc + ",\"fin_utc\":" + fin + ",\"muestras\":[" + muestrasJson + "\n]}";
                 File.WriteAllText(Ruta, contenido, new UTF8Encoding(false));
 
                 grabando = false;

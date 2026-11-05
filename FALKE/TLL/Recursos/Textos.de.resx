@@ -4403,7 +4403,7 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
     <value>Aufnahme wird auf dem Server gespeichert… Schließen Sie diese Seite nicht.</value>
   </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
-    <value>Die Sitzung „{0}“ wurde gespeichert. Was möchten Sie jetzt tun?</value>
+    <value>Die Sitzung „{0}“ ist jetzt in Ihrem Konto gespeichert.</value>
   </data>
   <data name="grabacion_ok_ver" xml:space="preserve">
     <value>Analyse ansehen</value>
@@ -4412,9 +4412,12 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
     <value>Weiteren Teil aufnehmen</value>
   </data>
   <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
-    <value>Es werden dieselben Sitzungs- und Testerdaten verwendet. Die neue Aufnahme heißt „{0}“.</value>
+    <value>Fahren Sie mit einem weiteren Teil desselben Tests fort. Kategorie und Testerdaten bleiben erhalten, die Aufnahme heißt „{0}“.</value>
   </data>
   <data name="grabacion_responsable_tu" xml:space="preserve">
     <value>Verantwortlich (Sie)</value>
+  </data>
+  <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
+    <value>Sehen Sie sich Video und Blickdaten der soeben aufgenommenen Sitzung an.</value>
   </data>
 </root>

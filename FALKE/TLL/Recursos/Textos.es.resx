@@ -4403,7 +4403,7 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Guardando la grabación en el servidor… No cierres esta página.</value>
   </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
-    <value>La sesión «{0}» quedó guardada. ¿Qué quieres hacer ahora?</value>
+    <value>La sesión «{0}» ya está guardada en tu cuenta.</value>
   </data>
   <data name="grabacion_ok_ver" xml:space="preserve">
     <value>Ver análisis</value>
@@ -4412,9 +4412,12 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Grabar otra parte</value>
   </data>
   <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
-    <value>Usa los mismos datos de la sesión y del tester. La nueva grabación se llamará «{0}».</value>
+    <value>Sigue con otra parte de la misma prueba. Se mantienen la categoría y los datos del tester, y se llamará «{0}».</value>
   </data>
   <data name="grabacion_responsable_tu" xml:space="preserve">
     <value>Responsable (tú)</value>
+  </data>
+  <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
+    <value>Mira el video y la mirada de lo que acabas de grabar.</value>
   </data>
 </root>
