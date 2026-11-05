@@ -128,7 +128,7 @@ class VisualizacionTramo extends Visualizacion {
 
         var calor = this.armarCalor(pts, primera, ultima);
 
-        if (calor.max > 0) this.dibujarTramo(ctx, w, h, calor, pts, primera, ultima);
+        if (calor.max > 0) this.dibujarTramo(ctx, w, h, calor);
     }
 
     armarCalor(pts, desde, hasta) {
@@ -160,5 +160,5 @@ class VisualizacionTramo extends Visualizacion {
         return { grilla: grilla, max: max };
     }
 
-    dibujarTramo(ctx, w, h, calor, pts, primera, ultima) { }
+    dibujarTramo(ctx, w, h, calor) { }
 }

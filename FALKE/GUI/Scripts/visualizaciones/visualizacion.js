@@ -45,6 +45,7 @@ class Visualizacion {
         this.elTiempo.textContent = "00:00 / " + aMinutos(sesion.duracionSeg);
 
         this.alAbrir();
+        this.actualizar();
 
         this.video.src = sesion.urlVideo;
     }
@@ -118,6 +119,7 @@ class Visualizacion {
         }
 
         this.arreglarDuracion();
+        this.actualizar();
     }
 
     arreglarDuracion() {
@@ -140,9 +142,10 @@ class Visualizacion {
     dibujar() { }
 
     duracion() {
-        var v = this.video;
+        var real = this.video.duration;
 
-        return isFinite(v.duration) && v.duration > 0 ? v.duration : this.sesion.duracionSeg;
+        // mientras carga, el navegador va informando duraciones parciales (2 s, 5 s... hasta la real): las ignoro si son menores a la guardada
+        return Math.max(this.sesion.duracionSeg, isFinite(real) ? real : 0);
     }
 
     actualizar() {

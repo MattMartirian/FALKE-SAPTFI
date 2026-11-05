@@ -114,7 +114,7 @@ class VisualizacionZonas extends VisualizacionTramo {
         return rectangulos;
     }
 
-    dibujarTramo(ctx, w, h, calor, pts, primera, ultima) {
+    dibujarTramo(ctx, w, h, calor) {
         var ciegas = this.buscarZonasCiegas(calor);
         var zonas = this.buscarZonas(calor);
         var i;
@@ -134,41 +134,16 @@ class VisualizacionZonas extends VisualizacionTramo {
         }
 
         ctx.setLineDash([]);
-
-        var validas = 0;
-
-        for (i = primera; i <= ultima; i++) if (pts[i].ok) validas++;
+        ctx.fillStyle = "rgba(232,175,82,.28)";
+        ctx.strokeStyle = "#E8AF52";
 
         for (i = 0; i < zonas.length; i++) {
             var z = zonas[i];
             var zx = z.x0 / CALOR_ANCHO * w, zy = z.y0 / CALOR_ALTO * h;
             var zw = (z.x1 - z.x0 + 1) / CALOR_ANCHO * w, zh = (z.y1 - z.y0 + 1) / CALOR_ALTO * h;
 
-            ctx.fillStyle = "rgba(232,175,82,.28)";
-            ctx.strokeStyle = "#E8AF52";
             ctx.fillRect(zx, zy, zw, zh);
             ctx.strokeRect(zx, zy, zw, zh);
-
-            
-            var dentro = 0;
-
-            for (var m = primera; m <= ultima; m++) {
-                var pm = pts[m];
-
-                if (pm.ok && pm.x * CALOR_ANCHO >= z.x0 && pm.x * CALOR_ANCHO < z.x1 + 1 && pm.y * CALOR_ALTO >= z.y0 && pm.y * CALOR_ALTO < z.y1 + 1) dentro++;
-            }
-
-            var texto = (i + 1) + " · " + (validas > 0 ? Math.round(dentro * 100 / validas) : 0) + "%";
-
-            ctx.font = "700 15px sans-serif";
-
-            var ancho = ctx.measureText(texto).width + 14;
-
-            ctx.fillStyle = "#0E1A34";
-            ctx.fillRect(zx, zy, ancho, 24);
-            ctx.fillStyle = "#fff";
-            ctx.textBaseline = "middle";
-            ctx.fillText(texto, zx + 7, zy + 12.5);
         }
     }
 }
