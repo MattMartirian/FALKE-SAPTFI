@@ -4420,4 +4420,61 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
     <value>Watch the video and gaze data of what you just recorded.</value>
   </data>
+  <data name="vis_elige_sesion" xml:space="preserve">
+    <value>Choose a session from the list to see its analysis.</value>
+  </data>
+  <data name="vis_sin_sesiones_empresa" xml:space="preserve">
+    <value>There are no recorded sessions yet. Once you record one, it will appear here.</value>
+  </data>
+  <data name="vis_error_cargar" xml:space="preserve">
+    <value>The data for this session could not be loaded. Try again.</value>
+  </data>
+  <data name="vis_error_listado" xml:space="preserve">
+    <value>The sessions could not be loaded.</value>
+  </data>
+  <data name="vis_sin_mirada" xml:space="preserve">
+    <value>This session has no gaze data: only the video is available.</value>
+  </data>
+  <data name="vis_filtro_edad" xml:space="preserve">
+    <value>Age: all</value>
+  </data>
+  <data name="vis_filtro_genero" xml:space="preserve">
+    <value>Gender: all</value>
+  </data>
+  <data name="vis_filtro_familiaridad" xml:space="preserve">
+    <value>Familiarity: all</value>
+  </data>
+  <data name="vis_tester_perfil" xml:space="preserve">
+    <value>Tester: {0} · {1} · {2} familiarity</value>
+  </data>
+  <data name="vis_objetivo" xml:space="preserve">
+    <value>Objective: {0}</value>
+  </data>
+  <data name="vis_pausar" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="vis_fijacion_activa_n" xml:space="preserve">
+    <value>Active fixation {0}%</value>
+  </data>
+  <data name="vis_sacadico_n" xml:space="preserve">
+    <value>Saccadic movement {0}%</value>
+  </data>
+  <data name="sesion_no_existe" xml:space="preserve">
+    <value>The session does not exist.</value>
+  </data>
+  <data name="vis_ayuda_duracion" xml:space="preserve">
+    <value>How long the whole recording of the session lasts.</value>
+  </data>
+  <data name="vis_ayuda_fijacion_media" xml:space="preserve">
+    <value>Average length of each fixation: the time the gaze stays still on the same point.</value>
+  </data>
+  <data name="vis_ayuda_fijaciones" xml:space="preserve">
+    <value>Number of times the gaze stopped on a point. A fixation is a pause of at least two consecutive samples.</value>
+  </data>
+  <data name="vis_ayuda_atencion" xml:space="preserve">
+    <value>Percentage of the time with valid data in which the gaze stayed on the same point for at least 1.5 seconds in a row.</value>
+  </data>
+  <data name="vis_ayuda_sacadico" xml:space="preserve">
+    <value>Percentage of the time with valid data in which the gaze was not attentive: it was moving from one point to another or did not stay long enough on any. It is 100% minus active attention.</value>
+  </data>
 </root>

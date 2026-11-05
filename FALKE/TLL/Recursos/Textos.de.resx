@@ -4420,4 +4420,61 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
     <value>Sehen Sie sich Video und Blickdaten der soeben aufgenommenen Sitzung an.</value>
   </data>
+  <data name="vis_elige_sesion" xml:space="preserve">
+    <value>Wählen Sie eine Sitzung aus der Liste, um die Analyse zu sehen.</value>
+  </data>
+  <data name="vis_sin_sesiones_empresa" xml:space="preserve">
+    <value>Es gibt noch keine aufgenommenen Sitzungen. Sobald Sie eine aufnehmen, erscheint sie hier.</value>
+  </data>
+  <data name="vis_error_cargar" xml:space="preserve">
+    <value>Die Daten dieser Sitzung konnten nicht geladen werden. Versuchen Sie es erneut.</value>
+  </data>
+  <data name="vis_error_listado" xml:space="preserve">
+    <value>Die Sitzungen konnten nicht geladen werden.</value>
+  </data>
+  <data name="vis_sin_mirada" xml:space="preserve">
+    <value>Diese Sitzung hat keine Blickdaten: Es ist nur das Video verfügbar.</value>
+  </data>
+  <data name="vis_filtro_edad" xml:space="preserve">
+    <value>Alter: alle</value>
+  </data>
+  <data name="vis_filtro_genero" xml:space="preserve">
+    <value>Geschlecht: alle</value>
+  </data>
+  <data name="vis_filtro_familiaridad" xml:space="preserve">
+    <value>Vertrautheit: alle</value>
+  </data>
+  <data name="vis_tester_perfil" xml:space="preserve">
+    <value>Tester: {0} · {1} · Vertrautheit {2}</value>
+  </data>
+  <data name="vis_objetivo" xml:space="preserve">
+    <value>Ziel: {0}</value>
+  </data>
+  <data name="vis_pausar" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="vis_fijacion_activa_n" xml:space="preserve">
+    <value>Aktive Fixation {0}%</value>
+  </data>
+  <data name="vis_sacadico_n" xml:space="preserve">
+    <value>Sakkadische Bewegung {0}%</value>
+  </data>
+  <data name="sesion_no_existe" xml:space="preserve">
+    <value>Die Sitzung existiert nicht.</value>
+  </data>
+  <data name="vis_ayuda_duracion" xml:space="preserve">
+    <value>Wie lange die gesamte Aufnahme der Sitzung dauert.</value>
+  </data>
+  <data name="vis_ayuda_fijacion_media" xml:space="preserve">
+    <value>Durchschnittliche Dauer jeder Fixation: die Zeit, in der der Blick auf demselben Punkt ruhig bleibt.</value>
+  </data>
+  <data name="vis_ayuda_fijaciones" xml:space="preserve">
+    <value>Anzahl der Male, die der Blick an einem Punkt angehalten hat. Eine Fixation ist eine Pause von mindestens zwei aufeinanderfolgenden Messwerten.</value>
+  </data>
+  <data name="vis_ayuda_atencion" xml:space="preserve">
+    <value>Prozentsatz der Zeit mit gültigen Daten, in der der Blick mindestens 1,5 Sekunden am Stück auf demselben Punkt blieb.</value>
+  </data>
+  <data name="vis_ayuda_sacadico" xml:space="preserve">
+    <value>Prozentsatz der Zeit mit gültigen Daten, in der der Blick nicht aufmerksam war: Er bewegte sich von einem Punkt zum anderen oder blieb an keinem lange genug. Es sind 100% minus aktive Aufmerksamkeit.</value>
+  </data>
 </root>

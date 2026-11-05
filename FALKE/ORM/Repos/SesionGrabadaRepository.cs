@@ -59,6 +59,31 @@ namespace ORM
             return lista;
         }
 
+        // El filtro por empresa va en el SQL (JOIN con la categoria): una sesion de otra empresa no se puede traer ni sabiendo su ID.
+        private const string SQL_CON_DATOS = @"
+            SELECT s.*, c.nombre_categoria, c.tipo_activo_digital_categoria,
+                   LTRIM(RTRIM(ISNULL(u.nombre_usuario, '') + ' ' + ISNULL(u.apellido_usuario, ''))) AS nombre_analista
+            FROM SesionGrabadaTable s
+            INNER JOIN CategoriaTable c ON c.id_categoria = s.id_categoria
+            LEFT JOIN UsuarioTable u ON u.id_usuario = s.id_usuario
+            WHERE c.id_empresa = @idEmpresa";
+
+        public List<SesionGrabada_BE> ObtenerPorEmpresa(int idEmpresa)
+        {
+            var dt = Gestor.EjecutarQuery(SQL_CON_DATOS + " ORDER BY s.fecha_sesion DESC", new SqlParameter("@idEmpresa", idEmpresa));
+            var lista = new List<SesionGrabada_BE>();
+            foreach (DataRow row in dt.Rows) lista.Add(Map(row));
+            return lista;
+        }
+
+        public SesionGrabada_BE ObtenerDeEmpresa(int idEmpresa, int idSesion)
+        {
+            var dt = Gestor.EjecutarQuery(SQL_CON_DATOS + " AND s.id_sesion = @idSesion",
+                new SqlParameter("@idEmpresa", idEmpresa),
+                new SqlParameter("@idSesion", idSesion));
+            return dt.Rows.Count == 0 ? null : Map(dt.Rows[0]);
+        }
+
         public int ContarEncadenadas(int idCategoria, string nombreBase)
         {
             var dt = Gestor.EjecutarQuery(
@@ -87,7 +112,10 @@ namespace ORM
                 Muestras = Valor<int>(dr, "muestras_sesion"),
                 BytesVideo = Valor<long>(dr, "bytes_video_sesion"),
                 DesfaseMiradaMs = Valor<int>(dr, "desfase_mirada_ms_sesion"),
-                DVH = Valor<string>(dr, "DVH")
+                DVH = Valor<string>(dr, "DVH"),
+                NombreCategoria = dr.Table.Columns.Contains("nombre_categoria") ? Valor<string>(dr, "nombre_categoria") : null,
+                TipoActivo = dr.Table.Columns.Contains("tipo_activo_digital_categoria") ? Valor<string>(dr, "tipo_activo_digital_categoria") : null,
+                NombreAnalista = dr.Table.Columns.Contains("nombre_analista") ? Valor<string>(dr, "nombre_analista") : null
             };
         }
     }

@@ -4420,4 +4420,61 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="grabacion_ok_ver_ayuda" xml:space="preserve">
     <value>Mira el video y la mirada de lo que acabas de grabar.</value>
   </data>
+  <data name="vis_elige_sesion" xml:space="preserve">
+    <value>Elige una sesión del listado para ver su análisis.</value>
+  </data>
+  <data name="vis_sin_sesiones_empresa" xml:space="preserve">
+    <value>Todavía no hay sesiones grabadas. Cuando grabes una, aparecerá acá.</value>
+  </data>
+  <data name="vis_error_cargar" xml:space="preserve">
+    <value>No se pudieron cargar los datos de esta sesión. Intenta de nuevo.</value>
+  </data>
+  <data name="vis_error_listado" xml:space="preserve">
+    <value>No se pudieron cargar las sesiones.</value>
+  </data>
+  <data name="vis_sin_mirada" xml:space="preserve">
+    <value>Esta sesión no tiene datos de mirada: solo se puede ver el video.</value>
+  </data>
+  <data name="vis_filtro_edad" xml:space="preserve">
+    <value>Edad: todas</value>
+  </data>
+  <data name="vis_filtro_genero" xml:space="preserve">
+    <value>Género: todos</value>
+  </data>
+  <data name="vis_filtro_familiaridad" xml:space="preserve">
+    <value>Familiaridad: todas</value>
+  </data>
+  <data name="vis_tester_perfil" xml:space="preserve">
+    <value>Tester: {0} · {1} · familiaridad {2}</value>
+  </data>
+  <data name="vis_objetivo" xml:space="preserve">
+    <value>Objetivo: {0}</value>
+  </data>
+  <data name="vis_pausar" xml:space="preserve">
+    <value>Pausar</value>
+  </data>
+  <data name="vis_fijacion_activa_n" xml:space="preserve">
+    <value>Fijación activa {0}%</value>
+  </data>
+  <data name="vis_sacadico_n" xml:space="preserve">
+    <value>Movimiento sacádico {0}%</value>
+  </data>
+  <data name="sesion_no_existe" xml:space="preserve">
+    <value>La sesión no existe.</value>
+  </data>
+  <data name="vis_ayuda_duracion" xml:space="preserve">
+    <value>Cuánto dura la grabación completa de la sesión.</value>
+  </data>
+  <data name="vis_ayuda_fijacion_media" xml:space="preserve">
+    <value>Cuánto dura, en promedio, cada fijación: el tiempo que la mirada se queda quieta en un mismo punto.</value>
+  </data>
+  <data name="vis_ayuda_fijaciones" xml:space="preserve">
+    <value>Cantidad de veces que la mirada se detuvo en un punto. Una fijación es una pausa de al menos dos muestras seguidas.</value>
+  </data>
+  <data name="vis_ayuda_atencion" xml:space="preserve">
+    <value>Porcentaje del tiempo con datos válidos en que la mirada se mantuvo en un mismo punto durante al menos 1,5 segundos seguidos.</value>
+  </data>
+  <data name="vis_ayuda_sacadico" xml:space="preserve">
+    <value>Porcentaje del tiempo con datos válidos en que la mirada no estuvo atenta: se movía de un punto a otro o no se quedó el tiempo suficiente en ninguno. Es 100% menos la atención activa.</value>
+  </data>
 </root>

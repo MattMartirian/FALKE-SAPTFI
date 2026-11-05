@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using BE;
 using ORM;
@@ -27,6 +28,36 @@ namespace BLL
             categoriaRepo = new CategoriaRepository();
             gestorIntegridad = new GestorIntegridad_SERVICE();
             bitacora = new BitacoraGestor_TLL();
+        }
+
+        /// <summary>
+        /// Sesiones de la empresa del usuario con la sesion iniciada. La empresa sale del ACTOR (sesion del servidor),
+        /// nunca de un parametro: no hay forma de pedir las de otra empresa.
+        /// </summary>
+        public List<SesionGrabada_BE> Listar(ActorUsuario_TE actor)
+        {
+            actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
+
+            if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
+
+            return sesionRepo.ObtenerPorEmpresa(actor.IdEmpresa);
+        }
+
+        /// <summary>
+        /// Una sesion, solo si es de la empresa del actor. Si no existe o es de otra empresa, el resultado es el mismo
+        /// (sesion_no_existe) para no revelar que el ID existe.
+        /// </summary>
+        public SesionGrabada_BE ObtenerPropia(ActorUsuario_TE actor, int idSesion)
+        {
+            actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
+
+            if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
+
+            SesionGrabada_BE sesion = sesionRepo.ObtenerDeEmpresa(actor.IdEmpresa, idSesion);
+
+            if (sesion == null) throw new ExcepcionTraducible_TLL("sesion_no_existe");
+
+            return sesion;
         }
 
         public static string NombreVideo(int idSesion) { return idSesion + ".webm"; }

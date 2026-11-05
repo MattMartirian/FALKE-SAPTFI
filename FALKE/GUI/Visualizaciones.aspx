@@ -45,6 +45,35 @@
             gap: 6px;
         }
 
+        .vis-filtros
+        {
+            display: grid;
+            gap: 8px;
+        }
+
+        .vis-sesion .categoria
+        {
+            display: block;
+            font-size: .76rem;
+            color: var(--texto-suave);
+        }
+
+        .visor-lienzo video,
+        .visor-lienzo canvas
+        {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .visual .grafico canvas
+        {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
         .vis-lista
         {
             display: flex;
@@ -340,6 +369,32 @@
             }
             .vis-main { padding: 18px 16px 48px; }
         }
+
+        /* ayuda de cada metrica: aparece al pasar el mouse (o al enfocar con el teclado) */
+        .metrica { position: relative; cursor: help; outline: none; }
+        .metrica::after
+        {
+            content: attr(data-ayuda);
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 230px;
+            padding: 8px 10px;
+            border-radius: var(--radio);
+            background: var(--superficie-alt);
+            color: var(--texto-sobre-primario);
+            font-size: .78rem;
+            line-height: 1.35;
+            box-shadow: var(--sombra-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .15s;
+            z-index: 20;
+            pointer-events: none;
+        }
+        .metrica:hover::after,
+        .metrica:focus-visible::after { opacity: 1; visibility: visible; }
+        .metrica:last-child::after { left: auto; right: 0; }
     </style>
 </asp:Content>
 
@@ -367,6 +422,21 @@
             <button type="button" class="chip" aria-pressed="false" data-categoria="appmovil" data-i18n="vis.cat.appmovil">[[analisismultiple_app_movil]]</button>
         </div>
 
+        <div class="vis-filtros" role="group" aria-label="[[grabacion_tester_titulo]]">
+            <select class="entrada" id="filtroEdad" aria-label="[[grabacion_tester_edad]]">
+                <option value="">[[vis_filtro_edad]]</option>
+                <asp:Repeater ID="rptFiltroEdad" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
+            </select>
+            <select class="entrada" id="filtroGenero" aria-label="[[grabacion_tester_genero]]">
+                <option value="">[[vis_filtro_genero]]</option>
+                <asp:Repeater ID="rptFiltroGenero" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
+            </select>
+            <select class="entrada" id="filtroFamiliaridad" aria-label="[[grabacion_tester_familiaridad]]">
+                <option value="">[[vis_filtro_familiaridad]]</option>
+                <asp:Repeater ID="rptFiltroFamiliaridad" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
+            </select>
+        </div>
+
         <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Categorias.aspx") %>">
             <svg width="16" height="16" aria-hidden="true"><use href="#i-mas" /></svg>
             <span data-i18n="vis.nuevaCategoria">[[categorias_nueva_categoria]]</span>
@@ -375,55 +445,23 @@
         <h2 data-i18n="vis.rail.listado">[[visualizaciones_listado_de_sesiones]]</h2>
 
         <div class="vis-lista" id="listaSesiones">
-
-            <button type="button" class="vis-sesion" aria-current="true"
-                    data-categoria="appweb" data-estado="finalizado" data-tipo="App e-commerce"
-                    data-nombre="Checkout — App e-commerce" data-fecha="12 jul 2026" data-duracion="18:42" data-analista="María Gómez">
-                <span class="nombre">Checkout — App e-commerce</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
-                <span class="meta">12 jul 2026 &middot; 18:42</span>
-            </button>
-
-            <button type="button" class="vis-sesion"
-                    data-categoria="videojuego" data-estado="finalizado" data-tipo="RPG móvil"
-                    data-nombre="Onboarding — RPG móvil" data-fecha="10 jul 2026" data-duracion="09:15" data-analista="Nicolás Castro">
-                <span class="nombre">Onboarding — RPG móvil</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
-                <span class="meta">10 jul 2026 &middot; 09:15</span>
-            </button>
-
-            <button type="button" class="vis-sesion" disabled
-                    data-categoria="publicidad" data-estado="procesando" data-tipo="Campaña Q3"
-                    data-nombre="Landing — Campaña Q3" data-fecha="08 jul 2026" data-duracion="04:03" data-analista="María Gómez">
-                <span class="nombre">Landing — Campaña Q3</span>
-                <span class="badge-vivo" data-i18n="estado.procesando">[[panel_procesando]]</span>
-                <span class="meta">08 jul 2026 &middot; 04:03</span>
-            </button>
-
-            <button type="button" class="vis-sesion"
-                    data-categoria="software" data-estado="finalizado" data-tipo="Panel interno"
-                    data-nombre="Login — Panel interno" data-fecha="05 jul 2026" data-duracion="06:51" data-analista="María Gómez">
-                <span class="nombre">Login — Panel interno</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
-                <span class="meta">05 jul 2026 &middot; 06:51</span>
-            </button>
-
-            <button type="button" class="vis-sesion"
-                    data-categoria="appweb" data-estado="finalizado" data-tipo="App e-commerce"
-                    data-nombre="Carrito — App e-commerce" data-fecha="01 jul 2026" data-duracion="12:27" data-analista="Valentina Ruiz">
-                <span class="nombre">Carrito — App e-commerce</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
-                <span class="meta">01 jul 2026 &middot; 12:27</span>
-            </button>
-
-            <button type="button" class="vis-sesion"
-                    data-categoria="appmovil" data-estado="finalizado" data-tipo="App móvil"
-                    data-nombre="Alta de cuenta — App móvil" data-fecha="27 jun 2026" data-duracion="07:40" data-analista="Nicolás Castro">
-                <span class="nombre">Alta de cuenta — App móvil</span>
-                <span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span>
-                <span class="meta">27 jun 2026 &middot; 07:40</span>
-            </button>
-
+            <%-- Una fila por sesion de la empresa del usuario (la arma el servidor). El token es al azar: no es el ID de la base. --%>
+            <asp:Repeater ID="rptSesiones" runat="server">
+                <ItemTemplate>
+                    <button type="button" class="vis-sesion"
+                            data-token='<%#: Eval("Token") %>' data-categoria='<%#: Eval("TipoClave") %>'
+                            data-nombre='<%#: Eval("Nombre") %>' data-categoria-nombre='<%#: Eval("Categoria") %>' data-tipo='<%#: Eval("Tipo") %>'
+                            data-fecha='<%#: Eval("Fecha") %>' data-duracion='<%#: Eval("Duracion") %>' data-duracion-seg='<%#: Eval("DuracionSegundos") %>'
+                            data-analista='<%#: Eval("Analista") %>' data-objetivo='<%#: Eval("Objetivo") %>' data-muestras='<%#: Eval("Muestras") %>'
+                            data-edad='<%#: Eval("Edad") %>' data-genero='<%#: Eval("Genero") %>' data-familiaridad='<%#: Eval("Familiaridad") %>'
+                            data-perfil='<%#: Eval("Perfil") %>' data-desfase='<%#: Eval("DesfaseMs") %>'>
+                        <span class="nombre"><%#: Eval("Nombre") %></span>
+                        <span class="categoria"><%#: Eval("Categoria") %></span>
+                        <span class="badge badge-exito">[[panel_finalizado]]</span>
+                        <span class="meta"><%#: Eval("Fecha") %> &middot; <%#: Eval("Duracion") %></span>
+                    </button>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
 
         <div class="vacio" id="sesionesVacio" hidden>
@@ -435,18 +473,35 @@
 
     <div class="vis-main">
 
+        <% if (HayError) { %>
+        <div class="aviso aviso-peligro">
+            <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
+            <p class="sin-margen">[[vis_error_listado]]</p>
+        </div>
+        <% } %>
+
+        <div class="vacio" id="vacioMain">
+            <svg width="28" height="28" aria-hidden="true"><use href="#i-video" /></svg>
+            <p class="sin-margen"><%: Traducir(HaySesiones ? "vis_elige_sesion" : "vis_sin_sesiones_empresa") %></p>
+            <% if (!HaySesiones) { %>
+            <a class="btn btn-primario" href="<%: ResolveUrl("~/NuevaGrabacion.aspx") %>">[[app_nueva_grabacion]]</a>
+            <% } %>
+        </div>
+
+        <div id="detalle" hidden>
+
         <p class="migas">
             <span data-i18n="vis.rail.sesiones">[[categorias_sesiones]]</span>
             <span aria-hidden="true">/</span>
-            <strong id="migaSesion">Checkout — App e-commerce</strong>
+            <strong id="migaSesion"></strong>
         </p>
 
         <div class="pagina-cabecera">
             <div>
-                <h1 id="tituloSesion" tabindex="-1">Checkout — App e-commerce</h1>
-                <p class="texto-suave sin-margen" id="subtituloSesion">
-                    12 jul 2026 &middot; 18:42 min &middot; Analista: María Gómez &middot; App e-commerce
-                </p>
+                <h1 id="tituloSesion" tabindex="-1"></h1>
+                <p class="texto-suave sin-margen" id="subtituloSesion"></p>
+                <p class="texto-suave sin-margen" id="perfilSesion"></p>
+                <p class="texto-suave sin-margen" id="objetivoSesion" hidden></p>
             </div>
             <div class="acciones">
                 <button type="button" class="btn btn-primario" data-abre-modal="modalExportar">
@@ -456,7 +511,17 @@
             </div>
         </div>
 
-        <div class="tablero">
+        <div class="aviso aviso-alerta" id="avisoSinMirada" hidden>
+            <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
+            <p class="sin-margen">[[vis_sin_mirada]]</p>
+        </div>
+
+        <div class="aviso aviso-peligro" id="avisoErrorSesion" hidden>
+            <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
+            <p class="sin-margen">[[vis_error_cargar]]</p>
+        </div>
+
+        <div class="tablero" id="tablero">
 
             <div class="visual destacada">
                 <span class="rotulo">
@@ -464,24 +529,24 @@
                     <span data-i18n="vis.metricas.titulo">[[visualizaciones_metricas_generales]]</span>
                 </span>
                 <div class="metricas">
-                    <div>
-                        <div class="metrica-valor">18:42</div>
+                    <div class="metrica" tabindex="0" data-ayuda="[[vis_ayuda_duracion]]">
+                        <div class="metrica-valor" id="mDuracion">-</div>
                         <div class="metrica-nombre" data-i18n="vis.metrica.duracion">[[visualizaciones_duracion_total]]</div>
                     </div>
-                    <div>
-                        <div class="metrica-valor">2,3 s</div>
+                    <div class="metrica" tabindex="0" data-ayuda="[[vis_ayuda_fijacion_media]]">
+                        <div class="metrica-valor" id="mFijacionMedia">-</div>
                         <div class="metrica-nombre" data-i18n="vis.metrica.fijacionMedia">[[analisismultiple_fijacion_media]]</div>
                     </div>
-                    <div>
-                        <div class="metrica-valor">47</div>
+                    <div class="metrica" tabindex="0" data-ayuda="[[vis_ayuda_fijaciones]]">
+                        <div class="metrica-valor" id="mFijaciones">-</div>
                         <div class="metrica-nombre" data-i18n="vis.metrica.fijaciones">[[visualizaciones_fijaciones]]</div>
                     </div>
-                    <div>
-                        <div class="metrica-valor">62%</div>
+                    <div class="metrica" tabindex="0" data-ayuda="[[vis_ayuda_atencion]]">
+                        <div class="metrica-valor" id="mAtencion">-</div>
                         <div class="metrica-nombre" data-i18n="vis.metrica.atencion">[[analisismultiple_atencion_activa]]</div>
                     </div>
-                    <div>
-                        <div class="metrica-valor">38%</div>
+                    <div class="metrica" tabindex="0" data-ayuda="[[vis_ayuda_sacadico]]">
+                        <div class="metrica-valor" id="mSacadico">-</div>
                         <div class="metrica-nombre" data-i18n="vis.metrica.sacadico">[[visualizaciones_movimiento_sacadico]]</div>
                     </div>
                 </div>
@@ -596,6 +661,8 @@
 
         </div>
 
+        </div>
+
     </div>
 </div>
 
@@ -605,7 +672,7 @@
         <div class="modal-cabecera">
             <div>
                 <h2 id="visorTitulo" data-i18n="vis.visor.titulo">[[visualizaciones_grabacion_con_seguimiento]]</h2>
-                <p class="subtitulo sin-margen" id="visorSubtitulo">Checkout — App e-commerce &middot; 12 jul 2026</p>
+                <p class="subtitulo sin-margen" id="visorSubtitulo"></p>
             </div>
             <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
@@ -616,24 +683,24 @@
 
             <div class="visor-lienzo" id="visorLienzo"></div>
 
-            <div class="visor-controles">
+            <div class="visor-controles" id="visorControles">
                 <div class="visor-botones">
-                    <button type="button" class="icono-boton" aria-label="[[visualizaciones_retroceder_diez_segundos]]">
+                    <button type="button" class="icono-boton" id="btnAtras" aria-label="[[visualizaciones_retroceder_diez_segundos]]">
                         <svg width="20" height="20" aria-hidden="true"><use href="#i-atras" /></svg>
                     </button>
                     <button type="button" class="icono-boton principal" id="btnReproducir" aria-label="[[visualizaciones_reproducir]]">
                         <svg width="20" height="20" aria-hidden="true" data-icono-play><use href="#i-play" /></svg>
                         <svg width="20" height="20" aria-hidden="true" data-icono-pausa style="display:none"><use href="#i-pausa" /></svg>
                     </button>
-                    <button type="button" class="icono-boton" aria-label="[[visualizaciones_adelantar_diez_segundos]]">
+                    <button type="button" class="icono-boton" id="btnAdelante" aria-label="[[visualizaciones_adelantar_diez_segundos]]">
                         <svg width="20" height="20" aria-hidden="true"><use href="#i-adelante" /></svg>
                     </button>
                 </div>
 
-                <span class="visor-tiempo" id="visorTiempo">06:32 / 18:42</span>
+                <span class="visor-tiempo" id="visorTiempo">00:00 / 00:00</span>
 
                 <label class="solo-lectores" for="visorLinea" data-i18n="vis.visor.linea">[[visualizaciones_posicion_en_la_grabacion]]</label>
-                <input type="range" class="linea-tiempo" id="visorLinea" min="0" max="100" value="35" />
+                <input type="range" class="linea-tiempo" id="visorLinea" min="0" max="1000" value="0" />
 
                 <button type="button" class="btn btn-secundario btn-chico" data-cierra-modal data-i18n="comun.salir">[[visualizaciones_salir]]</button>
             </div>
@@ -749,20 +816,68 @@
     <script>
         (function () {
             "use strict";
+            // COMO FUNCIONA ESTA PAGINA
+            // - La lista de sesiones la arma el backend con las de la empresa del usuario logueado.
+            // - Al elegir una sesion se pide el JSON a GrabacionArchivo.ashx
+            // - El video tambien sale de GrabacionArchivo.ashx (con Range, para poder saltar).
+
+            var URL_ARCHIVO = "<%: ResolveUrl("~/GrabacionArchivo.ashx") %>";
+            var INTERVALO_MS = 100;      // el agente guarda 10 muestras por segundo
+            var UMBRAL_FIJACION = 0.04;  // dispersion maxima (ancho + alto, en fraccion de pantalla) para decir que la mirada esta quieta
+            var ATENCION_MIN_MS = 1500;  // para contar como "atencion" la mirada tiene que quedarse en un punto al menos 1,5 segundos
+            var HUECO_MAX_MS = 350;      // si falta mas que esto entre dos muestras, se corta la fijacion
+            var COLOR_CORAL = "#F26157";
+            var COLOR_AMBAR = "#E8AF52";
+            var COLOR_GRIS = "#56637C";
 
             var chips = document.querySelectorAll(".vis-chips .chip");
             var sesiones = document.querySelectorAll(".vis-sesion");
             var buscar = document.getElementById("visBuscar");
+            var filtroEdad = document.getElementById("filtroEdad");
+            var filtroGenero = document.getElementById("filtroGenero");
+            var filtroFamiliaridad = document.getElementById("filtroFamiliaridad");
             var vacio = document.getElementById("sesionesVacio");
             var categoriaActiva = "todas";
 
+            var vacioMain = document.getElementById("vacioMain");
+            var detalle = document.getElementById("detalle");
             var tituloSesion = document.getElementById("tituloSesion");
             var migaSesion = document.getElementById("migaSesion");
             var subtituloSesion = document.getElementById("subtituloSesion");
+            var perfilSesion = document.getElementById("perfilSesion");
+            var objetivoSesion = document.getElementById("objetivoSesion");
+            var avisoSinMirada = document.getElementById("avisoSinMirada");
+            var avisoErrorSesion = document.getElementById("avisoErrorSesion");
             var visorSubtitulo = document.getElementById("visorSubtitulo");
+
+            var actual = null;   
+            var cargaN = 0;      // numero de la ultima carga, para ignorar respuestas viejas si el usuario cambia rapido
+            var reproductor = null; 
 
             function normalizar(texto) {
                 return window.Falke && window.Falke.normalizar ? window.Falke.normalizar(texto) : String(texto || "").toLowerCase().trim();
+            }
+
+            function urlArchivo(token, tipo) {
+                return URL_ARCHIVO + "?t=" + encodeURIComponent(token) + "&k=" + tipo;
+            }
+
+            function formatoNumero(n) {
+                try {
+                    return new Intl.NumberFormat(document.documentElement.lang || undefined, { maximumFractionDigits: 1 }).format(n);
+                } catch (e) {
+                    return String(Math.round(n * 10) / 10);
+                }
+            }
+
+            function aMinutos(segundos) {
+                segundos = Math.max(0, segundos || 0);
+                var h = Math.floor(segundos / 3600);
+                var m = Math.floor((segundos % 3600) / 60);
+                var s = Math.floor(segundos % 60);
+                var mm = (m < 10 ? "0" : "") + m;
+                var ss = (s < 10 ? "0" : "") + s;
+                return h > 0 ? h + ":" + mm + ":" + ss : mm + ":" + ss;
             }
 
             function filtrar() {
@@ -772,15 +887,18 @@
                 for (var i = 0; i < sesiones.length; i++) {
                     var s = sesiones[i];
                     var okCategoria = categoriaActiva === "todas" || s.getAttribute("data-categoria") === categoriaActiva;
-                    var okTexto = texto === "" || normalizar(s.getAttribute("data-nombre")).indexOf(texto) !== -1;
-                    var mostrar = okCategoria && okTexto;
+                    var okTexto = texto === "" || normalizar(s.getAttribute("data-nombre") + " " + s.getAttribute("data-categoria-nombre")).indexOf(texto) !== -1;
+                    var okEdad = !filtroEdad.value || s.getAttribute("data-edad") === filtroEdad.value;
+                    var okGenero = !filtroGenero.value || s.getAttribute("data-genero") === filtroGenero.value;
+                    var okFam = !filtroFamiliaridad.value || s.getAttribute("data-familiaridad") === filtroFamiliaridad.value;
+                    var mostrar = okCategoria && okTexto && okEdad && okGenero && okFam;
 
                     s.hidden = !mostrar;
 
                     if (mostrar) visibles++;
                 }
 
-                vacio.hidden = visibles > 0;
+                vacio.hidden = visibles > 0 || sesiones.length === 0;
             }
 
             for (var i = 0; i < chips.length; i++) {
@@ -794,33 +912,224 @@
             }
 
             buscar.addEventListener("input", filtrar);
+            filtroEdad.addEventListener("change", filtrar);
+            filtroGenero.addEventListener("change", filtrar);
+            filtroFamiliaridad.addEventListener("change", filtrar);
+
+
+            function analizar(datos, desfase) {
+                var inicio = datos.inicio_utc;
+                var lista = datos.muestras || [];
+                var pts = [];
+
+                for (var i = 0; i < lista.length; i++) {
+                    var m = lista[i];
+                    pts.push({ t: (m.u - inicio) + desfase, x: m.x, y: m.y, ok: m.ok === 1 });
+                }
+
+                var validos = pts.filter(function (p) { return p.ok; });
+                var fijs = fijaciones(validos);
+                var tFij = 0;
+
+                for (var k = 0; k < fijs.length; k++) tFij += fijs[k].dur;
+
+                // atencion: solo cuentan las fijaciones largas (>= ATENCION_MIN_MS), las mas cortas son miradas de paso
+                var tAtencion = 0;
+
+                for (var n = 0; n < fijs.length; n++) {
+                    if (fijs[n].dur >= ATENCION_MIN_MS) tAtencion += fijs[n].dur;
+                }
+
+                var tValido = validos.length * INTERVALO_MS;
+                var atencion = tValido > 0 ? Math.min(100, Math.round(tAtencion * 100 / tValido)) : 0;
+
+                return {
+                    pts: pts,
+                    validos: validos,
+                    fijs: fijs,
+                    atencion: atencion,
+                    sacadico: tValido > 0 ? 100 - atencion : 0,
+                    fijMedia: fijs.length ? tFij / fijs.length / 1000 : 0
+                };
+            }
+
+            function fijaciones(v) {
+                var res = [];
+                var i = 0;
+
+                while (i < v.length) {
+                    var j = i;
+                    var minX = v[i].x, maxX = minX, minY = v[i].y, maxY = minY;
+
+                    while (j + 1 < v.length && v[j + 1].t - v[j].t <= HUECO_MAX_MS) {
+                        var n = v[j + 1];
+                        var nMinX = Math.min(minX, n.x), nMaxX = Math.max(maxX, n.x);
+                        var nMinY = Math.min(minY, n.y), nMaxY = Math.max(maxY, n.y);
+
+                        if ((nMaxX - nMinX) + (nMaxY - nMinY) > UMBRAL_FIJACION) break;
+
+                        minX = nMinX; maxX = nMaxX; minY = nMinY; maxY = nMaxY;
+                        j++;
+                    }
+
+                    if (j > i) {
+                        var sx = 0, sy = 0;
+
+                        for (var k = i; k <= j; k++) { sx += v[k].x; sy += v[k].y; }
+
+                        var c = j - i + 1;
+                        res.push({ t0: v[i].t, dur: (v[j].t - v[i].t) + INTERVALO_MS, x: sx / c, y: sy / c });
+                        i = j + 1;
+                    } else {
+                        i++;
+                    }
+                }
+
+                return res;
+            }
+
+
+            function buscarMuestra(muestras, tiempoMs) {
+                var desde = 0;
+                var hasta = muestras.length - 1;
+                var encontrada = -1;
+
+                // busqueda binaria
+                while (desde <= hasta) {
+                    var medio = Math.floor((desde + hasta) / 2);
+
+                    if (muestras[medio].t <= tiempoMs) {
+                        // sigo
+                        encontrada = medio;
+                        desde = medio + 1;
+                    } else {
+                        // vuelvo
+                        hasta = medio - 1;
+                    }
+                }
+
+                return encontrada;
+            }
+
+            // dibuja el punto de mirada sobre el video segun el segundo
+            function dibujarMiradaEnVideo(ctx, w, h, a, segundos) {
+                var pts = a.pts; 
+                var t = segundos * 1000;
+                var idx = buscarMuestra(pts, t);
+
+                // fallback
+                if (idx < 0) return;
+
+                // estela: las 10 muestras anteriores (~1 segundo), mas transparentes cuanto mas viejas
+                for (var i = Math.max(0, idx - 10); i < idx; i++) {
+                    if (!pts[i].ok) continue;
+
+                    ctx.beginPath();
+                    ctx.arc(pts[i].x * w, pts[i].y * h, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(242,97,87," + (0.3 * (i - (idx - 10)) / 10) + ")";
+                    ctx.fill();
+                }
+
+                var p = pts[idx];
+
+                // fallback para muestars muy viejas o cuando no se detecta mirada
+                if (!p.ok || t - p.t > 400) return;
+
+                ctx.beginPath();
+                ctx.arc(p.x * w, p.y * h, 11, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(242,97,87,.55)";
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#fff";
+                ctx.stroke();
+            }
+
+            function limpiarTablero() {
+                var ids = ["mFijacionMedia", "mFijaciones", "mAtencion", "mSacadico"];
+
+                for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).textContent = "-";
+            }
+
+            function pintarTablero() {
+                var a = actual.analisis;
+
+                document.getElementById("mFijacionMedia").textContent = formatoNumero(a.fijMedia) + " s";
+                document.getElementById("mFijaciones").textContent = a.fijs.length;
+                document.getElementById("mAtencion").textContent = a.atencion + "%";
+                document.getElementById("mSacadico").textContent = a.sacadico + "%";
+
+                if (reproductor) actualizarReproductor();
+            }
 
             function elegirSesion(boton) {
-                if (boton.disabled) return;
+                for (var k = 0; k < sesiones.length; k++) sesiones[k].removeAttribute("aria-current");
 
-                for (var k = 0; k < sesiones.length; k++) {
-                    sesiones[k].removeAttribute("aria-current");
-                }
                 boton.setAttribute("aria-current", "true");
 
                 var nombre = boton.getAttribute("data-nombre");
+                var objetivo = boton.getAttribute("data-objetivo");
+                var n = ++cargaN;
+
+                actual = {
+                    token: boton.getAttribute("data-token"),
+                    nombre: nombre,
+                    fecha: boton.getAttribute("data-fecha"),
+                    duracionSeg: Number(boton.getAttribute("data-duracion-seg")) || 0,
+                    desfase: Number(boton.getAttribute("data-desfase")) || 0,
+                    analisis: null
+                };
+
+                vacioMain.hidden = true;
+                detalle.hidden = false;
+                avisoSinMirada.hidden = true;
+                avisoErrorSesion.hidden = true;
 
                 tituloSesion.textContent = nombre;
                 migaSesion.textContent = nombre;
                 subtituloSesion.textContent = boton.getAttribute("data-fecha") + " · " +
                     boton.getAttribute("data-duracion") + " [[js:visualizaciones_min_analista]] " +
-                    boton.getAttribute("data-analista") + " · " + boton.getAttribute("data-tipo");
+                    boton.getAttribute("data-analista") + " · " + boton.getAttribute("data-categoria-nombre") + " · " + boton.getAttribute("data-tipo");
+                perfilSesion.textContent = boton.getAttribute("data-perfil");
+                objetivoSesion.textContent = objetivo ? "[[js:vis_objetivo]]".replace("{0}", objetivo) : "";
+                objetivoSesion.hidden = !objetivo;
                 visorSubtitulo.textContent = nombre + " · " + boton.getAttribute("data-fecha");
+                document.getElementById("mDuracion").textContent = boton.getAttribute("data-duracion");
+
+                limpiarTablero();
 
                 tituloSesion.focus();
                 if (window.innerWidth <= 940) window.scrollTo(0, tituloSesion.offsetTop - 70);
+
+                if (Number(boton.getAttribute("data-muestras")) === 0) {
+                    avisoSinMirada.hidden = false;
+                    return;
+                }
+
+                fetch(urlArchivo(actual.token, "mirada"), { credentials: "same-origin", cache: "no-store" })
+                    .then(function (respuesta) {
+                        if (!respuesta.ok) throw new Error();
+
+                        return respuesta.json();
+                    })
+                    .then(function (json) {
+                        if (n !== cargaN) return;
+
+                        actual.analisis = analizar(json, actual.desfase);
+                        pintarTablero();
+                    })
+                    .catch(function () {
+                        if (n === cargaN) avisoErrorSesion.hidden = false;
+                    });
             }
 
             for (i = 0; i < sesiones.length; i++) {
                 sesiones[i].addEventListener("click", function () { elegirSesion(this); });
             }
 
-            var VISUALES = {
+            var TITULO_VIDEO = "[[js:visualizaciones_grabacion_con_seguimiento]]";
+            var LEYENDA_VIDEO = '<span><i style="background:' + COLOR_CORAL + '"></i>[[js:visualizaciones_punto_de_mirada_actual]]</span>';
+
+            var MAQUETAS = {
                 grabacion: {
                     titulo: "[[js:visualizaciones_grabacion_con_seguimiento]]",
                     lienzo: '<span class="grafico grafico-video" style="height:100%;aspect-ratio:auto;border:0"></span>',
@@ -880,41 +1189,182 @@
             var visorTitulo = document.getElementById("visorTitulo");
             var visorLienzo = document.getElementById("visorLienzo");
             var visorLeyenda = document.getElementById("visorLeyenda");
-            var abrenVisor = document.querySelectorAll("[data-visual]");
-
-            for (i = 0; i < abrenVisor.length; i++) {
-                abrenVisor[i].addEventListener("click", function () {
-                    var datos = VISUALES[this.getAttribute("data-visual")];
-                    if (!datos) return;
-                    visorTitulo.textContent = datos.titulo;
-                    visorLienzo.innerHTML = datos.lienzo;
-                    visorLeyenda.innerHTML = datos.leyenda;
-                });
-            }
-
-            var btnReproducir = document.getElementById("btnReproducir");
-            var reproduciendo = false;
-
-            btnReproducir.addEventListener("click", function () {
-                reproduciendo = !reproduciendo;
-                this.querySelector("[data-icono-play]").style.display = reproduciendo ? "none" : "";
-                this.querySelector("[data-icono-pausa]").style.display = reproduciendo ? "" : "none";
-                this.setAttribute("aria-label", reproduciendo ? "Pausar" : "Reproducir");
-            });
-
+            var visorControles = document.getElementById("visorControles");
             var visorLinea = document.getElementById("visorLinea");
             var visorTiempo = document.getElementById("visorTiempo");
-            var DURACION_DEMO = 1122;
+            var btnReproducir = document.getElementById("btnReproducir");
+            var modalVisor = document.getElementById("modalVisor");
+            var abrenVisor = document.querySelectorAll("[data-visual]");
+            var cuadroAnimacion = 0;
 
-            function aMinutos(segundos) {
-                var m = Math.floor(segundos / 60);
-                var s = Math.floor(segundos % 60);
-                return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+            function arreglarDuracion(video) {
+                if (video.duration !== Infinity) return;
+
+                var volver = function () {
+                    video.removeEventListener("timeupdate", volver);
+                    video.currentTime = 0;
+                };
+
+                video.addEventListener("timeupdate", volver);
+                video.currentTime = 1e101;
             }
 
+            function duracionEfectiva(video) {
+                return isFinite(video.duration) && video.duration > 0 ? video.duration : (actual ? actual.duracionSeg : 0);
+            }
+
+            function actualizarReproductor() {
+                if (!reproductor || reproductor.tipo !== "grabacion") return;
+
+                var v = reproductor.video;
+                var dur = duracionEfectiva(v);
+
+                visorTiempo.textContent = aMinutos(v.currentTime) + " / " + aMinutos(dur);
+
+                if (dur > 0) visorLinea.value = Math.min(1000, Math.round(v.currentTime * 1000 / dur));
+
+                if (actual && actual.analisis) {
+                    var c = reproductor.canvas;
+                    var ctx = c.getContext("2d");
+
+                    ctx.clearRect(0, 0, c.width, c.height);
+                    dibujarMiradaEnVideo(ctx, c.width, c.height, actual.analisis, v.currentTime);
+                }
+            }
+
+            function bucleReproduccion() {
+                actualizarReproductor();
+
+                if (reproductor && !reproductor.video.paused && !reproductor.video.ended) {
+                    cuadroAnimacion = requestAnimationFrame(bucleReproduccion);
+                }
+            }
+
+            function ponerIconoReproduccion(reproduciendo) {
+                btnReproducir.querySelector("[data-icono-play]").style.display = reproduciendo ? "none" : "";
+                btnReproducir.querySelector("[data-icono-pausa]").style.display = reproduciendo ? "" : "none";
+                btnReproducir.setAttribute("aria-label", reproduciendo ? "[[js:vis_pausar]]" : "[[js:visualizaciones_reproducir]]");
+            }
+
+            function soltarVisor() {
+                cancelAnimationFrame(cuadroAnimacion);
+
+                if (reproductor) {
+                    reproductor.video.pause();
+                    reproductor.video.removeAttribute("src");
+                    reproductor.video.load();
+                }
+
+                visorLienzo.innerHTML = "";
+                visorLienzo.style.aspectRatio = "";
+                reproductor = null;
+            }
+
+            function abrirMaqueta(tipo) {
+                var datos = MAQUETAS[tipo];
+
+                if (!datos) return;
+
+                soltarVisor();
+                visorTitulo.textContent = datos.titulo;
+                visorLienzo.innerHTML = datos.lienzo;
+                visorLeyenda.innerHTML = datos.leyenda;
+                visorControles.hidden = true;
+            }
+
+            function abrirVideo() {
+                if (!actual) return;
+
+                soltarVisor();
+
+                var video = document.createElement("video");
+                var canvas = document.createElement("canvas");
+                var error = document.createElement("p");
+
+                video.muted = true;
+                video.playsInline = true;
+                video.preload = "auto";
+                video.disablePictureInPicture = true;
+                video.setAttribute("controlslist", "nodownload noplaybackrate");
+                video.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+
+                canvas.width = 960;
+                canvas.height = 540;
+
+                error.className = "sin-margen";
+                error.hidden = true;
+                error.style.cssText = "position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;color:#fff;background:rgba(14,26,52,.8)";
+                error.textContent = "[[js:vis_error_cargar]]";
+
+                visorTitulo.textContent = TITULO_VIDEO;
+                visorLeyenda.innerHTML = LEYENDA_VIDEO;
+                visorLienzo.appendChild(video);
+                visorLienzo.appendChild(canvas);
+                visorLienzo.appendChild(error);
+                visorControles.hidden = false;
+                ponerIconoReproduccion(false);
+                visorLinea.value = 0;
+                visorTiempo.textContent = "00:00 / " + aMinutos(actual.duracionSeg);
+
+                reproductor = { video: video, canvas: canvas, tipo: "grabacion" };
+
+                video.addEventListener("loadedmetadata", function () {
+                    if (video.videoWidth && video.videoHeight) {
+                        visorLienzo.style.aspectRatio = video.videoWidth + " / " + video.videoHeight;
+                        canvas.height = Math.round(canvas.width * video.videoHeight / video.videoWidth);
+                    }
+
+                    arreglarDuracion(video);
+                });
+
+                video.addEventListener("timeupdate", actualizarReproductor);
+                video.addEventListener("seeked", actualizarReproductor);
+                video.addEventListener("play", function () { ponerIconoReproduccion(true); cuadroAnimacion = requestAnimationFrame(bucleReproduccion); });
+                video.addEventListener("pause", function () { ponerIconoReproduccion(false); });
+                video.addEventListener("ended", function () { ponerIconoReproduccion(false); });
+                video.addEventListener("error", function () { error.hidden = false; });
+
+                canvas.addEventListener("click", alternarReproduccion);
+
+                video.src = urlArchivo(actual.token, "video");
+            }
+
+            function abrirVisual(tipo) {
+                if (tipo === "grabacion") abrirVideo(); else abrirMaqueta(tipo);
+            }
+
+            function alternarReproduccion() {
+                if (!reproductor) return;
+
+                if (reproductor.video.paused) reproductor.video.play(); else reproductor.video.pause();
+            }
+
+            for (i = 0; i < abrenVisor.length; i++) {
+                abrenVisor[i].addEventListener("click", function () { abrirVisual(this.getAttribute("data-visual")); });
+            }
+
+            new MutationObserver(function () {
+                if (modalVisor.hidden) soltarVisor();
+            }).observe(modalVisor, { attributes: true, attributeFilter: ["hidden"] });
+
+            btnReproducir.addEventListener("click", alternarReproduccion);
+
+            function saltar(segundos) {
+                if (!reproductor) return;
+
+                var v = reproductor.video;
+                var dur = duracionEfectiva(v);
+
+                v.currentTime = Math.max(0, Math.min(dur || 0, v.currentTime + segundos));
+            }
+
+
             visorLinea.addEventListener("input", function () {
-                var actual = DURACION_DEMO * (this.value / 100);
-                visorTiempo.textContent = aMinutos(actual) + " / " + aMinutos(DURACION_DEMO);
+                if (!reproductor) return;
+
+                var dur = duracionEfectiva(reproductor.video);
+
+                reproductor.video.currentTime = dur * (this.value / 1000);
             });
 
             var btnExportar = document.getElementById("btnExportar");
