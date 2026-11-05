@@ -4103,10 +4103,10 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Conecta el Tobii Eye Tracker 5 y completa su calibración.</value>
   </data>
   <data name="descargas_paso_3" xml:space="preserve">
-    <value>Descomprime AgenteMirada.zip en una carpeta y ejecuta AgenteMirada.exe.</value>
+    <value>Ejecuta AgenteMirada.exe: se instala solo y queda activo cada vez que inicias Windows.</value>
   </data>
   <data name="descargas_paso_4" xml:space="preserve">
-    <value>Deja el agente abierto y entra a Nueva grabación.</value>
+    <value>Entra a Nueva grabación. La página comprueba que el agente esté activo.</value>
   </data>
   <data name="descargas_requisitos" xml:space="preserve">
     <value>Requiere Windows 10 u 11 de 64 bits y el Tobii Eye Tracker 5 conectado por USB.</value>
@@ -4137,5 +4137,86 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   </data>
   <data name="descargas_bienvenida_mensaje" xml:space="preserve">
     <value>Para registrar la mirada, esta PC necesita dos programas: el controlador del Tobii Eye Tracker 5 y el agente de Falke. Descárgalos juntos en un solo archivo; se instalan una única vez.</value>
+  </data>
+  <data name="grabacion_prep_titulo" xml:space="preserve">
+    <value>Preparación del equipo</value>
+  </data>
+  <data name="grabacion_prep_bajada" xml:space="preserve">
+    <value>Revisamos que esta PC esté lista para grabar. Los puntos obligatorios deben estar en verde; las calibraciones son recomendadas, no obligatorias.</value>
+  </data>
+  <data name="grabacion_prep_agente" xml:space="preserve">
+    <value>Programa local de FALKE</value>
+  </data>
+  <data name="grabacion_prep_agente_ok" xml:space="preserve">
+    <value>Instalado y activo en esta PC.</value>
+  </data>
+  <data name="grabacion_prep_agente_falta" xml:space="preserve">
+    <value>No se detecta el programa local. Descárgalo e instálalo desde Instalación y vuelve a verificar.</value>
+  </data>
+  <data name="grabacion_prep_ir_instalacion" xml:space="preserve">
+    <value>Ir a Instalación</value>
+  </data>
+  <data name="grabacion_prep_tobii" xml:space="preserve">
+    <value>Tobii Eye Tracker 5</value>
+  </data>
+  <data name="grabacion_prep_tobii_ok" xml:space="preserve">
+    <value>Conectado y listo.</value>
+  </data>
+  <data name="grabacion_prep_tobii_simulado" xml:space="preserve">
+    <value>Conectado (mirada simulada).</value>
+  </data>
+  <data name="grabacion_prep_tobii_falta" xml:space="preserve">
+    <value>No se detecta el eye tracker. Conéctalo por USB y abre Tobii Experience.</value>
+  </data>
+  <data name="grabacion_prep_tobii_sin_agente" xml:space="preserve">
+    <value>Primero se necesita el programa local.</value>
+  </data>
+  <data name="grabacion_prep_pantalla" xml:space="preserve">
+    <value>Captura de pantalla del navegador</value>
+  </data>
+  <data name="grabacion_prep_pantalla_ok" xml:space="preserve">
+    <value>Este navegador puede grabar la pantalla.</value>
+  </data>
+  <data name="grabacion_prep_pantalla_falta" xml:space="preserve">
+    <value>Este navegador no puede grabar la pantalla. Usa una versión reciente de Chrome o Edge.</value>
+  </data>
+  <data name="grabacion_prep_cal_pantalla" xml:space="preserve">
+    <value>Configuración de pantalla</value>
+  </data>
+  <data name="grabacion_prep_cal_pantalla_detalle" xml:space="preserve">
+    <value>Útil si moviste el sensor o cambiaste de monitor. En Tobii Experience toca «Configurar pantalla».</value>
+  </data>
+  <data name="grabacion_prep_cal_vista" xml:space="preserve">
+    <value>Calibración de la vista</value>
+  </data>
+  <data name="grabacion_prep_cal_vista_detalle" xml:space="preserve">
+    <value>Conviene hacerlo antes de cada análisis. En Tobii Experience toca «Mejorar calibración».</value>
+  </data>
+  <data name="grabacion_prep_ya_lo_hice" xml:space="preserve">
+    <value>Ya lo hice</value>
+  </data>
+  <data name="grabacion_prep_confirmado" xml:space="preserve">
+    <value>Confirmado por ti.</value>
+  </data>
+  <data name="grabacion_prep_recomendado" xml:space="preserve">
+    <value>Recomendado</value>
+  </data>
+  <data name="grabacion_prep_abrir_tobii" xml:space="preserve">
+    <value>Abrir Tobii Experience</value>
+  </data>
+  <data name="grabacion_prep_resumen_ok" xml:space="preserve">
+    <value>Todo listo para grabar</value>
+  </data>
+  <data name="grabacion_prep_resumen_ok_recom" xml:space="preserve">
+    <value>Recomendamos revisar las calibraciones antes de cada análisis.</value>
+  </data>
+  <data name="grabacion_prep_resumen_falta" xml:space="preserve">
+    <value>Falta resolver algo para poder grabar</value>
+  </data>
+  <data name="grabacion_prep_resumen_falta_detalle" xml:space="preserve">
+    <value>Soluciona los puntos marcados con una cruz y vuelve a verificar.</value>
+  </data>
+  <data name="grabacion_prep_verificando" xml:space="preserve">
+    <value>Verificando…</value>
   </data>
 </root>

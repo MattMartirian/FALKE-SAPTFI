@@ -66,7 +66,7 @@ namespace GUI
             var lista = new List<Instalador>
             {
                 new Instalador { Archivo = "TobiiExperience.exe", ClaveTitulo = "descargas_tobii_titulo", ClaveDescripcion = "descargas_tobii_descripcion", Enlace = "https://gaming.tobii.com/getstarted/" },
-                new Instalador { Archivo = "AgenteMirada.zip", ClaveTitulo = "descargas_agente_titulo", ClaveDescripcion = "descargas_agente_descripcion" }
+                new Instalador { Archivo = "AgenteMirada.exe", ClaveTitulo = "descargas_agente_titulo", ClaveDescripcion = "descargas_agente_descripcion" }
             };
 
             foreach (Instalador instalador in lista)

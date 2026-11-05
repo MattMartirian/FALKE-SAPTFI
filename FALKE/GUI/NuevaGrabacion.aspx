@@ -130,12 +130,14 @@
 
         .chequeo .nombre
         {
+            display: block;
             font-weight: 600;
             font-size: .92rem;
         }
 
         .chequeo .detalle
         {
+            display: block;
             font-size: .8rem;
             color: var(--texto-suave);
         }
@@ -162,6 +164,76 @@
         {
             background: var(--peligro);
             color: #FFFFFF;
+        }
+
+        .chequeo.pendiente
+        {
+            border-color: var(--alerta);
+            background: var(--alerta-suave);
+        }
+
+        .chequeo.pendiente .icono
+        {
+            background: var(--alerta);
+            color: #FFFFFF;
+        }
+
+        .chequeo .icono > *
+        {
+            display: none;
+        }
+
+        .chequeo:not(.correcto):not(.problema):not(.pendiente) .icono .espera,
+        .chequeo.correcto .icono .si,
+        .chequeo.problema .icono .no,
+        .chequeo.pendiente .icono .pregunta
+        {
+            display: block;
+        }
+
+        .chequeo .icono .pregunta
+        {
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .chequeo:not(.problema) .solo-problema,
+        .sin-agente [data-abre-tobii]
+        {
+            display: none;
+        }
+
+        .chequeo .accion
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex: none;
+        }
+
+        .resumen .espera,
+        .resumen .si,
+        .resumen .no
+        {
+            display: none;
+        }
+
+        .resumen.aviso-alerta .espera,
+        .resumen.aviso-exito .si,
+        .resumen.aviso-peligro .no
+        {
+            display: block;
+        }
+
+        .chequeo .confirmar
+        {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .82rem;
+            cursor: pointer;
         }
 
         .grabando
@@ -310,66 +382,127 @@
     </section>
 
     <section class="tarjeta paso-panel" id="panelPaso2" aria-labelledby="tituloPaso2" hidden>
-        <h2 id="tituloPaso2" style="font-size:1.1rem" data-i18n="grabacion.dispositivo.titulo">[[nuevagrabacion_verificacion_del_dispositivo]]</h2>
-        <p class="texto-suave texto-chico" data-i18n="grabacion.dispositivo.bajada">
-            [[nuevagrabacion_antes_de_grabar_la_plataforma_revisa]]
-        </p>
+        <h2 id="tituloPaso2" style="font-size:1.1rem">[[grabacion_prep_titulo]]</h2>
+        <p class="texto-suave texto-chico">[[grabacion_prep_bajada]]</p>
 
-        <div class="aviso aviso-exito" id="resumenDispositivo">
-            <svg width="20" height="20" aria-hidden="true"><use href="#i-tilde" /></svg>
-            <div>
-                <strong data-i18n="grabacion.dispositivo.listo">[[nuevagrabacion_dispositivo_listo]]</strong>
-                <p class="sin-margen" data-i18n="grabacion.dispositivo.listoDetalle">
-                    El Tobii 4C está conectado, calibrado y con el driver actualizado.
-                </p>
+        <div class="aviso aviso-alerta resumen" id="resumenDispositivo" role="status">
+            <svg class="espera" width="20" height="20" aria-hidden="true"><use href="#i-refrescar" /></svg>
+            <svg class="si" width="20" height="20" aria-hidden="true"><use href="#i-tilde" /></svg>
+            <svg class="no" width="20" height="20" aria-hidden="true"><use href="#i-alerta" /></svg>
+            <div class="espera"><strong>[[grabacion_prep_verificando]]</strong></div>
+            <div class="si">
+                <strong>[[grabacion_prep_resumen_ok]]</strong>
+                <p class="sin-margen" id="notaRecomendada">[[grabacion_prep_resumen_ok_recom]]</p>
+            </div>
+            <div class="no">
+                <strong>[[grabacion_prep_resumen_falta]]</strong>
+                <p class="sin-margen">[[grabacion_prep_resumen_falta_detalle]]</p>
             </div>
         </div>
 
-        <div class="chequeo correcto" data-chequeo="usb">
-            <span class="icono"><svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg></span>
-            <span class="texto">
-                <span class="nombre" data-i18n="grabacion.chequeo.usb">[[nuevagrabacion_conexion_usb]]</span>
-                <span class="detalle" data-i18n="grabacion.chequeo.usb.detalle">Tobii 4C detectado en el puerto USB 3.0</span>
+        <div class="chequeo" data-chequeo="agente" data-correcto="[[grabacion_prep_agente_ok]]" data-problema="[[grabacion_prep_agente_falta]]">
+            <span class="icono">
+                <svg class="espera" width="18" height="18" aria-hidden="true"><use href="#i-refrescar" /></svg>
+                <svg class="si" width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
+                <svg class="no" width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                <b class="pregunta">?</b>
             </span>
-            <span class="badge badge-exito" data-i18n="estado.conectado">[[nuevagrabacion_conectado]]</span>
+            <span class="texto">
+                <span class="nombre">[[grabacion_prep_agente]]</span>
+                <span class="detalle">[[grabacion_prep_verificando]]</span>
+            </span>
+            <span class="accion">
+                <a class="btn btn-secundario btn-chico solo-problema" href="<%: ResolveUrl("~/Descargas.aspx") %>">
+                    <svg width="16" height="16" aria-hidden="true"><use href="#i-descarga" /></svg>
+                    <span>[[grabacion_prep_ir_instalacion]]</span>
+                </a>
+            </span>
         </div>
 
-        <div class="chequeo correcto" data-chequeo="calibracion">
-            <span class="icono"><svg width="18" height="18" aria-hidden="true"><use href="#i-ojo" /></svg></span>
-            <span class="texto">
-                <span class="nombre" data-i18n="grabacion.chequeo.calibracion">[[nuevagrabacion_calibracion]]</span>
-                <span class="detalle" data-i18n="grabacion.chequeo.calibracion.detalle">Última calibración hace 4 minutos &middot; calidad 92%</span>
+        <div class="chequeo" data-chequeo="tobii" data-correcto="[[grabacion_prep_tobii_ok]]" data-simulado="[[grabacion_prep_tobii_simulado]]" data-problema="[[grabacion_prep_tobii_falta]]" data-sinagente="[[grabacion_prep_tobii_sin_agente]]">
+            <span class="icono">
+                <svg class="espera" width="18" height="18" aria-hidden="true"><use href="#i-refrescar" /></svg>
+                <svg class="si" width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
+                <svg class="no" width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                <b class="pregunta">?</b>
             </span>
-            <span class="badge badge-exito" data-i18n="estado.correcta">[[nuevagrabacion_correcta]]</span>
+            <span class="texto">
+                <span class="nombre">[[grabacion_prep_tobii]]</span>
+                <span class="detalle">[[grabacion_prep_verificando]]</span>
+            </span>
+            <span class="accion">
+                <button type="button" class="btn btn-secundario btn-chico" data-abre-tobii>
+                    <svg width="16" height="16" aria-hidden="true"><use href="#i-ojo" /></svg>
+                    <span>[[grabacion_prep_abrir_tobii]]</span>
+                </button>
+            </span>
         </div>
 
-        <div class="chequeo correcto" data-chequeo="driver">
-            <span class="icono"><svg width="18" height="18" aria-hidden="true"><use href="#i-engranaje" /></svg></span>
-            <span class="texto">
-                <span class="nombre" data-i18n="grabacion.chequeo.driver">[[nuevagrabacion_driver_de_tobii]]</span>
-                <span class="detalle">
-                    <span data-i18n="grabacion.chequeo.driver.instalado">[[nuevagrabacion_instalado]]</span>: 4.2.1 &middot;
-                    <span data-i18n="grabacion.chequeo.driver.requerido">[[nuevagrabacion_requerido]]</span>: 4.0 o superior
-                </span>
+        <div class="chequeo" data-chequeo="pantalla" data-correcto="[[grabacion_prep_pantalla_ok]]" data-problema="[[grabacion_prep_pantalla_falta]]">
+            <span class="icono">
+                <svg class="espera" width="18" height="18" aria-hidden="true"><use href="#i-refrescar" /></svg>
+                <svg class="si" width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
+                <svg class="no" width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                <b class="pregunta">?</b>
             </span>
-            <span class="badge badge-exito" data-i18n="estado.actualizado">[[nuevagrabacion_actualizado]]</span>
+            <span class="texto">
+                <span class="nombre">[[grabacion_prep_pantalla]]</span>
+                <span class="detalle">[[grabacion_prep_verificando]]</span>
+            </span>
+        </div>
+
+        <div class="chequeo pendiente" data-chequeo="calPantalla" data-pendiente="[[grabacion_prep_cal_pantalla_detalle]]" data-correcto="[[grabacion_prep_confirmado]]">
+            <span class="icono">
+                <svg class="espera" width="18" height="18" aria-hidden="true"><use href="#i-refrescar" /></svg>
+                <svg class="si" width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
+                <svg class="no" width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                <b class="pregunta">?</b>
+            </span>
+            <span class="texto">
+                <span class="nombre">[[grabacion_prep_cal_pantalla]] <span class="badge badge-alerta">[[grabacion_prep_recomendado]]</span></span>
+                <span class="detalle">[[grabacion_prep_cal_pantalla_detalle]]</span>
+            </span>
+            <span class="accion">
+                <button type="button" class="btn btn-secundario btn-chico" data-abre-tobii>
+                    <svg width="16" height="16" aria-hidden="true"><use href="#i-ojo" /></svg>
+                    <span>[[grabacion_prep_abrir_tobii]]</span>
+                </button>
+                <label class="confirmar"><input type="checkbox" data-confirma /> <span>[[grabacion_prep_ya_lo_hice]]</span></label>
+            </span>
+        </div>
+
+        <div class="chequeo pendiente" data-chequeo="calVista" data-pendiente="[[grabacion_prep_cal_vista_detalle]]" data-correcto="[[grabacion_prep_confirmado]]">
+            <span class="icono">
+                <svg class="espera" width="18" height="18" aria-hidden="true"><use href="#i-refrescar" /></svg>
+                <svg class="si" width="18" height="18" aria-hidden="true"><use href="#i-tilde" /></svg>
+                <svg class="no" width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                <b class="pregunta">?</b>
+            </span>
+            <span class="texto">
+                <span class="nombre">[[grabacion_prep_cal_vista]] <span class="badge badge-alerta">[[grabacion_prep_recomendado]]</span></span>
+                <span class="detalle">[[grabacion_prep_cal_vista_detalle]]</span>
+            </span>
+            <span class="accion">
+                <button type="button" class="btn btn-secundario btn-chico" data-abre-tobii>
+                    <svg width="16" height="16" aria-hidden="true"><use href="#i-ojo" /></svg>
+                    <span>[[grabacion_prep_abrir_tobii]]</span>
+                </button>
+                <label class="confirmar"><input type="checkbox" data-confirma /> <span>[[grabacion_prep_ya_lo_hice]]</span></label>
+            </span>
         </div>
 
         <div class="fila mt-16">
             <button type="button" class="btn btn-secundario btn-chico" id="btnVerificar">
                 <svg width="16" height="16" aria-hidden="true"><use href="#i-refrescar" /></svg>
-                <span data-i18n="grabacion.verificar">[[nuevagrabacion_verificar_nuevamente]]</span>
-            </button>
-            <button type="button" class="btn btn-fantasma btn-chico" id="btnSimularFallo" data-i18n="grabacion.simularFallo">
-                [[nuevagrabacion_simular_un_fallo_demo]]
+                <span>[[nuevagrabacion_verificar_nuevamente]]</span>
             </button>
         </div>
 
         <div class="paso-acciones">
-            <button type="button" class="btn btn-secundario izquierda" data-ir-paso="1" data-i18n="comun.volver">[[nuevagrabacion_volver]]</button>
-            <button type="button" class="btn btn-primario" data-ir-paso="3" id="btnIrAGrabar">
+            <button type="button" class="btn btn-secundario izquierda" data-ir-paso="1">[[nuevagrabacion_volver]]</button>
+            <button type="button" class="btn btn-primario" data-ir-paso="3" id="btnIrAGrabar" disabled>
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-video" /></svg>
-                <span data-i18n="grabacion.iniciar">[[nuevagrabacion_iniciar_la_grabacion]]</span>
+                <span>[[nuevagrabacion_iniciar_la_grabacion]]</span>
             </button>
         </div>
     </section>
@@ -506,7 +639,7 @@
             var pasoActual = 1;
 
             function irAPaso(numero) {
-                if (numero === 3 && !dispositivoOk) return;
+                if (numero === 3 && !listo) return;
 
                 pasoActual = numero;
 
@@ -526,6 +659,8 @@
                     }
                 }
 
+                sondear(numero === 2);
+
                 if (numero === 3) arrancarCronometro();
 
                 window.scrollTo(0, 0);
@@ -539,40 +674,78 @@
                 });
             }
 
-            var dispositivoOk = true;
+            var AGENTE = "http://localhost:8887";
+            var ESPERA_MS = 2500;
+            var SONDEO_MS = 3000;
+
+            var panel = document.getElementById("panelPaso2");
             var resumen = document.getElementById("resumenDispositivo");
-            var chequeoDriver = document.querySelector("[data-chequeo='driver']");
+            var nota = document.getElementById("notaRecomendada");
             var btnIrAGrabar = document.getElementById("btnIrAGrabar");
+            var casillas = panel.querySelectorAll("[data-confirma]");
+            var ultimo = null;
+            var listo = false;
+            var sondeo = null;
 
-            function pintarResumen(ok) {
-                dispositivoOk = ok;
-
-                resumen.className = ok ? "aviso aviso-exito" : "aviso aviso-peligro";
-                resumen.querySelector("use").setAttribute("href", ok ? "#i-tilde" : "#i-alerta");
-                resumen.querySelector("strong").textContent = ok ? "[[js:nuevagrabacion_dispositivo_listo]]" : "[[js:nuevagrabacion_el_dispositivo_no_esta_listo]]";
-                resumen.querySelector("p").textContent = ok
-                    ? "[[js:nuevagrabacion_el_tobii_4c_esta_conectado_calibrado]]"
-                    : "[[js:nuevagrabacion_resuelve_el_problema_marcado_en_rojo]]";
-
-                btnIrAGrabar.disabled = !ok;
+            function fila(nombre) {
+                return panel.querySelector("[data-chequeo='" + nombre + "']");
             }
 
-            document.getElementById("btnSimularFallo").addEventListener("click", function () {
-                chequeoDriver.className = "chequeo problema";
-                chequeoDriver.querySelector(".detalle").textContent = "[[js:nuevagrabacion_instalado_3_4_0_requerido_4]]";
-                chequeoDriver.querySelector(".badge").className = "badge badge-peligro";
-                chequeoDriver.querySelector(".badge").textContent = "[[js:nuevagrabacion_desactualizado]]";
+            function marcar(elemento, estado, variante) {
+                elemento.className = "chequeo " + estado;
+                elemento.querySelector(".detalle").textContent = elemento.getAttribute("data-" + (variante || estado));
+            }
 
-                pintarResumen(false);
-            });
+            function consultar(ruta) {
+                return fetch(AGENTE + ruta, { cache: "no-store", signal: AbortSignal.timeout(ESPERA_MS) })
+                    .then(function (respuesta) { return respuesta.json(); })
+                    .catch(function () { return null; });
+            }
 
-            document.getElementById("btnVerificar").addEventListener("click", function () {
-                chequeoDriver.className = "chequeo correcto";
-                chequeoDriver.querySelector(".detalle").textContent = "[[js:nuevagrabacion_instalado_4_2_1_requerido_4]]";
-                chequeoDriver.querySelector(".badge").className = "badge badge-exito";
-                chequeoDriver.querySelector(".badge").textContent = "[[js:nuevagrabacion_actualizado]]";
+            function pintar() {
+                var agente = ultimo !== null;
+                var estado = agente ? ultimo.estado : "";
+                var tobii = estado === "conectado" || estado === "conectado_simulado";
+                var pantalla = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia && window.MediaRecorder);
+                var confirmadas = 0;
 
-                pintarResumen(true);
+                marcar(fila("agente"), agente ? "correcto" : "problema");
+                marcar(fila("tobii"), tobii ? "correcto" : "problema", !agente ? "sinagente" : estado === "conectado_simulado" ? "simulado" : null);
+                marcar(fila("pantalla"), pantalla ? "correcto" : "problema");
+
+                for (var i = 0; i < casillas.length; i++) {
+                    marcar(casillas[i].closest("[data-chequeo]"), casillas[i].checked ? "correcto" : "pendiente");
+                    if (casillas[i].checked) confirmadas++;
+                }
+
+                listo = agente && tobii && pantalla;
+                panel.classList.toggle("sin-agente", !agente);
+                resumen.className = "aviso resumen " + (listo ? "aviso-exito" : "aviso-peligro");
+                nota.hidden = confirmadas === casillas.length;
+                btnIrAGrabar.disabled = !listo;
+            }
+
+            function verificar() {
+                return consultar("/estado").then(function (datos) {
+                    ultimo = datos;
+                    pintar();
+                });
+            }
+
+            function sondear(activo) {
+                clearInterval(sondeo);
+
+                if (!activo) return;
+
+                verificar();
+                sondeo = setInterval(verificar, SONDEO_MS);
+            }
+
+            document.getElementById("btnVerificar").addEventListener("click", verificar);
+            panel.addEventListener("change", pintar);
+
+            panel.addEventListener("click", function (evento) {
+                if (evento.target.closest("[data-abre-tobii]")) consultar("/tobii");
             });
 
             var reloj = document.getElementById("relojGrabacion");

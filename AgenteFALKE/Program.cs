@@ -1,41 +1,61 @@
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace AgenteMirada
 {
     internal static class Program
     {
         private const int PUERTO = 8887;
-        private const string PREFIJO_ORIGEN = "--origen=";
 
         private static void Main(string[] args)
         {
-            bool simulado = Array.IndexOf(args, "--sim") >= 0;
-
-            var origenes = new List<string> { "http://localhost:53192" };
-
-            foreach (string argumento in args)
+            if (Array.IndexOf(args, "--desinstalar") >= 0)
             {
-                if (argumento.StartsWith(PREFIJO_ORIGEN)) origenes.Add(argumento.Substring(PREFIJO_ORIGEN.Length));
+                Instalador.Desinstalar();
+                return;
             }
 
-            var servidor = new ServidorMirada(PUERTO, origenes);
-            IFuenteMirada fuente = FabricaFuente.Crear(simulado);
-            simulado = simulado || !FabricaFuente.TobiiDisponible;
+            bool simulado = Array.IndexOf(args, "--sim") >= 0;
+            bool local = simulado || Array.IndexOf(args, "--local") >= 0;
 
-            fuente.MuestraRecibida += servidor.Difundir;
-            fuente.EstadoCambiado += servidor.DifundirEstado;
+            if (!local && !Instalador.EstaInstalado)
+            {
+                Instalador.Instalar();
+                return;
+            }
 
-            servidor.Iniciar();
-            fuente.Iniciar();
+            Instalador.ExtraerDll(AppDomain.CurrentDomain.BaseDirectory);
 
-            Console.WriteLine("Agente de mirada en ws://localhost:" + PUERTO + "/mirada (" + (simulado ? "simulado" : "Tobii") + ")");
-            Console.WriteLine("Origenes permitidos: " + string.Join(", ", origenes));
-            Console.WriteLine("Presione Enter para cerrar.");
-            Console.ReadLine();
+            bool nueva;
 
-            fuente.Detener();
-            servidor.Detener();
+            using (new Mutex(true, "Local\\FALKE.AgenteMirada", out nueva))
+            {
+                if (!nueva) return;
+
+                var grabador = new Grabador(Path.Combine(Path.GetTempPath(), "falke-mirada.jsonl"));
+                var servidor = new ServidorAgente(PUERTO, grabador);
+                IFuenteMirada fuente = simulado ? (IFuenteMirada)new FuenteSimulada() : new FuenteTobii();
+
+                fuente.MuestraRecibida += grabador.Agregar;
+                fuente.EstadoCambiado += estado => grabador.EstadoFuente = estado;
+
+                try
+                {
+                    servidor.Iniciar();
+                }
+                catch (Exception error)
+                {
+                    Registro.Escribir("No se pudo abrir el puerto " + PUERTO + ": " + error.Message);
+                    return;
+                }
+
+                fuente.Iniciar();
+
+                Registro.Escribir("Agente iniciado (" + (simulado ? "simulado" : "Tobii") + ").");
+
+                new ManualResetEvent(false).WaitOne();
+            }
         }
     }
 }

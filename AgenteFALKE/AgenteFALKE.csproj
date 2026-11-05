@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{3C5E8A1D-7B24-4F6A-9D10-2A6B8E4C5F73}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>AgenteMirada</RootNamespace>
     <AssemblyName>AgenteMirada</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -35,29 +35,24 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FabricaFuenteSimulada.cs" Condition="!Exists('tobii')" />
-    <Compile Include="FabricaFuenteTobii.cs" Condition="Exists('tobii')" />
     <Compile Include="FuenteSimulada.cs" />
-    <Compile Include="FuenteTobii.cs" Condition="Exists('tobii')" />
+    <Compile Include="FuenteTobii.cs" />
+    <Compile Include="Interop.cs" />
     <Compile Include="IFuenteMirada.cs" />
-    <Compile Include="MuestraMirada.cs" />
+    <Compile Include="Grabador.cs" />
+    <Compile Include="Instalador.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ServidorMirada.cs" />
-    <Compile Include="tobii\**\*.cs" />
+    <Compile Include="Registro.cs" />
+    <Compile Include="ServidorAgente.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="IniciarAgente.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="IniciarSimulado.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="tobii_stream_engine.dll" Condition="Exists('tobii_stream_engine.dll')">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="tobii_stream_engine.dll">
+      <LogicalName>tobii_stream_engine.dll</LogicalName>
+    </EmbeddedResource>
     <None Include="LEEME.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
