@@ -41,6 +41,12 @@ namespace GUI
         protected bool HayError;
         protected bool HaySesiones;
 
+        // url de un archivo estatico (css / js) con su fecha de modificacion, asi el navegador no usa una copia vieja del cache
+        protected string UrlVersionada(string rutaVirtual)
+        {
+            return ResolveUrl(rutaVirtual) + "?v=" + System.IO.File.GetLastWriteTimeUtc(Server.MapPath(rutaVirtual)).Ticks;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!SesionActual_GUI.ExigirPermiso(TLL.Patentes_TLL.OPERAR_ANALISIS)) return;

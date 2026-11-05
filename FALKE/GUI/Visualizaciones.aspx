@@ -1,401 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/App.master" AutoEventWireup="true" CodeFile="Visualizaciones.aspx.cs" Inherits="GUI.Visualizaciones" Title="[[app_visualizaciones]]" %>
 
 <asp:Content ContentPlaceHolderID="cabeza" runat="server">
-    <style>
-        .vis
-        {
-            display: grid;
-            grid-template-columns: 268px minmax(0, 1fr);
-            min-height: calc(100vh - var(--alto-topbar));
-            margin: -26px -28px -60px;
-        }
-
-        .vis-rail
-        {
-            border-right: 1px solid var(--borde);
-            background: var(--superficie);
-            padding: 18px 14px;
-            position: sticky;
-            top: var(--alto-topbar);
-            align-self: start;
-            max-height: calc(100vh - var(--alto-topbar));
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .vis-rail h2
-        {
-            font-size: .84rem;
-            font-weight: 600;
-            color: var(--texto-suave);
-            margin: 0;
-        }
-
-        .vis-buscador
-        {
-            position: relative;
-        }
-
-        .vis-chips
-        {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .vis-filtros
-        {
-            display: grid;
-            gap: 8px;
-        }
-
-        .vis-sesion .categoria
-        {
-            display: block;
-            font-size: .76rem;
-            color: var(--texto-suave);
-        }
-
-        .visor-lienzo video,
-        .visor-lienzo canvas
-        {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .visual .grafico canvas
-        {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .vis-lista
-        {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .vis-sesion
-        {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 11px 12px;
-            border: 1px solid var(--borde);
-            border-radius: var(--radio);
-            background: var(--superficie);
-            color: var(--texto);
-            font-family: inherit;
-            cursor: pointer;
-        }
-
-        .vis-sesion:hover
-        {
-            border-color: var(--borde-fuerte);
-            background: var(--superficie-2);
-        }
-
-        .vis-sesion[aria-current="true"]
-        {
-            border-color: var(--acento);
-            background: var(--acento-suave);
-        }
-
-        .vis-sesion .nombre
-        {
-            display: block;
-            font-weight: 600;
-            font-size: .9rem;
-            margin-bottom: 5px;
-        }
-
-        .vis-sesion .meta
-        {
-            display: block;
-            font-family: var(--fuente-mono);
-            font-size: .7rem;
-            color: var(--texto-suave);
-            margin-top: 5px;
-        }
-
-        .badge-vivo
-        {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-family: var(--fuente-mono);
-            font-size: .64rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: var(--marca-coral);
-        }
-
-        .badge-vivo::before
-        {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--marca-coral);
-            animation: latir 1.4s ease-in-out infinite;
-        }
-
-        @keyframes latir
-        {
-            0%, 100% { opacity: 1; }
-            50%      { opacity: .3; }
-        }
-
-        .vis-main
-        {
-            padding: 24px 26px 20px;
-            min-width: 0;
-        }
-
-        .vis-main
-        {
-            container-type: inline-size;
-        }
-
-        .tablero
-        {
-            --alto-visual: clamp(200px, calc((100vh - 370px) / 2), 280px);
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            grid-template-rows: auto;
-            grid-auto-rows: var(--alto-visual);
-            gap: 16px;
-        }
-
-        @container (max-width: 700px)
-        {
-            .tablero { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-
-        @container (max-width: 440px)
-        {
-            .tablero { grid-template-columns: minmax(0, 1fr); }
-        }
-
-        .visual
-        {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            text-align: left;
-            padding: 16px;
-            border: 1px solid var(--borde);
-            border-radius: var(--radio-lg);
-            background: var(--superficie);
-            color: var(--texto);
-            font-family: inherit;
-            cursor: pointer;
-            transition: border-color .15s ease;
-        }
-
-        .visual:hover
-        {
-            border-color: var(--acento);
-        }
-
-        .visual.destacada
-        {
-            grid-column: 1 / -1;
-            cursor: default;
-        }
-
-        .visual.destacada:hover
-        {
-            border-color: var(--borde);
-        }
-
-        .visual .rotulo
-        {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: .9rem;
-            margin-bottom: 12px;
-        }
-
-        .visual .rotulo svg
-        {
-            color: var(--texto-suave);
-        }
-
-        .visual:not(.destacada)
-        {
-            min-height: 0;
-        }
-
-        .visual .grafico
-        {
-            flex: 1;
-            min-height: 0;
-            aspect-ratio: auto;
-        }
-
-        .visual .grafico svg .zona-interes,
-        .visual .grafico svg .zona-ciega,
-        .visual .grafico svg .linea-recorrido,
-        .visual .grafico svg ellipse
-        {
-            vector-effect: non-scaling-stroke;
-        }
-
-        .punto-fijo
-        {
-            stroke-linecap: round;
-            vector-effect: non-scaling-stroke;
-        }
-
-        .visual .ver
-        {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 12px;
-            font-size: .82rem;
-            font-weight: 600;
-            color: var(--acento-texto);
-        }
-
-        .visor-lienzo
-        {
-            aspect-ratio: 16 / 9;
-            border-radius: var(--radio);
-            overflow: hidden;
-            background: var(--superficie-2);
-            border: 1px solid var(--borde);
-            position: relative;
-        }
-
-        .visor-controles
-        {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 14px;
-            flex-wrap: wrap;
-        }
-
-        .visor-tiempo
-        {
-            font-family: var(--fuente-mono);
-            font-size: .82rem;
-            color: var(--texto-suave);
-            white-space: nowrap;
-        }
-
-        .linea-tiempo
-        {
-            flex: 1 1 220px;
-            accent-color: var(--acento);
-            min-width: 160px;
-        }
-
-        .visor-botones
-        {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .visor-botones .icono-boton
-        {
-            color: var(--texto);
-        }
-
-        .visor-botones .icono-boton:hover
-        {
-            background: var(--superficie-2);
-        }
-
-        .visor-botones .principal
-        {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--acento);
-            color: var(--marca-azul);
-        }
-
-        .visor-botones .principal:hover
-        {
-            background: var(--acento-hover);
-        }
-
-        .leyenda
-        {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 14px;
-            font-size: .8rem;
-            color: var(--texto-suave);
-        }
-
-        .leyenda span
-        {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .leyenda i
-        {
-            width: 13px;
-            height: 13px;
-            border-radius: 3px;
-            display: inline-block;
-        }
-
-        @media (max-width: 940px)
-        {
-            .vis { grid-template-columns: minmax(0, 1fr); margin: -20px -16px -48px; }
-            .vis-rail
-            {
-                position: static;
-                max-height: none;
-                border-right: 0;
-                border-bottom: 1px solid var(--borde);
-            }
-            .vis-main { padding: 18px 16px 48px; }
-        }
-
-        /* ayuda de cada metrica: aparece al pasar el mouse (o al enfocar con el teclado) */
-        .metrica { position: relative; cursor: help; outline: none; }
-        .metrica::after
-        {
-            content: attr(data-ayuda);
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0;
-            width: 230px;
-            padding: 8px 10px;
-            border-radius: var(--radio);
-            background: var(--superficie-alt);
-            color: var(--texto-sobre-primario);
-            font-size: .78rem;
-            line-height: 1.35;
-            box-shadow: var(--sombra-lg);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .15s;
-            z-index: 20;
-            pointer-events: none;
-        }
-        .metrica:hover::after,
-        .metrica:focus-visible::after { opacity: 1; visibility: visible; }
-        .metrica:last-child::after { left: auto; right: 0; }
-    </style>
+    <link rel="stylesheet" href="<%: UrlVersionada("~/Content/visualizaciones.css") %>" />
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="cuerpo" runat="server">
@@ -683,6 +289,25 @@
 
             <div class="visor-lienzo" id="visorLienzo"></div>
 
+            <div id="calorOpciones" hidden>
+                <div class="calor-tramo" role="group" aria-labelledby="calorTramoTitulo">
+                    <p class="calor-tramo-titulo" id="calorTramoTitulo">[[vis_calor_tramo]]</p>
+
+                    <label for="calorDesde">[[vis_calor_desde]]</label>
+                    <input type="range" id="calorDesde" min="0" max="1000" value="0" />
+                    <span class="visor-tiempo" id="calorDesdeTxt">00:00</span>
+
+                    <label for="calorHasta">[[vis_calor_hasta]]</label>
+                    <input type="range" id="calorHasta" min="0" max="1000" value="1000" />
+                    <span class="visor-tiempo" id="calorHastaTxt">00:00</span>
+                </div>
+
+                <label class="calor-tiempo-real" id="calorTiempoRealCaja">
+                    <input type="checkbox" id="calorTiempoReal" />
+                    <span>[[vis_calor_tiempo_real]]</span>
+                </label>
+            </div>
+
             <div class="visor-controles" id="visorControles">
                 <div class="visor-botones">
                     <button type="button" class="icono-boton" id="btnAtras" aria-label="[[visualizaciones_retroceder_diez_segundos]]">
@@ -814,18 +439,44 @@
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">
     <script>
+        // textos traducidos para los .js de las visualizaciones (un .js externo no puede leer los [[...]] del servidor)
+        var VisTextos = {
+            errorCargar: "[[js:vis_error_cargar]]",
+            sinDatos: "[[js:vis_calor_sin_datos]]",
+            pausar: "[[js:vis_pausar]]",
+            reproducir: "[[js:visualizaciones_reproducir]]",
+            grabacionTitulo: "[[js:visualizaciones_grabacion_con_seguimiento]]",
+            grabacionLeyenda: '<span><i style="background:#F26157"></i>[[js:visualizaciones_punto_de_mirada_actual]]</span>',
+            calorTitulo: "[[js:analisismultiple_mapa_de_calor]]",
+            calorLeyenda: '<span><i style="background:#F26157"></i>[[js:visualizaciones_mayor_concentracion]]</span>' +
+                          '<span><i style="background:#E8AF52"></i>[[js:visualizaciones_concentracion_media]]</span>' +
+                          '<span><i style="background:#56637C"></i>[[js:visualizaciones_menor_concentracion]]</span>',
+            zonasTitulo: "[[js:visualizaciones_zonas_de_interes_y_zonas_ciegas]]",
+            zonasLeyenda: '<span><i style="background:rgba(232,175,82,.5);border:1px solid #E8AF52"></i>[[js:visualizaciones_zona_de_interes]]</span>' +
+                          '<span><i style="background:transparent;border:1px dashed #56637C"></i>[[js:visualizaciones_zona_ciega]]</span>'
+        };
+    </script>
+
+    <%-- el orden importa: cada archivo usa lo que define el anterior --%>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/analisis.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-maqueta.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-grabacion.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-tramo.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-calor.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-zonas.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visor.js") %>"></script>
+
+    <script>
         (function () {
             "use strict";
             // COMO FUNCIONA ESTA PAGINA
             // - La lista de sesiones la arma el backend con las de la empresa del usuario logueado.
             // - Al elegir una sesion se pide el JSON a GrabacionArchivo.ashx
             // - El video tambien sale de GrabacionArchivo.ashx (con Range, para poder saltar).
+            // - Las visualizaciones (video, mapa de calor, zonas...) son clases en Scripts/visualizaciones/; aca solo se conectan.
 
             var URL_ARCHIVO = "<%: ResolveUrl("~/GrabacionArchivo.ashx") %>";
-            var INTERVALO_MS = 100;      // el agente guarda 10 muestras por segundo
-            var UMBRAL_FIJACION = 0.04;  // dispersion maxima (ancho + alto, en fraccion de pantalla) para decir que la mirada esta quieta
-            var ATENCION_MIN_MS = 1500;  // para contar como "atencion" la mirada tiene que quedarse en un punto al menos 1,5 segundos
-            var HUECO_MAX_MS = 350;      // si falta mas que esto entre dos muestras, se corta la fijacion
             var COLOR_CORAL = "#F26157";
             var COLOR_AMBAR = "#E8AF52";
             var COLOR_GRIS = "#56637C";
@@ -852,7 +503,6 @@
 
             var actual = null;   
             var cargaN = 0;      // numero de la ultima carga, para ignorar respuestas viejas si el usuario cambia rapido
-            var reproductor = null; 
 
             function normalizar(texto) {
                 return window.Falke && window.Falke.normalizar ? window.Falke.normalizar(texto) : String(texto || "").toLowerCase().trim();
@@ -868,16 +518,6 @@
                 } catch (e) {
                     return String(Math.round(n * 10) / 10);
                 }
-            }
-
-            function aMinutos(segundos) {
-                segundos = Math.max(0, segundos || 0);
-                var h = Math.floor(segundos / 3600);
-                var m = Math.floor((segundos % 3600) / 60);
-                var s = Math.floor(segundos % 60);
-                var mm = (m < 10 ? "0" : "") + m;
-                var ss = (s < 10 ? "0" : "") + s;
-                return h > 0 ? h + ":" + mm + ":" + ss : mm + ":" + ss;
             }
 
             function filtrar() {
@@ -917,133 +557,6 @@
             filtroFamiliaridad.addEventListener("change", filtrar);
 
 
-            function analizar(datos, desfase) {
-                var inicio = datos.inicio_utc;
-                var lista = datos.muestras || [];
-                var pts = [];
-
-                for (var i = 0; i < lista.length; i++) {
-                    var m = lista[i];
-                    pts.push({ t: (m.u - inicio) + desfase, x: m.x, y: m.y, ok: m.ok === 1 });
-                }
-
-                var validos = pts.filter(function (p) { return p.ok; });
-                var fijs = fijaciones(validos);
-                var tFij = 0;
-
-                for (var k = 0; k < fijs.length; k++) tFij += fijs[k].dur;
-
-                // atencion: solo cuentan las fijaciones largas (>= ATENCION_MIN_MS), las mas cortas son miradas de paso
-                var tAtencion = 0;
-
-                for (var n = 0; n < fijs.length; n++) {
-                    if (fijs[n].dur >= ATENCION_MIN_MS) tAtencion += fijs[n].dur;
-                }
-
-                var tValido = validos.length * INTERVALO_MS;
-                var atencion = tValido > 0 ? Math.min(100, Math.round(tAtencion * 100 / tValido)) : 0;
-
-                return {
-                    pts: pts,
-                    validos: validos,
-                    fijs: fijs,
-                    atencion: atencion,
-                    sacadico: tValido > 0 ? 100 - atencion : 0,
-                    fijMedia: fijs.length ? tFij / fijs.length / 1000 : 0
-                };
-            }
-
-            function fijaciones(v) {
-                var res = [];
-                var i = 0;
-
-                while (i < v.length) {
-                    var j = i;
-                    var minX = v[i].x, maxX = minX, minY = v[i].y, maxY = minY;
-
-                    while (j + 1 < v.length && v[j + 1].t - v[j].t <= HUECO_MAX_MS) {
-                        var n = v[j + 1];
-                        var nMinX = Math.min(minX, n.x), nMaxX = Math.max(maxX, n.x);
-                        var nMinY = Math.min(minY, n.y), nMaxY = Math.max(maxY, n.y);
-
-                        if ((nMaxX - nMinX) + (nMaxY - nMinY) > UMBRAL_FIJACION) break;
-
-                        minX = nMinX; maxX = nMaxX; minY = nMinY; maxY = nMaxY;
-                        j++;
-                    }
-
-                    if (j > i) {
-                        var sx = 0, sy = 0;
-
-                        for (var k = i; k <= j; k++) { sx += v[k].x; sy += v[k].y; }
-
-                        var c = j - i + 1;
-                        res.push({ t0: v[i].t, dur: (v[j].t - v[i].t) + INTERVALO_MS, x: sx / c, y: sy / c });
-                        i = j + 1;
-                    } else {
-                        i++;
-                    }
-                }
-
-                return res;
-            }
-
-
-            function buscarMuestra(muestras, tiempoMs) {
-                var desde = 0;
-                var hasta = muestras.length - 1;
-                var encontrada = -1;
-
-                // busqueda binaria
-                while (desde <= hasta) {
-                    var medio = Math.floor((desde + hasta) / 2);
-
-                    if (muestras[medio].t <= tiempoMs) {
-                        // sigo
-                        encontrada = medio;
-                        desde = medio + 1;
-                    } else {
-                        // vuelvo
-                        hasta = medio - 1;
-                    }
-                }
-
-                return encontrada;
-            }
-
-            // dibuja el punto de mirada sobre el video segun el segundo
-            function dibujarMiradaEnVideo(ctx, w, h, a, segundos) {
-                var pts = a.pts; 
-                var t = segundos * 1000;
-                var idx = buscarMuestra(pts, t);
-
-                // fallback
-                if (idx < 0) return;
-
-                // estela: las 10 muestras anteriores (~1 segundo), mas transparentes cuanto mas viejas
-                for (var i = Math.max(0, idx - 10); i < idx; i++) {
-                    if (!pts[i].ok) continue;
-
-                    ctx.beginPath();
-                    ctx.arc(pts[i].x * w, pts[i].y * h, 5, 0, Math.PI * 2);
-                    ctx.fillStyle = "rgba(242,97,87," + (0.3 * (i - (idx - 10)) / 10) + ")";
-                    ctx.fill();
-                }
-
-                var p = pts[idx];
-
-                // fallback para muestars muy viejas o cuando no se detecta mirada
-                if (!p.ok || t - p.t > 400) return;
-
-                ctx.beginPath();
-                ctx.arc(p.x * w, p.y * h, 11, 0, Math.PI * 2);
-                ctx.fillStyle = "rgba(242,97,87,.55)";
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = "#fff";
-                ctx.stroke();
-            }
-
             function limpiarTablero() {
                 var ids = ["mFijacionMedia", "mFijaciones", "mAtencion", "mSacadico"];
 
@@ -1058,7 +571,8 @@
                 document.getElementById("mAtencion").textContent = a.atencion + "%";
                 document.getElementById("mSacadico").textContent = a.sacadico + "%";
 
-                if (reproductor) actualizarReproductor();
+                // si el visor ya estaba abierto cuando llegaron los datos, se vuelve a dibujar
+                Visor.refrescar();
             }
 
             function elegirSesion(boton) {
@@ -1072,10 +586,12 @@
 
                 actual = {
                     token: boton.getAttribute("data-token"),
+                    urlVideo: urlArchivo(boton.getAttribute("data-token"), "video"),
                     nombre: nombre,
                     fecha: boton.getAttribute("data-fecha"),
                     duracionSeg: Number(boton.getAttribute("data-duracion-seg")) || 0,
                     desfase: Number(boton.getAttribute("data-desfase")) || 0,
+                    sinMirada: Number(boton.getAttribute("data-muestras")) === 0,
                     analisis: null
                 };
 
@@ -1125,33 +641,7 @@
             for (i = 0; i < sesiones.length; i++) {
                 sesiones[i].addEventListener("click", function () { elegirSesion(this); });
             }
-
-            var TITULO_VIDEO = "[[js:visualizaciones_grabacion_con_seguimiento]]";
-            var LEYENDA_VIDEO = '<span><i style="background:' + COLOR_CORAL + '"></i>[[js:visualizaciones_punto_de_mirada_actual]]</span>';
-
             var MAQUETAS = {
-                grabacion: {
-                    titulo: "[[js:visualizaciones_grabacion_con_seguimiento]]",
-                    lienzo: '<span class="grafico grafico-video" style="height:100%;aspect-ratio:auto;border:0"></span>',
-                    leyenda: '<span><i style="background:#F26157"></i>[[js:visualizaciones_punto_de_mirada_actual]]</span>'
-                },
-                calor: {
-                    titulo: "[[js:analisismultiple_mapa_de_calor]]",
-                    lienzo: '<span class="grafico grafico-calor" style="height:100%;aspect-ratio:auto;border:0"></span>',
-                    leyenda: '<span><i style="background:#F26157"></i>[[js:visualizaciones_mayor_concentracion]]</span>' +
-                             '<span><i style="background:#E8AF52"></i>[[js:visualizaciones_concentracion_media]]</span>' +
-                             '<span><i style="background:#56637C"></i>[[js:visualizaciones_menor_concentracion]]</span>'
-                },
-                zonas: {
-                    titulo: "[[js:visualizaciones_zonas_de_interes_y_zonas_ciegas]]",
-                    lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
-                            '<rect class="zona-interes" x="30" y="26" width="120" height="62" rx="6" />' +
-                            '<rect class="zona-interes" x="170" y="60" width="90" height="46" rx="6" />' +
-                            '<rect class="zona-ciega" x="42" y="112" width="86" height="44" rx="6" />' +
-                            '<rect class="zona-ciega" x="212" y="122" width="74" height="36" rx="6" /></svg>',
-                    leyenda: '<span><i style="background:rgba(232,175,82,.5);border:1px solid #E8AF52"></i>[[js:visualizaciones_zona_de_interes]]</span>' +
-                             '<span><i style="background:transparent;border:1px dashed #56637C"></i>[[js:visualizaciones_zona_ciega]]</span>'
-                },
                 dispersion: {
                     titulo: "[[js:analisismultiple_dispersion_de_mirada]]",
                     lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
@@ -1186,186 +676,19 @@
                 }
             };
 
-            var visorTitulo = document.getElementById("visorTitulo");
-            var visorLienzo = document.getElementById("visorLienzo");
-            var visorLeyenda = document.getElementById("visorLeyenda");
-            var visorControles = document.getElementById("visorControles");
-            var visorLinea = document.getElementById("visorLinea");
-            var visorTiempo = document.getElementById("visorTiempo");
-            var btnReproducir = document.getElementById("btnReproducir");
-            var modalVisor = document.getElementById("modalVisor");
-            var abrenVisor = document.querySelectorAll("[data-visual]");
-            var cuadroAnimacion = 0;
+            Visor.tipos.grabacion = new VisualizacionGrabacion();
+            Visor.tipos.calor = new VisualizacionCalor();
+            Visor.tipos.zonas = new VisualizacionZonas();
+            Visor.tipos.dispersion = new VisualizacionMaqueta(MAQUETAS.dispersion);
+            Visor.tipos.atencion = new VisualizacionMaqueta(MAQUETAS.atencion);
+            Visor.tipos.recorrido = new VisualizacionMaqueta(MAQUETAS.recorrido);
+            Visor.iniciar();
 
-            function arreglarDuracion(video) {
-                if (video.duration !== Infinity) return;
+            var botonesVisual = document.querySelectorAll("[data-visual]");
 
-                var volver = function () {
-                    video.removeEventListener("timeupdate", volver);
-                    video.currentTime = 0;
-                };
-
-                video.addEventListener("timeupdate", volver);
-                video.currentTime = 1e101;
+            for (i = 0; i < botonesVisual.length; i++) {
+                botonesVisual[i].addEventListener("click", function () { Visor.abrir(this.getAttribute("data-visual"), actual); });
             }
-
-            function duracionEfectiva(video) {
-                return isFinite(video.duration) && video.duration > 0 ? video.duration : (actual ? actual.duracionSeg : 0);
-            }
-
-            function actualizarReproductor() {
-                if (!reproductor || reproductor.tipo !== "grabacion") return;
-
-                var v = reproductor.video;
-                var dur = duracionEfectiva(v);
-
-                visorTiempo.textContent = aMinutos(v.currentTime) + " / " + aMinutos(dur);
-
-                if (dur > 0) visorLinea.value = Math.min(1000, Math.round(v.currentTime * 1000 / dur));
-
-                if (actual && actual.analisis) {
-                    var c = reproductor.canvas;
-                    var ctx = c.getContext("2d");
-
-                    ctx.clearRect(0, 0, c.width, c.height);
-                    dibujarMiradaEnVideo(ctx, c.width, c.height, actual.analisis, v.currentTime);
-                }
-            }
-
-            function bucleReproduccion() {
-                actualizarReproductor();
-
-                if (reproductor && !reproductor.video.paused && !reproductor.video.ended) {
-                    cuadroAnimacion = requestAnimationFrame(bucleReproduccion);
-                }
-            }
-
-            function ponerIconoReproduccion(reproduciendo) {
-                btnReproducir.querySelector("[data-icono-play]").style.display = reproduciendo ? "none" : "";
-                btnReproducir.querySelector("[data-icono-pausa]").style.display = reproduciendo ? "" : "none";
-                btnReproducir.setAttribute("aria-label", reproduciendo ? "[[js:vis_pausar]]" : "[[js:visualizaciones_reproducir]]");
-            }
-
-            function soltarVisor() {
-                cancelAnimationFrame(cuadroAnimacion);
-
-                if (reproductor) {
-                    reproductor.video.pause();
-                    reproductor.video.removeAttribute("src");
-                    reproductor.video.load();
-                }
-
-                visorLienzo.innerHTML = "";
-                visorLienzo.style.aspectRatio = "";
-                reproductor = null;
-            }
-
-            function abrirMaqueta(tipo) {
-                var datos = MAQUETAS[tipo];
-
-                if (!datos) return;
-
-                soltarVisor();
-                visorTitulo.textContent = datos.titulo;
-                visorLienzo.innerHTML = datos.lienzo;
-                visorLeyenda.innerHTML = datos.leyenda;
-                visorControles.hidden = true;
-            }
-
-            function abrirVideo() {
-                if (!actual) return;
-
-                soltarVisor();
-
-                var video = document.createElement("video");
-                var canvas = document.createElement("canvas");
-                var error = document.createElement("p");
-
-                video.muted = true;
-                video.playsInline = true;
-                video.preload = "auto";
-                video.disablePictureInPicture = true;
-                video.setAttribute("controlslist", "nodownload noplaybackrate");
-                video.addEventListener("contextmenu", function (e) { e.preventDefault(); });
-
-                canvas.width = 960;
-                canvas.height = 540;
-
-                error.className = "sin-margen";
-                error.hidden = true;
-                error.style.cssText = "position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;color:#fff;background:rgba(14,26,52,.8)";
-                error.textContent = "[[js:vis_error_cargar]]";
-
-                visorTitulo.textContent = TITULO_VIDEO;
-                visorLeyenda.innerHTML = LEYENDA_VIDEO;
-                visorLienzo.appendChild(video);
-                visorLienzo.appendChild(canvas);
-                visorLienzo.appendChild(error);
-                visorControles.hidden = false;
-                ponerIconoReproduccion(false);
-                visorLinea.value = 0;
-                visorTiempo.textContent = "00:00 / " + aMinutos(actual.duracionSeg);
-
-                reproductor = { video: video, canvas: canvas, tipo: "grabacion" };
-
-                video.addEventListener("loadedmetadata", function () {
-                    if (video.videoWidth && video.videoHeight) {
-                        visorLienzo.style.aspectRatio = video.videoWidth + " / " + video.videoHeight;
-                        canvas.height = Math.round(canvas.width * video.videoHeight / video.videoWidth);
-                    }
-
-                    arreglarDuracion(video);
-                });
-
-                video.addEventListener("timeupdate", actualizarReproductor);
-                video.addEventListener("seeked", actualizarReproductor);
-                video.addEventListener("play", function () { ponerIconoReproduccion(true); cuadroAnimacion = requestAnimationFrame(bucleReproduccion); });
-                video.addEventListener("pause", function () { ponerIconoReproduccion(false); });
-                video.addEventListener("ended", function () { ponerIconoReproduccion(false); });
-                video.addEventListener("error", function () { error.hidden = false; });
-
-                canvas.addEventListener("click", alternarReproduccion);
-
-                video.src = urlArchivo(actual.token, "video");
-            }
-
-            function abrirVisual(tipo) {
-                if (tipo === "grabacion") abrirVideo(); else abrirMaqueta(tipo);
-            }
-
-            function alternarReproduccion() {
-                if (!reproductor) return;
-
-                if (reproductor.video.paused) reproductor.video.play(); else reproductor.video.pause();
-            }
-
-            for (i = 0; i < abrenVisor.length; i++) {
-                abrenVisor[i].addEventListener("click", function () { abrirVisual(this.getAttribute("data-visual")); });
-            }
-
-            new MutationObserver(function () {
-                if (modalVisor.hidden) soltarVisor();
-            }).observe(modalVisor, { attributes: true, attributeFilter: ["hidden"] });
-
-            btnReproducir.addEventListener("click", alternarReproduccion);
-
-            function saltar(segundos) {
-                if (!reproductor) return;
-
-                var v = reproductor.video;
-                var dur = duracionEfectiva(v);
-
-                v.currentTime = Math.max(0, Math.min(dur || 0, v.currentTime + segundos));
-            }
-
-
-            visorLinea.addEventListener("input", function () {
-                if (!reproductor) return;
-
-                var dur = duracionEfectiva(reproductor.video);
-
-                reproductor.video.currentTime = dur * (this.value / 1000);
-            });
 
             var btnExportar = document.getElementById("btnExportar");
             var exportarAviso = document.getElementById("exportarAviso");

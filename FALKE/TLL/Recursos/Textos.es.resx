@@ -4477,4 +4477,19 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="vis_ayuda_sacadico" xml:space="preserve">
     <value>Porcentaje del tiempo con datos válidos en que la mirada no estuvo atenta: se movía de un punto a otro o no se quedó el tiempo suficiente en ninguno. Es 100% menos la atención activa.</value>
   </data>
+  <data name="vis_calor_tramo" xml:space="preserve">
+    <value>Tramo del video analizado</value>
+  </data>
+  <data name="vis_calor_desde" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="vis_calor_hasta" xml:space="preserve">
+    <value>Hasta</value>
+  </data>
+  <data name="vis_calor_tiempo_real" xml:space="preserve">
+    <value>Ver mapa de calor en tiempo real</value>
+  </data>
+  <data name="vis_calor_sin_datos" xml:space="preserve">
+    <value>No hay datos de mirada en el tramo elegido.</value>
+  </data>
 </root>

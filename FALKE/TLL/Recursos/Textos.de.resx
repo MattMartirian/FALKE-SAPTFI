@@ -4477,4 +4477,19 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="vis_ayuda_sacadico" xml:space="preserve">
     <value>Prozentsatz der Zeit mit gültigen Daten, in der der Blick nicht aufmerksam war: Er bewegte sich von einem Punkt zum anderen oder blieb an keinem lange genug. Es sind 100% minus aktive Aufmerksamkeit.</value>
   </data>
+  <data name="vis_calor_tramo" xml:space="preserve">
+    <value>Analysierter Videoabschnitt</value>
+  </data>
+  <data name="vis_calor_desde" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="vis_calor_hasta" xml:space="preserve">
+    <value>Bis</value>
+  </data>
+  <data name="vis_calor_tiempo_real" xml:space="preserve">
+    <value>Heatmap in Echtzeit anzeigen</value>
+  </data>
+  <data name="vis_calor_sin_datos" xml:space="preserve">
+    <value>Im gewählten Abschnitt gibt es keine Blickdaten.</value>
+  </data>
 </root>

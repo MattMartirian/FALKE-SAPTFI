@@ -4477,4 +4477,19 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="vis_ayuda_sacadico" xml:space="preserve">
     <value>Percentage of the time with valid data in which the gaze was not attentive: it was moving from one point to another or did not stay long enough on any. It is 100% minus active attention.</value>
   </data>
+  <data name="vis_calor_tramo" xml:space="preserve">
+    <value>Video section analyzed</value>
+  </data>
+  <data name="vis_calor_desde" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="vis_calor_hasta" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="vis_calor_tiempo_real" xml:space="preserve">
+    <value>Show heat map in real time</value>
+  </data>
+  <data name="vis_calor_sin_datos" xml:space="preserve">
+    <value>There is no gaze data in the chosen section.</value>
+  </data>
 </root>
