@@ -1,0 +1,131 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Publico.master.cs" Inherits="GUI.PublicoMaster" %>
+<%@ Register Src="~/Controles/Iconos.ascx" TagPrefix="falke" TagName="Iconos" %>
+<%@ Register Src="~/Controles/SelectorIdioma.ascx" TagPrefix="falke" TagName="SelectorIdioma" %>
+<!DOCTYPE html>
+<html lang="<%: GUI.IdiomaActual_GUI.Codigo %>">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%: Page.Title %> - Falke</title>
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("falke.tema");
+                if (!t) { t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "noche" : "dia"; }
+                document.documentElement.setAttribute("data-tema", t);
+            } catch (e) { document.documentElement.setAttribute("data-tema", "dia"); }
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Manrope:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" />
+
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/falke.css") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Content/falke.css")).Ticks %>" />
+
+    <asp:ContentPlaceHolder ID="cabeza" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server" class="sitio-publico">
+
+        <falke:Iconos runat="server" ID="ucIconos" />
+
+        <a class="salto-contenido" href="#contenido-principal" data-i18n="comun.saltar">[[app_saltar_al_contenido]]</a>
+
+        <header class="nav-publica">
+            <div class="contenedor">
+
+                <a class="marca" href="<%: ResolveUrl("~/Default.aspx") %>">
+                    <img src="<%: ResolveUrl("~/Content/img/falke-logo.svg") %>" alt="Falke" />
+                </a>
+
+                <nav class="nav-links" aria-label="[[publico_navegacion_principal]]">
+                    <a id="navInicio" runat="server" href="~/Default.aspx" data-i18n="nav.inicio">[[default_inicio]]</a>
+                    <a id="navPlanes" runat="server" href="~/Planes.aspx" data-i18n="nav.planes">[[planes_planes]]</a>
+                    <a id="navFaq" runat="server" href="~/Faq.aspx" data-i18n="nav.faq">[[faq_preguntas_frecuentes]]</a>
+                    <a id="navPanel" runat="server" href="~/Panel.aspx" data-i18n="nav.panel">[[publico_panel]]</a>
+                </nav>
+
+                <div class="nav-acciones">
+                    <falke:SelectorIdioma runat="server" ID="ucSelectorIdioma" />
+
+                    <button type="button" class="icono-boton" data-accion="cambiar-tema"
+                            aria-pressed="false" title="[[app_cambiar_entre_modo_dia_y_modo]]">
+                        <span class="solo-lectores" data-i18n="comun.cambiar.tema">[[app_cambiar_el_tema_de_color]]</span>
+                        <svg width="20" height="20" aria-hidden="true" data-icono-tema="dia"><use href="#i-sol" /></svg>
+                        <svg width="20" height="20" aria-hidden="true" data-icono-tema="noche"><use href="#i-luna" /></svg>
+                    </button>
+
+                    <asp:PlaceHolder ID="phAnonimo" runat="server">
+                        <a class="btn btn-secundario btn-chico" href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="nav.ingresar">[[ingresar_iniciar_sesion]]</a>
+                        <a class="btn btn-primario btn-chico" href="<%: ResolveUrl("~/Registro.aspx") %>" data-i18n="nav.registro">[[publico_crear_cuenta]]</a>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder ID="phAutenticado" runat="server" Visible="false">
+                        <a class="btn btn-secundario btn-chico" href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="nav.panel">[[publico_panel]]</a>
+                        <a class="btn btn-primario btn-chico" href="<%: ResolveUrl("~/Salir.aspx") %>" data-i18n="usuario.salir">[[app_cerrar_sesion]]</a>
+                    </asp:PlaceHolder>
+                </div>
+
+            </div>
+        </header>
+
+        <main id="contenido-principal">
+            <asp:ContentPlaceHolder ID="cuerpo" runat="server" />
+        </main>
+
+        <footer class="pie">
+            <div class="contenedor">
+
+                <div class="pie-grid">
+                    <div class="pie-col">
+                        <a class="marca" href="<%: ResolveUrl("~/Default.aspx") %>">
+                            <img src="<%: ResolveUrl("~/Content/img/falke-logo.svg") %>" alt="Falke" />
+                        </a>
+                        <p class="mt-16" style="max-width: 280px;" data-i18n="pie.descripcion">
+                            [[publico_analitica_conductual_biometrica_por_segu]]
+                        </p>
+                    </div>
+
+                    <div class="pie-col">
+                        <h4 data-i18n="pie.producto">[[publico_producto]]</h4>
+                        <ul>
+                            <li><a href="<%: ResolveUrl("~/Planes.aspx") %>" data-i18n="nav.planes">[[planes_planes]]</a></li>
+                            <li><a href="<%: ResolveUrl("~/Faq.aspx") %>" data-i18n="nav.faq">[[faq_preguntas_frecuentes]]</a></li>
+                            <li><a href="<%: ResolveUrl("~/Registro.aspx") %>" data-i18n="pie.comoContratar">[[publico_como_se_contrata]]</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="pie-col">
+                        <h4 data-i18n="pie.acceso">[[publico_acceso]]</h4>
+                        <ul>
+                            <li><a href="<%: ResolveUrl("~/Ingresar.aspx") %>" data-i18n="nav.ingresar">[[ingresar_iniciar_sesion]]</a></li>
+                            <li><a href="<%: ResolveUrl("~/Panel.aspx") %>" data-i18n="nav.panel">[[publico_panel]]</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="pie-col">
+                        <h4 data-i18n="pie.contacto">[[publico_contacto]]</h4>
+                        <ul>
+                            <li>contacto@patternblue.com.ar</li>
+                            <li>+54 11 0000-0000</li>
+                            <li data-i18n="pie.ciudad">Buenos Aires, Argentina</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pie-legal">
+                    <span>&copy; <%: DateTime.Now.Year %> Pattern Blue. <span data-i18n="pie.derechos">[[publico_todos_los_derechos_reservados]]</span></span>
+                    <span data-i18n="pie.ley">[[publico_tratamiento_de_datos_biometricos_conform]]</span>
+                </div>
+
+            </div>
+        </footer>
+
+        <script>window.FalkeTextos = { modoDia: "[[js:falke_js_modo_dia]]", modoNoche: "[[js:falke_js_modo_noche]]", expandirMenu: "[[js:falke_js_expandir_menu]]", plegarMenu: "[[js:app_plegar_el_menu]]", ocultarClave: "[[js:falke_js_ocultar_contrasena]]", mostrarClave: "[[js:ingresar_mostrar_la_contrasena]]" };</script>
+        <script src="<%: ResolveUrl("~/Scripts/falke.js") %>?v=<%: System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Scripts/falke.js")).Ticks %>"></script>
+
+        <asp:ContentPlaceHolder ID="scripts" runat="server" />
+    </form>
+</body>
+</html>

@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+using System.Web;
+using System.Web.UI.WebControls;
+using BE;
+using BLL;
+using SERVICES;
+using TLL;
+using TE;
+
+namespace GUI
+{
+    public partial class Categorias : PaginaConAviso_GUI
+    {
+        private static CultureInfo Cultura
+        {
+            get { return IdiomaActual_GUI.Cultura; }
+        }
+
+        private ActorUsuario_TE actor;
+
+        protected bool PuedeGestionar { get; private set; }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!SesionActual_GUI.ExigirPermiso(Patentes_TLL.OPERAR_ANALISIS)) return;
+
+            actor = SesionActual_GUI.ObtenerActor();
+            PuedeGestionar = actor.Puede(Patentes_TLL.GESTIONAR_CATEGORIAS);
+            phNuevaCategoria.Visible = PuedeGestionar;
+        }
+
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            if (actor == null) return;
+
+            try
+            {
+                List<Categoria_BE> categorias = new Categoria_BLL().ObtenerPorEmpresa(actor);
+
+                rptCategorias.DataSource = categorias;
+                rptCategorias.DataBind();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Avisar("aviso-peligro", MensajeDe(ex));
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("Categorias.Listar", ex);
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("categoria_error_listado"));
+            }
+        }
+
+        protected void rptCategorias_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName != "Eliminar") return;
+
+            int idCategoria = Convert.ToInt32(e.CommandArgument);
+
+            Ejecutar("Categorias.Eliminar", IdiomaActual_GUI.Texto("categoria_eliminada"), () => new Categoria_BLL().Eliminar(actor, idCategoria));
+        }
+
+        protected void btnGuardarCategoria_Click(object sender, EventArgs e)
+        {
+            int idCategoria;
+            TipoActivoCategoria tipo;
+
+            if (actor == null || !int.TryParse(hfCatId.Value, out idCategoria) || !Enum.TryParse(mcTipo.SelectedValue, out tipo) || !Enum.IsDefined(typeof(TipoActivoCategoria), tipo))
+            {
+                Avisar("aviso-peligro", IdiomaActual_GUI.Texto("categoria_error_identificar"));
+                return;
+            }
+
+            Categoria_BE categoria = Categoria_BE.Nueva(tipo);
+
+            categoria.NombreCategoria = mcNombre.Text;
+            categoria.NombreActivo = mcActivo.Text;
+            categoria.FlujoEsperado = mcFlujo.Text;
+            categoria.AplicarCampos(new Dictionary<string, string>
+            {
+                { "so", mcSo.Text },
+                { "versionsw", mcVersionSw.Text },
+                { "url", mcUrl.Text },
+                { "dispositivo", mcDispositivo.SelectedValue },
+                { "somovil", mcSoMovil.SelectedValue },
+                { "versionapp", mcVersionApp.Text },
+                { "plataforma", mcPlataforma.SelectedValue },
+                { "versionjuego", mcVersionJuego.Text },
+                { "formato", mcFormato.Text },
+                { "canal", mcCanal.Text }
+            });
+
+            if (idCategoria == 0)
+            {
+                Ejecutar("Categorias.Alta", IdiomaActual_GUI.Texto("categoria_registrada"), () => new Categoria_BLL().Crear(actor, categoria));
+            }
+            else
+            {
+                Ejecutar("Categorias.Modificar", IdiomaActual_GUI.Texto("categoria_actualizada"), () => new Categoria_BLL().Modificar(actor, idCategoria, categoria));
+            }
+        }
+
+        protected static string AtributosEspecificos(Categoria_BE categoria)
+        {
+            var atributos = new StringBuilder();
+
+            foreach (KeyValuePair<string, string> campo in categoria.ObtenerCampos())
+                atributos.Append(" data-e-").Append(campo.Key).Append("=\"").Append(HttpUtility.HtmlAttributeEncode(campo.Value)).Append('"');
+
+            return atributos.ToString();
+        }
+
+        protected static string Dato(string valor)
+        {
+            return string.IsNullOrWhiteSpace(valor) ? "—" : valor;
+        }
+
+        protected static string Fecha(DateTime fecha)
+        {
+            return fecha.ToString("d MMM yyyy", Cultura);
+        }
+
+        protected static string EtiquetaTipo(TipoActivoCategoria tipo)
+        {
+            switch (tipo)
+            {
+                case TipoActivoCategoria.AppWeb: return IdiomaActual_GUI.Texto("categoria_tipo_app_web");
+                case TipoActivoCategoria.AppMovil: return IdiomaActual_GUI.Texto("categoria_tipo_app_movil");
+                default: return tipo.ToString();
+            }
+        }
+    }
+}

@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using DAL;
 
 namespace ORM
 {
     public class Integridad_ORM
     {
-        private readonly GestorBaseDeDatos Gestor;
+        private readonly GestorBaseDeDatos_DAL Gestor;
 
         public Integridad_ORM()
         {
-            Gestor = GestorBaseDeDatos.Instancia;
+            Gestor = GestorBaseDeDatos_DAL.Instancia;
         }
 
         private static string NombreTabla(TablasBD tabla) => $"{tabla}Table";
 
+        public List<string> ObtenerNombresColumnas(TablasBD tabla) => ObtenerColumnas(NombreTabla(tabla));
 
         private List<string> ObtenerColumnas(string nombreTabla)
         {
@@ -29,7 +31,10 @@ namespace ORM
             var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@tabla", nombreTabla));
             var columnas = new List<string>();
 
-            foreach (DataRow row in dt.Rows) columnas.Add(row["COLUMN_NAME"].ToString());
+            foreach (DataRow row in dt.Rows)
+            {
+                columnas.Add(row["COLUMN_NAME"].ToString());
+            }
 
             return columnas;
         }
@@ -49,7 +54,10 @@ namespace ORM
             var dt = Gestor.EjecutarQuery(sql, new SqlParameter("@tabla", nombreTabla));
             var columnas = new List<string>();
 
-            foreach (DataRow row in dt.Rows) columnas.Add(row["COLUMN_NAME"].ToString());
+            foreach (DataRow row in dt.Rows)
+            {
+                columnas.Add(row["COLUMN_NAME"].ToString());
+            }
 
             return columnas;
         }
@@ -62,7 +70,10 @@ namespace ORM
             var dt = Gestor.EjecutarQuery(sql);
             var dvhs = new List<string>();
 
-            foreach (DataRow row in dt.Rows)  dvhs.Add(row["DVH"].ToString());
+            foreach (DataRow row in dt.Rows)
+            {
+                dvhs.Add(row["DVH"].ToString());
+            }
 
             return dvhs;
         }
@@ -88,10 +99,10 @@ namespace ORM
 
                 for (int i = 0; i < columnas.Count; i++)
                 {
-                    datos[i] = row[i] == DBNull.Value ? string.Empty : row[i].ToString();
+                    datos[i] = FormatearValor(row[i]);
                 }
 
-                string dvh = row[columnas.Count] == DBNull.Value ? string.Empty : row[columnas.Count].ToString();
+                string dvh = FormatearValor(row[columnas.Count]);
                 var clave = indicesPK.ConvertAll(idx => idx >= 0 ? datos[idx] : string.Empty).ToArray();
 
                 resultado.Add((datos, dvh, clave));
@@ -108,7 +119,8 @@ namespace ORM
 
             if (columnasPK.Count != valoresClave.Length)
             {
-                throw new ArgumentException($"La tabla {nombreTabla} tiene {columnasPK.Count} columna(s) de PK, se pasaron {valoresClave.Length} valores.");
+                //TODO: Traducir.
+                throw new ArgumentException("integridad_valores_clave_invalidos");
             }
 
             var condiciones = new List<string>();
@@ -129,10 +141,20 @@ namespace ORM
             var datos = new string[columnas.Count];
             for (int i = 0; i < columnas.Count; i++)
             {
-                datos[i] = dt.Rows[0][i] == DBNull.Value ? string.Empty : dt.Rows[0][i].ToString();
+                datos[i] = FormatearValor(dt.Rows[0][i]);
             }
 
             return datos;
+        }
+
+        private static string FormatearValor(object valor)
+        {
+            if (valor == null || valor == DBNull.Value) return string.Empty;
+
+            var formateable = valor as IFormattable;
+            if (formateable != null) return formateable.ToString(null, CultureInfo.InvariantCulture);
+
+            return valor.ToString();
         }
 
 
@@ -143,12 +165,14 @@ namespace ORM
 
             if (columnasPK.Count == 0)
             {
-                throw new InvalidOperationException($"No se encontró clave primaria para la tabla {nombreTabla}.");
+                //TODO: Traducir.
+                throw new InvalidOperationException("integridad_sin_clave_primaria");
             }
 
             if (columnasPK.Count != valoresClave.Length)
             {
-                throw new ArgumentException($"La tabla {nombreTabla} tiene {columnasPK.Count} columna(s) de PK, se pasaron {valoresClave.Length} valores.");
+                //TODO: Traducir.
+                throw new ArgumentException("integridad_valores_clave_invalidos");
             }
 
             var condiciones = new List<string>();

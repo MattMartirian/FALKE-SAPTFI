@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace TE
@@ -13,6 +13,10 @@ namespace TE
     {
         public string Nombre { get; }
 
+        public string Descripcion { get; set; }
+
+        public bool EsDeGestion { get; set; }
+
         public abstract TipoPermiso TipoPermiso { get; }
 
         public virtual bool EsRolPermiso => false;
@@ -22,26 +26,58 @@ namespace TE
             Nombre = nombre;
         }
 
-        public abstract HashSet<string> ObtenerPermisosEfectivos();
 
         public virtual void Agregar(PermisoAbstracto_TE hijo)
         {
-            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no puede contener otros permisos.");
+            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no puede contener otros permisos.", "permiso_simple_no_contiene", Nombre);
         }
 
         public virtual void Quitar(PermisoAbstracto_TE hijo)
         {
-            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no tiene hijos.");
+            throw new PermisoInvalidoException($"\"{Nombre}\" es un permiso Simple, no tiene hijos.", "permiso_simple_sin_hijos", Nombre);
         }
 
         public virtual IReadOnlyList<PermisoAbstracto_TE> ObtenerHijos()
         {
             return Array.Empty<PermisoAbstracto_TE>();
         }
+
+
+        public bool Contiene(string nombrePermiso)
+        {
+            return Contiene(nombrePermiso, new HashSet<PermisoAbstracto_TE>());
+        }
+
+
+        public HashSet<string> ObtenerPermisosEfectivos()
+        {
+            var resultado = new HashSet<string>();
+            AcumularEfectivos(resultado, new HashSet<PermisoAbstracto_TE>());
+            return resultado;
+        }
+
+        public HashSet<string> ObtenerPatentes()
+        {
+            var resultado = new HashSet<string>();
+            AcumularPatentes(resultado, new HashSet<PermisoAbstracto_TE>());
+            return resultado;
+        }
+
+       
+        internal abstract bool Contiene(string nombrePermiso, HashSet<PermisoAbstracto_TE> visitados);
+        internal abstract void AcumularEfectivos(HashSet<string> resultado, HashSet<PermisoAbstracto_TE> visitados);
+        internal abstract void AcumularPatentes(HashSet<string> resultado, HashSet<PermisoAbstracto_TE> visitados);
     }
 
     public class PermisoInvalidoException : System.Exception
     {
-        public PermisoInvalidoException(string mensaje) : base(mensaje) { }
+        public string Codigo { get; private set; }
+        public object[] Parametros { get; private set; }
+
+        public PermisoInvalidoException(string mensaje, string codigo = null, params object[] parametros) : base(mensaje)
+        {
+            Codigo = codigo;
+            Parametros = parametros ?? new object[0];
+        }
     }
 }

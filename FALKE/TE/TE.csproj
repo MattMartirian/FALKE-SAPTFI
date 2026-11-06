@@ -42,11 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora_TE.cs" />
+    <Compile Include="Idioma_TE.cs" />
+    <Compile Include="Traduccion_TE.cs" />
+    <Compile Include="ActorUsuario_TE.cs" />
+    <Compile Include="Respaldo_TE.cs" />
     <Compile Include="PermisoAbstracto_TE.cs" />
     <Compile Include="PermisoCompuesto_TE.cs" />
     <Compile Include="PermisoSimple_TE.cs" />
+    <Compile Include="PermisoVista_TE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario_TE.cs" />
+    <Compile Include="UsuarioListado_TE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

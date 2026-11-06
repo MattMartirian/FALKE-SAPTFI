@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace TE
 {
@@ -8,9 +8,19 @@ namespace TE
 
         public PermisoSimple_TE(string nombre) : base(nombre) { }
 
-        public override HashSet<string> ObtenerPermisosEfectivos()
+        internal override bool Contiene(string nombrePermiso, HashSet<PermisoAbstracto_TE> visitados)
         {
-            return new HashSet<string> { Nombre };
+            return Nombre == nombrePermiso;
+        }
+
+        internal override void AcumularEfectivos(HashSet<string> resultado, HashSet<PermisoAbstracto_TE> visitados)
+        {
+            resultado.Add(Nombre);
+        }
+
+        internal override void AcumularPatentes(HashSet<string> resultado, HashSet<PermisoAbstracto_TE> visitados)
+        {
+            resultado.Add(Nombre);
         }
     }
 }

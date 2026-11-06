@@ -1,0 +1,151 @@
+﻿using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Configuration;
+
+namespace SECURITY
+{
+    public sealed class Cifrador_SECURITY
+    {
+        #region Singleton
+        private static readonly Lazy<Cifrador_SECURITY> lazyInstance = new Lazy<Cifrador_SECURITY>(() => new Cifrador_SECURITY());
+
+        public static Cifrador_SECURITY CifradorSingleton => lazyInstance.Value;
+        #endregion
+
+        private readonly byte[] key;
+
+        private const int AesKeySizeBits = 256;
+        private const int AesBlockSizeBytes = 16;
+
+        private Cifrador_SECURITY()
+        {
+            string keyBase64 = ConfigurationManager.AppSettings["FALKE_AES_KEY"];
+
+            if (string.IsNullOrWhiteSpace(keyBase64))
+            {
+                throw new InvalidOperationException("cifrado_clave_ausente");
+            }
+
+            key = Convert.FromBase64String(keyBase64);
+
+            if (key.Length * 8 != AesKeySizeBits)
+            {
+                throw new InvalidOperationException("cifrado_clave_tamano");
+            }
+        }
+
+        public string Encoder(string toEncode)
+        {
+            if (toEncode == null) throw new ArgumentNullException(nameof(toEncode));
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(toEncode);
+                byte[] hashBytes = sha256.ComputeHash(bytes);
+
+                StringBuilder stringBuilder = new StringBuilder(hashBytes.Length * 2);
+                foreach (byte b in hashBytes)
+                {
+                    stringBuilder.Append(b.ToString("x2"));
+                }
+                return stringBuilder.ToString();
+            }
+        }
+
+        public static string GenerarSecretoUrlSafe()
+        {
+            byte[] bytes = new byte[32];
+
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(bytes);
+            }
+
+            return Convert.ToBase64String(bytes)
+                .Replace('+', '-')
+                .Replace('/', '_')
+                .TrimEnd('=');
+        }
+
+        public string EncriptadoReversible(string toEncode)
+        {
+            if (toEncode == null) throw new ArgumentNullException(nameof(toEncode));
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = key;
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.Padding = PaddingMode.PKCS7;
+                aesAlg.GenerateIV();
+
+                using (ICryptoTransform encryptor = aesAlg.CreateEncryptor())
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt, Encoding.UTF8))
+                    {
+                        swEncrypt.Write(toEncode);
+                    }
+
+                    byte[] cipherBytes = msEncrypt.ToArray();
+                    byte[] result = new byte[cipherBytes.Length + aesAlg.IV.Length];
+                    Buffer.BlockCopy(cipherBytes, 0, result, 0, cipherBytes.Length);
+                    Buffer.BlockCopy(aesAlg.IV, 0, result, cipherBytes.Length, aesAlg.IV.Length);
+
+                    return Convert.ToBase64String(result);
+                }
+            }
+        }
+
+        public string DesencriptadoReversible(string toDecode)
+        {
+            if (toDecode == null) throw new ArgumentNullException(nameof(toDecode));
+
+            byte[] fullCipher;
+            try
+            {
+                fullCipher = Convert.FromBase64String(toDecode);
+            }
+            catch (FormatException ex)
+            {
+                throw new CryptographicException("cifrado_base64_invalido", ex);
+            }
+
+            if (fullCipher.Length <= AesBlockSizeBytes)
+            {
+                throw new CryptographicException("cifrado_datos_insuficientes");
+            }
+
+            int cipherLength = fullCipher.Length - AesBlockSizeBytes;
+            byte[] cipherBytes = new byte[cipherLength];
+            byte[] iv = new byte[AesBlockSizeBytes];
+            Buffer.BlockCopy(fullCipher, 0, cipherBytes, 0, cipherLength);
+            Buffer.BlockCopy(fullCipher, cipherLength, iv, 0, AesBlockSizeBytes);
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = key;
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.Padding = PaddingMode.PKCS7;
+                aesAlg.IV = iv;
+
+                using (ICryptoTransform decryptor = aesAlg.CreateDecryptor())
+                using (MemoryStream msDecrypt = new MemoryStream(cipherBytes))
+                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                using (StreamReader srDecrypt = new StreamReader(csDecrypt, Encoding.UTF8))
+                {
+                    try
+                    {
+                        return srDecrypt.ReadToEnd();
+                    }
+                    catch (CryptographicException ex)
+                    {
+                        throw new CryptographicException("cifrado_descifrado_fallido", ex);
+                    }
+                }
+            }
+        }
+    }
+}

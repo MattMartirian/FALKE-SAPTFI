@@ -7,11 +7,11 @@ namespace ORM
 {
     public abstract class RepositoryBase<TEntity, TKey>
     {
-        internal readonly GestorBaseDeDatos Gestor;
+        internal readonly GestorBaseDeDatos_DAL Gestor;
 
         protected RepositoryBase()
         {
-            Gestor = GestorBaseDeDatos.Instancia;
+            Gestor = GestorBaseDeDatos_DAL.Instancia;
         }
 
         public abstract void Alta(TEntity entidad);
@@ -34,7 +34,14 @@ namespace ORM
             var tipoNullable = Nullable.GetUnderlyingType(tipoDestino);
             var tipoReal = tipoNullable ?? tipoDestino;
 
-            if (tipoReal.IsEnum) return (T)Enum.ToObject(tipoReal, val);
+            if (tipoReal.IsEnum)
+            {
+                // La columna puede venir como numero (1) o como nombre (activo)
+                var texto = val as string;
+                if (texto != null) return (T)Enum.Parse(tipoReal, texto, true);
+
+                return (T)Enum.ToObject(tipoReal, val);
+            }
 
             return (T)Convert.ChangeType(val, tipoReal);
         }

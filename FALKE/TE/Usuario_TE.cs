@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TE
 {
@@ -17,16 +13,18 @@ namespace TE
         public PermisoCompuesto_TE Rol { get; set; }
         public EstadoUsuario Estado { get; set; }
         public int IntentosFallidosUsuario { get; set; }
-        public int IdIdioma { get; set; } //TODO Cambiar por clase Idioma_TE
+        public int IdIdioma { get; set; }
         public string DVH { get; set; }
-        public bool EsCuentaEmergencia { get; set; } 
+        public bool EsCuentaEmergencia { get; set; }
+
     }
 
     public enum EstadoUsuario
     {
         Pendiente = 0,
         Activo = 1,
-        Bloqueado = 2,
-        Inactivo = 3
+        BloqueadoPorIntentos = 2,
+        Inactivo = 3,
+        BloqueoEstricto = 4
     }
 }

@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="AgenteFALKE.csproj" Id="3c5e8a1d-7b24-4f6a-9d10-2a6b8e4c5f73">
+    <Platform Project="x64" />
+  </Project>
+</Solution>
