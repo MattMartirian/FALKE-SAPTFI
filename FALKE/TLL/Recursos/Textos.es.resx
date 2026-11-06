@@ -111,9 +111,6 @@
   <data name="analisismultiple_todavia_no_elegiste_ninguna_sesion" xml:space="preserve">
     <value>Todavía no elegiste ninguna sesión.</value>
   </data>
-  <data name="analisismultiple_trayecto_tipico_la_linea_llena_es" xml:space="preserve">
-    <value>Trayecto tipico: la línea llena es el promedio del conjunto.</value>
-  </data>
   <data name="analisismultiple_videojuego" xml:space="preserve">
     <value>Videojuego</value>
   </data>
@@ -245,9 +242,6 @@
   </data>
   <data name="bitacora_empresa" xml:space="preserve">
     <value>Empresa</value>
-  </data>
-  <data name="bitacora_equipo_pb" xml:space="preserve">
-    <value>Equipo de Pattern Blue</value>
   </data>
   <data name="bitacora_error_cargar" xml:space="preserve">
     <value>No se pudo cargar la bitácora.</value>
@@ -1965,35 +1959,14 @@
   <data name="modelo_ya_de_baja" xml:space="preserve">
     <value>El modelo ya está dado de baja.</value>
   </data>
-  <data name="nuevagrabacion_actualizado" xml:space="preserve">
-    <value>Actualizado</value>
-  </data>
-  <data name="nuevagrabacion_analista_responsable" xml:space="preserve">
-    <value>Analista responsable</value>
-  </data>
-  <data name="nuevagrabacion_antes_de_grabar_la_plataforma_revisa" xml:space="preserve">
-    <value>Antes de grabar, la plataforma revisa que el Tobii este conectado, calibrado y con el driver correcto. Si algo falla no se puede iniciar la sesión.</value>
-  </data>
-  <data name="nuevagrabacion_calibracion" xml:space="preserve">
-    <value>Calibración</value>
-  </data>
   <data name="nuevagrabacion_cancelar_la_grabacion" xml:space="preserve">
     <value>¿Cancelar la grabación?</value>
-  </data>
-  <data name="nuevagrabacion_conectado" xml:space="preserve">
-    <value>Conectado</value>
-  </data>
-  <data name="nuevagrabacion_conexion_usb" xml:space="preserve">
-    <value>Conexión USB</value>
   </data>
   <data name="nuevagrabacion_configura_la_sesion_verifica_el_disposit" xml:space="preserve">
     <value>Configura la sesión, verifica el dispositivo y empieza a grabar.</value>
   </data>
   <data name="nuevagrabacion_continuar" xml:space="preserve">
     <value>Continuar</value>
-  </data>
-  <data name="nuevagrabacion_correcta" xml:space="preserve">
-    <value>Correcta</value>
   </data>
   <data name="nuevagrabacion_crear_una_categoria_nueva" xml:space="preserve">
     <value>Crear una categoría nueva</value>
@@ -2004,50 +1977,23 @@
   <data name="nuevagrabacion_dispositivo" xml:space="preserve">
     <value>Dispositivo</value>
   </data>
-  <data name="nuevagrabacion_dispositivo_listo" xml:space="preserve">
-    <value>Dispositivo listo</value>
-  </data>
-  <data name="nuevagrabacion_driver_de_tobii" xml:space="preserve">
-    <value>Driver de Tobii</value>
-  </data>
-  <data name="nuevagrabacion_el_procesamiento_arranca_solo_y_suele" xml:space="preserve">
-    <value>El procesamiento arranca solo y suele tardar menos de cinco minutos. Cuando termine vas a recibir un aviso y la sesión queda disponible en Visualizaciones.</value>
-  </data>
   <data name="nuevagrabacion_esta_accion_no_se_puede_deshacer" xml:space="preserve">
     <value>Esta acción no se puede deshacer.</value>
   </data>
   <data name="nuevagrabacion_finalizar" xml:space="preserve">
     <value>Finalizar</value>
   </data>
-  <data name="nuevagrabacion_finalizar_la_grabacion" xml:space="preserve">
-    <value>¿Finalizar la grabación?</value>
-  </data>
-  <data name="nuevagrabacion_fuente_de_captura" xml:space="preserve">
-    <value>Fuente de captura</value>
-  </data>
   <data name="nuevagrabacion_grabacion" xml:space="preserve">
     <value>Grabación</value>
-  </data>
-  <data name="nuevagrabacion_grabacion_en_curso" xml:space="preserve">
-    <value>Grabación en curso</value>
   </data>
   <data name="nuevagrabacion_grabando" xml:space="preserve">
     <value>Grabando</value>
   </data>
-  <data name="nuevagrabacion_identificador_del_tester" xml:space="preserve">
-    <value>Identificador del tester</value>
-  </data>
   <data name="nuevagrabacion_iniciar_la_grabacion" xml:space="preserve">
     <value>Iniciar la grabación</value>
   </data>
-  <data name="nuevagrabacion_instalado" xml:space="preserve">
-    <value>Instalado</value>
-  </data>
   <data name="nuevagrabacion_la_categoria_define_el_tipo_de" xml:space="preserve">
     <value>La categoría define el tipo de activo digital y agrupa todas las sesiones que hagas sobre él.</value>
-  </data>
-  <data name="nuevagrabacion_la_sesion_se_cierra_y_se" xml:space="preserve">
-    <value>La sesión se cierra y se envia a procesar. No se puede seguir grabando después.</value>
   </data>
   <data name="nuevagrabacion_no_encuentras_la_que_necesitas" xml:space="preserve">
     <value>¿No encuentras la que necesitas?</value>
@@ -2058,47 +2004,14 @@
   <data name="nuevagrabacion_objetivo_de_la_prueba_opcional" xml:space="preserve">
     <value>Objetivo de la prueba (opcional)</value>
   </data>
-  <data name="nuevagrabacion_pantalla_y_seguimiento_ocular_sincroniza" xml:space="preserve">
-    <value>Pantalla y seguimiento ocular sincronizados con la misma marca de tiempo.</value>
-  </data>
-  <data name="nuevagrabacion_pausar" xml:space="preserve">
-    <value>Pausar</value>
-  </data>
   <data name="nuevagrabacion_que_quieres_validar_con_esta_sesion" xml:space="preserve">
     <value>¿Qué quieres validar con esta sesión?</value>
-  </data>
-  <data name="nuevagrabacion_reiniciar" xml:space="preserve">
-    <value>Reiniciar</value>
-  </data>
-  <data name="nuevagrabacion_requerido" xml:space="preserve">
-    <value>requerido</value>
   </data>
   <data name="nuevagrabacion_se_descartan_todos_los_datos_capturados" xml:space="preserve">
     <value>Se descartan todos los datos capturados hasta ahora, incluida la grabación de pantalla y los datos de seguimiento ocular. No se guarda nada.</value>
   </data>
-  <data name="nuevagrabacion_se_toma_del_usuario_con_la" xml:space="preserve">
-    <value>Se toma del usuario con la sesión iniciada.</value>
-  </data>
-  <data name="nuevagrabacion_seguir_grabando" xml:space="preserve">
-    <value>Seguir grabando</value>
-  </data>
   <data name="nuevagrabacion_si_descartar_todo" xml:space="preserve">
     <value>Sí, descartar todo</value>
-  </data>
-  <data name="nuevagrabacion_si_el_dispositivo_se_desconecta_durante" xml:space="preserve">
-    <value>Si el dispositivo se desconecta durante la sesión, la grabación se interrumpe y los datos capturados se descartan. No muevas el cable durante la grabación.</value>
-  </data>
-  <data name="nuevagrabacion_si_finalizar" xml:space="preserve">
-    <value>Sí, finalizar</value>
-  </data>
-  <data name="nuevagrabacion_simular_un_fallo_demo" xml:space="preserve">
-    <value>Simular un fallo (demo)</value>
-  </data>
-  <data name="nuevagrabacion_usa_un_codigo_no_el_nombre" xml:space="preserve">
-    <value>Usa un código, no el nombre real: los datos se guardan disociados de la identidad.</value>
-  </data>
-  <data name="nuevagrabacion_verificacion_del_dispositivo" xml:space="preserve">
-    <value>Verificación del dispositivo</value>
   </data>
   <data name="nuevagrabacion_verificar_nuevamente" xml:space="preserve">
     <value>Verificar nuevamente</value>
@@ -3334,9 +3247,6 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="idiomas_origen_automatica" xml:space="preserve">
     <value>Automática</value>
   </data>
-  <data name="analisismultiple_tipo_de_activo_0" xml:space="preserve">
-    <value>Tipo de activo: {0}.</value>
-  </data>
   <data name="analisismultiple_listo_para_combinar_0_sesiones" xml:space="preserve">
     <value>Listo para combinar {0} sesiones.</value>
   </data>
@@ -3481,30 +3391,6 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="miclave_todavia_no_coinciden" xml:space="preserve">
     <value>Todavía no coinciden.</value>
   </data>
-  <data name="nuevagrabacion_el_dispositivo_no_esta_listo" xml:space="preserve">
-    <value>El dispositivo no está listo</value>
-  </data>
-  <data name="nuevagrabacion_el_tobii_4c_esta_conectado_calibrado" xml:space="preserve">
-    <value>El Tobii 4C está conectado, calibrado y con el driver actualizado.</value>
-  </data>
-  <data name="nuevagrabacion_resuelve_el_problema_marcado_en_rojo" xml:space="preserve">
-    <value>Resuelve el problema marcado en rojo y verifica de nuevo para poder grabar.</value>
-  </data>
-  <data name="nuevagrabacion_instalado_3_4_0_requerido_4" xml:space="preserve">
-    <value>Instalado: 3.4.0 - requerido: 4.0 o superior</value>
-  </data>
-  <data name="nuevagrabacion_instalado_4_2_1_requerido_4" xml:space="preserve">
-    <value>Instalado: 4.2.1 - requerido: 4.0 o superior</value>
-  </data>
-  <data name="nuevagrabacion_desactualizado" xml:space="preserve">
-    <value>Desactualizado</value>
-  </data>
-  <data name="nuevagrabacion_grabacion_en_pausa_los_datos_capturados" xml:space="preserve">
-    <value>Grabación en pausa. Los datos capturados hasta ahora se conservan.</value>
-  </data>
-  <data name="nuevagrabacion_la_grabacion_se_reinicio_se_descartaron" xml:space="preserve">
-    <value>La grabación se reinició. Se descartaron los datos anteriores.</value>
-  </data>
   <data name="planes_hola_me_interesa_comunicarme_con_ustedes" xml:space="preserve">
     <value>Hola! Me interesa comunicarme con ustedes para discutir la puesta en funcionamiento del plan {0}. Quedo a la espera de su respuesta.</value>
   </data>
@@ -3540,12 +3426,6 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   </data>
   <data name="visualizaciones_elipse_de_dispersion" xml:space="preserve">
     <value>Elipse de dispersión</value>
-  </data>
-  <data name="visualizaciones_fijacion_activa_62" xml:space="preserve">
-    <value>Fijación activa (62%)</value>
-  </data>
-  <data name="visualizaciones_movimiento_sacadico_38" xml:space="preserve">
-    <value>Movimiento sacádico (38%)</value>
   </data>
   <data name="visualizaciones_final" xml:space="preserve">
     <value>Final</value>
@@ -3723,9 +3603,6 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   </data>
   <data name="permiso_rol_base_eliminar" xml:space="preserve">
     <value>"{0}" es un rol base del sistema: no se puede eliminar.</value>
-  </data>
-  <data name="miperfil_espanol" xml:space="preserve">
-    <value>Español</value>
   </data>
   <data name="falke_js_modo_dia" xml:space="preserve">
     <value>Cambiar a modo día</value>

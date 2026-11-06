@@ -339,16 +339,6 @@ namespace GUI
             });
         }
 
-        [WebMethod(EnableSession = true)]
-        public static RespuestaGuardado CancelarSubida(string token)
-        {
-            return Ejecutar(actor =>
-            {
-                BorrarTemporal(RutaTemporal(actor, token));
-                return new RespuestaGuardado { ok = true };
-            });
-        }
-
         private static RespuestaGuardado Ejecutar(Func<ActorUsuario_TE, RespuestaGuardado> paso)
         {
             try

@@ -111,9 +111,6 @@
   <data name="analisismultiple_todavia_no_elegiste_ninguna_sesion" xml:space="preserve">
     <value>Sie haben noch keine Sitzung gewählt.</value>
   </data>
-  <data name="analisismultiple_trayecto_tipico_la_linea_llena_es" xml:space="preserve">
-    <value>Typischer Verlauf: Die durchgezogene Linie ist der Durchschnitt der Gruppe.</value>
-  </data>
   <data name="analisismultiple_videojuego" xml:space="preserve">
     <value>Videospiel</value>
   </data>
@@ -245,9 +242,6 @@
   </data>
   <data name="bitacora_empresa" xml:space="preserve">
     <value>Unternehmen</value>
-  </data>
-  <data name="bitacora_equipo_pb" xml:space="preserve">
-    <value>Team von Pattern Blue</value>
   </data>
   <data name="bitacora_error_cargar" xml:space="preserve">
     <value>Das Audit-Protokoll konnte nicht geladen werden.</value>
@@ -1965,35 +1959,14 @@
   <data name="modelo_ya_de_baja" xml:space="preserve">
     <value>Das Modell wurde bereits ausgemustert.</value>
   </data>
-  <data name="nuevagrabacion_actualizado" xml:space="preserve">
-    <value>Aktuell</value>
-  </data>
-  <data name="nuevagrabacion_analista_responsable" xml:space="preserve">
-    <value>Verantwortlicher Analyst</value>
-  </data>
-  <data name="nuevagrabacion_antes_de_grabar_la_plataforma_revisa" xml:space="preserve">
-    <value>Vor der Aufnahme prüft die Plattform, ob das Tobii verbunden, kalibriert und mit dem richtigen Treiber ausgestattet ist. Wenn etwas fehlschlägt, kann die Sitzung nicht gestartet werden.</value>
-  </data>
-  <data name="nuevagrabacion_calibracion" xml:space="preserve">
-    <value>Kalibrierung</value>
-  </data>
   <data name="nuevagrabacion_cancelar_la_grabacion" xml:space="preserve">
     <value>Aufnahme abbrechen?</value>
-  </data>
-  <data name="nuevagrabacion_conectado" xml:space="preserve">
-    <value>Verbunden</value>
-  </data>
-  <data name="nuevagrabacion_conexion_usb" xml:space="preserve">
-    <value>USB-Verbindung</value>
   </data>
   <data name="nuevagrabacion_configura_la_sesion_verifica_el_disposit" xml:space="preserve">
     <value>Richten Sie die Sitzung ein, prüfen Sie das Gerät und starten Sie die Aufnahme.</value>
   </data>
   <data name="nuevagrabacion_continuar" xml:space="preserve">
     <value>Fortfahren</value>
-  </data>
-  <data name="nuevagrabacion_correcta" xml:space="preserve">
-    <value>Korrekt</value>
   </data>
   <data name="nuevagrabacion_crear_una_categoria_nueva" xml:space="preserve">
     <value>Neue Kategorie erstellen</value>
@@ -2004,50 +1977,23 @@
   <data name="nuevagrabacion_dispositivo" xml:space="preserve">
     <value>Gerät</value>
   </data>
-  <data name="nuevagrabacion_dispositivo_listo" xml:space="preserve">
-    <value>Gerät bereit</value>
-  </data>
-  <data name="nuevagrabacion_driver_de_tobii" xml:space="preserve">
-    <value>Tobii-Treiber</value>
-  </data>
-  <data name="nuevagrabacion_el_procesamiento_arranca_solo_y_suele" xml:space="preserve">
-    <value>Die Verarbeitung startet automatisch und dauert in der Regel weniger als fünf Minuten. Wenn sie abgeschlossen ist, erhalten Sie eine Benachrichtigung und die Sitzung steht unter Visualisierungen zur Verfügung.</value>
-  </data>
   <data name="nuevagrabacion_esta_accion_no_se_puede_deshacer" xml:space="preserve">
     <value>Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="nuevagrabacion_finalizar" xml:space="preserve">
     <value>Beenden</value>
   </data>
-  <data name="nuevagrabacion_finalizar_la_grabacion" xml:space="preserve">
-    <value>Aufnahme beenden?</value>
-  </data>
-  <data name="nuevagrabacion_fuente_de_captura" xml:space="preserve">
-    <value>Erfassungsquelle</value>
-  </data>
   <data name="nuevagrabacion_grabacion" xml:space="preserve">
     <value>Aufnahme</value>
-  </data>
-  <data name="nuevagrabacion_grabacion_en_curso" xml:space="preserve">
-    <value>Aufnahme läuft</value>
   </data>
   <data name="nuevagrabacion_grabando" xml:space="preserve">
     <value>Aufzeichnung</value>
   </data>
-  <data name="nuevagrabacion_identificador_del_tester" xml:space="preserve">
-    <value>Kennung des Testers</value>
-  </data>
   <data name="nuevagrabacion_iniciar_la_grabacion" xml:space="preserve">
     <value>Aufnahme starten</value>
   </data>
-  <data name="nuevagrabacion_instalado" xml:space="preserve">
-    <value>Installiert</value>
-  </data>
   <data name="nuevagrabacion_la_categoria_define_el_tipo_de" xml:space="preserve">
     <value>Die Kategorie legt den Typ des digitalen Assets fest und fasst alle Sitzungen zusammen, die Sie darauf durchführen.</value>
-  </data>
-  <data name="nuevagrabacion_la_sesion_se_cierra_y_se" xml:space="preserve">
-    <value>Die Sitzung wird beendet und zur Verarbeitung gesendet. Danach kann nicht weiter aufgezeichnet werden.</value>
   </data>
   <data name="nuevagrabacion_no_encuentras_la_que_necesitas" xml:space="preserve">
     <value>Finden Sie die gesuchte nicht?</value>
@@ -2058,47 +2004,14 @@
   <data name="nuevagrabacion_objetivo_de_la_prueba_opcional" xml:space="preserve">
     <value>Ziel des Tests (optional)</value>
   </data>
-  <data name="nuevagrabacion_pantalla_y_seguimiento_ocular_sincroniza" xml:space="preserve">
-    <value>Bildschirm und Eye-Tracking, synchronisiert mit demselben Zeitstempel.</value>
-  </data>
-  <data name="nuevagrabacion_pausar" xml:space="preserve">
-    <value>Pausieren</value>
-  </data>
   <data name="nuevagrabacion_que_quieres_validar_con_esta_sesion" xml:space="preserve">
     <value>Was möchten Sie mit dieser Sitzung validieren?</value>
-  </data>
-  <data name="nuevagrabacion_reiniciar" xml:space="preserve">
-    <value>Neu starten</value>
-  </data>
-  <data name="nuevagrabacion_requerido" xml:space="preserve">
-    <value>erforderlich</value>
   </data>
   <data name="nuevagrabacion_se_descartan_todos_los_datos_capturados" xml:space="preserve">
     <value>Alle bisher erfassten Daten werden verworfen, einschließlich der Bildschirmaufnahme und der Eye-Tracking-Daten. Es wird nichts gespeichert.</value>
   </data>
-  <data name="nuevagrabacion_se_toma_del_usuario_con_la" xml:space="preserve">
-    <value>Vom angemeldeten Benutzer übernommen.</value>
-  </data>
-  <data name="nuevagrabacion_seguir_grabando" xml:space="preserve">
-    <value>Weiter aufzeichnen</value>
-  </data>
   <data name="nuevagrabacion_si_descartar_todo" xml:space="preserve">
     <value>Ja, alles verwerfen</value>
-  </data>
-  <data name="nuevagrabacion_si_el_dispositivo_se_desconecta_durante" xml:space="preserve">
-    <value>Wenn das Gerät während der Sitzung getrennt wird, wird die Aufnahme unterbrochen und die erfassten Daten werden verworfen. Bewegen Sie das Kabel während der Aufnahme nicht.</value>
-  </data>
-  <data name="nuevagrabacion_si_finalizar" xml:space="preserve">
-    <value>Ja, beenden</value>
-  </data>
-  <data name="nuevagrabacion_simular_un_fallo_demo" xml:space="preserve">
-    <value>Einen Fehler simulieren (Demo)</value>
-  </data>
-  <data name="nuevagrabacion_usa_un_codigo_no_el_nombre" xml:space="preserve">
-    <value>Verwenden Sie einen Code, nicht den echten Namen: Die Daten werden getrennt von der Identität gespeichert.</value>
-  </data>
-  <data name="nuevagrabacion_verificacion_del_dispositivo" xml:space="preserve">
-    <value>Geräteprüfung</value>
   </data>
   <data name="nuevagrabacion_verificar_nuevamente" xml:space="preserve">
     <value>Erneut prüfen</value>
@@ -3334,9 +3247,6 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="idiomas_origen_automatica" xml:space="preserve">
     <value>Automatisch</value>
   </data>
-  <data name="analisismultiple_tipo_de_activo_0" xml:space="preserve">
-    <value>Asset-Typ: {0}.</value>
-  </data>
   <data name="analisismultiple_listo_para_combinar_0_sesiones" xml:space="preserve">
     <value>Bereit, {0} Sitzungen zu kombinieren.</value>
   </data>
@@ -3481,30 +3391,6 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="miclave_todavia_no_coinciden" xml:space="preserve">
     <value>Sie stimmen noch nicht überein.</value>
   </data>
-  <data name="nuevagrabacion_el_dispositivo_no_esta_listo" xml:space="preserve">
-    <value>Das Gerät ist nicht bereit</value>
-  </data>
-  <data name="nuevagrabacion_el_tobii_4c_esta_conectado_calibrado" xml:space="preserve">
-    <value>Das Tobii 4C ist verbunden, kalibriert und der Treiber ist aktuell.</value>
-  </data>
-  <data name="nuevagrabacion_resuelve_el_problema_marcado_en_rojo" xml:space="preserve">
-    <value>Beheben Sie das rot markierte Problem und prüfen Sie erneut, um aufnehmen zu können.</value>
-  </data>
-  <data name="nuevagrabacion_instalado_3_4_0_requerido_4" xml:space="preserve">
-    <value>Installiert: 3.4.0 - erforderlich: 4.0 oder höher</value>
-  </data>
-  <data name="nuevagrabacion_instalado_4_2_1_requerido_4" xml:space="preserve">
-    <value>Installiert: 4.2.1 - erforderlich: 4.0 oder höher</value>
-  </data>
-  <data name="nuevagrabacion_desactualizado" xml:space="preserve">
-    <value>Veraltet</value>
-  </data>
-  <data name="nuevagrabacion_grabacion_en_pausa_los_datos_capturados" xml:space="preserve">
-    <value>Aufnahme pausiert. Die bisher erfassten Daten bleiben erhalten.</value>
-  </data>
-  <data name="nuevagrabacion_la_grabacion_se_reinicio_se_descartaron" xml:space="preserve">
-    <value>Die Aufnahme wurde neu gestartet. Die vorherigen Daten wurden verworfen.</value>
-  </data>
   <data name="planes_hola_me_interesa_comunicarme_con_ustedes" xml:space="preserve">
     <value>Hallo! Ich möchte Kontakt aufnehmen, um über die Einführung des Tarifs {0} zu sprechen. Ich freue mich auf Ihre Antwort.</value>
   </data>
@@ -3540,12 +3426,6 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   </data>
   <data name="visualizaciones_elipse_de_dispersion" xml:space="preserve">
     <value>Streuungsellipse</value>
-  </data>
-  <data name="visualizaciones_fijacion_activa_62" xml:space="preserve">
-    <value>Aktive Fixation (62 %)</value>
-  </data>
-  <data name="visualizaciones_movimiento_sacadico_38" xml:space="preserve">
-    <value>Sakkadische Bewegung (38 %)</value>
   </data>
   <data name="visualizaciones_final" xml:space="preserve">
     <value>Ende</value>
@@ -3723,9 +3603,6 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   </data>
   <data name="permiso_rol_base_eliminar" xml:space="preserve">
     <value>„{0}“ ist eine Basisrolle des Systems: Sie kann nicht gelöscht werden.</value>
-  </data>
-  <data name="miperfil_espanol" xml:space="preserve">
-    <value>Spanisch</value>
   </data>
   <data name="falke_js_modo_dia" xml:space="preserve">
     <value>Zum Tagmodus wechseln</value>

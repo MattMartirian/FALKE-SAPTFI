@@ -86,13 +86,6 @@ namespace ORM
                 new SqlParameter("@idioma", idIdioma)));
         }
 
-        public List<Traduccion_TE> ObtenerPendientes(int idIdioma)
-        {
-            return MapTodos(Gestor.EjecutarQuery(
-                SqlSeleccion() + " WHERE id_idioma = @idioma AND pendiente_traduccion = 1 ORDER BY codigo_clave_traduccion",
-                new SqlParameter("@idioma", idIdioma)));
-        }
-
         public Dictionary<string, string> ObtenerTextos(int idIdioma)
         {
             var textos = new Dictionary<string, string>(StringComparer.Ordinal);
