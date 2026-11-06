@@ -8,8 +8,8 @@ namespace GUI
     {
         private static readonly bool MODO_PRUEBA = true;
 
-        // el zip con todo el software (agente + instalador de Tobii) se arma a mano y se deja en esta carpeta
-        private const string CARPETA = "~/App_Data/Descargas";
+        // el zip con todo el software (agente + instalador de Tobii) se arma a mano y se deja en esta carpeta (viaja con la publicacion del sitio)
+        private const string CARPETA = "~/Instaladores";
         private const string ARCHIVO = "FALKE_SW.zip";
 
         private bool permitido;
