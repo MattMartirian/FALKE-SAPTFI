@@ -1,9 +1,5 @@
 "use strict";
 
-// ZONAS DE INTERES Y ZONAS CIEGAS (consenso)
-// en cada sesion se buscan sus zonas calientes y sus bloques ciegos; despues se cuentan en cuantas sesiones coincide cada lugar.
-// se dibuja lo que coincide en CONSENSO_ZONAS o mas de las sesiones
-
 var CONSENSO_ZONAS = 0.6;
 
 class GraficoZonas extends GraficoMultiple {
@@ -23,7 +19,6 @@ class GraficoZonas extends GraficoMultiple {
             return;
         }
 
-        // cuantas sesiones tienen cada celda caliente y cada bloque ciego
         var interes = new Uint8Array(CALOR_ANCHO * CALOR_ALTO);
         var ciegos = new Uint8Array(CIEGA_BLOQUES_X * CIEGA_BLOQUES_Y);
 
@@ -40,7 +35,6 @@ class GraficoZonas extends GraficoMultiple {
             }
         }
 
-        // minimo de sesiones que tienen que coincidir
         var minimo = Math.ceil(calores.length * CONSENSO_ZONAS - 0.0001);
         var ciegosEnConsenso = [];
 

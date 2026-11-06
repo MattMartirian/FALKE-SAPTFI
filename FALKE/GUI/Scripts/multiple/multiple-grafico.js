@@ -1,8 +1,5 @@
 "use strict";
 
-// GRAFICO PROMEDIADO (clase base)
-// cada grafico del analisis multiple es un canvas dentro de su tarjeta. Las clases hijas dibujan, esta pone el fondo
-
 class GraficoMultiple {
     constructor(idCaja) {
         this.canvas = document.createElement("canvas");
@@ -11,10 +8,9 @@ class GraficoMultiple {
 
         document.getElementById(idCaja).appendChild(this.canvas);
 
-        this.cuadricula = true;   // las hijas que no la quieran lo ponen en false
+        this.cuadricula = true;
     }
 
-    // sesiones: solo las que tienen datos de mirada
     dibujar(sesiones) {
         var ctx = this.canvas.getContext("2d");
         var w = this.canvas.width;
@@ -32,7 +28,6 @@ class GraficoMultiple {
         this.dibujarSesiones(ctx, w, h, sesiones);
     }
 
-    // lineas finas cada 25% de la pantalla, para poder ubicar las posiciones (no es una captura real)
     dibujarCuadricula(ctx, w, h) {
         ctx.lineWidth = 1;
         ctx.strokeStyle = "rgba(124,135,156,.28)";
@@ -56,6 +51,5 @@ class GraficoMultiple {
         ctx.textAlign = "start";
     }
 
-    // lo completa cada grafico
     dibujarSesiones(ctx, w, h, sesiones) { }
 }

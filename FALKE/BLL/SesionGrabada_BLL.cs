@@ -20,6 +20,7 @@ namespace BLL
         private readonly SesionGrabadaRepository sesionRepo;
         private readonly CategoriaRepository categoriaRepo;
         private readonly DispositivoRepository dispositivoRepo;
+        private readonly EmpresaRepository empresaRepo;
         private readonly GestorIntegridad_SERVICE gestorIntegridad;
         private readonly BitacoraGestor_TLL bitacora;
 
@@ -28,6 +29,7 @@ namespace BLL
             sesionRepo = new SesionGrabadaRepository();
             categoriaRepo = new CategoriaRepository();
             dispositivoRepo = new DispositivoRepository();
+            empresaRepo = new EmpresaRepository();
             gestorIntegridad = new GestorIntegridad_SERVICE();
             bitacora = new BitacoraGestor_TLL();
         }
@@ -60,6 +62,50 @@ namespace BLL
             if (sesion == null) throw new ExcepcionTraducible_TLL("sesion_no_existe");
 
             return sesion;
+        }
+
+        public InformeSesion_BE ObtenerParaInforme(ActorUsuario_TE actor, int idSesion, string codigoIdioma)
+        {
+            SesionGrabada_BE sesion = ObtenerPropia(actor, idSesion);
+
+            var informe = new InformeSesion_BE
+            {
+                Sesion = sesion,
+                Categoria = categoriaRepo.ObtenerPorPK(sesion.IdCategoria),
+                Dispositivo = sesion.IdDispositivo > 0 ? dispositivoRepo.ObtenerPorPK(sesion.IdDispositivo) : null,
+                Empresa = empresaRepo.ObtenerResumenPorId(actor.IdEmpresa)
+            };
+
+            bitacora.Auditar(actor, "Grabaciones", actor.IdEmpresa, EventosBitacora_TLL.INFORME_EXPORTADO, CriticidadBitacora.Baja,
+                DetalleBitacora_TLL.Armar(sesion.Nombre, codigoIdioma));
+
+            return informe;
+        }
+
+        public InformeMultiple_BE ObtenerParaInformeMultiple(ActorUsuario_TE actor, List<int> idSesiones, string codigoIdioma)
+        {
+            if (idSesiones == null || idSesiones.Count == 0) throw new ExcepcionTraducible_TLL("sesion_no_existe");
+
+            var sesiones = new List<SesionGrabada_BE>();
+
+            foreach (int idSesion in idSesiones) sesiones.Add(ObtenerPropia(actor, idSesion));
+
+            foreach (SesionGrabada_BE s in sesiones)
+            {
+                if (s.IdCategoria != sesiones[0].IdCategoria) throw new ExcepcionTraducible_TLL("analisismultiple_todas_las_sesiones_tienen_que_ser");
+            }
+
+            var informe = new InformeMultiple_BE
+            {
+                Sesiones = sesiones,
+                Categoria = categoriaRepo.ObtenerPorPK(sesiones[0].IdCategoria),
+                Empresa = empresaRepo.ObtenerResumenPorId(actor.IdEmpresa)
+            };
+
+            bitacora.Auditar(actor, "Grabaciones", actor.IdEmpresa, EventosBitacora_TLL.INFORME_EXPORTADO, CriticidadBitacora.Baja,
+                DetalleBitacora_TLL.Armar(sesiones[0].NombreCategoria, sesiones.Count, codigoIdioma));
+
+            return informe;
         }
 
         public List<Dispositivo_BE> DispositivosParaGrabar(ActorUsuario_TE actor)

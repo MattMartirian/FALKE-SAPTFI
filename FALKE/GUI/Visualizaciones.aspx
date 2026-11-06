@@ -110,7 +110,7 @@
                 <p class="texto-suave sin-margen" id="objetivoSesion" hidden></p>
             </div>
             <div class="acciones">
-                <button type="button" class="btn btn-primario" data-abre-modal="modalExportar">
+                <button type="button" class="btn btn-primario" id="btnAbrirExportar" data-abre-modal="modalExportar">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-descarga" /></svg>
                     <span data-i18n="vis.exportar">[[analisismultiple_descargar_reporte]]</span>
                 </button>
@@ -355,7 +355,7 @@
 </div>
 
 <div class="modal-fondo" id="modalExportar" role="dialog" aria-modal="true" aria-labelledby="exportarTitulo" hidden>
-    <div class="modal">
+    <div class="modal ancho">
 
         <div class="modal-cabecera">
             <div>
@@ -371,65 +371,111 @@
 
         <div class="modal-cuerpo">
 
-            <p class="etiqueta" data-i18n="vis.exportar.contenido">[[visualizaciones_contenido_del_reporte]]</p>
+            <div class="campo exportar-idioma">
+                <label for="expIdioma">[[vis_exportar_idioma]]</label>
+                <%-- por defecto el idioma del usuario; el informe puede salir en cualquier idioma activo --%>
+                <select class="entrada" id="expIdioma">
+                    <asp:Repeater ID="rptIdiomasInforme" runat="server">
+                        <ItemTemplate><option value='<%#: Eval("CodigoIdioma") %>'<%# IdiomaElegido((string)Eval("CodigoIdioma")) %>><%#: Eval("NombreIdioma") %></option></ItemTemplate>
+                    </asp:Repeater>
+                </select>
+            </div>
 
-            <label class="opcion">
-                <input type="checkbox" checked disabled />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.exportar.portada">[[visualizaciones_nombre_fecha_y_metricas_generales]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.portada.detalle">[[visualizaciones_siempre_se_incluye_en_el_reporte]]</span>
-                </span>
-            </label>
+            <p class="etiqueta mt-16" data-i18n="vis.exportar.contenido">[[visualizaciones_contenido_del_reporte]]</p>
+
+            <div class="exportar-opciones">
+                <label class="opcion">
+                    <input type="checkbox" checked disabled />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_obligatorio]]</span>
+                        <span class="opcion-detalle" data-i18n="vis.exportar.portada.detalle">[[visualizaciones_siempre_se_incluye_en_el_reporte]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="activo" checked />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_activo]]</span>
+                        <span class="opcion-detalle">[[vis_exportar_activo_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="perfil" checked />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_perfil]]</span>
+                        <span class="opcion-detalle">[[vis_exportar_perfil_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="objetivo" checked />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_objetivo]]</span>
+                        <span class="opcion-detalle">[[vis_exportar_objetivo_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="dispositivo" checked />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_dispositivo]]</span>
+                        <span class="opcion-detalle">[[vis_exportar_dispositivo_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="definiciones" checked />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_definiciones]]</span>
+                        <span class="opcion-detalle">[[vis_exportar_definiciones_detalle]]</span>
+                    </span>
+                </label>
+            </div>
 
             <p class="etiqueta mt-16" data-i18n="vis.exportar.visualizaciones">[[visualizaciones_visualizaciones_a_incluir]]</p>
 
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="grabacion" />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.grabacion">[[visualizaciones_grabacion_con_seguimiento]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.grabacion.detalle">[[visualizaciones_se_incluye_como_cuadro_representativo]]</span>
-                </span>
-            </label>
+            <div class="exportar-opciones">
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="calor" checked />
+                    <span>
+                        <span class="opcion-titulo" data-i18n="vis.grafico.calor">[[analisismultiple_mapa_de_calor]]</span>
+                        <span class="opcion-detalle" data-i18n="vis.exportar.calor.detalle">[[visualizaciones_concentracion_de_la_atencion_visual]]</span>
+                    </span>
+                </label>
 
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="calor" checked />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.calor">[[analisismultiple_mapa_de_calor]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.calor.detalle">[[visualizaciones_concentracion_de_la_atencion_visual]]</span>
-                </span>
-            </label>
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="zonas" checked />
+                    <span>
+                        <span class="opcion-titulo" data-i18n="vis.grafico.zonas">[[analisismultiple_zonas_de_interes_y_ciegas]]</span>
+                        <span class="opcion-detalle" data-i18n="vis.exportar.zonas.detalle">[[visualizaciones_areas_miradas_y_areas_ignoradas]]</span>
+                    </span>
+                </label>
 
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="zonas" checked />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.zonas">[[analisismultiple_zonas_de_interes_y_ciegas]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.zonas.detalle">[[visualizaciones_areas_miradas_y_areas_ignoradas]]</span>
-                </span>
-            </label>
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="dispersion" />
+                    <span>
+                        <span class="opcion-titulo" data-i18n="vis.grafico.dispersion">[[analisismultiple_dispersion_de_mirada]]</span>
+                        <span class="opcion-detalle" data-i18n="vis.exportar.dispersion.detalle">[[visualizaciones_que_tan_estable_fue_la_atencion]]</span>
+                    </span>
+                </label>
 
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="dispersion" />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.dispersion">[[analisismultiple_dispersion_de_mirada]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.dispersion.detalle">[[visualizaciones_que_tan_estable_fue_la_atencion]]</span>
-                </span>
-            </label>
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="atencion" />
+                    <span>
+                        <span class="opcion-titulo" data-i18n="vis.grafico.atencion">[[visualizaciones_atencion_frente_a_distraccion]]</span>
+                        <span class="opcion-detalle" data-i18n="vis.exportar.atencion.detalle">[[visualizaciones_fijacion_activa_frente_a_movimiento_saca]]</span>
+                    </span>
+                </label>
 
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="atencion" />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.atencion">[[visualizaciones_atencion_frente_a_distraccion]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.atencion.detalle">[[visualizaciones_fijacion_activa_frente_a_movimiento_saca]]</span>
-                </span>
-            </label>
-
-            <label class="opcion">
-                <input type="checkbox" name="expVisual" value="recorrido" checked />
-                <span>
-                    <span class="opcion-titulo" data-i18n="vis.grafico.recorrido">[[analisismultiple_recorrido_de_mirada]]</span>
-                    <span class="opcion-detalle" data-i18n="vis.exportar.recorrido.detalle">[[visualizaciones_trayecto_secuencial_sobre_el_activo]]</span>
-                </span>
-            </label>
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="recorrido" checked />
+                    <span>
+                        <span class="opcion-titulo" data-i18n="vis.grafico.recorrido">[[analisismultiple_recorrido_de_mirada]]</span>
+                        <span class="opcion-detalle" data-i18n="vis.exportar.recorrido.detalle">[[visualizaciones_trayecto_secuencial_sobre_el_activo]]</span>
+                    </span>
+                </label>
+            </div>
 
             <p class="ayuda" id="exportarAviso" role="status"></p>
 
@@ -492,6 +538,11 @@
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-atencion.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-recorrido.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visor.js") %>"></script>
+
+    <script src="<%: UrlVersionada("~/Scripts/lib/jspdf.umd.min.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-fuentes.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-imagenes.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-pdf.js") %>"></script>
 
     <script>
         (function () {
@@ -682,20 +733,112 @@
                 botonesVisual[i].addEventListener("click", function () { Visor.abrir(this.getAttribute("data-visual"), actual); });
             }
 
+            var URL_INFORME = "<%: ResolveUrl("~/Visualizaciones_WebMethod.asmx") %>/DatosInforme";
+            var URL_LOGO = "<%: ResolveUrl("~/Content/img/falke-logo.svg") %>";
             var btnExportar = document.getElementById("btnExportar");
             var exportarAviso = document.getElementById("exportarAviso");
+            var expIdioma = document.getElementById("expIdioma");
+
+            function avisoExportar(clase, texto) {
+                exportarAviso.className = "ayuda " + clase;
+                exportarAviso.textContent = texto;
+            }
+
+            function marcadas(nombre) {
+                var lista = [];
+                var casillas = document.querySelectorAll("input[name='" + nombre + "']:checked");
+
+                for (var i = 0; i < casillas.length; i++) lista.push(casillas[i].value);
+
+                return lista;
+            }
+
+            function pedirDatosInforme(token, idioma) {
+                return fetch(URL_INFORME, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    body: JSON.stringify({ token: token, idioma: idioma })
+                })
+                    .then(function (respuesta) {
+                        if (!respuesta.ok) throw new Error();
+
+                        return respuesta.json();
+                    })
+                    .then(function (json) {
+                        if (!json.d || !json.d.ok) {
+                            var error = new Error(json.d && json.d.mensaje);
+                            error.delServidor = true;
+                            throw error;
+                        }
+
+                        return json.d;
+                    });
+            }
+
+            document.getElementById("btnAbrirExportar").addEventListener("click", function () {
+                if (!btnExportar.disabled) avisoExportar("", "");
+            });
 
             btnExportar.addEventListener("click", function () {
-                var elegidas = document.querySelectorAll("input[name='expVisual']:checked");
+                var visuales = marcadas("expVisual");
+                var datos = marcadas("expDato");
 
-                if (elegidas.length === 0) {
-                    exportarAviso.className = "ayuda texto-peligro";
-                    exportarAviso.textContent = "[[js:visualizaciones_elige_al_menos_una_visualizacion_para]]";
+                if (!actual) return;
+
+                if (visuales.length === 0) {
+                    avisoExportar("texto-peligro", "[[js:visualizaciones_elige_al_menos_una_visualizacion_para]]");
                     return;
                 }
 
-                exportarAviso.className = "ayuda texto-suave";
-                exportarAviso.textContent = "[[js:visualizaciones_se_generaria_un_pdf_con_0]]".replace("{0}", elegidas.length);
+                if (!actual.analisis && !actual.sinMirada) {
+                    avisoExportar("texto-peligro", "[[js:vis_exportar_esperar]]");
+                    return;
+                }
+
+                var sesion = actual;
+                var segundo = sesion.duracionSeg / 2;
+                var datosInforme = null;
+
+                btnExportar.disabled = true;
+                avisoExportar("texto-suave", "[[js:vis_exportar_generando]]");
+
+                pedirDatosInforme(sesion.token, expIdioma.value)
+                    .then(function (respuesta) {
+                        datosInforme = respuesta;
+
+                        return InformeImagenes.logo(URL_LOGO);
+                    })
+                    .then(function (logo) {
+                        var informe = new InformePdf(datosInforme, logo);
+
+                        informe.armar({
+                            sesion: sesion,
+                            analisis: sesion.analisis,
+                            visuales: visuales,
+                            incluir: {
+                                activo: datos.indexOf("activo") !== -1,
+                                perfil: datos.indexOf("perfil") !== -1,
+                                objetivo: datos.indexOf("objetivo") !== -1,
+                                dispositivo: datos.indexOf("dispositivo") !== -1,
+                                definiciones: datos.indexOf("definiciones") !== -1
+                            },
+                            tipos: Visor.tipos,
+                            segundo: segundo
+                        });
+
+                        informe.guardar();
+
+                        avisoExportar("texto-exito", "[[js:vis_exportar_listo]]");
+                    })
+                    .catch(function (error) {
+                        if (window.console) console.error(error);
+
+                        avisoExportar("texto-peligro", error && error.delServidor && error.message ? error.message : "[[js:vis_exportar_error]]");
+                    })
+                    .then(function () {
+                        btnExportar.disabled = false;
+                    });
             });
         })();
     </script>

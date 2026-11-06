@@ -1,9 +1,5 @@
 "use strict";
 
-// METRICAS PROMEDIADAS
-// las metricas generales y las de cada grupo del tester (edad, genero, familiaridad)
-
-// si un grupo tiene menos de este porcentaje de las sesiones de esa metrica se avisa que la muestra es chica
 var MUESTRA_PEQUENA = 0.10;
 
 function formatoMinutos(segundos) {
@@ -22,7 +18,6 @@ function formatoNumero(n) {
     }
 }
 
-// cada metrica dice como sacar su valor de una sesion (null si la sesion no tiene ese dato) y como mostrarlo
 var METRICAS = [
     {
         nombre: function () { return MultiTextos.duracion; },
@@ -46,7 +41,6 @@ var METRICAS = [
     }
 ];
 
-// los valores de una metrica para las sesiones que tienen ese dato
 function valoresDe(sesiones, metrica) {
     var valores = [];
 
@@ -68,7 +62,6 @@ function crear(etiqueta, clase, texto) {
     return el;
 }
 
-// metricas generales: promedio de todas las sesiones y, abajo, la mediana
 function pintarGenerales(contenedor, sesiones) {
     contenedor.innerHTML = "";
 
@@ -94,7 +87,6 @@ function pintarGenerales(contenedor, sesiones) {
     contenedor.appendChild(combinadas);
 }
 
-// una celda de la tabla de un grupo: sin datos, o el promedio (con aviso si el grupo es muy chico)
 function celdaGrupo(sesionesGrupo, sesionesTodas, metrica) {
     var td = document.createElement("td");
     var valores = valoresDe(sesionesGrupo, metrica);
@@ -115,7 +107,6 @@ function celdaGrupo(sesionesGrupo, sesionesTodas, metrica) {
     return td;
 }
 
-// los tres datos del tester con sus opciones (las usan las tablas por grupo y el filtro)
 function dimensionesDelTester(grupos) {
     return [
         { campo: "edad", titulo: MultiTextos.grupoEdad, opciones: grupos.edad },
@@ -124,7 +115,6 @@ function dimensionesDelTester(grupos) {
     ];
 }
 
-// una tabla por cada dato del tester: una fila por opcion (aunque no tenga sesiones)
 function pintarGrupos(contenedor, sesiones, grupos) {
     contenedor.innerHTML = "";
 

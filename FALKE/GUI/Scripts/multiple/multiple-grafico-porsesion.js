@@ -1,8 +1,5 @@
 "use strict";
 
-// ATENCION POR SESION (barras)
-// una barra por sesion: lo dorado es su porcentaje de atencion; la linea punteada es el promedio
-
 class GraficoPorSesion extends GraficoMultiple {
     constructor(idCaja) {
         super(idCaja);
@@ -16,7 +13,6 @@ class GraficoPorSesion extends GraficoMultiple {
         var ancho = w - izq - der;
         var i;
 
-        // lineas de referencia al 0, 25, 50, 75 y 100 %
         ctx.font = "500 18px sans-serif";
         ctx.fillStyle = "#7C879C";
         ctx.textBaseline = "middle";
@@ -50,7 +46,6 @@ class GraficoPorSesion extends GraficoMultiple {
             ctx.fillRect(x, arriba + alto * (1 - pct / 100), grosor, alto * pct / 100);
         }
 
-        // promedio
         var yMedia = arriba + alto * (1 - media(valores) / 100);
 
         ctx.setLineDash([8, 6]);

@@ -3397,9 +3397,6 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
   <data name="roles_un_grupo_ordena_permisos_y_puede" xml:space="preserve">
     <value>Um grupo organiza permissões e pode conter outros grupos. Depois você o inclui em uma função.</value>
   </data>
-  <data name="visualizaciones_se_generaria_un_pdf_con_0" xml:space="preserve">
-    <value>Seria gerado um PDF com {0} visualização(ões).</value>
-  </data>
   <data name="visualizaciones_punto_de_mirada_actual" xml:space="preserve">
     <value>Ponto atual do olhar</value>
   </data>
@@ -4415,7 +4412,7 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
     <value>Quantidade de vezes que o olhar parou em um ponto. Uma fixação é uma pausa de pelo menos duas amostras seguidas.</value>
   </data>
   <data name="vis_ayuda_atencion" xml:space="preserve">
-    <value>Porcentagem do tempo com dados válidos em que o olhar ficou no mesmo ponto por pelo menos 1,5 segundo seguido.</value>
+    <value>Porcentagem do tempo com dados válidos em que o olhar ficou no mesmo ponto por pelo menos 0,8 segundo seguido.</value>
   </data>
   <data name="vis_ayuda_sacadico" xml:space="preserve">
     <value>Porcentagem do tempo com dados válidos em que o olhar não esteve atento: estava se movendo de um ponto a outro ou não ficou tempo suficiente em nenhum. É 100% menos a atenção ativa.</value>
@@ -4506,5 +4503,311 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
   </data>
   <data name="mistobiis_guia_dejar_previa" xml:space="preserve">
     <value>Para parar a pré-visualização, desative também "Preview my gaze" no Tobii Experience.</value>
+  </data>
+  <data name="informe_titulo" xml:space="preserve">
+    <value>Relatório de Comportamento e Interação do Usuário</value>
+  </data>
+  <data name="informe_emision" xml:space="preserve">
+    <value>Data de emissão</value>
+  </data>
+  <data name="informe_emitido_por" xml:space="preserve">
+    <value>Emitido por</value>
+  </data>
+  <data name="informe_pagina" xml:space="preserve">
+    <value>Página {0} de {1}</value>
+  </data>
+  <data name="informe_nota" xml:space="preserve">
+    <value>Este relatório apresenta de forma descritiva os dados registrados durante a sessão. Não inclui conclusões nem recomendações: a interpretação dos dados e as decisões tomadas a partir deles cabem à equipe da empresa.</value>
+  </data>
+  <data name="informe_seccion_empresa" xml:space="preserve">
+    <value>Dados da empresa</value>
+  </data>
+  <data name="informe_empresa" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="informe_cuit" xml:space="preserve">
+    <value>CUIT (identificação fiscal)</value>
+  </data>
+  <data name="informe_rubro" xml:space="preserve">
+    <value>Setor</value>
+  </data>
+  <data name="informe_seccion_sesion" xml:space="preserve">
+    <value>Dados da sessão</value>
+  </data>
+  <data name="informe_sesion" xml:space="preserve">
+    <value>Sessão</value>
+  </data>
+  <data name="informe_categoria" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="informe_tipo_activo" xml:space="preserve">
+    <value>Tipo de ativo</value>
+  </data>
+  <data name="informe_fecha_grabacion" xml:space="preserve">
+    <value>Data da gravação</value>
+  </data>
+  <data name="informe_duracion" xml:space="preserve">
+    <value>Duração</value>
+  </data>
+  <data name="informe_analista" xml:space="preserve">
+    <value>Analista</value>
+  </data>
+  <data name="informe_muestras" xml:space="preserve">
+    <value>Amostras de olhar</value>
+  </data>
+  <data name="informe_dispositivo" xml:space="preserve">
+    <value>Dispositivo de captura</value>
+  </data>
+  <data name="informe_seccion_activo" xml:space="preserve">
+    <value>Ativo avaliado</value>
+  </data>
+  <data name="informe_activo" xml:space="preserve">
+    <value>Nome do ativo</value>
+  </data>
+  <data name="informe_flujo" xml:space="preserve">
+    <value>Fluxo ou processo analisado</value>
+  </data>
+  <data name="informe_campo_so" xml:space="preserve">
+    <value>Sistema operacional</value>
+  </data>
+  <data name="informe_campo_versionsw" xml:space="preserve">
+    <value>Versão do software</value>
+  </data>
+  <data name="informe_campo_url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="informe_campo_dispositivo" xml:space="preserve">
+    <value>Dispositivo-alvo</value>
+  </data>
+  <data name="informe_campo_somovil" xml:space="preserve">
+    <value>Sistema operacional-alvo</value>
+  </data>
+  <data name="informe_campo_versionapp" xml:space="preserve">
+    <value>Versão do aplicativo</value>
+  </data>
+  <data name="informe_campo_plataforma" xml:space="preserve">
+    <value>Plataforma</value>
+  </data>
+  <data name="informe_campo_versionjuego" xml:space="preserve">
+    <value>Versão do jogo</value>
+  </data>
+  <data name="informe_campo_formato" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="informe_campo_canal" xml:space="preserve">
+    <value>Canal de distribuição</value>
+  </data>
+  <data name="informe_seccion_perfil" xml:space="preserve">
+    <value>Perfil do tester</value>
+  </data>
+  <data name="informe_edad" xml:space="preserve">
+    <value>Faixa etária</value>
+  </data>
+  <data name="informe_genero" xml:space="preserve">
+    <value>Gênero</value>
+  </data>
+  <data name="informe_familiaridad" xml:space="preserve">
+    <value>Familiaridade com o ativo</value>
+  </data>
+  <data name="informe_seccion_objetivo" xml:space="preserve">
+    <value>Objetivo da sessão</value>
+  </data>
+  <data name="informe_seccion_metricas" xml:space="preserve">
+    <value>Métricas gerais</value>
+  </data>
+  <data name="informe_seccion_visualizaciones" xml:space="preserve">
+    <value>Visualizações</value>
+  </data>
+  <data name="informe_seccion_definiciones" xml:space="preserve">
+    <value>Definições das métricas</value>
+  </data>
+  <data name="informe_figura" xml:space="preserve">
+    <value>Figura {0}</value>
+  </data>
+  <data name="informe_tramo" xml:space="preserve">
+    <value>Trecho analisado: {0} a {1} (sessão completa)</value>
+  </data>
+  <data name="informe_cuadro" xml:space="preserve">
+    <value>Posição do olhar em {0}</value>
+  </data>
+  <data name="informe_sin_mirada" xml:space="preserve">
+    <value>Esta sessão não tem dados de olhar registrados.</value>
+  </data>
+  <data name="informe_desc_grabacion" xml:space="preserve">
+    <value>Posição do olhar naquele instante da gravação.</value>
+  </data>
+  <data name="informe_desc_calor" xml:space="preserve">
+    <value>Concentração do olhar na tela durante o trecho analisado. As cores quentes marcam as áreas mais olhadas.</value>
+  </data>
+  <data name="informe_desc_zonas" xml:space="preserve">
+    <value>Áreas com maior concentração do olhar (áreas de interesse) e setores da tela que quase não receberam olhar (áreas cegas).</value>
+  </data>
+  <data name="informe_desc_dispersion" xml:space="preserve">
+    <value>Distribuição dos pontos de olhar, com seu centro (centroide) e a elipse que contém a maior parte deles.</value>
+  </data>
+  <data name="informe_desc_atencion" xml:space="preserve">
+    <value>Proporção do tempo com olhar válido em atenção ativa frente ao movimento sacádico, e como se distribui ao longo da sessão.</value>
+  </data>
+  <data name="informe_desc_recorrido" xml:space="preserve">
+    <value>Trajeto do olhar em ordem temporal: o traço começa fino e cinza e termina grosso e coral.</value>
+  </data>
+  <data name="informe_dato_muestras_validas" xml:space="preserve">
+    <value>Amostras com olhar válido: {0} de {1} ({2})</value>
+  </data>
+  <data name="informe_dato_zonas" xml:space="preserve">
+    <value>Áreas de interesse detectadas: {0}</value>
+  </data>
+  <data name="informe_dato_ciegas" xml:space="preserve">
+    <value>Setores sem olhar (áreas cegas): {0} de {1}</value>
+  </data>
+  <data name="informe_dato_centroide" xml:space="preserve">
+    <value>Centroide: {0} da largura e {1} da altura da tela</value>
+  </data>
+  <data name="informe_dato_elipse" xml:space="preserve">
+    <value>Área da elipse: {0} da tela</value>
+  </data>
+  <data name="informe_dato_atencion" xml:space="preserve">
+    <value>Atenção ativa: {0} ({1} s)</value>
+  </data>
+  <data name="informe_dato_sacadico" xml:space="preserve">
+    <value>Movimento sacádico: {0} ({1} s)</value>
+  </data>
+  <data name="informe_dato_sin_datos" xml:space="preserve">
+    <value>Sem dados de olhar: {0} s</value>
+  </data>
+  <data name="informe_dato_recorrido" xml:space="preserve">
+    <value>Pontos do trajeto: {0}</value>
+  </data>
+  <data name="informe_dato_fijaciones" xml:space="preserve">
+    <value>Fixações: {0}</value>
+  </data>
+  <data name="bitacora_ev_informe_exportado" xml:space="preserve">
+    <value>Relatório de sessão exportado</value>
+  </data>
+  <data name="vis_exportar_idioma" xml:space="preserve">
+    <value>Idioma do relatório</value>
+  </data>
+  <data name="vis_exportar_obligatorio" xml:space="preserve">
+    <value>Empresa, dados da sessão e métricas gerais</value>
+  </data>
+  <data name="vis_exportar_activo" xml:space="preserve">
+    <value>Ativo avaliado</value>
+  </data>
+  <data name="vis_exportar_activo_detalle" xml:space="preserve">
+    <value>Nome, fluxo analisado e dados do tipo de ativo.</value>
+  </data>
+  <data name="vis_exportar_perfil" xml:space="preserve">
+    <value>Perfil do tester</value>
+  </data>
+  <data name="vis_exportar_perfil_detalle" xml:space="preserve">
+    <value>Faixa etária, gênero e familiaridade.</value>
+  </data>
+  <data name="vis_exportar_objetivo" xml:space="preserve">
+    <value>Objetivo da sessão</value>
+  </data>
+  <data name="vis_exportar_objetivo_detalle" xml:space="preserve">
+    <value>Somente se foi informado ao gravar.</value>
+  </data>
+  <data name="vis_exportar_dispositivo" xml:space="preserve">
+    <value>Dispositivo de captura</value>
+  </data>
+  <data name="vis_exportar_dispositivo_detalle" xml:space="preserve">
+    <value>Modelo e número de série do Tobii.</value>
+  </data>
+  <data name="vis_exportar_definiciones" xml:space="preserve">
+    <value>Definições das métricas</value>
+  </data>
+  <data name="vis_exportar_definiciones_detalle" xml:space="preserve">
+    <value>O que cada métrica mede, no final do relatório.</value>
+  </data>
+  <data name="vis_exportar_generando" xml:space="preserve">
+    <value>Gerando o relatório...</value>
+  </data>
+  <data name="vis_exportar_listo" xml:space="preserve">
+    <value>Pronto: o relatório foi baixado.</value>
+  </data>
+  <data name="vis_exportar_error" xml:space="preserve">
+    <value>Não foi possível gerar o relatório. Tente novamente.</value>
+  </data>
+  <data name="vis_exportar_esperar" xml:space="preserve">
+    <value>Aguarde até que os dados da sessão terminem de carregar.</value>
+  </data>
+  <data name="informe_multiple_obligatorio" xml:space="preserve">
+    <value>Empresa e dados da análise</value>
+  </data>
+  <data name="informe_multiple_seccion_analisis" xml:space="preserve">
+    <value>Dados da análise</value>
+  </data>
+  <data name="informe_multiple_sesiones_elegidas" xml:space="preserve">
+    <value>Sessões escolhidas</value>
+  </data>
+  <data name="informe_multiple_todos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="informe_multiple_seccion_sesiones" xml:space="preserve">
+    <value>Sessões incluídas</value>
+  </data>
+  <data name="informe_multiple_col_numero" xml:space="preserve">
+    <value>N.º</value>
+  </data>
+  <data name="informe_multiple_col_sesion" xml:space="preserve">
+    <value>Sessão</value>
+  </data>
+  <data name="informe_multiple_col_fecha" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="informe_multiple_col_duracion" xml:space="preserve">
+    <value>Duração</value>
+  </data>
+  <data name="informe_multiple_por_edad" xml:space="preserve">
+    <value>Métricas por faixa etária</value>
+  </data>
+  <data name="informe_multiple_por_genero" xml:space="preserve">
+    <value>Métricas por gênero</value>
+  </data>
+  <data name="informe_multiple_por_familiaridad" xml:space="preserve">
+    <value>Métricas por familiaridade</value>
+  </data>
+  <data name="informe_multiple_dato_con_mirada" xml:space="preserve">
+    <value>Sessões com dados de olhar: {0} de {1}</value>
+  </data>
+  <data name="informe_multiple_dato_consenso" xml:space="preserve">
+    <value>Marcam-se as áreas coincidentes em pelo menos {0} das sessões.</value>
+  </data>
+  <data name="informe_multiple_dato_barras" xml:space="preserve">
+    <value>Atenção ativa de cada sessão (uma barra por sessão):</value>
+  </data>
+  <data name="informe_multiple_y_mas" xml:space="preserve">
+    <value>e mais {0} sessões</value>
+  </data>
+  <data name="informe_multiple_def_mediana" xml:space="preserve">
+    <value>Valor central das sessões depois de ordenadas de menor para maior. É exibido junto à média.</value>
+  </data>
+  <data name="informe_multiple_def_muestra" xml:space="preserve">
+    <value>Um aviso é exibido quando menos de {0} das sessões tem dados dessa métrica no grupo.</value>
+  </data>
+  <data name="informe_multiple_def_titulo_muestra" xml:space="preserve">
+    <value>Amostra pequena</value>
+  </data>
+  <data name="informe_multiple_def_titulo_mediana" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
+  <data name="informe_multiple_filtro_detalle" xml:space="preserve">
+    <value>Os grupos de idade, gênero e familiaridade combinados.</value>
+  </data>
+  <data name="informe_multiple_sesiones_detalle" xml:space="preserve">
+    <value>Lista das sessões combinadas com data, duração e perfil.</value>
+  </data>
+  <data name="informe_multiple_calidad_detalle" xml:space="preserve">
+    <value>Sessões usadas, excluídas e variação das durações.</value>
+  </data>
+  <data name="informe_multiple_metricas_detalle" xml:space="preserve">
+    <value>Duração, fixação média, fixações e atenção ativa, com média e mediana.</value>
+  </data>
+  <data name="informe_multiple_grupo_detalle" xml:space="preserve">
+    <value>Uma tabela com as métricas de cada grupo.</value>
+  </data>
+  <data name="informe_multiple_elegi_algo" xml:space="preserve">
+    <value>Escolha pelo menos um dado ou uma visualização para incluir no relatório.</value>
   </data>
 </root>

@@ -1,8 +1,5 @@
 "use strict";
 
-// DISPERSION PROMEDIADA
-// a cada sesion se le calcula su centro y su dispersion; la elipse es la dispersion promedio alrededor del centro promedio
-
 class GraficoDispersion extends GraficoMultiple {
     dibujarSesiones(ctx, w, h, sesiones) {
         var resultados = [];
@@ -14,7 +11,6 @@ class GraficoDispersion extends GraficoMultiple {
 
             for (i = 0; i < validos.length; i++) puntos.push({ x: validos[i].x * w, y: validos[i].y * h });
 
-            // con menos de 3 puntos la dispersion no dice nada
             if (puntos.length >= 3) resultados.push(covarianza(puntos));
         }
 
@@ -35,7 +31,6 @@ class GraficoDispersion extends GraficoMultiple {
 
         dibujarElipse(ctx, prom.cx, prom.cy, prom.sxx, prom.syy, prom.sxy);
 
-        // el centro de cada sesion, en gris
         ctx.fillStyle = "rgba(86,99,124,.75)";
 
         for (i = 0; i < resultados.length; i++) {

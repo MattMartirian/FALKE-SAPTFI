@@ -18,6 +18,7 @@ namespace GUI
             public int IdCategoria { get; set; }
             public string Categoria { get; set; }
             public string Fecha { get; set; }
+            public string FechaIso { get; set; }
             public string Duracion { get; set; }
             public string Analista { get; set; }
             public int DuracionSegundos { get; set; }
@@ -45,9 +46,28 @@ namespace GUI
             if (!SesionActual_GUI.ExigirPermiso(TLL.Patentes_TLL.OPERAR_ANALISIS)) return;
 
             CargarSesiones();
+            CargarIdiomasInforme();
             GruposJson = "{\"edad\":" + ListaJson(PerfilTester_BE.RangosEdad, null) +
                          ",\"genero\":" + ListaJson(PerfilTester_BE.Generos, "grabacion_tester_genero_") +
                          ",\"familiaridad\":" + ListaJson(PerfilTester_BE.Familiaridades, "grabacion_tester_familiaridad_") + "}";
+        }
+
+        private void CargarIdiomasInforme()
+        {
+            try
+            {
+                rptIdiomasInforme.DataSource = new TLL.Idioma_TLL().ListarActivos();
+                rptIdiomasInforme.DataBind();
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("AnalisisMultiple.Idiomas", ex);
+            }
+        }
+
+        protected string IdiomaElegido(string codigo)
+        {
+            return string.Equals(codigo, IdiomaActual_GUI.Codigo, StringComparison.OrdinalIgnoreCase) ? " selected" : "";
         }
 
         private string ListaJson(string[] valores, string prefijo)
@@ -90,6 +110,7 @@ namespace GUI
                         IdCategoria = s.IdCategoria,
                         Categoria = s.NombreCategoria,
                         Fecha = s.Fecha.ToString("dd MMM yyyy", cultura),
+                        FechaIso = s.Fecha.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                         Duracion = FormatoDuracion(s.DuracionSegundos),
                         Analista = s.NombreAnalista,
                         DuracionSegundos = s.DuracionSegundos,

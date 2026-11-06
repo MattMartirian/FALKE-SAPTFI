@@ -1,9 +1,5 @@
 "use strict";
 
-// FILTRO POR PERFIL DEL TESTER
-// tres grupos de casillas (edad, genero, familiaridad), que arrancan todas marcadas. Dentro de un grupo alcanza con cumplir
-// una opcion marcada; entre grupos hay que cumplir todos. Un grupo sin nada marcado cuenta como "todos"
-
 function armarFiltros(contenedor, grupos) {
     contenedor.innerHTML = "";
 
@@ -35,7 +31,6 @@ function armarFiltros(contenedor, grupos) {
     }
 }
 
-// los valores marcados de un grupo (vacio = no se filtra por ese grupo)
 function valoresMarcados(contenedor, campo) {
     var casillas = contenedor.querySelectorAll("input[data-campo='" + campo + "']:checked");
     var valores = [];
@@ -75,7 +70,6 @@ function marcarTodos(contenedor) {
     for (var i = 0; i < casillas.length; i++) casillas[i].checked = true;
 }
 
-// los grupos que quedaron marcados (para mostrar solo esas filas en las metricas por grupo)
 function gruposMarcados(contenedor, grupos) {
     var campos = ["edad", "genero", "familiaridad"];
     var resultado = {};
@@ -87,7 +81,6 @@ function gruposMarcados(contenedor, grupos) {
         resultado[campo] = [];
 
         for (var o = 0; o < grupos[campo].length; o++) {
-            // sin nada marcado cuenta como todos
             if (marcados.length === 0 || marcados.indexOf(grupos[campo][o].valor) >= 0) resultado[campo].push(grupos[campo][o]);
         }
     }

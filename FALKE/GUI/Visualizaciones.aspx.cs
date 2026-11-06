@@ -5,6 +5,7 @@ using BE;
 using BLL;
 using SERVICES;
 using TE;
+using TLL;
 
 namespace GUI
 {
@@ -53,6 +54,7 @@ namespace GUI
 
             CargarSesiones();
             CargarFiltros();
+            CargarIdiomasInforme();
         }
 
         // La empresa NO viene del navegador: el BLL la toma del actor (sesion del servidor).
@@ -123,6 +125,24 @@ namespace GUI
             rptFiltroGenero.DataBind();
             rptFiltroFamiliaridad.DataSource = Opciones(PerfilTester_BE.Familiaridades, "grabacion_tester_familiaridad_");
             rptFiltroFamiliaridad.DataBind();
+        }
+
+        private void CargarIdiomasInforme()
+        {
+            try
+            {
+                rptIdiomasInforme.DataSource = new Idioma_TLL().ListarActivos();
+                rptIdiomasInforme.DataBind();
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("Visualizaciones.Idiomas", ex);
+            }
+        }
+
+        protected string IdiomaElegido(string codigo)
+        {
+            return string.Equals(codigo, IdiomaActual_GUI.Codigo, StringComparison.OrdinalIgnoreCase) ? " selected" : "";
         }
 
         private List<Opcion> Opciones(string[] valores, string prefijo)

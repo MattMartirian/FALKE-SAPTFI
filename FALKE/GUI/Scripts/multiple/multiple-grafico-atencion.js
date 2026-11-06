@@ -1,8 +1,5 @@
 "use strict";
 
-// ATENCION FRENTE A DISTRACCION PROMEDIADA (dona)
-// el porcentaje es el promedio de la atencion de cada sesion
-
 var COLOR_ATENCION = "#E8AF52";
 var COLOR_DISTRACCION = "#56637C";
 
@@ -11,7 +8,7 @@ class GraficoAtencion extends GraficoMultiple {
         super(idCaja);
 
         this.cuadricula = false;
-        this.porcentaje = null;   // el ultimo porcentaje dibujado (lo usa la leyenda)
+        this.porcentaje = null;
     }
 
     dibujarSesiones(ctx, w, h, sesiones) {
@@ -26,7 +23,6 @@ class GraficoAtencion extends GraficoMultiple {
 
         ctx.lineWidth = h * 0.12;
 
-        // aro entero gris (distraccion) y encima el arco dorado (atencion)
         ctx.strokeStyle = COLOR_DISTRACCION;
         ctx.beginPath();
         ctx.arc(cx, cy, radio, 0, Math.PI * 2);

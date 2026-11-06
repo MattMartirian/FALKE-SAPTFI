@@ -235,7 +235,7 @@
                     <asp:Repeater ID="rptSesiones" runat="server">
                         <ItemTemplate>
                             <label class="opcion fila-sesion" data-categoria='<%#: Eval("IdCategoria") %>' data-categoria-nombre='<%#: Eval("Categoria") %>'
-                                   data-duracion-seg='<%#: Eval("DuracionSegundos") %>' data-desfase='<%#: Eval("DesfaseMs") %>' data-muestras='<%#: Eval("Muestras") %>'
+                                   data-fecha='<%#: Eval("FechaIso") %>' data-duracion-seg='<%#: Eval("DuracionSegundos") %>' data-desfase='<%#: Eval("DesfaseMs") %>' data-muestras='<%#: Eval("Muestras") %>'
                                    data-edad='<%#: Eval("Edad") %>' data-genero='<%#: Eval("Genero") %>' data-familiaridad='<%#: Eval("Familiaridad") %>'>
                                 <input type="checkbox" name="sesion" value='<%#: Eval("Token") %>' data-nombre='<%#: Eval("Nombre") %>' />
                                 <span>
@@ -291,7 +291,7 @@
                 <p class="texto-suave sin-margen" id="subtituloResultado"></p>
             </div>
             <div class="acciones">
-                <button type="button" class="btn btn-primario">
+                <button type="button" class="btn btn-primario" id="btnAbrirExportar" data-abre-modal="modalExportar">
                     <svg width="18" height="18" aria-hidden="true"><use href="#i-descarga" /></svg>
                     <span data-i18n="multiple.exportar">[[analisismultiple_descargar_reporte]]</span>
                 </button>
@@ -454,6 +454,173 @@
         </div>
     </section>
 
+<div class="modal-fondo" id="modalExportar" role="dialog" aria-modal="true" aria-labelledby="exportarTitulo" hidden>
+    <div class="modal ancho">
+
+        <div class="modal-cabecera">
+            <div>
+                <h2 id="exportarTitulo">[[visualizaciones_exportar_analisis]]</h2>
+                <p class="subtitulo sin-margen">[[visualizaciones_elige_que_incluir_en_el_reporte]]</p>
+            </div>
+            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+            </button>
+        </div>
+
+        <div class="modal-cuerpo">
+
+            <div class="campo exportar-idioma">
+                <label for="expIdioma">[[vis_exportar_idioma]]</label>
+                <select class="entrada" id="expIdioma">
+                    <asp:Repeater ID="rptIdiomasInforme" runat="server">
+                        <ItemTemplate><option value='<%#: Eval("CodigoIdioma") %>'<%# IdiomaElegido((string)Eval("CodigoIdioma")) %>><%#: Eval("NombreIdioma") %></option></ItemTemplate>
+                    </asp:Repeater>
+                </select>
+            </div>
+
+            <p class="etiqueta mt-16">[[visualizaciones_contenido_del_reporte]]</p>
+
+            <div class="exportar-opciones">
+                <label class="opcion">
+                    <input type="checkbox" checked disabled />
+                    <span>
+                        <span class="opcion-titulo">[[informe_multiple_obligatorio]]</span>
+                        <span class="opcion-detalle">[[visualizaciones_siempre_se_incluye_en_el_reporte]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="filtro" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_filtro_titulo]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_filtro_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="sesiones" checked />
+                    <span>
+                        <span class="opcion-titulo">[[informe_multiple_seccion_sesiones]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_sesiones_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="calidad" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_calidad_titulo]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_calidad_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="metricas" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_metricas_promediadas]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_metricas_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="grupoEdad" checked />
+                    <span>
+                        <span class="opcion-titulo">[[informe_multiple_por_edad]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_grupo_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="grupoGenero" checked />
+                    <span>
+                        <span class="opcion-titulo">[[informe_multiple_por_genero]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_grupo_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="grupoFamiliaridad" checked />
+                    <span>
+                        <span class="opcion-titulo">[[informe_multiple_por_familiaridad]]</span>
+                        <span class="opcion-detalle">[[informe_multiple_grupo_detalle]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expDato" value="definiciones" checked />
+                    <span>
+                        <span class="opcion-titulo">[[vis_exportar_definiciones]]</span>
+                        <span class="opcion-detalle">[[vis_exportar_definiciones_detalle]]</span>
+                    </span>
+                </label>
+            </div>
+
+            <p class="etiqueta mt-16">[[visualizaciones_visualizaciones_a_incluir]]</p>
+
+            <div class="exportar-opciones">
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="calor" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_mapa_de_calor]]</span>
+                        <span class="opcion-detalle">[[visualizaciones_concentracion_de_la_atencion_visual]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="zonas" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_zonas_de_interes_y_ciegas]]</span>
+                        <span class="opcion-detalle">[[visualizaciones_areas_miradas_y_areas_ignoradas]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="dispersion" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_dispersion_de_mirada]]</span>
+                        <span class="opcion-detalle">[[visualizaciones_que_tan_estable_fue_la_atencion]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="atencion" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_atencion_vs_distraccion]]</span>
+                        <span class="opcion-detalle">[[visualizaciones_fijacion_activa_frente_a_movimiento_saca]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="recorrido" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_recorrido_de_mirada]]</span>
+                        <span class="opcion-detalle">[[visualizaciones_trayecto_secuencial_sobre_el_activo]]</span>
+                    </span>
+                </label>
+
+                <label class="opcion">
+                    <input type="checkbox" name="expVisual" value="porsesion" checked />
+                    <span>
+                        <span class="opcion-titulo">[[analisismultiple_atencion_por_sesion]]</span>
+                        <span class="opcion-detalle">[[analisismultiple_comparacion_directa_del_porcentaje_de_at]]</span>
+                    </span>
+                </label>
+            </div>
+
+            <p class="ayuda" id="exportarAviso" role="status"></p>
+
+        </div>
+
+        <div class="modal-pie">
+            <button type="button" class="btn btn-secundario" data-cierra-modal>[[categorias_cancelar]]</button>
+            <button type="button" class="btn btn-primario" id="btnExportar">
+                <svg width="17" height="17" aria-hidden="true"><use href="#i-descarga" /></svg>
+                <span>[[visualizaciones_exportar_reporte]]</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">
@@ -484,8 +651,16 @@
             calculando: "[[js:analisismultiple_calculando]]",
             filtroResumen: "[[js:analisismultiple_filtro_resumen_n]]",
             atencionActiva: "[[js:vis_fijacion_activa_n]]",
-            atencionSacadico: "[[js:vis_sacadico_n]]"
+            atencionSacadico: "[[js:vis_sacadico_n]]",
+            filtroVacio: "[[js:analisismultiple_filtro_vacio]]",
+            esperar: "[[js:vis_exportar_esperar]]",
+            elegiAlgo: "[[js:informe_multiple_elegi_algo]]",
+            generando: "[[js:vis_exportar_generando]]",
+            listo: "[[js:vis_exportar_listo]]",
+            errorInforme: "[[js:vis_exportar_error]]"
         };
+        var URL_INFORME = "<%: ResolveUrl("~/AnalisisMultiple_WebMethod.asmx") %>/DatosInformeMultiple";
+        var URL_LOGO = "<%: ResolveUrl("~/Content/img/falke-logo.svg") %>";
     </script>
 
     <%-- el orden importa: cada archivo usa lo que define el anterior --%>
@@ -503,6 +678,11 @@
     <script src="<%: UrlVersionada("~/Scripts/multiple/multiple-grafico-atencion.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/multiple/multiple-grafico-porsesion.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/multiple/multiple-grafico-recorrido.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/lib/jspdf.umd.min.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-fuentes.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-imagenes.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-pdf.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/informe/informe-multiple.js") %>"></script>
 
     <script>
         (function () {
@@ -625,6 +805,7 @@
             var filtros = document.getElementById("filtrosGrupos");
             var datos = document.getElementById("resultadoDatos");
             var sesionesCargadas = [];
+            var estadoInforme = null;
 
             armarFiltros(filtros, GRUPOS);
 
@@ -636,6 +817,7 @@
                 document.getElementById("filtroResumen").textContent = MultiTextos.filtroResumen.replace("{0}", elegidas.length).replace("{1}", sesionesCargadas.length);
                 document.getElementById("filtroVacio").hidden = elegidas.length > 0;
                 datos.hidden = elegidas.length === 0;
+                estadoInforme = null;
 
                 if (elegidas.length === 0) return;
 
@@ -656,6 +838,19 @@
 
                 document.getElementById("leyendaAtencion").innerHTML = leyendaAtencion(conMirada.length ? graficoAtencion.porcentaje : null);
                 document.getElementById("leyendaPorSesion").innerHTML = leyendaAtencion(null);
+
+                estadoInforme = {
+                    elegidas: elegidas,
+                    conMirada: conMirada,
+                    totalCargadas: sesionesCargadas.length,
+                    calidad: evaluarCalidad(elegidas),
+                    porcentajeAtencion: graficoAtencion.porcentaje,
+                    marcados: {
+                        edad: valoresMarcados(filtros, "edad"),
+                        genero: valoresMarcados(filtros, "genero"),
+                        familiaridad: valoresMarcados(filtros, "familiaridad")
+                    }
+                };
             }
 
             document.getElementById("btnRegenerar").addEventListener("click", regenerar);
@@ -700,6 +895,126 @@
                     estado.hidden = true;
                     cuerpo.hidden = false;
                 });
+            });
+
+            var btnExportar = document.getElementById("btnExportar");
+            var exportarAviso = document.getElementById("exportarAviso");
+            var expIdioma = document.getElementById("expIdioma");
+
+            function avisoExportar(clase, texto) {
+                exportarAviso.className = "ayuda " + clase;
+                exportarAviso.textContent = texto;
+            }
+
+            function marcadas(nombre) {
+                var lista = [];
+                var casillasMarcadas = document.querySelectorAll("input[name='" + nombre + "']:checked");
+
+                for (var i = 0; i < casillasMarcadas.length; i++) lista.push(casillasMarcadas[i].value);
+
+                return lista;
+            }
+
+            function pedirDatosInforme(tokens, idioma) {
+                return fetch(URL_INFORME, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    body: JSON.stringify({ tokens: tokens, idioma: idioma })
+                })
+                    .then(function (respuesta) {
+                        if (!respuesta.ok) throw new Error();
+
+                        return respuesta.json();
+                    })
+                    .then(function (json) {
+                        if (!json.d || !json.d.ok) {
+                            var error = new Error(json.d && json.d.mensaje);
+                            error.delServidor = true;
+                            throw error;
+                        }
+
+                        return json.d;
+                    });
+            }
+
+            document.getElementById("btnAbrirExportar").addEventListener("click", function () {
+                if (!btnExportar.disabled) avisoExportar("", "");
+            });
+
+            btnExportar.addEventListener("click", function () {
+                var visuales = marcadas("expVisual");
+                var datosElegidos = marcadas("expDato");
+                var foto = estadoInforme;
+
+                if (foto === null) {
+                    avisoExportar("texto-peligro", sesionesCargadas.length === 0 ? MultiTextos.esperar : MultiTextos.filtroVacio);
+                    return;
+                }
+
+                if (visuales.length === 0 && datosElegidos.length === 0) {
+                    avisoExportar("texto-peligro", MultiTextos.elegiAlgo);
+                    return;
+                }
+
+                var tokens = [];
+                var datosInforme = null;
+
+                for (var i = 0; i < foto.elegidas.length; i++) tokens.push(foto.elegidas[i].token);
+
+                btnExportar.disabled = true;
+                avisoExportar("texto-suave", MultiTextos.generando);
+
+                pedirDatosInforme(tokens, expIdioma.value)
+                    .then(function (respuesta) {
+                        datosInforme = respuesta;
+                        datosInforme.sesion = respuesta.textos.analisismultiple_analisis_multiple + " · " + respuesta.categoria;
+
+                        return InformeImagenes.logo(URL_LOGO);
+                    })
+                    .then(function (logo) {
+                        var informe = new InformeMultiplePdf(datosInforme, logo);
+
+                        informe.armar({
+                            elegidas: foto.elegidas,
+                            conMirada: foto.conMirada,
+                            totalCargadas: foto.totalCargadas,
+                            calidad: foto.calidad,
+                            porcentajeAtencion: foto.porcentajeAtencion,
+                            marcados: foto.marcados,
+                            visuales: visuales,
+                            incluir: {
+                                filtro: datosElegidos.indexOf("filtro") !== -1,
+                                sesiones: datosElegidos.indexOf("sesiones") !== -1,
+                                calidad: datosElegidos.indexOf("calidad") !== -1,
+                                metricas: datosElegidos.indexOf("metricas") !== -1,
+                                grupoEdad: datosElegidos.indexOf("grupoEdad") !== -1,
+                                grupoGenero: datosElegidos.indexOf("grupoGenero") !== -1,
+                                grupoFamiliaridad: datosElegidos.indexOf("grupoFamiliaridad") !== -1,
+                                definiciones: datosElegidos.indexOf("definiciones") !== -1
+                            },
+                            graficos: {
+                                calor: graficoCalor.canvas,
+                                zonas: graficoZonas.canvas,
+                                dispersion: graficoDispersion.canvas,
+                                atencion: graficoAtencion.canvas,
+                                recorrido: graficoRecorrido.canvas,
+                                porsesion: graficoPorSesion.canvas
+                            }
+                        });
+
+                        informe.guardar();
+
+                        avisoExportar("texto-exito", MultiTextos.listo);
+                    })
+                    .catch(function (error) {
+                        if (window.console) console.error(error);
+
+                        avisoExportar("texto-peligro", error && error.delServidor && error.message ? error.message : MultiTextos.errorInforme);
+                    })
+                    .then(function () {
+                        btnExportar.disabled = false;
+                    });
             });
 
             document.getElementById("btnVolverSeleccion").addEventListener("click", function () {

@@ -1,12 +1,7 @@
 "use strict";
 
-// INDICADOR DE CALIDAD
-// dice cuantas sesiones se usaron y avisa cuando el promedio puede no ser confiable
-
-// menos sesiones que esto = aviso
 var N_MIN_SESIONES = 5;
 
-// coeficiente de variacion de las duraciones a partir del cual se avisa (0.5 = el desvio es la mitad del promedio)
 var CV_DURACION_MAX = 0.5;
 
 function evaluarCalidad(sesiones) {
@@ -24,7 +19,15 @@ function evaluarCalidad(sesiones) {
     if (usadas < N_MIN_SESIONES) avisos.push(MultiTextos.calidadPocas.replace("{0}", N_MIN_SESIONES));
     if (cv >= CV_DURACION_MAX) avisos.push(MultiTextos.calidadDuraciones);
 
-    return { total: sesiones.length, usadas: usadas, excluidas: sesiones.length - usadas, cv: cv, avisos: avisos };
+    return {
+        total: sesiones.length,
+        usadas: usadas,
+        excluidas: sesiones.length - usadas,
+        cv: cv,
+        pocas: usadas < N_MIN_SESIONES,
+        variada: cv >= CV_DURACION_MAX,
+        avisos: avisos
+    };
 }
 
 function pintarCalidad(valores, avisos, calidad) {

@@ -1,8 +1,5 @@
 "use strict";
 
-// MAPA DE CALOR PROMEDIADO
-// a cada sesion se le arma su mapa y se lo reparte para que sume 1 (asi una sesion larga no pesa mas que una corta); despues se promedian celda por celda
-
 class GraficoCalor extends GraficoMultiple {
     dibujarSesiones(ctx, w, h, sesiones) {
         var promedio = new Float32Array(CALOR_ANCHO * CALOR_ALTO);

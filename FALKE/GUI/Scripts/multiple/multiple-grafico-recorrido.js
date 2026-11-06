@@ -1,9 +1,5 @@
 "use strict";
 
-// RECORRIDOS SUPERPUESTOS
-// el recorrido promedio no existe (promediar trayectorias da una linea que nadie hizo), asi que se dibujan todos con poca opacidad:
-// donde varios coinciden, la linea se ve mas fuerte. Inicio en azul y final en coral
-
 var RECORRIDO_COLOR = "rgba(86,99,124,.28)";
 
 class GraficoRecorrido extends GraficoMultiple {
@@ -21,7 +17,6 @@ class GraficoRecorrido extends GraficoMultiple {
             ctx.moveTo(validos[0].x * w, validos[0].y * h);
 
             for (i = 1; i < validos.length; i++) {
-                // si hubo un hueco sin datos no se une con el punto anterior
                 if (validos[i].t - validos[i - 1].t > HUECO_MAX_MS) ctx.moveTo(validos[i].x * w, validos[i].y * h);
                 else ctx.lineTo(validos[i].x * w, validos[i].y * h);
             }
@@ -29,7 +24,6 @@ class GraficoRecorrido extends GraficoMultiple {
             ctx.stroke();
         }
 
-        // donde empieza y donde termina cada sesion
         for (s = 0; s < sesiones.length; s++) {
             var v = sesiones[s].analisis.validos;
 

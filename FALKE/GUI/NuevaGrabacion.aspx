@@ -1543,7 +1543,7 @@
                 bloquear(false);
             }
 
-            var urlMetodos = "<%: ResolveUrl("~/NuevaGrabacion.aspx") %>/";
+            var urlMetodos = "<%: ResolveUrl("~/NuevaGrabacion_WebMethod.asmx") %>/";
             var TAMANO_PARTE = 2 * 1024 * 1024;
             var INTENTOS = 3;
 

@@ -1,9 +1,5 @@
 "use strict";
 
-// SESIONES ELEGIDAS
-// arma los datos de cada sesion elegida y baja su archivo de mirada
-
-// devuelve una promesa con la lista de sesiones, cada una con su analisis (o null si no tiene datos de mirada)
 function cargarSesiones(casillas, urlArchivo) {
     var pedidos = [];
 
@@ -16,17 +12,18 @@ function cargarSesion(casilla, urlArchivo) {
     var fila = casilla.closest(".fila-sesion");
 
     var sesion = {
+        token: casilla.value,
         nombre: casilla.getAttribute("data-nombre"),
+        fecha: fila.getAttribute("data-fecha"),
         duracionSeg: Number(fila.getAttribute("data-duracion-seg")) || 0,
         edad: fila.getAttribute("data-edad"),
         genero: fila.getAttribute("data-genero"),
         familiaridad: fila.getAttribute("data-familiaridad"),
-        analisis: null,      // el resultado de analizar() sobre el archivo de mirada
-        conMirada: false,    // true si tiene al menos un punto de mirada valido
-        fallo: false         // true si no se pudo bajar el archivo
+        analisis: null,
+        conMirada: false,
+        fallo: false
     };
 
-    // sin muestras no hay nada que bajar
     if (Number(fila.getAttribute("data-muestras")) === 0) return Promise.resolve(sesion);
 
     var url = urlArchivo + "?t=" + encodeURIComponent(casilla.value) + "&k=mirada";

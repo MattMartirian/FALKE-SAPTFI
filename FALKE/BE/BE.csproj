@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Categoria_BE.cs" />
+    <Compile Include="InformeSesion_BE.cs" />
+    <Compile Include="InformeMultiple_BE.cs" />
     <Compile Include="CategoriaAppMovil_BE.cs" />
     <Compile Include="CategoriaAppWeb_BE.cs" />
     <Compile Include="CategoriaPublicidad_BE.cs" />
