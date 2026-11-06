@@ -153,9 +153,6 @@
   <data name="app_mi_perfil" xml:space="preserve">
     <value>My profile</value>
   </data>
-  <data name="app_mi_perfil_con_datos" xml:space="preserve">
-    <value>My profile — {0} ({1}) · {2}</value>
-  </data>
   <data name="app_nueva_grabacion" xml:space="preserve">
     <value>New recording</value>
   </data>
@@ -450,18 +447,6 @@
   <data name="clave_fuerza_0" xml:space="preserve">
     <value>Very weak</value>
   </data>
-  <data name="clave_fuerza_1" xml:space="preserve">
-    <value>Weak</value>
-  </data>
-  <data name="clave_fuerza_2" xml:space="preserve">
-    <value>Acceptable</value>
-  </data>
-  <data name="clave_fuerza_3" xml:space="preserve">
-    <value>Good</value>
-  </data>
-  <data name="clave_fuerza_4" xml:space="preserve">
-    <value>Strong</value>
-  </data>
   <data name="clave_igual_a_actual" xml:space="preserve">
     <value>The new password cannot be the same as the current one.</value>
   </data>
@@ -519,23 +504,14 @@
   <data name="comun_sin_cambios" xml:space="preserve">
     <value>There are no changes to save.</value>
   </data>
-  <data name="comun_sin_descripcion" xml:space="preserve">
-    <value>(no description)</value>
-  </data>
   <data name="comun_sin_permiso" xml:space="preserve">
     <value>You don't have permission to perform this action.</value>
-  </data>
-  <data name="comun_sin_rol" xml:space="preserve">
-    <value>(no role)</value>
   </data>
   <data name="comun_usuario_plural" xml:space="preserve">
     <value>{0} users</value>
   </data>
   <data name="comun_usuario_singular" xml:space="preserve">
     <value>1 user</value>
-  </data>
-  <data name="comun_vacio" xml:space="preserve">
-    <value>(empty)</value>
   </data>
   <data name="default_agencias_de_publicidad_digital" xml:space="preserve">
     <value>Digital advertising agencies</value>
@@ -762,9 +738,6 @@
   <data name="disp_empresa_no_existe" xml:space="preserve">
     <value>The company does not exist.</value>
   </data>
-  <data name="disp_empresa_opcion" xml:space="preserve">
-    <value>{0} — {1} plan ({2})</value>
-  </data>
   <data name="disp_empresa_uso_prestados" xml:space="preserve">
     <value>{0} on loan</value>
   </data>
@@ -830,9 +803,6 @@
   </data>
   <data name="disp_prestamo_en_curso" xml:space="preserve">
     <value>In progress</value>
-  </data>
-  <data name="disp_prestar_a_pattern_blue" xml:space="preserve">
-    <value>Devices are lent to client companies, not to Pattern Blue.</value>
   </data>
   <data name="disp_serie_caracteres" xml:space="preserve">
     <value>The serial number only allows letters, numbers, spaces and . _ / -</value>
@@ -1038,9 +1008,6 @@
   <data name="empresa_contacto_largo" xml:space="preserve">
     <value>The contact number cannot exceed {0} characters.</value>
   </data>
-  <data name="empresa_cuit_control" xml:space="preserve">
-    <value>The last digit of the CUIT does not match the previous ones (it is a check number): make sure there is no typo.</value>
-  </data>
   <data name="empresa_cuit_duplicado" xml:space="preserve">
     <value>A company with that CUIT is already registered.</value>
   </data>
@@ -1084,7 +1051,7 @@
     <value> The activation email could not be sent: the invitation can be resent from Users.</value>
   </data>
   <data name="empresa_nueva_ok_enlace" xml:space="preserve">
-    <value> The activation link was left in App_Data/mails/.</value>
+    <value> We sent an email with the activation link.</value>
   </data>
   <data name="empresa_nueva_plan_invalido" xml:space="preserve">
     <value>The plan or the billing are not valid.</value>
@@ -1491,9 +1458,6 @@
   <data name="idioma_en_uso" xml:space="preserve">
     <value>"{0}" cannot be disabled or deleted: {1} user(s) have it selected.</value>
   </data>
-  <data name="idioma_no_disponible" xml:space="preserve">
-    <value>There is no translation pack for the language "{0}".</value>
-  </data>
   <data name="idioma_no_existe" xml:space="preserve">
     <value>The language does not exist.</value>
   </data>
@@ -1584,12 +1548,6 @@
   <data name="ingresar_olvide_mi_contrasena" xml:space="preserve">
     <value>I forgot my password</value>
   </data>
-  <data name="ingresar_queda_un_intento" xml:space="preserve">
-    <value> You have 1 attempt left before the account is blocked.</value>
-  </data>
-  <data name="ingresar_quedan_intentos" xml:space="preserve">
-    <value> You have {0} attempts left before the account is blocked.</value>
-  </data>
   <data name="ingresar_recordarme_en_este_equipo" xml:space="preserve">
     <value>Remember me on this computer</value>
   </data>
@@ -1607,9 +1565,6 @@
   </data>
   <data name="ingresar_volver_al_inicio" xml:space="preserve">
     <value>Back to home</value>
-  </data>
-  <data name="integridad_agregados_externos" xml:space="preserve">
-    <value>Records added externally were detected in the table {0}.</value>
   </data>
   <data name="integridad_al_recalcular_los_datos_actuales_pasan" xml:space="preserve">
     <value>When recalculating, the current data is considered correct and the evidence that something was modified outside the system is lost.</value>
@@ -1646,9 +1601,6 @@
   </data>
   <data name="integridad_el_acceso_al_sistema_permanece_bloqueado" xml:space="preserve">
     <value>System access remains blocked for the rest of the users until the full recalculation is run. Only the webmaster can see the technical detail of the affected tables and records.</value>
-  </data>
-  <data name="integridad_eliminados_externos" xml:space="preserve">
-    <value>Records deleted externally were detected in the table {0}.</value>
   </data>
   <data name="integridad_error_leer" xml:space="preserve">
     <value>The database integrity status could not be read.</value>
@@ -2043,9 +1995,6 @@
   <data name="panel_duracion" xml:space="preserve">
     <value>Duration</value>
   </data>
-  <data name="panel_en_procesamiento" xml:space="preserve">
-    <value>Processing</value>
-  </data>
   <data name="panel_este_es_el_resumen_de_la" xml:space="preserve">
     <value>This is the summary of your company's activity in Falke.</value>
   </data>
@@ -2061,32 +2010,20 @@
   <data name="panel_hola" xml:space="preserve">
     <value>Hello</value>
   </data>
-  <data name="panel_listo" xml:space="preserve">
-    <value>Ready</value>
-  </data>
   <data name="panel_mapas_zonas_y_recorridos" xml:space="preserve">
     <value>Maps, areas and paths</value>
   </data>
   <data name="panel_organizar_los_activos_digitales" xml:space="preserve">
     <value>Organize digital assets</value>
   </data>
-  <data name="panel_procesando" xml:space="preserve">
-    <value>Processing</value>
-  </data>
   <data name="panel_promediar_varios_testers" xml:space="preserve">
     <value>Average several testers</value>
-  </data>
-  <data name="panel_queda_disponible_en_unos_minutos" xml:space="preserve">
-    <value>Available in a few minutes</value>
   </data>
   <data name="panel_sesion" xml:space="preserve">
     <value>Session</value>
   </data>
   <data name="panel_sesiones_este_mes" xml:space="preserve">
     <value>Sessions this month</value>
-  </data>
-  <data name="panel_tu_dispositivo" xml:space="preserve">
-    <value>Your device</value>
   </data>
   <data name="panel_ultimas_sesiones" xml:space="preserve">
     <value>Latest sessions</value>
@@ -2096,9 +2033,6 @@
   </data>
   <data name="panel_ver_todas" xml:space="preserve">
     <value>View all</value>
-  </data>
-  <data name="panel_verificar_el_dispositivo" xml:space="preserve">
-    <value>Check the device</value>
   </data>
   <data name="permiso_del_sistema" xml:space="preserve">
     <value>"{0}" is a system permission: it is defined by the developer and cannot be {1}.</value>
@@ -2147,18 +2081,6 @@
   </data>
   <data name="permiso_solo_roles_grupos" xml:space="preserve">
     <value>Only roles and groups can contain permissions.</value>
-  </data>
-  <data name="permiso_te_ciclo" xml:space="preserve">
-    <value>Adding "{0}" to "{1}" would create a composition cycle.</value>
-  </data>
-  <data name="permiso_te_ciclo_si_mismo" xml:space="preserve">
-    <value>A permission cannot include itself.</value>
-  </data>
-  <data name="permiso_te_no_incluye" xml:space="preserve">
-    <value>"{0}" does not include "{1}".</value>
-  </data>
-  <data name="permiso_te_ya_incluye" xml:space="preserve">
-    <value>"{0}" already includes "{1}".</value>
   </data>
   <data name="planes_6_visualizaciones_analiticas" xml:space="preserve">
     <value>6 analytical visualizations</value>
@@ -2358,14 +2280,6 @@
   <data name="recuperar_mail_asunto" xml:space="preserve">
     <value>Reset your Falke password</value>
   </data>
-  <data name="recuperar_mail_cuerpo" xml:space="preserve">
-    <value>We received a request to reset the password of your Falke account.
-If it was you, open this link (it expires in two hours and can be used only once):
-{0}
-
-If it wasn't you, ignore this message: your current password is still valid.
-</value>
-  </data>
   <data name="recuperarclave_correo_de_la_cuenta" xml:space="preserve">
     <value>Account email</value>
   </data>
@@ -2382,7 +2296,7 @@ If it wasn't you, ignore this message: your current password is still valid.
     <value>Recover my password</value>
   </data>
   <data name="recuperarclave_si_ese_correo_pertenece_a_una" xml:space="preserve">
-    <value>If that email belongs to a registered account, you will receive the link to set a new password. The notice is generated as a file in App_Data/mails/.</value>
+    <value>If that email belongs to a registered account, you will receive the link to set a new password by email.</value>
   </data>
   <data name="recuperarclave_si_tu_cuenta_fue_dada_de" xml:space="preserve">
     <value>If your account was deactivated or has a strict block, no link is sent: your company's administrator resolves it.</value>
@@ -2497,9 +2411,6 @@ If it wasn't you, ignore this message: your current password is still valid.
   </data>
   <data name="respaldos_disponible" xml:space="preserve">
     <value>Available</value>
-  </data>
-  <data name="respaldo_sin_usuario" xml:space="preserve">
-    <value>No user (emergency account)</value>
   </data>
   <data name="respaldos_al_confirmar" xml:space="preserve">
     <value>When you confirm:</value>
@@ -2711,21 +2622,6 @@ If it wasn't you, ignore this message: your current password is still valid.
   <data name="salir_volver_a_entrar" xml:space="preserve">
     <value>Sign in again</value>
   </data>
-  <data name="seguridad_aes_no_encontrada" xml:space="preserve">
-    <value>The environment variable FALKE_AES_KEY was not found.</value>
-  </data>
-  <data name="seguridad_aes_tamano" xml:space="preserve">
-    <value>The configured AES key does not have the expected size ({0} bits).</value>
-  </data>
-  <data name="seguridad_datos_insuficientes" xml:space="preserve">
-    <value>The encrypted value does not contain enough data.</value>
-  </data>
-  <data name="seguridad_no_base64" xml:space="preserve">
-    <value>The value to decrypt is not valid Base64.</value>
-  </data>
-  <data name="seguridad_no_descifrable" xml:space="preserve">
-    <value>The value could not be decrypted. It may have been altered or encrypted with another key.</value>
-  </data>
   <data name="sinpermiso_el_intento_de_acceso_queda_registrado" xml:space="preserve">
     <value>The access attempt is recorded in the audit log. It's not a problem: it is noted so that we can later review who needs which permissions.</value>
   </data>
@@ -2889,7 +2785,7 @@ If it wasn't you, ignore this message: your current password is still valid.
     <value>Invitation sent</value>
   </data>
   <data name="usuarios_invitacion_ok" xml:space="preserve">
-    <value>The account of {0} was created with status "Pending activation". The activation link was left in App_Data/mails/.</value>
+    <value>The account of {0} was created with status "Pending activation". We sent an email with the activation link.</value>
   </data>
   <data name="usuarios_invitacion_reenviada" xml:space="preserve">
     <value>We sent you the invitation to your Falke account again.</value>
@@ -3031,9 +2927,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="visualizaciones_no_hay_sesiones_que_coincidan_con" xml:space="preserve">
     <value>No sessions match the filters.</value>
   </data>
-  <data name="visualizaciones_nombre_fecha_y_metricas_generales" xml:space="preserve">
-    <value>Name, date and general metrics</value>
-  </data>
   <data name="visualizaciones_posicion_en_la_grabacion" xml:space="preserve">
     <value>Position in the recording</value>
   </data>
@@ -3048,9 +2941,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   </data>
   <data name="visualizaciones_salir" xml:space="preserve">
     <value>Exit</value>
-  </data>
-  <data name="visualizaciones_se_incluye_como_cuadro_representativo" xml:space="preserve">
-    <value>Included as a representative snapshot.</value>
   </data>
   <data name="visualizaciones_sesiones_y_filtros" xml:space="preserve">
     <value>Sessions and filters</value>
@@ -3082,9 +2972,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="idiomas_textos_catalogo" xml:space="preserve">
     <value>Catalog texts</value>
   </data>
-  <data name="idiomas_traducciones_pendientes" xml:space="preserve">
-    <value>Pending translations</value>
-  </data>
   <data name="idiomas_tabla_idiomas" xml:space="preserve">
     <value>Interface languages</value>
   </data>
@@ -3094,14 +2981,8 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="idiomas_col_traducciones" xml:space="preserve">
     <value>Translations</value>
   </data>
-  <data name="idiomas_col_pendientes" xml:space="preserve">
-    <value>Pending</value>
-  </data>
   <data name="idiomas_base" xml:space="preserve">
     <value>Base</value>
-  </data>
-  <data name="idiomas_sincronizar" xml:space="preserve">
-    <value>Synchronize</value>
   </data>
   <data name="idiomas_deshabilitar" xml:space="preserve">
     <value>Disable</value>
@@ -3133,9 +3014,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="idiomas_col_traduccion" xml:space="preserve">
     <value>Translation</value>
   </data>
-  <data name="idiomas_col_origen" xml:space="preserve">
-    <value>Origin</value>
-  </data>
   <data name="idiomas_pendiente" xml:space="preserve">
     <value>Pending</value>
   </data>
@@ -3147,15 +3025,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   </data>
   <data name="idiomas_agregar_un_idioma" xml:space="preserve">
     <value>Add a language</value>
-  </data>
-  <data name="idiomas_se_agrega_completo" xml:space="preserve">
-    <value>It is added with all its translations already loaded.</value>
-  </data>
-  <data name="idiomas_disponibles_ayuda" xml:space="preserve">
-    <value>These are the languages that come in the system's translation packs. If a text is missing, it stays pending and is shown in English until it is completed.</value>
-  </data>
-  <data name="idiomas_sin_disponibles" xml:space="preserve">
-    <value>All the languages with a translation pack have already been added.</value>
   </data>
   <data name="idiomas_eliminar_el_idioma" xml:space="preserve">
     <value>Delete the language</value>
@@ -3181,9 +3050,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="idiomas_marcadores_ayuda" xml:space="preserve">
     <value>Keep placeholders such as {0} or {1}. If you leave it empty, it stays pending and the base text is shown.</value>
   </data>
-  <data name="idiomas_sincronizar_ayuda" xml:space="preserve">
-    <value>Adds the pack's missing texts; existing ones are not changed</value>
-  </data>
   <data name="idiomas_clave_o_texto" xml:space="preserve">
     <value>Key or text</value>
   </data>
@@ -3201,12 +3067,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   </data>
   <data name="idiomas_no_se_pudo_identificar" xml:space="preserve">
     <value>The language could not be identified. Please try again.</value>
-  </data>
-  <data name="idiomas_al_dia" xml:space="preserve">
-    <value>The language was already up to date.</value>
-  </data>
-  <data name="idiomas_sincronizado" xml:space="preserve">
-    <value>The language was synchronized: {0} text(s) added.</value>
   </data>
   <data name="idiomas_habilitado_ok" xml:space="preserve">
     <value>The language was enabled.</value>
@@ -3535,12 +3395,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="comun_todas" xml:space="preserve">
     <value>All</value>
   </data>
-  <data name="comun_fecha_corta" xml:space="preserve">
-    <value>MMM d, yyyy</value>
-  </data>
-  <data name="comun_fecha_hora_corta" xml:space="preserve">
-    <value>MMM d, yyyy, HH:mm</value>
-  </data>
   <data name="categoria_tipo_app_web" xml:space="preserve">
     <value>Web app</value>
   </data>
@@ -3549,15 +3403,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   </data>
   <data name="disp_estado_mantenimiento" xml:space="preserve">
     <value>Under maintenance</value>
-  </data>
-  <data name="usuarios_formato_mes_anio" xml:space="preserve">
-    <value>MMM yyyy</value>
-  </data>
-  <data name="usuarios_motivo_largo" xml:space="preserve">
-    <value>(required)</value>
-  </data>
-  <data name="autenticacion_integridad_comprometida" xml:space="preserve">
-    <value>Data integrity is compromised. A user with Pattern Blue permissions must review it before the rest can sign in.</value>
   </data>
   <data name="bitacora_sin_registros_filtros" xml:space="preserve">
     <value>No records match the filters.</value>
@@ -3573,9 +3418,6 @@ To activate it and set your password, open this link (it expires in 48 hours):
   </data>
   <data name="login_quedan_varios" xml:space="preserve">
     <value>You have {0} attempts left before the account is locked.</value>
-  </data>
-  <data name="usuarios_datos_actualizados_nuevo_enlace" xml:space="preserve">
-    <value>The user's data was updated. Since the account is still pending, we sent a new activation link to the new email address.</value>
   </data>
   <data name="correo_hola" xml:space="preserve">
     <value>Hello {0},</value>
@@ -3997,26 +3839,11 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="descargas_titulo" xml:space="preserve">
     <value>First time on this PC</value>
   </data>
-  <data name="descargas_primera_vez" xml:space="preserve">
-    <value>If this is your first time, download this</value>
-  </data>
-  <data name="descargas_explicacion" xml:space="preserve">
-    <value>To record gaze, this PC needs the eye tracker software and the Falke agent. You only install them once.</value>
-  </data>
   <data name="descargas_descargar_todo" xml:space="preserve">
     <value>Download all (.zip)</value>
   </data>
   <data name="descargas_descargar" xml:space="preserve">
     <value>Download</value>
-  </data>
-  <data name="descargas_disponible" xml:space="preserve">
-    <value>Available</value>
-  </data>
-  <data name="descargas_no_disponible" xml:space="preserve">
-    <value>Not available on the server</value>
-  </data>
-  <data name="descargas_sitio_oficial" xml:space="preserve">
-    <value>Official site</value>
   </data>
   <data name="descargas_sin_instaladores" xml:space="preserve">
     <value>The server has no installers loaded.</value>
@@ -4024,14 +3851,8 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="descargas_tobii_titulo" xml:space="preserve">
     <value>Tobii Experience</value>
   </data>
-  <data name="descargas_tobii_descripcion" xml:space="preserve">
-    <value>Driver and services for the Tobii Eye Tracker 5. Without it the PC does not detect the device.</value>
-  </data>
   <data name="descargas_agente_titulo" xml:space="preserve">
     <value>Falke gaze agent</value>
-  </data>
-  <data name="descargas_agente_descripcion" xml:space="preserve">
-    <value>Program that reads the Tobii gaze and sends it to this page. It runs on the PC where you record.</value>
   </data>
   <data name="descargas_despues_de_descargar" xml:space="preserve">
     <value>After downloading</value>
@@ -4457,10 +4278,10 @@ To activate it and set your password, open this link (it expires in 48 hours):
     <value>My Tobiis</value>
   </data>
   <data name="mistobiis_bajada" xml:space="preserve">
-    <value>Your company’s eye trackers and the tools to get them ready before recording.</value>
+    <value>Your company's eye trackers and the tools to get them ready before recording.</value>
   </data>
   <data name="mistobiis_tobiis_de_tu_empresa" xml:space="preserve">
-    <value>Your company’s Tobiis</value>
+    <value>Your company's Tobiis</value>
   </data>
   <data name="mistobiis_herramientas" xml:space="preserve">
     <value>Tools</value>
@@ -4809,5 +4630,32 @@ To activate it and set your password, open this link (it expires in 48 hours):
   </data>
   <data name="informe_multiple_elegi_algo" xml:space="preserve">
     <value>Choose at least one data block or visualization to include in the report.</value>
+  </data>
+  <data name="panel_respecto_mes_pasado" xml:space="preserve">
+    <value>{0} compared to last month</value>
+  </data>
+  <data name="panel_igual_mes_pasado" xml:space="preserve">
+    <value>Same as last month</value>
+  </data>
+  <data name="panel_tiempo_grabado_este_mes" xml:space="preserve">
+    <value>Time recorded this month</value>
+  </data>
+  <data name="panel_promedio_por_sesion" xml:space="preserve">
+    <value>Average per session: {0}</value>
+  </data>
+  <data name="panel_tipos_de_activo_n" xml:space="preserve">
+    <value>Asset types: {0}</value>
+  </data>
+  <data name="panel_dispositivos_disponibles" xml:space="preserve">
+    <value>Available: {0}</value>
+  </data>
+  <data name="panel_sin_dispositivos" xml:space="preserve">
+    <value>No devices assigned</value>
+  </data>
+  <data name="panel_sesiones_por_categoria" xml:space="preserve">
+    <value>Sessions by category</value>
+  </data>
+  <data name="panel_categoria" xml:space="preserve">
+    <value>Category</value>
   </data>
 </root>

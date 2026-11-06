@@ -92,12 +92,12 @@
         .panel-columnas
         {
             display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+            grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1.1fr);
             gap: 18px;
-            align-items: start;
+            align-items: stretch;
         }
 
-        @media (max-width: 1000px)
+        @media (max-width: 1280px)
         {
             .panel-columnas { grid-template-columns: minmax(0, 1fr); }
         }
@@ -105,6 +105,29 @@
         .panel-columnas .tabla td:nth-child(3),
         .panel-columnas .tabla td:nth-child(4)
         {
+            white-space: nowrap;
+        }
+
+        .por-categoria
+        {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 14px;
+        }
+
+        .por-categoria .fila-entre
+        {
+            margin-bottom: 6px;
+            font-size: .86rem;
+        }
+
+        .por-categoria .nombre
+        {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
 
@@ -119,9 +142,14 @@
         {
             display: flex;
             gap: 11px;
-            padding: 11px 0;
+            padding: 10px 0;
             border-bottom: 1px solid var(--borde);
             font-size: .86rem;
+        }
+
+        .actividad li:first-child
+        {
+            padding-top: 0;
         }
 
         .actividad li:last-child
@@ -135,6 +163,21 @@
             flex: none;
             margin-top: 2px;
             color: var(--texto-suave);
+        }
+
+        .actividad li > span
+        {
+            min-width: 0;
+        }
+
+        .actividad .detalle-actividad
+        {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--texto-suave);
+            font-size: .8rem;
         }
 
         .actividad .cuando
@@ -200,26 +243,26 @@
 
         <div>
             <div class="metrica-nombre" data-i18n="panel.metrica1">[[panel_sesiones_este_mes]]</div>
-            <div class="metrica-valor">14</div>
-            <p class="texto-chico texto-exito sin-margen mt-8" data-i18n="panel.metrica1.detalle">+4 respecto del mes pasado</p>
+            <div class="metrica-valor"><%: SesionesMes %></div>
+            <p class="texto-chico <%: SesionesMesClase %> sin-margen mt-8"><%: SesionesMesDetalle %></p>
         </div>
 
         <div>
-            <div class="metrica-nombre" data-i18n="panel.metrica2">[[panel_en_procesamiento]]</div>
-            <div class="metrica-valor">1</div>
-            <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica2.detalle">[[panel_queda_disponible_en_unos_minutos]]</p>
+            <div class="metrica-nombre">[[panel_tiempo_grabado_este_mes]]</div>
+            <div class="metrica-valor"><%: TiempoMes %></div>
+            <p class="texto-chico texto-suave sin-margen mt-8"><%: TiempoMesDetalle %></p>
         </div>
 
         <div>
             <div class="metrica-nombre" data-i18n="panel.metrica3">[[panel_categorias_activas]]</div>
-            <div class="metrica-valor">6</div>
-            <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica3.detalle">Sobre 5 tipos de activo</p>
+            <div class="metrica-valor"><%: CategoriasActivas %></div>
+            <p class="texto-chico texto-suave sin-margen mt-8"><%: CategoriasDetalle %></p>
         </div>
 
         <div>
             <div class="metrica-nombre" data-i18n="panel.metrica4">[[panel_dispositivos_asignados]]</div>
-            <div class="metrica-valor">1</div>
-            <p class="texto-chico texto-suave sin-margen mt-8" data-i18n="panel.metrica4.detalle">Tobii 4C &middot; calibrado</p>
+            <div class="metrica-valor"><%: Dispositivos %></div>
+            <p class="texto-chico texto-suave sin-margen mt-8"><%: DispositivosDetalle %></p>
         </div>
 
     </div>
@@ -236,127 +279,93 @@
                 </a>
             </div>
 
+            <% if (HaySesiones) { %>
             <div class="tabla-scroll" style="border:0">
                 <table class="tabla">
                     <caption class="solo-lectores">[[panel_ultimas_sesiones_grabadas]]</caption>
                     <thead>
                         <tr>
                             <th scope="col" data-i18n="panel.tabla.sesion">[[panel_sesion]]</th>
-                            <th scope="col" data-i18n="panel.tabla.tipo">[[categorias_tipo_de_activo]]</th>
+                            <th scope="col">[[panel_categoria]]</th>
                             <th scope="col" data-i18n="panel.tabla.fecha">[[panel_fecha]]</th>
                             <th scope="col" data-i18n="panel.tabla.duracion">[[panel_duracion]]</th>
-                            <th scope="col" data-i18n="panel.tabla.estado">[[dispositivos_estado]]</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Checkout - App e-commerce</a></td>
-                            <td>[[analisismultiple_app_web]]</td>
-                            <td>12 jul 2026</td>
-                            <td>18:42</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Onboarding - RPG móvil</a></td>
-                            <td>[[analisismultiple_videojuego]]</td>
-                            <td>10 jul 2026</td>
-                            <td>09:15</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Landing - Campaña Q3</a></td>
-                            <td>[[categorias_publicidad]]</td>
-                            <td>08 jul 2026</td>
-                            <td>04:03</td>
-                            <td><span class="badge badge-alerta" data-i18n="estado.procesando">[[panel_procesando]]</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Login - Panel interno</a></td>
-                            <td>[[analisismultiple_software]]</td>
-                            <td>05 jul 2026</td>
-                            <td>06:51</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>">Carrito - App e-commerce</a></td>
-                            <td>[[analisismultiple_app_web]]</td>
-                            <td>01 jul 2026</td>
-                            <td>12:27</td>
-                            <td><span class="badge badge-exito" data-i18n="estado.finalizado">[[panel_finalizado]]</span></td>
-                        </tr>
+                        <asp:Repeater ID="rptSesiones" runat="server" EnableViewState="false">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><a href="<%: ResolveUrl("~/Visualizaciones.aspx") %>"><%#: Eval("Nombre") %></a></td>
+                                    <td><%#: Eval("Categoria") %></td>
+                                    <td><%#: Eval("Fecha") %></td>
+                                    <td><%#: Eval("Duracion") %></td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </tbody>
                 </table>
             </div>
+            <% } else { %>
+            <p class="texto-chico texto-suave sin-margen"><%: Traducir("vis_sin_sesiones_empresa") %></p>
+            <% } %>
         </section>
 
-        <div class="pila">
+        <section class="tarjeta">
+            <div class="tarjeta-cabecera">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-comparar" /></svg>
+                <span>[[panel_sesiones_por_categoria]]</span>
+                <a class="derecha enlace-detalle" href="<%: ResolveUrl("~/Categorias.aspx") %>">
+                    <span>[[app_categorias]]</span>
+                    <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
+                </a>
+            </div>
 
-            <section class="tarjeta">
-                <div class="tarjeta-cabecera">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-dispositivo" /></svg>
-                    <span data-i18n="panel.dispositivo.titulo">[[panel_tu_dispositivo]]</span>
-                </div>
+            <% if (HayCategoriasConSesiones) { %>
+            <ul class="por-categoria">
+                <asp:Repeater ID="rptCategorias" runat="server" EnableViewState="false">
+                    <ItemTemplate>
+                        <li>
+                            <div class="fila-entre">
+                                <span class="nombre"><%#: Eval("Nombre") %></span>
+                                <strong><%#: Eval("Cantidad") %></strong>
+                            </div>
+                            <div class="barra" role="img" aria-label='<%#: Eval("Nombre") %>: <%#: Eval("Cantidad") %>'>
+                                <span style='width: <%#: Eval("Porcentaje") %>%'></span>
+                            </div>
+                        </li>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </ul>
+            <% } else { %>
+            <p class="texto-chico texto-suave sin-margen"><%: Traducir("vis_sin_sesiones_empresa") %></p>
+            <% } %>
+        </section>
 
-                <div class="fila-entre mb-8">
-                    <strong>Tobii Eye Tracker 4C</strong>
-                    <span class="badge badge-exito" data-i18n="estado.listo">[[panel_listo]]</span>
-                </div>
-                <p class="texto-chico texto-suave" data-i18n="panel.dispositivo.detalle">
-                    Conectado por USB 3.0 &middot; última calibración hace 4 minutos &middot; driver 4.2.1
-                </p>
+        <section class="tarjeta">
+            <div class="tarjeta-cabecera">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-reloj" /></svg>
+                <span data-i18n="panel.actividad.titulo">[[panel_actividad_reciente]]</span>
+            </div>
 
-                <div class="barra exito" role="img" aria-label="Calidad de la calibración: 92 por ciento">
-                    <span style="width: 92%"></span>
-                </div>
-                <p class="texto-chico texto-suave mt-8 sin-margen" data-i18n="panel.dispositivo.calidad">Calidad de calibración: 92%</p>
-
-                <div class="tarjeta-pie">
-                    <a class="enlace-detalle" href="<%: ResolveUrl("~/NuevaGrabacion.aspx") %>">
-                        <span data-i18n="panel.dispositivo.verificar">[[panel_verificar_el_dispositivo]]</span>
-                        <svg width="14" height="14" aria-hidden="true"><use href="#i-flecha-der" /></svg>
-                    </a>
-                </div>
-            </section>
-
-            <section class="tarjeta">
-                <div class="tarjeta-cabecera">
-                    <svg width="18" height="18" aria-hidden="true"><use href="#i-reloj" /></svg>
-                    <span data-i18n="panel.actividad.titulo">[[panel_actividad_reciente]]</span>
-                </div>
-
-                <ul class="actividad">
-                    <li>
-                        <svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg>
-                        <span>
-                            <span data-i18n="panel.actividad1">Terminó el procesamiento de "Checkout — App e-commerce"</span>
-                            <span class="cuando">Hace 2 horas</span>
-                        </span>
-                    </li>
-                    <li>
-                        <svg width="17" height="17" aria-hidden="true"><use href="#i-carpeta" /></svg>
-                        <span>
-                            <span data-i18n="panel.actividad2">Se registró la categoría "Checkout flow v2"</span>
-                            <span class="cuando">Hace 5 horas</span>
-                        </span>
-                    </li>
-                    <li>
-                        <svg width="17" height="17" aria-hidden="true"><use href="#i-descarga" /></svg>
-                        <span>
-                            <span data-i18n="panel.actividad3">Se exportó el reporte PDF del análisis n.&deg; 2398</span>
-                            <span class="cuando">Ayer</span>
-                        </span>
-                    </li>
-                    <li>
-                        <svg width="17" height="17" aria-hidden="true"><use href="#i-usuarios" /></svg>
-                        <span>
-                            <span data-i18n="panel.actividad4">Se invitó a diego.paz@ironhide.com</span>
-                            <span class="cuando">Hace 2 días</span>
-                        </span>
-                    </li>
-                </ul>
-            </section>
-
-        </div>
+            <% if (HayActividad) { %>
+            <ul class="actividad">
+                <asp:Repeater ID="rptActividad" runat="server" EnableViewState="false">
+                    <ItemTemplate>
+                        <li>
+                            <svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg>
+                            <span>
+                                <span><%#: GUI.TextoBitacora_GUI.Descripcion(Eval("DescripcionBitacora")) %></span>
+                                <span class="detalle-actividad"><%#: DetalleActividad(Eval("DetalleBitacora")) %></span>
+                                <span class="cuando"><%#: GUI.TextoBitacora_GUI.Modulo(Eval("ModuloBitacora")) %> &middot; <%#: ((DateTime)Eval("FechaHoraBitacora")).ToString("g", GUI.IdiomaActual_GUI.Cultura) %></span>
+                            </span>
+                        </li>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </ul>
+            <% } else { %>
+            <p class="texto-chico texto-suave sin-margen">[[miperfil_todavia_no_hay_movimientos_registrados_d]]</p>
+            <% } %>
+        </section>
 
     </div>
 

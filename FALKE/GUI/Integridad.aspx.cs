@@ -123,7 +123,7 @@ namespace GUI
                     var registro = integridadRepo.LeerRegistroIntegridad(tabla);
                     string registros = registro.HasValue ? registro.Value.Item2.ToString("#,0", IdiomaActual_GUI.Cultura) : "—";
 
-                    // La columna Detalle solo dice si la tabla está bien o no; qué registros son los que no cierran se ve en «Ver detalle».
+                    // La columna Detalle solo dice si la tabla está bien o no; qué registros son los que no cierran se ve en "Ver detalle".
                     string detalle = inconsistente
                         ? IdiomaActual_GUI.Texto("integridad_tabla_corrupta")
                         : IdiomaActual_GUI.Texto("integridad_tabla_ok");

@@ -77,7 +77,7 @@ namespace BLL
             };
 
             bitacora.Auditar(actor, "Grabaciones", actor.IdEmpresa, EventosBitacora_TLL.INFORME_EXPORTADO, CriticidadBitacora.Baja,
-                DetalleBitacora_TLL.Armar(sesion.Nombre, codigoIdioma));
+                DetalleBitacora_TLL.Armar(sesion.Nombre));
 
             return informe;
         }
@@ -103,7 +103,7 @@ namespace BLL
             };
 
             bitacora.Auditar(actor, "Grabaciones", actor.IdEmpresa, EventosBitacora_TLL.INFORME_EXPORTADO, CriticidadBitacora.Baja,
-                DetalleBitacora_TLL.Armar(sesiones[0].NombreCategoria, sesiones.Count, codigoIdioma));
+                DetalleBitacora_TLL.Armar(sesiones[0].NombreCategoria));
 
             return informe;
         }
