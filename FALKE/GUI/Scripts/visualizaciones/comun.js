@@ -1,15 +1,11 @@
 "use strict";
 
 // FUNCIONES COMPARTIDAS
-// las usan las visualizaciones (una sesion) y el analisis multiple (varias sesiones)
-
-// ---------- MAPA DE CALOR ----------
 
 var CALOR_ANCHO = 96;
 var CALOR_ALTO = 54;
 var CALOR_RADIO = 4;
 
-// opacidad de lo poco mirado (frio) y de lo mas mirado (caliente), entre 0 y 1
 var OPACIDAD_MIN = 0;
 var OPACIDAD_MAX = 0.9;
 var CURVA_OPACIDAD = 5;
@@ -29,7 +25,6 @@ function armarMolde() {
 
 var MOLDE_CALOR = armarMolde();
 
-// grilla de calor con las muestras desde..hasta (indices de pts); max es el valor de la celda mas caliente
 function calcularCalor(pts, desde, hasta) {
     var grilla = new Float32Array(CALOR_ANCHO * CALOR_ALTO);
     var max = 0;
@@ -59,7 +54,6 @@ function calcularCalor(pts, desde, hasta) {
     return { grilla: grilla, max: max };
 }
 
-// color de una celda segun su calor (v entre 0 y 1)
 function colorCalor(v) {
     //rgb
     var FRIO = [86, 99, 124], MEDIO = [232, 175, 82], CALIENTE = [242, 97, 87];
@@ -71,17 +65,14 @@ function colorCalor(v) {
         r: Math.round(desde[0] + (hasta[0] - desde[0]) * f),
         g: Math.round(desde[1] + (hasta[1] - desde[1]) * f),
         b: Math.round(desde[2] + (hasta[2] - desde[2]) * f),
-        // curva exponencial: sube rapido con poco calor y se achata cerca del maximo
         a: v <= 0 ? 0 : OPACIDAD_MIN + (OPACIDAD_MAX - OPACIDAD_MIN) * (1 - Math.exp(-CURVA_OPACIDAD * v)) / (1 - Math.exp(-CURVA_OPACIDAD))
     };
 }
 
-// canvas chico (96x54) donde se pintan las celdas antes de estirarlas al tamano del lienzo
 var capaCalor = document.createElement("canvas");
 capaCalor.width = CALOR_ANCHO;
 capaCalor.height = CALOR_ALTO;
 
-// pinta la grilla en el lienzo ctx (w x h); max es el calor que se toma como "maximo"
 function pintarCalor(ctx, w, h, grilla, max) {
     var capa = capaCalor.getContext("2d");
     var imagen = capa.createImageData(CALOR_ANCHO, CALOR_ALTO);
@@ -100,7 +91,6 @@ function pintarCalor(ctx, w, h, grilla, max) {
     ctx.drawImage(capaCalor, 0, 0, w, h);
 }
 
-// ---------- ZONAS DE INTERES Y ZONAS CIEGAS ----------
 
 var ZONA_UMBRAL = 0.35;
 var ZONA_MIN_CELDAS = 8;
@@ -109,7 +99,6 @@ var CIEGA_BLOQUES_X = 8;
 var CIEGA_BLOQUES_Y = 6;
 var CIEGA_UMBRAL = 0.04;
 
-// zonas de interes: grupos de celdas vecinas con valor >= umbral (relleno por inundacion), las mas calientes primero
 function buscarZonas(grilla, umbral) {
     var visitada = new Uint8Array(grilla.length);
     var zonas = [];
@@ -158,8 +147,6 @@ function buscarZonas(grilla, umbral) {
     return zonas.slice(0, ZONA_MAX);
 }
 
-// divide la pantalla en bloques (8 x 6) y dice cuales casi no se miraron (calor maximo del bloque < max * CIEGA_UMBRAL)
-// devuelve una lista de true/false, una por bloque, fila por fila
 function bloquesCiegos(grilla, max) {
     var anchoBloque = CALOR_ANCHO / CIEGA_BLOQUES_X;
     var altoBloque = CALOR_ALTO / CIEGA_BLOQUES_Y;
@@ -182,7 +169,6 @@ function bloquesCiegos(grilla, max) {
     return ciegos;
 }
 
-// junta los bloques ciegos vecinos en rectangulos (primero a lo ancho de cada fila, despues estira hacia abajo)
 function unirBloques(ciegos) {
     var rectangulos = [];
 
@@ -214,7 +200,6 @@ function unirBloques(ciegos) {
     return rectangulos;
 }
 
-// dibuja los cuadrados: ciegas (punteado gris) y zonas de interes (dorado)
 function dibujarZonas(ctx, w, h, zonas, ciegas) {
     var i;
 
@@ -246,11 +231,8 @@ function dibujarZonas(ctx, w, h, zonas, ciegas) {
     }
 }
 
-// ---------- DISPERSION ----------
-
 var DISPERSION_K = 2;
 
-// centro (promedio) de los puntos {x, y} y cuanto se separan de el (varianza en x e y, covarianza)
 function covarianza(puntos) {
     var cx = 0, cy = 0, i;
 
@@ -276,7 +258,6 @@ function covarianza(puntos) {
     return { cx: cx, cy: cy, sxx: sxx / puntos.length, syy: syy / puntos.length, sxy: sxy / puntos.length };
 }
 
-// elipse de dispersion (punteada dorada) a partir del centro y la covarianza
 function dibujarElipse(ctx, cx, cy, sxx, syy, sxy) {
     var mitad = (sxx - syy) / 2;
     var radio = Math.sqrt(mitad * mitad + sxy * sxy);
@@ -297,7 +278,6 @@ function dibujarElipse(ctx, cx, cy, sxx, syy, sxy) {
     ctx.setLineDash([]);
 }
 
-// circulo coral con borde blanco (el centro de los puntos)
 function dibujarCentroide(ctx, cx, cy) {
     ctx.beginPath();
     ctx.arc(cx, cy, 7, 0, Math.PI * 2);

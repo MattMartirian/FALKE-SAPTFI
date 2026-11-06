@@ -25,7 +25,6 @@ class VisualizacionDispersion extends VisualizacionTramo {
         // la elipse necesita al menos 3 puntos
         if (puntos.length >= 3) dibujarElipse(ctx, c.cx, c.cy, c.sxx, c.syy, c.sxy);
 
-        // los puntos de mirada son grises
         ctx.fillStyle = "rgba(86,99,124,.75)";
 
         for (i = 0; i < puntos.length; i++) {

@@ -49,8 +49,6 @@ class Visualizacion {
 
         this.duracionFija = false;
 
-        // bajamos el video entero y lo usamos como archivo local,
-        // asi firefox puede saltar a cualquier segundo
         var video = this.video;
 
         fetch(sesion.urlVideo)
@@ -151,7 +149,7 @@ class Visualizacion {
         v.currentTime = 1e101;
     }
 
-    // dibuja el punto de mirada del instante t (ms), con su estela de 10 muestras
+    // dibuja el punto de mirada del instante t (ms)
     dibujarMirada(ctx, w, h, pts, t) {
         var idx = buscarMuestra(pts, t);
 
@@ -192,7 +190,6 @@ class Visualizacion {
     duracion() {
         var real = this.video.duration;
 
-        // ya con la duracion real del video, usamos esa (la de la sesion puede ser mas larga)
         if (this.duracionFija && isFinite(real) && real > 0) return real;
 
         return Math.max(this.sesion.duracionSeg, isFinite(real) ? real : 0);

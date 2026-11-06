@@ -63,7 +63,6 @@ class VisualizacionAtencion extends VisualizacionTramo {
         return this.estados;
     }
 
-    // dona con el porcentaje de atencion del tramo, arriba a la derecha del video
     dibujarTramo(ctx, w, h, pts, primera, ultima) {
         var estados = this.obtenerEstados();
         var atentas = 0, distraidas = 0;
@@ -77,12 +76,10 @@ class VisualizacionAtencion extends VisualizacionTramo {
 
         if (validas === 0) return;
 
-        // mismo criterio que el tablero: distraccion = 100 - atencion
         var pctAtencion = Math.min(100, Math.round(atentas * 100 / validas));
 
         this.elLeyenda.innerHTML = this.armarLeyenda(pctAtencion, 100 - pctAtencion);
 
-        // cuadro blanco de fondo
         var lado = Math.round(h * 0.36);
         var x0 = w - lado - 20;
         var y0 = 20;
@@ -93,7 +90,6 @@ class VisualizacionAtencion extends VisualizacionTramo {
         ctx.fillStyle = "rgba(255,255,255,.93)";
         ctx.fillRect(x0, y0, lado, lado);
 
-        // aro entero gris (distraccion) y encima el arco dorado (atencion), que arranca arriba y avanza en sentido horario
         ctx.lineWidth = lado * 0.11;
         ctx.strokeStyle = COLOR_DISTRACCION;
         ctx.beginPath();
@@ -105,7 +101,6 @@ class VisualizacionAtencion extends VisualizacionTramo {
         ctx.arc(cx, cy, radio, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * pctAtencion / 100);
         ctx.stroke();
 
-        // porcentaje en el centro y segundos de atencion sobre segundos con datos abajo
         ctx.fillStyle = "#0E1A34";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -116,7 +111,6 @@ class VisualizacionAtencion extends VisualizacionTramo {
         ctx.textAlign = "start";
     }
 
-    // franja de toda la grabacion: un rectangulito por muestra, del color de su estado
     dibujarFranja() {
         if (!this.sesion.analisis) return;
 

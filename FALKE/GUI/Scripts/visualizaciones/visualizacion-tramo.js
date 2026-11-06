@@ -16,13 +16,13 @@ class VisualizacionTramo extends Visualizacion {
         this.checkTiempoReal = document.getElementById("calorTiempoReal");
         this.etiquetaTiempoReal = this.cajaTiempoReal.querySelector("span");
         this.textoOriginal = this.etiquetaTiempoReal.textContent;
-        this.textoTiempoReal = null;   // si la visualizacion quiere otro texto para el checkbox de tiempo real
+        this.textoTiempoReal = null;   
         this.cajaMirada = document.getElementById("calorMiradaCaja");
         this.checkMirada = document.getElementById("calorMirada");
-        this.capaMirada = null;   // canvas encima del video solo para el punto de mirada (se redibuja siempre)
+        this.capaMirada = null;   
 
         this.tieneTiempoReal = false;   
-        this.tieneMirada = true;        // si muestra el checkbox de "mirada en tiempo real" (el recorrido ya tiene el suyo)
+        this.tieneMirada = true;     
         this.aviso = null;              
         this.clave = "";                
 
@@ -131,11 +131,9 @@ class VisualizacionTramo extends Visualizacion {
         this.dibujarTramo(ctx, w, h, pts, primera, ultima);
     }
 
-    // punto de mirada en tiempo real, igual al de "grabacion con seguimiento"
     dibujarCapaMirada() {
         var capa = this.capaMirada;
 
-        // igualo el tamano al del canvas principal (si cambia, el canvas se limpia solo)
         if (capa.width !== this.canvas.width || capa.height !== this.canvas.height) {
             capa.width = this.canvas.width;
             capa.height = this.canvas.height;
