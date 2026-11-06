@@ -73,10 +73,10 @@
     <value>Averaged metrics</value>
   </data>
   <data name="analisismultiple_necesitas_al_menos_dos_sesiones_del" xml:space="preserve">
-    <value>You need at least two sessions of the same type.</value>
+    <value>You need at least two sessions in the same category.</value>
   </data>
   <data name="analisismultiple_promediar_sesiones_de_tipos_distintos_da" xml:space="preserve">
-    <value>Averaging sessions of different types would give a statistically invalid result, so once you pick the first one, the incompatible ones are disabled. At least two are needed.</value>
+    <value>Averaging sessions from different categories would give a statistically invalid result, so once you pick the first one, sessions from other categories are disabled. At least two are needed.</value>
   </data>
   <data name="analisismultiple_proporcion_media_de_fijacion_activa_fren" xml:space="preserve">
     <value>Mean share of active fixation versus saccadic movement.</value>
@@ -106,7 +106,7 @@
     <value>Only already processed sessions are listed</value>
   </data>
   <data name="analisismultiple_todas_las_sesiones_tienen_que_ser" xml:space="preserve">
-    <value>All sessions must be of the same asset type</value>
+    <value>All sessions must be in the same category</value>
   </data>
   <data name="analisismultiple_todavia_no_elegiste_ninguna_sesion" xml:space="preserve">
     <value>You haven't chosen any session yet.</value>
@@ -3340,6 +3340,72 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="analisismultiple_listo_para_combinar_0_sesiones" xml:space="preserve">
     <value>Ready to combine {0} sessions.</value>
   </data>
+  <data name="analisismultiple_seleccionar_todos_los_de_esta_categoria" xml:space="preserve">
+    <value>Select all in this category</value>
+  </data>
+  <data name="analisismultiple_categoria_activa_0" xml:space="preserve">
+    <value>Category: {0}.</value>
+  </data>
+  <data name="analisismultiple_sin_datos" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  <data name="analisismultiple_muestra_pequena" xml:space="preserve">
+    <value>Small sample for this metric</value>
+  </data>
+  <data name="analisismultiple_mediana_n" xml:space="preserve">
+    <value>Median: {0}</value>
+  </data>
+  <data name="analisismultiple_calidad_titulo" xml:space="preserve">
+    <value>Sample quality</value>
+  </data>
+  <data name="analisismultiple_calidad_usadas" xml:space="preserve">
+    <value>Sessions with gaze data</value>
+  </data>
+  <data name="analisismultiple_calidad_excluidas" xml:space="preserve">
+    <value>No gaze data (excluded)</value>
+  </data>
+  <data name="analisismultiple_calidad_variacion" xml:space="preserve">
+    <value>Duration variation</value>
+  </data>
+  <data name="analisismultiple_calidad_aviso" xml:space="preserve">
+    <value>The average may not be representative.</value>
+  </data>
+  <data name="analisismultiple_calidad_pocas" xml:space="preserve">
+    <value>There are few sessions (fewer than {0}).</value>
+  </data>
+  <data name="analisismultiple_calidad_duraciones" xml:space="preserve">
+    <value>Session durations are very different from each other.</value>
+  </data>
+  <data name="analisismultiple_por_grupo_titulo" xml:space="preserve">
+    <value>Metrics by tester group</value>
+  </data>
+  <data name="analisismultiple_error_cargar_n" xml:space="preserve">
+    <value>The gaze data of {0} session(s) could not be loaded.</value>
+  </data>
+  <data name="analisismultiple_calculando" xml:space="preserve">
+    <value>Calculating…</value>
+  </data>
+  <data name="analisismultiple_nota_cuadricula" xml:space="preserve">
+    <value>The grid marks every 25% of the screen (it is not a real capture). Every session weighs the same and the moment in the video is not taken into account.</value>
+  </data>
+  <data name="analisismultiple_centro_de_cada_sesion" xml:space="preserve">
+    <value>Center of each session</value>
+  </data>
+  <data name="analisismultiple_filtro_titulo" xml:space="preserve">
+    <value>Sample filters</value>
+  </data>
+  <data name="analisismultiple_filtro_ayuda" xml:space="preserve">
+    <value>Everything starts selected. Uncheck what you do not want to include and press "Regenerate data".</value>
+  </data>
+  <data name="analisismultiple_filtro_resumen_n" xml:space="preserve">
+    <value>{0} of {1} sessions match the filter.</value>
+  </data>
+  <data name="analisismultiple_filtro_vacio" xml:space="preserve">
+    <value>No session matches the filter.</value>
+  </data>
+  <data name="analisismultiple_filtro_regenerar" xml:space="preserve">
+    <value>Regenerate data</value>
+  </data>
   <data name="categorias_registrar_categoria" xml:space="preserve">
     <value>Register category</value>
   </data>
@@ -4489,7 +4555,19 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="vis_calor_tiempo_real" xml:space="preserve">
     <value>Show heat map in real time</value>
   </data>
+  <data name="vis_mirada_tiempo_real" xml:space="preserve">
+    <value>Show gaze in real time</value>
+  </data>
+  <data name="vis_recorrido_tiempo_real" xml:space="preserve">
+    <value>Show path in real time</value>
+  </data>
   <data name="vis_calor_sin_datos" xml:space="preserve">
     <value>There is no gaze data in the chosen section.</value>
+  </data>
+  <data name="vis_atencion_sin_datos" xml:space="preserve">
+    <value>No gaze data</value>
+  </data>
+  <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
+    <value>Path of every session overlaid: where more lines meet, the gaze passed more often.</value>
   </data>
 </root>

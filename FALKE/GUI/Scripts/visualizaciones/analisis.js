@@ -3,8 +3,8 @@
 // ANALISIS
 
 var INTERVALO_MS = 100;     
-var UMBRAL_FIJACION = 0.04;  
-var ATENCION_MIN_MS = 1500;  
+var UMBRAL_FIJACION = 0.055;  
+var ATENCION_MIN_MS = 800;  
 var HUECO_MAX_MS = 350;      
 
 
@@ -101,4 +101,27 @@ function buscarMuestra(muestras, tiempoMs) {
     }
 
     return encontrada;
+}
+
+function estadosAtencion(pts, fijs) {
+    var estados = [];
+    var f = 0;
+
+    for (var i = 0; i < pts.length; i++) {
+        var t = pts[i].t;
+
+        if (!pts[i].ok) {
+            estados.push(0);
+            continue;
+        }
+
+        // salto las fijaciones que ya terminaron
+        while (f < fijs.length && fijs[f].t0 + fijs[f].dur <= t) f++;
+
+        var dentro = f < fijs.length && fijs[f].t0 <= t && fijs[f].dur >= ATENCION_MIN_MS;
+
+        estados.push(dentro ? 2 : 1);
+    }
+
+    return estados;
 }

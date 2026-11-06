@@ -47,7 +47,18 @@ class Visualizacion {
         this.alAbrir();
         this.actualizar();
 
-        this.video.src = sesion.urlVideo;
+        this.duracionFija = false;
+
+        // bajamos el video entero y lo usamos como archivo local,
+        // asi firefox puede saltar a cualquier segundo
+        var video = this.video;
+
+        fetch(sesion.urlVideo)
+            .then((resp) => resp.blob())
+            .then((blob) => {
+                if (this.video === video) video.src = URL.createObjectURL(blob);
+            })
+            .catch(() => { video.src = sesion.urlVideo; });
     }
 
     cerrar() {
@@ -125,15 +136,52 @@ class Visualizacion {
     arreglarDuracion() {
         var v = this.video;
 
-        if (v.duration !== Infinity) return;
+        if (v.duration !== Infinity) {
+            this.duracionFija = true;
+            return;
+        }
 
         var volver = () => {
             v.removeEventListener("timeupdate", volver);
             v.currentTime = 0;
+            this.duracionFija = true;
         };
 
         v.addEventListener("timeupdate", volver);
         v.currentTime = 1e101;
+    }
+
+    // dibuja el punto de mirada del instante t (ms), con su estela de 10 muestras
+    dibujarMirada(ctx, w, h, pts, t) {
+        var idx = buscarMuestra(pts, t);
+
+        // fallback si no hay muestra
+        if (idx < 0) return;
+
+        // las 10 muestras anteriores
+        for (var i = Math.max(0, idx - 10); i < idx; i++) {
+            if (!pts[i].ok) continue;
+
+            ctx.beginPath();
+            // arc(centro x * width, centro y * height, radio, angulo inicial, angulo final)
+            ctx.arc(pts[i].x * w, pts[i].y * h, 5, 0, Math.PI * 2);
+
+            // control de opacidad, cuanto mas viejo menos se ve
+            ctx.fillStyle = "rgba(242,97,87," + (0.3 * (i - (idx - 10)) / 10) + ")";
+            ctx.fill();
+        }
+
+        var p = pts[idx];
+        if (!p.ok || t - p.t > 400) return;
+
+        // vista actual es mas grande, con borde blanco
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, 13, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(242,97,87,.55)";
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#fff";
+        ctx.stroke();
     }
 
     alAbrir() { }
@@ -144,7 +192,9 @@ class Visualizacion {
     duracion() {
         var real = this.video.duration;
 
-        // mientras carga, el navegador va informando duraciones parciales (2 s, 5 s... hasta la real): las ignoro si son menores a la guardada
+        // ya con la duracion real del video, usamos esa (la de la sesion puede ser mas larga)
+        if (this.duracionFija && isFinite(real) && real > 0) return real;
+
         return Math.max(this.sesion.duracionSeg, isFinite(real) ? real : 0);
     }
 

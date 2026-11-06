@@ -73,10 +73,10 @@
     <value>Gemittelte Kennzahlen</value>
   </data>
   <data name="analisismultiple_necesitas_al_menos_dos_sesiones_del" xml:space="preserve">
-    <value>Sie benötigen mindestens zwei Sitzungen desselben Typs.</value>
+    <value>Sie benötigen mindestens zwei Sitzungen derselben Kategorie.</value>
   </data>
   <data name="analisismultiple_promediar_sesiones_de_tipos_distintos_da" xml:space="preserve">
-    <value>Sitzungen unterschiedlicher Typen zu mitteln würde ein statistisch ungültiges Ergebnis liefern. Sobald Sie die erste gewählt haben, werden die inkompatiblen daher deaktiviert. Es sind mindestens zwei erforderlich.</value>
+    <value>Sitzungen unterschiedlicher Kategorien zu mitteln würde ein statistisch ungültiges Ergebnis liefern. Sobald Sie die erste gewählt haben, werden die Sitzungen anderer Kategorien daher deaktiviert. Es sind mindestens zwei erforderlich.</value>
   </data>
   <data name="analisismultiple_proporcion_media_de_fijacion_activa_fren" xml:space="preserve">
     <value>Durchschnittlicher Anteil aktiver Fixation gegenüber sakkadischer Bewegung.</value>
@@ -106,7 +106,7 @@
     <value>Es werden nur bereits verarbeitete Sitzungen aufgelistet</value>
   </data>
   <data name="analisismultiple_todas_las_sesiones_tienen_que_ser" xml:space="preserve">
-    <value>Alle Sitzungen müssen vom selben Asset-Typ sein</value>
+    <value>Alle Sitzungen müssen zur selben Kategorie gehören</value>
   </data>
   <data name="analisismultiple_todavia_no_elegiste_ninguna_sesion" xml:space="preserve">
     <value>Sie haben noch keine Sitzung gewählt.</value>
@@ -3340,6 +3340,72 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="analisismultiple_listo_para_combinar_0_sesiones" xml:space="preserve">
     <value>Bereit, {0} Sitzungen zu kombinieren.</value>
   </data>
+  <data name="analisismultiple_seleccionar_todos_los_de_esta_categoria" xml:space="preserve">
+    <value>Alle dieser Kategorie auswählen</value>
+  </data>
+  <data name="analisismultiple_categoria_activa_0" xml:space="preserve">
+    <value>Kategorie: {0}.</value>
+  </data>
+  <data name="analisismultiple_sin_datos" xml:space="preserve">
+    <value>Keine Daten</value>
+  </data>
+  <data name="analisismultiple_muestra_pequena" xml:space="preserve">
+    <value>Kleine Stichprobe für diese Metrik</value>
+  </data>
+  <data name="analisismultiple_mediana_n" xml:space="preserve">
+    <value>Median: {0}</value>
+  </data>
+  <data name="analisismultiple_calidad_titulo" xml:space="preserve">
+    <value>Qualität der Stichprobe</value>
+  </data>
+  <data name="analisismultiple_calidad_usadas" xml:space="preserve">
+    <value>Sitzungen mit Blickdaten</value>
+  </data>
+  <data name="analisismultiple_calidad_excluidas" xml:space="preserve">
+    <value>Keine Blickdaten (ausgeschlossen)</value>
+  </data>
+  <data name="analisismultiple_calidad_variacion" xml:space="preserve">
+    <value>Streuung der Dauer</value>
+  </data>
+  <data name="analisismultiple_calidad_aviso" xml:space="preserve">
+    <value>Der Durchschnitt ist möglicherweise nicht repräsentativ.</value>
+  </data>
+  <data name="analisismultiple_calidad_pocas" xml:space="preserve">
+    <value>Es gibt nur wenige Sitzungen (weniger als {0}).</value>
+  </data>
+  <data name="analisismultiple_calidad_duraciones" xml:space="preserve">
+    <value>Die Dauer der Sitzungen unterscheidet sich stark.</value>
+  </data>
+  <data name="analisismultiple_por_grupo_titulo" xml:space="preserve">
+    <value>Metriken nach Testergruppe</value>
+  </data>
+  <data name="analisismultiple_error_cargar_n" xml:space="preserve">
+    <value>Die Blickdaten von {0} Sitzung(en) konnten nicht geladen werden.</value>
+  </data>
+  <data name="analisismultiple_calculando" xml:space="preserve">
+    <value>Berechnung läuft…</value>
+  </data>
+  <data name="analisismultiple_nota_cuadricula" xml:space="preserve">
+    <value>Das Raster markiert alle 25 % des Bildschirms (keine echte Aufnahme). Jede Sitzung hat dasselbe Gewicht; der Zeitpunkt im Video wird nicht berücksichtigt.</value>
+  </data>
+  <data name="analisismultiple_centro_de_cada_sesion" xml:space="preserve">
+    <value>Zentrum jeder Sitzung</value>
+  </data>
+  <data name="analisismultiple_filtro_titulo" xml:space="preserve">
+    <value>Filter für die Stichprobe</value>
+  </data>
+  <data name="analisismultiple_filtro_ayuda" xml:space="preserve">
+    <value>Zu Beginn ist alles ausgewählt. Entfernen Sie die Auswahl für alles, was nicht einbezogen werden soll, und tippen Sie auf "Daten neu erzeugen".</value>
+  </data>
+  <data name="analisismultiple_filtro_resumen_n" xml:space="preserve">
+    <value>{0} von {1} Sitzungen entsprechen dem Filter.</value>
+  </data>
+  <data name="analisismultiple_filtro_vacio" xml:space="preserve">
+    <value>Keine Sitzung entspricht dem Filter.</value>
+  </data>
+  <data name="analisismultiple_filtro_regenerar" xml:space="preserve">
+    <value>Daten neu erzeugen</value>
+  </data>
   <data name="categorias_registrar_categoria" xml:space="preserve">
     <value>Kategorie anlegen</value>
   </data>
@@ -4489,7 +4555,19 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="vis_calor_tiempo_real" xml:space="preserve">
     <value>Heatmap in Echtzeit anzeigen</value>
   </data>
+  <data name="vis_mirada_tiempo_real" xml:space="preserve">
+    <value>Blick in Echtzeit anzeigen</value>
+  </data>
+  <data name="vis_recorrido_tiempo_real" xml:space="preserve">
+    <value>Verlauf in Echtzeit anzeigen</value>
+  </data>
   <data name="vis_calor_sin_datos" xml:space="preserve">
     <value>Im gewählten Abschnitt gibt es keine Blickdaten.</value>
+  </data>
+  <data name="vis_atencion_sin_datos" xml:space="preserve">
+    <value>Keine Blickdaten</value>
+  </data>
+  <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
+    <value>Verlauf jeder Sitzung übereinandergelegt: Wo sich mehr Linien treffen, ging der Blick öfter hin.</value>
   </data>
 </root>

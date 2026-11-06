@@ -3,26 +3,6 @@
 // VISUALIZACION CON TRAMO (clase intermedia)
 // La usan el mapa de calor y las zonas. Agrega lo que tienen en comun como las barras desde/hasta para elegir que parte del video se analiza
 
-var CALOR_ANCHO = 96;  
-var CALOR_ALTO = 54;
-var CALOR_RADIO = 4;   
-
-
-function armarMolde() {
-    var molde = [];
-    var sigma = CALOR_RADIO / 2;
-
-    for (var dy = -CALOR_RADIO; dy <= CALOR_RADIO; dy++) {
-        for (var dx = -CALOR_RADIO; dx <= CALOR_RADIO; dx++) {
-            molde.push({ dx: dx, dy: dy, peso: Math.exp(-(dx * dx + dy * dy) / (2 * sigma * sigma)) });
-        }
-    }
-
-    return molde;
-}
-
-var MOLDE_CALOR = armarMolde();
-
 class VisualizacionTramo extends Visualizacion {
     constructor() {
         super();
@@ -34,8 +14,15 @@ class VisualizacionTramo extends Visualizacion {
         this.txtHasta = document.getElementById("calorHastaTxt");
         this.cajaTiempoReal = document.getElementById("calorTiempoRealCaja");
         this.checkTiempoReal = document.getElementById("calorTiempoReal");
+        this.etiquetaTiempoReal = this.cajaTiempoReal.querySelector("span");
+        this.textoOriginal = this.etiquetaTiempoReal.textContent;
+        this.textoTiempoReal = null;   // si la visualizacion quiere otro texto para el checkbox de tiempo real
+        this.cajaMirada = document.getElementById("calorMiradaCaja");
+        this.checkMirada = document.getElementById("calorMirada");
+        this.capaMirada = null;   // canvas encima del video solo para el punto de mirada (se redibuja siempre)
 
         this.tieneTiempoReal = false;   
+        this.tieneMirada = true;        // si muestra el checkbox de "mirada en tiempo real" (el recorrido ya tiene el suyo)
         this.aviso = null;              
         this.clave = "";                
 
@@ -58,6 +45,10 @@ class VisualizacionTramo extends Visualizacion {
         this.checkTiempoReal.addEventListener("change", () => {
             if (this.abierta) this.actualizar();
         });
+
+        this.checkMirada.addEventListener("change", () => {
+            if (this.abierta) this.actualizar();
+        });
     }
 
     alAbrir() {
@@ -66,7 +57,10 @@ class VisualizacionTramo extends Visualizacion {
         this.barraDesde.value = 0;
         this.barraHasta.value = 1000;
         this.checkTiempoReal.checked = true;
+        this.checkMirada.checked = false;
+        this.cajaMirada.hidden = !this.tieneMirada;
         this.cajaTiempoReal.hidden = !this.tieneTiempoReal;
+        this.etiquetaTiempoReal.textContent = this.textoTiempoReal || this.textoOriginal;
         this.opciones.hidden = false;
         this.clave = "";
 
@@ -76,11 +70,17 @@ class VisualizacionTramo extends Visualizacion {
         this.aviso.style.cssText = "position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;pointer-events:none;color:var(--texto)";
         this.aviso.textContent = VisTextos.sinDatos;
         this.lienzo.appendChild(this.aviso);
+
+        // el canvas principal solo se redibuja cuando cambia el tramo, asi que el punto va en otro
+        this.capaMirada = document.createElement("canvas");
+        this.capaMirada.style.cssText = "position:absolute;inset:0;width:100%;height:100%;pointer-events:none";
+        this.lienzo.appendChild(this.capaMirada);
     }
 
     alCerrar() {
         this.opciones.hidden = true;
         this.aviso = null;
+        this.capaMirada = null;
     }
 
     alCambiarTamano() {
@@ -94,6 +94,8 @@ class VisualizacionTramo extends Visualizacion {
 
         this.txtDesde.textContent = aMinutos(desdeSeg);
         this.txtHasta.textContent = aMinutos(hastaSeg);
+
+        this.dibujarCapaMirada();
 
         var w = this.canvas.width;
         var h = this.canvas.height;
@@ -126,39 +128,27 @@ class VisualizacionTramo extends Visualizacion {
 
         if (ultima < primera) return;
 
-        var calor = this.armarCalor(pts, primera, ultima);
-
-        if (calor.max > 0) this.dibujarTramo(ctx, w, h, calor);
+        this.dibujarTramo(ctx, w, h, pts, primera, ultima);
     }
 
-    armarCalor(pts, desde, hasta) {
-        var grilla = new Float32Array(CALOR_ANCHO * CALOR_ALTO);
-        var max = 0;
+    // punto de mirada en tiempo real, igual al de "grabacion con seguimiento"
+    dibujarCapaMirada() {
+        var capa = this.capaMirada;
 
-        for (var i = desde; i <= hasta; i++) {
-            var p = pts[i];
-
-            if (!p.ok) continue;
-
-            var cx = Math.min(CALOR_ANCHO - 1, Math.max(0, Math.floor(p.x * CALOR_ANCHO)));
-            var cy = Math.min(CALOR_ALTO - 1, Math.max(0, Math.floor(p.y * CALOR_ALTO)));
-
-            for (var k = 0; k < MOLDE_CALOR.length; k++) {
-                var gx = cx + MOLDE_CALOR[k].dx;
-                var gy = cy + MOLDE_CALOR[k].dy;
-
-                if (gx < 0 || gx >= CALOR_ANCHO || gy < 0 || gy >= CALOR_ALTO) continue;
-
-                var pos = gy * CALOR_ANCHO + gx;
-
-                grilla[pos] += MOLDE_CALOR[k].peso;
-
-                if (grilla[pos] > max) max = grilla[pos];
-            }
+        // igualo el tamano al del canvas principal (si cambia, el canvas se limpia solo)
+        if (capa.width !== this.canvas.width || capa.height !== this.canvas.height) {
+            capa.width = this.canvas.width;
+            capa.height = this.canvas.height;
         }
 
-        return { grilla: grilla, max: max };
+        var ctx = capa.getContext("2d");
+
+        ctx.clearRect(0, 0, capa.width, capa.height);
+
+        if (!this.checkMirada.checked || !this.sesion.analisis) return;
+
+        this.dibujarMirada(ctx, capa.width, capa.height, this.sesion.analisis.pts, this.video.currentTime * 1000);
     }
 
-    dibujarTramo(ctx, w, h, calor) { }
+    dibujarTramo(ctx, w, h, pts, primera, ultima) { }
 }

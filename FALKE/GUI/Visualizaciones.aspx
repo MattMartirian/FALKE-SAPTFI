@@ -289,6 +289,10 @@
 
             <div class="visor-lienzo" id="visorLienzo"></div>
 
+            <div class="franja-caja" id="franjaCaja" hidden>
+                <canvas id="franja" width="960" height="36" aria-hidden="true"></canvas>
+            </div>
+
             <div id="calorOpciones" hidden>
                 <div class="calor-tramo" role="group" aria-labelledby="calorTramoTitulo">
                     <p class="calor-tramo-titulo" id="calorTramoTitulo">[[vis_calor_tramo]]</p>
@@ -305,6 +309,11 @@
                 <label class="calor-tiempo-real" id="calorTiempoRealCaja">
                     <input type="checkbox" id="calorTiempoReal" />
                     <span>[[vis_calor_tiempo_real]]</span>
+                </label>
+
+                <label class="calor-tiempo-real" id="calorMiradaCaja">
+                    <input type="checkbox" id="calorMirada" />
+                    <span>[[vis_mirada_tiempo_real]]</span>
                 </label>
             </div>
 
@@ -332,12 +341,14 @@
 
             <div class="leyenda" id="visorLeyenda"></div>
 
+            <%-- esto es para la info: aviso "Muevete por la linea de tiempo..." sacado porque ya no da info importante
             <div class="aviso aviso-info mt-16 mb-0">
                 <svg width="18" height="18" aria-hidden="true"><use href="#i-info" /></svg>
                 <p class="sin-margen" id="visorAyuda" data-i18n="vis.visor.ayuda">
                     [[visualizaciones_muevete_por_la_linea_de_tiempo]]
                 </p>
             </div>
+            --%>
 
         </div>
     </div>
@@ -452,6 +463,18 @@
                           '<span><i style="background:#E8AF52"></i>[[js:visualizaciones_concentracion_media]]</span>' +
                           '<span><i style="background:#56637C"></i>[[js:visualizaciones_menor_concentracion]]</span>',
             zonasTitulo: "[[js:visualizaciones_zonas_de_interes_y_zonas_ciegas]]",
+            dispersionTitulo: "[[js:analisismultiple_dispersion_de_mirada]]",
+            dispersionLeyenda: '<span><i style="background:#56637C"></i>[[js:visualizaciones_punto_de_mirada]]</span>' +
+                               '<span><i style="background:#F26157"></i>[[js:visualizaciones_centroide]]</span>' +
+                               '<span><i style="background:transparent;border:1px dashed #E8AF52"></i>[[js:visualizaciones_elipse_de_dispersion]]</span>',
+            recorridoTiempoReal: "[[js:vis_recorrido_tiempo_real]]",
+            recorridoTitulo: "[[js:analisismultiple_recorrido_de_mirada]]",
+            recorridoLeyenda: '<span><i style="background:#56637C"></i>[[js:default_inicio]]</span>' +
+                              '<span><i style="background:#F26157"></i>[[js:visualizaciones_final]]</span>',
+            atencionTitulo: "[[js:visualizaciones_atencion_frente_a_distraccion]]",
+            atencionActiva: "[[js:vis_fijacion_activa_n]]",
+            atencionSacadico: "[[js:vis_sacadico_n]]",
+            atencionSinDatos: "[[js:vis_atencion_sin_datos]]",
             zonasLeyenda: '<span><i style="background:rgba(232,175,82,.5);border:1px solid #E8AF52"></i>[[js:visualizaciones_zona_de_interes]]</span>' +
                           '<span><i style="background:transparent;border:1px dashed #56637C"></i>[[js:visualizaciones_zona_ciega]]</span>'
         };
@@ -459,12 +482,15 @@
 
     <%-- el orden importa: cada archivo usa lo que define el anterior --%>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/analisis.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/comun.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion.js") %>"></script>
-    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-maqueta.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-grabacion.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-tramo.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-calor.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-zonas.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-dispersion.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-atencion.js") %>"></script>
+    <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visualizacion-recorrido.js") %>"></script>
     <script src="<%: UrlVersionada("~/Scripts/visualizaciones/visor.js") %>"></script>
 
     <script>
@@ -641,47 +667,13 @@
             for (i = 0; i < sesiones.length; i++) {
                 sesiones[i].addEventListener("click", function () { elegirSesion(this); });
             }
-            var MAQUETAS = {
-                dispersion: {
-                    titulo: "[[js:analisismultiple_dispersion_de_mirada]]",
-                    lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
-                            '<ellipse cx="158" cy="88" rx="86" ry="48" fill="rgba(232,175,82,.16)" stroke="#E8AF52" stroke-width="2" stroke-dasharray="5 4" />' +
-                            '<circle class="punto-mirada" cx="120" cy="66" r="4" /><circle class="punto-mirada" cx="168" cy="58" r="4" />' +
-                            '<circle class="punto-mirada" cx="196" cy="92" r="4" /><circle class="punto-mirada" cx="142" cy="104" r="4" />' +
-                            '<circle class="punto-mirada" cx="104" cy="98" r="4" /><circle class="punto-mirada" cx="182" cy="120" r="4" />' +
-                            '<circle cx="158" cy="88" r="5" fill="#F26157" /></svg>',
-                    leyenda: '<span><i style="background:#56637C"></i>[[js:visualizaciones_punto_de_mirada]]</span>' +
-                             '<span><i style="background:#F26157"></i>[[js:visualizaciones_centroide]]</span>' +
-                             '<span><i style="background:transparent;border:1px dashed #E8AF52"></i>[[js:visualizaciones_elipse_de_dispersion]]</span>'
-                },
-                atencion: {
-                    titulo: "[[js:visualizaciones_atencion_frente_a_distraccion]]",
-                    lienzo: '<span style="display:flex;height:100%;align-items:center;justify-content:center">' +
-                            '<svg viewBox="0 0 120 120" style="height:76%">' +
-                            '<circle cx="60" cy="60" r="44" fill="none" stroke="#0E1A34" stroke-width="18" />' +
-                            '<circle cx="60" cy="60" r="44" fill="none" stroke="#E8AF52" stroke-width="18" stroke-dasharray="171 276" transform="rotate(-90 60 60)" />' +
-                            '<text x="60" y="66" text-anchor="middle" font-size="20" font-weight="700" fill="currentColor">62%</text>' +
-                            '</svg></span>',
-                    leyenda: '<span><i style="background:#E8AF52"></i>[[js:visualizaciones_fijacion_activa_62]]</span>' +
-                             '<span><i style="background:#0E1A34"></i>[[js:visualizaciones_movimiento_sacadico_38]]</span>'
-                },
-                recorrido: {
-                    titulo: "[[js:analisismultiple_recorrido_de_mirada]]",
-                    lienzo: '<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%">' +
-                            '<path class="linea-recorrido" d="M40 132 C 88 40, 132 150, 176 74 S 250 44, 284 96" />' +
-                            '<circle cx="40" cy="132" r="5" fill="#56637C" /><circle cx="176" cy="74" r="5" fill="#0E1A34" />' +
-                            '<circle cx="284" cy="96" r="5" fill="#F26157" /></svg>',
-                    leyenda: '<span><i style="background:#56637C"></i>[[js:default_inicio]]</span>' +
-                             '<span><i style="background:#F26157"></i>[[js:visualizaciones_final]]</span>'
-                }
-            };
 
             Visor.tipos.grabacion = new VisualizacionGrabacion();
             Visor.tipos.calor = new VisualizacionCalor();
             Visor.tipos.zonas = new VisualizacionZonas();
-            Visor.tipos.dispersion = new VisualizacionMaqueta(MAQUETAS.dispersion);
-            Visor.tipos.atencion = new VisualizacionMaqueta(MAQUETAS.atencion);
-            Visor.tipos.recorrido = new VisualizacionMaqueta(MAQUETAS.recorrido);
+            Visor.tipos.dispersion = new VisualizacionDispersion();
+            Visor.tipos.atencion = new VisualizacionAtencion();
+            Visor.tipos.recorrido = new VisualizacionRecorrido();
             Visor.iniciar();
 
             var botonesVisual = document.querySelectorAll("[data-visual]");

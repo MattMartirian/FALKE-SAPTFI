@@ -73,10 +73,10 @@
     <value>Métricas médias</value>
   </data>
   <data name="analisismultiple_necesitas_al_menos_dos_sesiones_del" xml:space="preserve">
-    <value>Você precisa de pelo menos duas sessões do mesmo tipo.</value>
+    <value>Você precisa de pelo menos duas sessões da mesma categoria.</value>
   </data>
   <data name="analisismultiple_promediar_sesiones_de_tipos_distintos_da" xml:space="preserve">
-    <value>Calcular a média de sessões de tipos diferentes daria um resultado estatisticamente inválido; por isso, ao escolher a primeira, as incompatíveis são desativadas. São necessárias pelo menos duas.</value>
+    <value>Calcular a média de sessões de categorias diferentes daria um resultado estatisticamente inválido; por isso, ao escolher a primeira, as de outras categorias são desativadas. São necessárias pelo menos duas.</value>
   </data>
   <data name="analisismultiple_proporcion_media_de_fijacion_activa_fren" xml:space="preserve">
     <value>Proporção média de fixação ativa em relação ao movimento sacádico.</value>
@@ -106,7 +106,7 @@
     <value>Só são listadas as sessões já processadas</value>
   </data>
   <data name="analisismultiple_todas_las_sesiones_tienen_que_ser" xml:space="preserve">
-    <value>Todas as sessões devem ser do mesmo tipo de ativo</value>
+    <value>Todas as sessões devem ser da mesma categoria</value>
   </data>
   <data name="analisismultiple_todavia_no_elegiste_ninguna_sesion" xml:space="preserve">
     <value>Você ainda não escolheu nenhuma sessão.</value>
@@ -3340,6 +3340,72 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
   <data name="analisismultiple_listo_para_combinar_0_sesiones" xml:space="preserve">
     <value>Pronto para combinar {0} sessões.</value>
   </data>
+  <data name="analisismultiple_seleccionar_todos_los_de_esta_categoria" xml:space="preserve">
+    <value>Selecionar todas desta categoria</value>
+  </data>
+  <data name="analisismultiple_categoria_activa_0" xml:space="preserve">
+    <value>Categoria: {0}.</value>
+  </data>
+  <data name="analisismultiple_sin_datos" xml:space="preserve">
+    <value>Sem dados</value>
+  </data>
+  <data name="analisismultiple_muestra_pequena" xml:space="preserve">
+    <value>Amostra pequena para esta métrica</value>
+  </data>
+  <data name="analisismultiple_mediana_n" xml:space="preserve">
+    <value>Mediana: {0}</value>
+  </data>
+  <data name="analisismultiple_calidad_titulo" xml:space="preserve">
+    <value>Qualidade da amostra</value>
+  </data>
+  <data name="analisismultiple_calidad_usadas" xml:space="preserve">
+    <value>Sessões com dados de olhar</value>
+  </data>
+  <data name="analisismultiple_calidad_excluidas" xml:space="preserve">
+    <value>Sem dados de olhar (excluídas)</value>
+  </data>
+  <data name="analisismultiple_calidad_variacion" xml:space="preserve">
+    <value>Variação das durações</value>
+  </data>
+  <data name="analisismultiple_calidad_aviso" xml:space="preserve">
+    <value>A média pode não ser representativa.</value>
+  </data>
+  <data name="analisismultiple_calidad_pocas" xml:space="preserve">
+    <value>Há poucas sessões (menos de {0}).</value>
+  </data>
+  <data name="analisismultiple_calidad_duraciones" xml:space="preserve">
+    <value>As durações das sessões são muito diferentes entre si.</value>
+  </data>
+  <data name="analisismultiple_por_grupo_titulo" xml:space="preserve">
+    <value>Métricas por grupo do tester</value>
+  </data>
+  <data name="analisismultiple_error_cargar_n" xml:space="preserve">
+    <value>Não foi possível carregar os dados de olhar de {0} sessão(ões).</value>
+  </data>
+  <data name="analisismultiple_calculando" xml:space="preserve">
+    <value>Calculando…</value>
+  </data>
+  <data name="analisismultiple_nota_cuadricula" xml:space="preserve">
+    <value>A grade marca cada 25 % da tela (não é uma captura real). Cada sessão pesa o mesmo e o momento do vídeo não é considerado.</value>
+  </data>
+  <data name="analisismultiple_centro_de_cada_sesion" xml:space="preserve">
+    <value>Centro de cada sessão</value>
+  </data>
+  <data name="analisismultiple_filtro_titulo" xml:space="preserve">
+    <value>Filtros da amostra</value>
+  </data>
+  <data name="analisismultiple_filtro_ayuda" xml:space="preserve">
+    <value>Tudo começa selecionado. Desmarque o que não quiser incluir e toque em "Regenerar dados".</value>
+  </data>
+  <data name="analisismultiple_filtro_resumen_n" xml:space="preserve">
+    <value>{0} de {1} sessões correspondem ao filtro.</value>
+  </data>
+  <data name="analisismultiple_filtro_vacio" xml:space="preserve">
+    <value>Nenhuma sessão corresponde ao filtro.</value>
+  </data>
+  <data name="analisismultiple_filtro_regenerar" xml:space="preserve">
+    <value>Regenerar dados</value>
+  </data>
   <data name="categorias_registrar_categoria" xml:space="preserve">
     <value>Cadastrar categoria</value>
   </data>
@@ -4489,7 +4555,19 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
   <data name="vis_calor_tiempo_real" xml:space="preserve">
     <value>Ver mapa de calor em tempo real</value>
   </data>
+  <data name="vis_mirada_tiempo_real" xml:space="preserve">
+    <value>Mostrar olhar em tempo real</value>
+  </data>
+  <data name="vis_recorrido_tiempo_real" xml:space="preserve">
+    <value>Ver percurso em tempo real</value>
+  </data>
   <data name="vis_calor_sin_datos" xml:space="preserve">
     <value>Não há dados de olhar no trecho escolhido.</value>
+  </data>
+  <data name="vis_atencion_sin_datos" xml:space="preserve">
+    <value>Sem dados de olhar</value>
+  </data>
+  <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
+    <value>Percurso de cada sessão sobreposto: onde mais linhas se encontram, o olhar passou mais vezes.</value>
   </data>
 </root>
