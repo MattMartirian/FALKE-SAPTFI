@@ -490,7 +490,7 @@
                     </div>
                     <div class="aviso aviso-alerta" id="avisoInvEmpresa" hidden>
                         <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
-                        <p class="sin-margen"><strong>[[usuarios_cuidado]]</strong> [[usuarios_estas_creando_un_usuario_en_la]] <strong id="invEmpresaNombre"></strong>[[usuarios_que_no_es_la_tuya]]</p>
+                        <p class="sin-margen"><strong>[[usuarios_cuidado]]</strong> [[usuarios_estas_creando_un_usuario_en_la]] <strong id="invEmpresaNombre" style="display:inline"></strong>[[usuarios_que_no_es_la_tuya]]</p>
                     </div>
                 </asp:PlaceHolder>
                 <div class="aviso aviso-info mb-0">

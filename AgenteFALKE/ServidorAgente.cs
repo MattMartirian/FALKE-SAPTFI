@@ -82,6 +82,9 @@ namespace AgenteMirada
                         Process.Start(new ProcessStartInfo(ENLACE_TOBII) { UseShellExecute = true });
                         Responder(respuesta, "{}");
                         break;
+                    case "/mirada":
+                        Responder(respuesta, grabador.UltimaMuestraJson());
+                        break;
                     case "/archivo":
                         EntregarArchivo(respuesta);
                         break;

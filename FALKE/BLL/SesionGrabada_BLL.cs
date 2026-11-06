@@ -19,6 +19,7 @@ namespace BLL
 
         private readonly SesionGrabadaRepository sesionRepo;
         private readonly CategoriaRepository categoriaRepo;
+        private readonly DispositivoRepository dispositivoRepo;
         private readonly GestorIntegridad_SERVICE gestorIntegridad;
         private readonly BitacoraGestor_TLL bitacora;
 
@@ -26,6 +27,7 @@ namespace BLL
         {
             sesionRepo = new SesionGrabadaRepository();
             categoriaRepo = new CategoriaRepository();
+            dispositivoRepo = new DispositivoRepository();
             gestorIntegridad = new GestorIntegridad_SERVICE();
             bitacora = new BitacoraGestor_TLL();
         }
@@ -60,6 +62,22 @@ namespace BLL
             return sesion;
         }
 
+        public List<Dispositivo_BE> DispositivosParaGrabar(ActorUsuario_TE actor)
+        {
+            actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
+
+            if (actor.IdEmpresa <= 0) throw new ExcepcionNoAutorizada_TLL("comun_sesion_sin_empresa");
+
+            var lista = new List<Dispositivo_BE>();
+
+            foreach (Dispositivo_BE d in dispositivoRepo.ObtenerDeEmpresa(actor.IdEmpresa))
+            {
+                if (d.Estado != EstadoDispositivo.DeBaja && d.Estado != EstadoDispositivo.EnMantenimiento) lista.Add(d);
+            }
+
+            return lista;
+        }
+
         public static string NombreVideo(int idSesion) { return idSesion + ".webm"; }
         public static string NombreMirada(int idSesion) { return idSesion + ".json"; }
 
@@ -81,6 +99,10 @@ namespace BLL
             if (categoria == null) throw new ExcepcionTraducible_TLL("categoria_no_existe");
             if (!actor.EsEmergencia && categoria.IdEmpresa != actor.IdEmpresa) throw new ExcepcionNoAutorizada_TLL("categoria_otra_empresa");
             if (!categoria.Activa) throw new ExcepcionTraducible_TLL("sesion_categoria_inactiva");
+
+            // el dispositivo tiene que estar asignado a la empresa de la categoria
+            bool dispositivoDeLaEmpresa = dispositivoRepo.ObtenerDeEmpresa(categoria.IdEmpresa).Exists(d => d.IdDispositivo == sesion.IdDispositivo);
+            if (!dispositivoDeLaEmpresa) throw new ExcepcionTraducible_TLL("sesion_dispositivo_invalido");
 
             sesion.Nombre = (sesion.Nombre ?? string.Empty).Trim();
             sesion.Objetivo = (sesion.Objetivo ?? string.Empty).Trim();

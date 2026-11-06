@@ -724,13 +724,13 @@
     <value>Repetir la contraseña nueva</value>
   </data>
   <data name="definirclave_si_el_enlace_vencio_pedi_uno" xml:space="preserve">
-    <value>Si el enlace venció, pedí uno nuevo desde «Recuperar mi contraseña».</value>
+    <value>Si el enlace venció, pedí uno nuevo desde "Recuperar mi contraseña".</value>
   </data>
   <data name="definirclave_usado" xml:space="preserve">
     <value>Este enlace ya fue utilizado. Si necesitás cambiar la contraseña, pedí uno nuevo.</value>
   </data>
   <data name="definirclave_vencido" xml:space="preserve">
-    <value>El enlace venció. Pedí uno nuevo desde «Recuperar mi contraseña».</value>
+    <value>El enlace venció. Pedí uno nuevo desde "Recuperar mi contraseña".</value>
   </data>
   <data name="disp_actualizado" xml:space="preserve">
     <value>Los datos del dispositivo se actualizaron.</value>
@@ -790,7 +790,7 @@
     <value>El dispositivo terminó el mantenimiento y está disponible.</value>
   </data>
   <data name="disp_modelo_agregado" xml:space="preserve">
-    <value>Se agregó el modelo «{0}».</value>
+    <value>Se agregó el modelo "{0}".</value>
   </data>
   <data name="disp_modelo_baja_ok" xml:space="preserve">
     <value>El modelo se dio de baja: ya no se ofrece para dispositivos nuevos.</value>
@@ -823,7 +823,7 @@
     <value>El dispositivo pasó a mantenimiento.</value>
   </data>
   <data name="disp_prestado_ok" xml:space="preserve">
-    <value>El dispositivo se prestó a «{0}».</value>
+    <value>El dispositivo se prestó a "{0}".</value>
   </data>
   <data name="disp_prestado_registrar_devolucion" xml:space="preserve">
     <value>El dispositivo está en préstamo: registrá primero la devolución.</value>
@@ -1078,7 +1078,7 @@
     <value>Se creó la empresa "{0}" en Falke y sos su administrador.</value>
   </data>
   <data name="empresa_nueva_ok" xml:space="preserve">
-    <value>Se registró la empresa «{0}» y su administrador {1} (pendiente de activación).</value>
+    <value>Se registró la empresa "{0}" y su administrador {1} (pendiente de activación).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
     <value> No se pudo enviar el correo de activación: desde Usuarios se puede reenviar la invitación.</value>
@@ -1300,7 +1300,7 @@
     <value>Filtrar por estado</value>
   </data>
   <data name="empresas_lo_que_cambies_lo_ve_la" xml:space="preserve">
-    <value>Lo que cambies lo ve la empresa en «Mi empresa». Cambiar el CUIT, el plan o la facturación afecta la facturación. Queda en la bitácora y la empresa lo ve como hecho por el equipo de Pattern Blue.</value>
+    <value>Lo que cambies lo ve la empresa en "Mi empresa". Cambiar el CUIT, el plan o la facturación afecta la facturación. Queda en la bitácora y la empresa lo ve como hecho por el equipo de Pattern Blue.</value>
   </data>
   <data name="empresas_no_hay_empresas_que_coincidan" xml:space="preserve">
     <value>No hay empresas que coincidan.</value>
@@ -1540,7 +1540,7 @@
     <value>La cuenta fue dada de baja. Si crees que es un error, comunícate con el administrador de tu empresa.</value>
   </data>
   <data name="ingresar_cuenta_bloqueada" xml:space="preserve">
-    <value>La cuenta está bloqueada por contraseñas incorrectas. Usa «Olvidé mi contraseña» para recuperar el acceso.</value>
+    <value>La cuenta está bloqueada por contraseñas incorrectas. Usa "Olvidé mi contraseña" para recuperar el acceso.</value>
   </data>
   <data name="ingresar_cuenta_pendiente" xml:space="preserve">
     <value>La cuenta todavía no fue activada. Revisa el correo con el enlace de activación.</value>
@@ -2538,7 +2538,7 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
     <value>Lo que se cargó después de la copia se pierde.</value>
   </data>
   <data name="respaldos_los_digitos_verificadores_vuelven_al_est" xml:space="preserve">
-    <value>Los dígitos verificadores vuelven al estado de la copia: revisalos en «Dígito verificador».</value>
+    <value>Los dígitos verificadores vuelven al estado de la copia: revisalos en "Dígito verificador".</value>
   </data>
   <data name="respaldos_los_usuarios_conectados_quedan_sin_servi" xml:space="preserve">
     <value>Los usuarios conectados quedan sin servicio unos segundos y se cierran todas las sesiones, incluida la tuya.</value>
@@ -2589,7 +2589,7 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
     <value>Grupo</value>
   </data>
   <data name="roles_creado" xml:space="preserve">
-    <value>{0} «{1}» creado. Ahora marcá qué incluye.</value>
+    <value>{0} "{1}" creado. Ahora marcá qué incluye.</value>
   </data>
   <data name="roles_de_gestion_solo_para_usuarios_de" xml:space="preserve">
     <value>De gestión: solo para usuarios de Pattern Blue</value>
@@ -2598,7 +2598,7 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
     <value>Elegí un rol, un grupo o un permiso de la lista.</value>
   </data>
   <data name="roles_eliminado" xml:space="preserve">
-    <value>«{0}» se eliminó.</value>
+    <value>"{0}" se eliminó.</value>
   </data>
   <data name="roles_eliminar" xml:space="preserve">
     <value>Eliminar</value>
@@ -2796,7 +2796,7 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
     <value>El nombre y el apellido son obligatorios.</value>
   </data>
   <data name="usuario_propios_datos_en_perfil" xml:space="preserve">
-    <value>Tus propios datos se cambian desde «Mi perfil».</value>
+    <value>Tus propios datos se cambian desde "Mi perfil".</value>
   </data>
   <data name="usuario_reenvio_solo_pendiente" xml:space="preserve">
     <value>La invitación solo se reenvía a una cuenta que sigue pendiente de activación.</value>
@@ -2883,13 +2883,13 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
     <value>Gestionar usuario</value>
   </data>
   <data name="usuarios_inactivo_dada_de_baja_no_puede" xml:space="preserve">
-    <value>Inactivo: dada de baja, no puede entrar ni recuperar la contraseña. Bloqueo estricto: no puede entrar ni pedir el cambio de contraseña. «Bloqueado» (por contraseña incorrecta) lo pone el sistema: la persona se desbloquea recuperando su contraseña.</value>
+    <value>Inactivo: dada de baja, no puede entrar ni recuperar la contraseña. Bloqueo estricto: no puede entrar ni pedir el cambio de contraseña. "Bloqueado" (por contraseña incorrecta) lo pone el sistema: la persona se desbloquea recuperando su contraseña.</value>
   </data>
   <data name="usuarios_invitacion_enviada" xml:space="preserve">
     <value>Invitación enviada</value>
   </data>
   <data name="usuarios_invitacion_ok" xml:space="preserve">
-    <value>Se creó la cuenta de {0} en estado «Pendiente de activación». El enlace de activación quedó en App_Data/mails/.</value>
+    <value>Se creó la cuenta de {0} en estado "Pendiente de activación". El enlace de activación quedó en App_Data/mails/.</value>
   </data>
   <data name="usuarios_invitacion_reenviada" xml:space="preserve">
     <value>Te enviamos de nuevo la invitación a tu cuenta de Falke.</value>
@@ -2904,7 +2904,7 @@ Si no fuiste vos, ignorá este mensaje: tu contraseña actual sigue siendo váli
     <value>Invitar usuario</value>
   </data>
   <data name="usuarios_la_cuenta_queda_en_estado_pendiente" xml:space="preserve">
-    <value>La cuenta queda en estado «Pendiente de activación» hasta que la persona entre al enlace y defina su contraseña.</value>
+    <value>La cuenta queda en estado "Pendiente de activación" hasta que la persona entre al enlace y defina su contraseña.</value>
   </data>
   <data name="usuarios_la_invitacion_ya_se_envio" xml:space="preserve">
     <value>La invitación ya se envió</value>
@@ -4127,13 +4127,13 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Configuración de pantalla</value>
   </data>
   <data name="grabacion_prep_cal_pantalla_detalle" xml:space="preserve">
-    <value>Útil si moviste el sensor o cambiaste de monitor. En Tobii Experience toca «Configurar pantalla».</value>
+    <value>Útil si moviste el sensor o cambiaste de monitor. En Tobii Experience toca "Configurar pantalla".</value>
   </data>
   <data name="grabacion_prep_cal_vista" xml:space="preserve">
     <value>Calibración de la vista</value>
   </data>
   <data name="grabacion_prep_cal_vista_detalle" xml:space="preserve">
-    <value>Conviene hacerlo antes de cada análisis. En Tobii Experience toca «Mejorar calibración».</value>
+    <value>Conviene hacerlo antes de cada análisis. En Tobii Experience toca "Mejorar calibración".</value>
   </data>
   <data name="grabacion_prep_ya_lo_hice" xml:space="preserve">
     <value>Ya lo hice</value>
@@ -4280,13 +4280,13 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Elige qué pantalla vas a grabar.</value>
   </data>
   <data name="grabacion_rec_guia_listo" xml:space="preserve">
-    <value>Elige cuándo empezar y presiona «Iniciar la grabación».</value>
+    <value>Elige cuándo empezar y presiona "Iniciar la grabación".</value>
   </data>
   <data name="grabacion_rec_guia_cuenta" xml:space="preserve">
     <value>Prepárate: cambia a lo que vas a probar. La grabación empieza sola.</value>
   </data>
   <data name="grabacion_rec_guia_grabando" xml:space="preserve">
-    <value>Trabaja con normalidad. Cuando termines, presiona «Finalizar».</value>
+    <value>Trabaja con normalidad. Cuando termines, presiona "Finalizar".</value>
   </data>
   <data name="grabacion_rec_cambiar" xml:space="preserve">
     <value>Cambiar pantalla</value>
@@ -4346,7 +4346,7 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Guardando la grabación en el servidor… No cierres esta página.</value>
   </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
-    <value>La sesión «{0}» ya está guardada en tu cuenta.</value>
+    <value>La sesión "{0}" ya está guardada en tu cuenta.</value>
   </data>
   <data name="grabacion_ok_ver" xml:space="preserve">
     <value>Ver análisis</value>
@@ -4355,7 +4355,7 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
     <value>Grabar otra parte</value>
   </data>
   <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
-    <value>Sigue con otra parte de la misma prueba. Se mantienen la categoría y los datos del tester, y se llamará «{0}».</value>
+    <value>Sigue con otra parte de la misma prueba. Se mantienen la categoría y los datos del tester, y se llamará "{0}".</value>
   </data>
   <data name="grabacion_responsable_tu" xml:space="preserve">
     <value>Responsable (tú)</value>
@@ -4446,5 +4446,65 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   </data>
   <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
     <value>Recorrido de cada sesión superpuesto: donde se juntan más líneas, más pasó la mirada.</value>
+  </data>
+  <data name="grabacion_dispositivo" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
+  <data name="grabacion_dispositivo_sin" xml:space="preserve">
+    <value>Sin dispositivos</value>
+  </data>
+  <data name="sesion_dispositivo_invalido" xml:space="preserve">
+    <value>El dispositivo elegido no está asignado a tu empresa.</value>
+  </data>
+  <data name="mistobiis_mis_tobiis" xml:space="preserve">
+    <value>Mis Tobiis</value>
+  </data>
+  <data name="mistobiis_bajada" xml:space="preserve">
+    <value>Los eye trackers de tu empresa y las herramientas para dejarlos listos antes de grabar.</value>
+  </data>
+  <data name="mistobiis_tobiis_de_tu_empresa" xml:space="preserve">
+    <value>Tobiis de tu empresa</value>
+  </data>
+  <data name="mistobiis_herramientas" xml:space="preserve">
+    <value>Herramientas</value>
+  </data>
+  <data name="mistobiis_abrir_tobii_experience" xml:space="preserve">
+    <value>Abrir Tobii Experience</value>
+  </data>
+  <data name="mistobiis_recalibrar_tobii" xml:space="preserve">
+    <value>Recalibrar Tobii</value>
+  </data>
+  <data name="mistobiis_calibrar_pantalla" xml:space="preserve">
+    <value>Calibrar pantalla</value>
+  </data>
+  <data name="mistobiis_previsualizar_mirada" xml:space="preserve">
+    <value>Previsualizar mirada</value>
+  </data>
+  <data name="mistobiis_dejar_de_previsualizar" xml:space="preserve">
+    <value>Dejar de previsualizar</value>
+  </data>
+  <data name="mistobiis_agente_conectado" xml:space="preserve">
+    <value>Agente de Falke conectado</value>
+  </data>
+  <data name="mistobiis_agente_no_responde" xml:space="preserve">
+    <value>No se encontró el agente de Falke. Revisá que esté instalado y en ejecución (sección Instalación).</value>
+  </data>
+  <data name="mistobiis_tobii_conectado" xml:space="preserve">
+    <value>Tobii conectado</value>
+  </data>
+  <data name="mistobiis_tobii_sin_conectar" xml:space="preserve">
+    <value>Tobii sin conectar</value>
+  </data>
+  <data name="mistobiis_guia_recalibrar" xml:space="preserve">
+    <value>Se abrió Tobii Experience. Tocá la rueda de ajustes (arriba a la izquierda) y después "Mejorar mi calibración".</value>
+  </data>
+  <data name="mistobiis_guia_pantalla" xml:space="preserve">
+    <value>Se abrió Tobii Experience. Tocá la rueda de ajustes (arriba a la izquierda), buscá "Cambiar pantalla" y tocá "Configurar pantalla".</value>
+  </data>
+  <data name="mistobiis_guia_previa" xml:space="preserve">
+    <value>Se abrió Tobii Experience. Activá "Preview my gaze" para ver la estela de tu mirada ahí. En esta página también se ve un punto con estela (mejor con el navegador en pantalla completa, F11). Terminá con el botón o con Esc.</value>
+  </data>
+  <data name="mistobiis_guia_dejar_previa" xml:space="preserve">
+    <value>Para dejar de previsualizar, desactivá también "Preview my gaze" en Tobii Experience.</value>
   </data>
 </root>

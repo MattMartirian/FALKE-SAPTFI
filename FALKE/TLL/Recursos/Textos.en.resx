@@ -4447,4 +4447,64 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
     <value>Path of every session overlaid: where more lines meet, the gaze passed more often.</value>
   </data>
+  <data name="grabacion_dispositivo" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="grabacion_dispositivo_sin" xml:space="preserve">
+    <value>No devices</value>
+  </data>
+  <data name="sesion_dispositivo_invalido" xml:space="preserve">
+    <value>The chosen device is not assigned to your company.</value>
+  </data>
+  <data name="mistobiis_mis_tobiis" xml:space="preserve">
+    <value>My Tobiis</value>
+  </data>
+  <data name="mistobiis_bajada" xml:space="preserve">
+    <value>Your company’s eye trackers and the tools to get them ready before recording.</value>
+  </data>
+  <data name="mistobiis_tobiis_de_tu_empresa" xml:space="preserve">
+    <value>Your company’s Tobiis</value>
+  </data>
+  <data name="mistobiis_herramientas" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="mistobiis_abrir_tobii_experience" xml:space="preserve">
+    <value>Open Tobii Experience</value>
+  </data>
+  <data name="mistobiis_recalibrar_tobii" xml:space="preserve">
+    <value>Recalibrate Tobii</value>
+  </data>
+  <data name="mistobiis_calibrar_pantalla" xml:space="preserve">
+    <value>Set up screen</value>
+  </data>
+  <data name="mistobiis_previsualizar_mirada" xml:space="preserve">
+    <value>Preview gaze</value>
+  </data>
+  <data name="mistobiis_dejar_de_previsualizar" xml:space="preserve">
+    <value>Stop previewing</value>
+  </data>
+  <data name="mistobiis_agente_conectado" xml:space="preserve">
+    <value>Falke agent connected</value>
+  </data>
+  <data name="mistobiis_agente_no_responde" xml:space="preserve">
+    <value>The Falke agent was not found. Check that it is installed and running (Installation section).</value>
+  </data>
+  <data name="mistobiis_tobii_conectado" xml:space="preserve">
+    <value>Tobii connected</value>
+  </data>
+  <data name="mistobiis_tobii_sin_conectar" xml:space="preserve">
+    <value>Tobii not connected</value>
+  </data>
+  <data name="mistobiis_guia_recalibrar" xml:space="preserve">
+    <value>Tobii Experience was opened. Click the settings wheel (top left) and then "Improve my calibration".</value>
+  </data>
+  <data name="mistobiis_guia_pantalla" xml:space="preserve">
+    <value>Tobii Experience was opened. Click the settings wheel (top left), find "Change screen" and click "Set up screen".</value>
+  </data>
+  <data name="mistobiis_guia_previa" xml:space="preserve">
+    <value>Tobii Experience was opened. Turn on "Preview my gaze" to see the trail of your gaze there. This page also shows a dot with a trail (better with the browser in full screen, F11). Stop with the button or Esc.</value>
+  </data>
+  <data name="mistobiis_guia_dejar_previa" xml:space="preserve">
+    <value>To stop previewing, also turn off "Preview my gaze" in Tobii Experience.</value>
+  </data>
 </root>

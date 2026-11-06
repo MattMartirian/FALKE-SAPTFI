@@ -97,6 +97,10 @@
                             <svg aria-hidden="true"><use href="#i-comparar" /></svg>
                             <span class="sidebar-texto" data-i18n="menu.analisisMultiple">[[analisismultiple_analisis_multiple]]</span>
                         </a>
+                        <a id="navMisTobiis" runat="server" class="sidebar-item" href="~/MisTobiis.aspx">
+                            <svg aria-hidden="true"><use href="#i-dispositivo" /></svg>
+                            <span class="sidebar-texto" data-i18n="menu.misTobiis">[[mistobiis_mis_tobiis]]</span>
+                        </a>
                     </div>
 
                     <div id="grupoOrganizacion" runat="server" class="sidebar-grupo">

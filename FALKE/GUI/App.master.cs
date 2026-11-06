@@ -61,6 +61,7 @@ namespace GUI
             navCategorias.Visible = operaAnalisis;
             navDescargas.Visible = operaAnalisis;
             navAnalisisMultiple.Visible = operaAnalisis;
+            navMisTobiis.Visible = operaAnalisis;
 
             navUsuarios.Visible = Puede(Patentes_TLL.VER_USUARIOS);
             // Quien ve todas las empresas ya tiene su pantalla de Empresas: "Mi empresa" es para el administrador de un cliente.
@@ -95,6 +96,7 @@ namespace GUI
             Marcar(navCategorias, archivo, "Categorias.aspx");
             Marcar(navDescargas, archivo, "Descargas.aspx");
             Marcar(navAnalisisMultiple, archivo, "AnalisisMultiple.aspx");
+            Marcar(navMisTobiis, archivo, "MisTobiis.aspx");
             Marcar(navUsuarios, archivo, "Usuarios.aspx");
             Marcar(navMiEmpresa, archivo, "MiEmpresa.aspx");
             Marcar(navEmpresas, archivo, "Empresas.aspx");

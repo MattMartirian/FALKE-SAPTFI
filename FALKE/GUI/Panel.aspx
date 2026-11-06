@@ -328,14 +328,14 @@
                     <li>
                         <svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg>
                         <span>
-                            <span data-i18n="panel.actividad1">Terminó el procesamiento de «Checkout — App e-commerce»</span>
+                            <span data-i18n="panel.actividad1">Terminó el procesamiento de "Checkout — App e-commerce"</span>
                             <span class="cuando">Hace 2 horas</span>
                         </span>
                     </li>
                     <li>
                         <svg width="17" height="17" aria-hidden="true"><use href="#i-carpeta" /></svg>
                         <span>
-                            <span data-i18n="panel.actividad2">Se registró la categoría «Checkout flow v2»</span>
+                            <span data-i18n="panel.actividad2">Se registró la categoría "Checkout flow v2"</span>
                             <span class="cuando">Hace 5 horas</span>
                         </span>
                     </li>

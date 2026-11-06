@@ -19,6 +19,7 @@ namespace AgenteMirada
         private long inicioUtc;
         private long proximoUtc;
         private int muestras;
+        private MuestraMirada ultima;
 
         public Grabador(string ruta)
         {
@@ -37,6 +38,18 @@ namespace AgenteMirada
         public bool Grabando
         {
             get { lock (candado) { return grabando; } }
+        }
+
+        // la ultima mirada recibida (para la previsualizacion): si pasó mas de 1 segundo sin muestras, cuenta como invalida
+        public string UltimaMuestraJson()
+        {
+            lock (candado)
+            {
+                bool reciente = ultima.UtcMs > 0 && DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - ultima.UtcMs < 1000;
+                bool ok = reciente && ultima.Valida;
+
+                return string.Format(CultureInfo.InvariantCulture, "{{\"x\":{0:0.0000},\"y\":{1:0.0000},\"ok\":{2}}}", ultima.X, ultima.Y, ok ? "true" : "false");
+            }
         }
 
         public long Iniciar()
@@ -59,6 +72,8 @@ namespace AgenteMirada
         {
             lock (candado)
             {
+                ultima = m;
+
                 if (!grabando || m.UtcMs < proximoUtc) return;
 
                 proximoUtc = Math.Max(proximoUtc + INTERVALO_MUESTREO_MS, m.UtcMs + 1);

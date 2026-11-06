@@ -733,18 +733,31 @@
             [[nuevagrabacion_la_categoria_define_el_tipo_de]]
         </p>
 
-        <div class="campo">
-            <label for="grCategoria" data-i18n="grabacion.categoria">[[categorias_categoria]]</label>
+        <div class="fila-campos">
+            <div class="campo">
+                <label for="grCategoria" data-i18n="grabacion.categoria">[[categorias_categoria]]</label>
 
-            <select class="entrada" id="grCategoria" data-perfil="">
-                <asp:Repeater ID="rptCategorias" runat="server">
-                    <ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate>
-                </asp:Repeater>
-            </select>
-            <p class="ayuda">
-                <span data-i18n="grabacion.categoria.ayuda">[[nuevagrabacion_no_encuentras_la_que_necesitas]]</span>
-                <a href='<%: ResolveUrl("~/Categorias.aspx") %>' data-i18n="grabacion.categoria.crear">[[nuevagrabacion_crear_una_categoria_nueva]]</a>
-            </p>
+                <select class="entrada" id="grCategoria" data-perfil="">
+                    <asp:Repeater ID="rptCategorias" runat="server">
+                        <ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate>
+                    </asp:Repeater>
+                </select>
+                <p class="ayuda">
+                    <span data-i18n="grabacion.categoria.ayuda">[[nuevagrabacion_no_encuentras_la_que_necesitas]]</span>
+                    <a href='<%: ResolveUrl("~/Categorias.aspx") %>' data-i18n="grabacion.categoria.crear">[[nuevagrabacion_crear_una_categoria_nueva]]</a>
+                </p>
+            </div>
+
+            <div class="campo">
+                <label for="grDispositivo">[[grabacion_dispositivo]]</label>
+
+                <select class="entrada" id="grDispositivo" data-perfil="" <%= SinDispositivos ? "disabled" : "" %>>
+                    <% if (SinDispositivos) { %><option value="">[[grabacion_dispositivo_sin]]</option><% } else { %><option value="">[[grabacion_tester_seleccionar]]</option><% } %>
+                    <asp:Repeater ID="rptDispositivos" runat="server">
+                        <ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate>
+                    </asp:Repeater>
+                </select>
+            </div>
         </div>
 
         <div class="fila-campos">
@@ -1426,7 +1439,9 @@
 
                     inicioMirada = datos.inicio_utc;
                     trozos = [];
-                    grabador = new MediaRecorder(flujo, { mimeType: formato, videoBitsPerSecond: bitrate });
+                    // videoKeyFrameIntervalDuration: un cuadro completo cada 400 ms. Sin esto Chrome casi no los pone y,
+                    // al adelantar un video pesado, el visor tiene que decodificar desde el principio y queda congelado
+                    grabador = new MediaRecorder(flujo, { mimeType: formato, videoBitsPerSecond: bitrate, videoKeyFrameIntervalDuration: 400 });
                     grabador.ondataavailable = function (evento) {
                         if (evento.data.size > 0) trozos.push(evento.data);
                     };
@@ -1596,6 +1611,7 @@
             function subir(video, mirada) {
                 var datos = {
                     idCategoria: parseInt(document.getElementById("grCategoria").value, 10),
+                    idDispositivo: parseInt(document.getElementById("grDispositivo").value, 10),
                     nombre: document.getElementById("grNombre").value,
                     objetivo: document.getElementById("grObjetivo").value,
                     edad: document.getElementById("grEdad").value,

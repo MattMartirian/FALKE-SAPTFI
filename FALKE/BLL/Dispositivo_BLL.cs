@@ -80,7 +80,7 @@ namespace BLL
             actor.Exigir(Patentes_TLL.ASIGNAR_DISPOSITIVO);
 
             return empresaRepo.ObtenerResumen()
-                .Where(e => e.Estado == EstadoEmpresa.Activa && e.IdEmpresa != BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA)
+                .Where(e => e.Estado == EstadoEmpresa.Activa)
                 .OrderBy(e => e.NombreEmpresa)
                 .ToList();
         }
@@ -165,8 +165,6 @@ namespace BLL
 
             if (dispositivo.Estado != EstadoDispositivo.Disponible)
                 throw new ExcepcionTraducible_TLL("disp_solo_prestar_disponible", new ClaveTexto_TLL(ClaveEstado(dispositivo.Estado), true));
-
-            if (idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) throw new ExcepcionTraducible_TLL("disp_prestar_a_pattern_blue");
 
             Empresa_BE empresa = empresaRepo.ObtenerPorPK(idEmpresa);
             if (empresa == null) throw new ExcepcionTraducible_TLL("disp_empresa_no_existe");

@@ -247,7 +247,7 @@
     <value>Das Audit-Protokoll konnte nicht geladen werden.</value>
   </data>
   <data name="bitacora_fecha_invalida" xml:space="preserve">
-    <value>Das Datum „Von“ darf nicht nach dem Datum „Bis“ liegen.</value>
+    <value>Das Datum "Von" darf nicht nach dem Datum "Bis" liegen.</value>
   </data>
   <data name="bitacora_fecha_y_hora" xml:space="preserve">
     <value>Datum und Uhrzeit</value>
@@ -301,7 +301,7 @@
     <value>Die Daten der Kategorie wurden aktualisiert.</value>
   </data>
   <data name="categoria_campo_largo" xml:space="preserve">
-    <value>Das Feld „{0}“ darf höchstens {1} Zeichen lang sein.</value>
+    <value>Das Feld "{0}" darf höchstens {1} Zeichen lang sein.</value>
   </data>
   <data name="categoria_duplicada" xml:space="preserve">
     <value>In Ihrem Unternehmen existiert bereits eine Kategorie mit diesem Namen.</value>
@@ -724,13 +724,13 @@
     <value>Neues Passwort wiederholen</value>
   </data>
   <data name="definirclave_si_el_enlace_vencio_pedi_uno" xml:space="preserve">
-    <value>Wenn der Link abgelaufen ist, fordern Sie über „Mein Passwort wiederherstellen“ einen neuen an.</value>
+    <value>Wenn der Link abgelaufen ist, fordern Sie über "Mein Passwort wiederherstellen" einen neuen an.</value>
   </data>
   <data name="definirclave_usado" xml:space="preserve">
     <value>Dieser Link wurde bereits verwendet. Wenn Sie das Passwort ändern müssen, fordern Sie einen neuen an.</value>
   </data>
   <data name="definirclave_vencido" xml:space="preserve">
-    <value>Der Link ist abgelaufen. Fordern Sie über „Mein Passwort wiederherstellen“ einen neuen an.</value>
+    <value>Der Link ist abgelaufen. Fordern Sie über "Mein Passwort wiederherstellen" einen neuen an.</value>
   </data>
   <data name="disp_actualizado" xml:space="preserve">
     <value>Die Gerätedaten wurden aktualisiert.</value>
@@ -790,13 +790,13 @@
     <value>Das Gerät hat die Wartung abgeschlossen und ist verfügbar.</value>
   </data>
   <data name="disp_modelo_agregado" xml:space="preserve">
-    <value>Das Modell „{0}“ wurde hinzugefügt.</value>
+    <value>Das Modell "{0}" wurde hinzugefügt.</value>
   </data>
   <data name="disp_modelo_baja_ok" xml:space="preserve">
     <value>Das Modell wurde ausgemustert: Es wird für neue Geräte nicht mehr angeboten.</value>
   </data>
   <data name="disp_modelo_de_baja" xml:space="preserve">
-    <value>Das Modell „{0}“ wurde ausgemustert: Wählen Sie ein anderes.</value>
+    <value>Das Modell "{0}" wurde ausgemustert: Wählen Sie ein anderes.</value>
   </data>
   <data name="disp_modelo_de_baja_sufijo" xml:space="preserve">
     <value>{0} (ausgemustert)</value>
@@ -823,7 +823,7 @@
     <value>Das Gerät ging in die Wartung.</value>
   </data>
   <data name="disp_prestado_ok" xml:space="preserve">
-    <value>Das Gerät wurde an „{0}“ verliehen.</value>
+    <value>Das Gerät wurde an "{0}" verliehen.</value>
   </data>
   <data name="disp_prestado_registrar_devolucion" xml:space="preserve">
     <value>Das Gerät ist verliehen: Erfassen Sie zuerst die Rückgabe.</value>
@@ -868,10 +868,10 @@
     <value>Nur ein verfügbares Gerät kann verliehen werden (dieses ist {0}).</value>
   </data>
   <data name="disp_tope_plan_uno" xml:space="preserve">
-    <value>Der Tarif {0} von „{1}“ enthält {2} Gerät und es sind bereits {3} verliehen.</value>
+    <value>Der Tarif {0} von "{1}" enthält {2} Gerät und es sind bereits {3} verliehen.</value>
   </data>
   <data name="disp_tope_plan_varios" xml:space="preserve">
-    <value>Der Tarif {0} von „{1}“ enthält {2} Geräte und es sind bereits {3} verliehen.</value>
+    <value>Der Tarif {0} von "{1}" enthält {2} Geräte und es sind bereits {3} verliehen.</value>
   </data>
   <data name="disp_ya_de_baja" xml:space="preserve">
     <value>Das Gerät wurde ausgemustert.</value>
@@ -1075,10 +1075,10 @@
     <value>Das Unternehmen konnte nicht angelegt werden. Bitte versuchen Sie es erneut.</value>
   </data>
   <data name="empresa_nueva_mail_intro" xml:space="preserve">
-    <value>Das Unternehmen „{0}“ wurde in Falke angelegt und Sie sind dessen Administrator.</value>
+    <value>Das Unternehmen "{0}" wurde in Falke angelegt und Sie sind dessen Administrator.</value>
   </data>
   <data name="empresa_nueva_ok" xml:space="preserve">
-    <value>Das Unternehmen „{0}“ und sein Administrator {1} wurden angelegt (Aktivierung ausstehend).</value>
+    <value>Das Unternehmen "{0}" und sein Administrator {1} wurden angelegt (Aktivierung ausstehend).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
     <value> Die Aktivierungs-E-Mail konnte nicht gesendet werden: Die Einladung kann unter Benutzer erneut gesendet werden.</value>
@@ -1192,7 +1192,7 @@
     <value>Das Konto wird aktiv.</value>
   </data>
   <data name="empresanueva_la_empresa_queda_registrada_en_estado" xml:space="preserve">
-    <value>Das Unternehmen wird mit dem Status „Aktivierung ausstehend“ angelegt.</value>
+    <value>Das Unternehmen wird mit dem Status "Aktivierung ausstehend" angelegt.</value>
   </data>
   <data name="empresanueva_los_datos_fiscales_van_tal_como" xml:space="preserve">
     <value>Die steuerlichen Angaben werden genau so eingetragen, wie sie auf der Rechnung stehen.</value>
@@ -1300,7 +1300,7 @@
     <value>Nach Status filtern</value>
   </data>
   <data name="empresas_lo_que_cambies_lo_ve_la" xml:space="preserve">
-    <value>Das Unternehmen sieht, was Sie unter „Mein Unternehmen“ ändern. Die Änderung von CUIT, Tarif oder Abrechnung wirkt sich auf die Fakturierung aus. Sie wird im Audit-Protokoll erfasst und das Unternehmen sieht sie als vom Team von Pattern Blue durchgeführt.</value>
+    <value>Das Unternehmen sieht, was Sie unter "Mein Unternehmen" ändern. Die Änderung von CUIT, Tarif oder Abrechnung wirkt sich auf die Fakturierung aus. Sie wird im Audit-Protokoll erfasst und das Unternehmen sieht sie als vom Team von Pattern Blue durchgeführt.</value>
   </data>
   <data name="empresas_no_hay_empresas_que_coincidan" xml:space="preserve">
     <value>Kein Unternehmen entspricht.</value>
@@ -1489,10 +1489,10 @@
     <value>Der Sprachcode ist ungültig.</value>
   </data>
   <data name="idioma_en_uso" xml:space="preserve">
-    <value>„{0}“ kann nicht deaktiviert oder gelöscht werden: {1} Benutzer haben es ausgewählt.</value>
+    <value>"{0}" kann nicht deaktiviert oder gelöscht werden: {1} Benutzer haben es ausgewählt.</value>
   </data>
   <data name="idioma_no_disponible" xml:space="preserve">
-    <value>Für die Sprache „{0}“ gibt es kein Übersetzungspaket.</value>
+    <value>Für die Sprache "{0}" gibt es kein Übersetzungspaket.</value>
   </data>
   <data name="idioma_no_existe" xml:space="preserve">
     <value>Die Sprache existiert nicht.</value>
@@ -1501,7 +1501,7 @@
     <value>Die Sprache ist bereits deaktiviert.</value>
   </data>
   <data name="idioma_ya_existe" xml:space="preserve">
-    <value>Die Sprache „{0}“ wurde bereits hinzugefügt.</value>
+    <value>Die Sprache "{0}" wurde bereits hinzugefügt.</value>
   </data>
   <data name="idioma_ya_habilitado" xml:space="preserve">
     <value>Die Sprache ist bereits aktiviert.</value>
@@ -1540,7 +1540,7 @@
     <value>Das Konto wurde deaktiviert. Wenn Sie glauben, dass dies ein Irrtum ist, wenden Sie sich an den Administrator Ihres Unternehmens.</value>
   </data>
   <data name="ingresar_cuenta_bloqueada" xml:space="preserve">
-    <value>Das Konto ist wegen falscher Passwörter gesperrt. Verwenden Sie „Passwort vergessen“, um den Zugang wiederherzustellen.</value>
+    <value>Das Konto ist wegen falscher Passwörter gesperrt. Verwenden Sie "Passwort vergessen", um den Zugang wiederherzustellen.</value>
   </data>
   <data name="ingresar_cuenta_pendiente" xml:space="preserve">
     <value>Das Konto wurde noch nicht aktiviert. Suchen Sie in Ihrer E-Mail nach dem Aktivierungslink.</value>
@@ -1690,7 +1690,7 @@
     <value>Vollständige Neuberechnung: {0} Tabelle(n), {1} Eintrag/Einträge. Die anschließende Prüfung hat keine Inkonsistenzen gefunden.</value>
   </data>
   <data name="integridad_registro_alterado" xml:space="preserve">
-    <value>Der Eintrag Nr. {0} (Schlüssel „{1}“) der Tabelle {2} wurde extern geändert oder hinzugefügt.</value>
+    <value>Der Eintrag Nr. {0} (Schlüssel "{1}") der Tabelle {2} wurde extern geändert oder hinzugefügt.</value>
   </data>
   <data name="integridad_registro_n" xml:space="preserve">
     <value>Eintrag Nr.</value>
@@ -2101,25 +2101,25 @@
     <value>Gerät prüfen</value>
   </data>
   <data name="permiso_del_sistema" xml:space="preserve">
-    <value>„{0}“ ist eine Systemberechtigung: Sie wird vom Entwickler festgelegt und kann nicht {1} werden.</value>
+    <value>"{0}" ist eine Systemberechtigung: Sie wird vom Entwickler festgelegt und kann nicht {1} werden.</value>
   </data>
   <data name="permiso_es_un_rol" xml:space="preserve">
-    <value>„{0}“ ist eine Rolle: Weder eine Rolle noch eine Gruppe darf Rollen enthalten.</value>
+    <value>"{0}" ist eine Rolle: Weder eine Rolle noch eine Gruppe darf Rollen enthalten.</value>
   </data>
   <data name="permiso_incluido_en" xml:space="preserve">
-    <value>„{0}“ ist enthalten in: {1}. Entfernen Sie es dort, bevor Sie es löschen.</value>
+    <value>"{0}" ist enthalten in: {1}. Entfernen Sie es dort, bevor Sie es löschen.</value>
   </data>
   <data name="permiso_incluido_no_existe" xml:space="preserve">
-    <value>Die Berechtigung „{0}“ existiert nicht.</value>
+    <value>Die Berechtigung "{0}" existiert nicht.</value>
   </data>
   <data name="permiso_no_existe" xml:space="preserve">
-    <value>„{0}“ existiert nicht.</value>
+    <value>"{0}" existiert nicht.</value>
   </data>
   <data name="permiso_nombre_control" xml:space="preserve">
     <value>Der Name darf keine Zeilenumbrüche oder Steuerzeichen enthalten.</value>
   </data>
   <data name="permiso_nombre_duplicado" xml:space="preserve">
-    <value>Es existiert bereits eine Berechtigung, Rolle oder Gruppe mit dem Namen „{0}“.</value>
+    <value>Es existiert bereits eine Berechtigung, Rolle oder Gruppe mit dem Namen "{0}".</value>
   </data>
   <data name="permiso_nombre_formato" xml:space="preserve">
     <value>Der Name muss zwischen 3 und 60 Zeichen lang sein (Buchstaben, Zahlen, Leerzeichen, Bindestriche oder Punkte).</value>
@@ -2128,16 +2128,16 @@
     <value>Der Name darf höchstens 200 Zeichen lang sein.</value>
   </data>
   <data name="permiso_rol_asignado" xml:space="preserve">
-    <value>Die Rolle „{0}“ ist Benutzern zugewiesen: Weisen Sie diese neu zu, bevor Sie sie löschen.</value>
+    <value>Die Rolle "{0}" ist Benutzern zugewiesen: Weisen Sie diese neu zu, bevor Sie sie löschen.</value>
   </data>
   <data name="permiso_rol_base" xml:space="preserve">
-    <value>„{0}“ ist eine Basisrolle des Systems: Sie kann nicht {1} werden.</value>
+    <value>"{0}" ist eine Basisrolle des Systems: Sie kann nicht {1} werden.</value>
   </data>
   <data name="permiso_rol_fijo" xml:space="preserve">
     <value>Die Rolle {0} ist fest: Ihre Zusammensetzung wird nicht geändert.</value>
   </data>
   <data name="permiso_rol_general_reservados" xml:space="preserve">
-    <value>Die Rolle „{0}“ ist eine allgemeine Rolle und würde Berechtigungen erhalten, die Pattern Blue vorbehalten sind ({1}). Diese Berechtigungen gehören nur in Verwaltungsrollen.</value>
+    <value>Die Rolle "{0}" ist eine allgemeine Rolle und würde Berechtigungen erhalten, die Pattern Blue vorbehalten sind ({1}). Diese Berechtigungen gehören nur in Verwaltungsrollen.</value>
   </data>
   <data name="permiso_sin_permiso_descripciones" xml:space="preserve">
     <value>Sie haben keine Berechtigung, Beschreibungen zu ändern.</value>
@@ -2149,16 +2149,16 @@
     <value>Nur Rollen und Gruppen können Berechtigungen enthalten.</value>
   </data>
   <data name="permiso_te_ciclo" xml:space="preserve">
-    <value>Das Hinzufügen von „{0}“ zu „{1}“ würde einen Zusammensetzungszyklus erzeugen.</value>
+    <value>Das Hinzufügen von "{0}" zu "{1}" würde einen Zusammensetzungszyklus erzeugen.</value>
   </data>
   <data name="permiso_te_ciclo_si_mismo" xml:space="preserve">
     <value>Eine Berechtigung kann sich nicht selbst enthalten.</value>
   </data>
   <data name="permiso_te_no_incluye" xml:space="preserve">
-    <value>„{0}“ enthält „{1}“ nicht.</value>
+    <value>"{0}" enthält "{1}" nicht.</value>
   </data>
   <data name="permiso_te_ya_incluye" xml:space="preserve">
-    <value>„{0}“ enthält „{1}“ bereits.</value>
+    <value>"{0}" enthält "{1}" bereits.</value>
   </data>
   <data name="planes_6_visualizaciones_analiticas" xml:space="preserve">
     <value>6 analytische Visualisierungen</value>
@@ -2538,7 +2538,7 @@ Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort 
     <value>Alles, was nach der Kopie geladen wurde, geht verloren.</value>
   </data>
   <data name="respaldos_los_digitos_verificadores_vuelven_al_est" xml:space="preserve">
-    <value>Die Prüfziffern kehren in den Zustand der Kopie zurück: Prüfen Sie sie unter „Prüfziffer“.</value>
+    <value>Die Prüfziffern kehren in den Zustand der Kopie zurück: Prüfen Sie sie unter "Prüfziffer".</value>
   </data>
   <data name="respaldos_los_usuarios_conectados_quedan_sin_servi" xml:space="preserve">
     <value>Verbundene Benutzer sind für einige Sekunden ohne Dienst und alle Sitzungen werden beendet, einschließlich Ihrer.</value>
@@ -2589,7 +2589,7 @@ Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort 
     <value>Gruppe</value>
   </data>
   <data name="roles_creado" xml:space="preserve">
-    <value>{0} „{1}“ wurde erstellt. Markieren Sie nun, was es enthält.</value>
+    <value>{0} "{1}" wurde erstellt. Markieren Sie nun, was es enthält.</value>
   </data>
   <data name="roles_de_gestion_solo_para_usuarios_de" xml:space="preserve">
     <value>Verwaltung: nur für Benutzer von Pattern Blue</value>
@@ -2598,7 +2598,7 @@ Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort 
     <value>Wählen Sie eine Rolle, eine Gruppe oder eine Berechtigung aus der Liste.</value>
   </data>
   <data name="roles_eliminado" xml:space="preserve">
-    <value>„{0}“ wurde gelöscht.</value>
+    <value>"{0}" wurde gelöscht.</value>
   </data>
   <data name="roles_eliminar" xml:space="preserve">
     <value>Löschen</value>
@@ -2796,13 +2796,13 @@ Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort 
     <value>Vor- und Nachname sind erforderlich.</value>
   </data>
   <data name="usuario_propios_datos_en_perfil" xml:space="preserve">
-    <value>Ihre eigenen Daten ändern Sie unter „Mein Profil“.</value>
+    <value>Ihre eigenen Daten ändern Sie unter "Mein Profil".</value>
   </data>
   <data name="usuario_reenvio_solo_pendiente" xml:space="preserve">
     <value>Die Einladung wird nur an ein Konto erneut gesendet, dessen Aktivierung noch aussteht.</value>
   </data>
   <data name="usuario_rol_gestion_solo_pb" xml:space="preserve">
-    <value>Die Rolle „{0}“ ist eine Verwaltungsrolle, nur für Benutzer von Pattern Blue: Sie kann Benutzern von Kundenunternehmen nicht zugewiesen werden.</value>
+    <value>Die Rolle "{0}" ist eine Verwaltungsrolle, nur für Benutzer von Pattern Blue: Sie kann Benutzern von Kundenunternehmen nicht zugewiesen werden.</value>
   </data>
   <data name="usuario_rol_no_asignable" xml:space="preserve">
     <value>Diese Rolle kann von Ihrem Konto aus nicht zugewiesen werden.</value>
@@ -2883,13 +2883,13 @@ Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort 
     <value>Benutzer verwalten</value>
   </data>
   <data name="usuarios_inactivo_dada_de_baja_no_puede" xml:space="preserve">
-    <value>Inaktiv: deaktiviert, kann sich weder anmelden noch das Passwort wiederherstellen. Strikte Sperre: kann sich weder anmelden noch eine Passwortänderung anfordern. „Gesperrt“ (wegen falschem Passwort) wird vom System gesetzt: Die Person wird durch die Wiederherstellung ihres Passworts entsperrt.</value>
+    <value>Inaktiv: deaktiviert, kann sich weder anmelden noch das Passwort wiederherstellen. Strikte Sperre: kann sich weder anmelden noch eine Passwortänderung anfordern. "Gesperrt" (wegen falschem Passwort) wird vom System gesetzt: Die Person wird durch die Wiederherstellung ihres Passworts entsperrt.</value>
   </data>
   <data name="usuarios_invitacion_enviada" xml:space="preserve">
     <value>Einladung gesendet</value>
   </data>
   <data name="usuarios_invitacion_ok" xml:space="preserve">
-    <value>Das Konto von {0} wurde mit dem Status „Aktivierung ausstehend“ angelegt. Der Aktivierungslink wurde in App_Data/mails/ abgelegt.</value>
+    <value>Das Konto von {0} wurde mit dem Status "Aktivierung ausstehend" angelegt. Der Aktivierungslink wurde in App_Data/mails/ abgelegt.</value>
   </data>
   <data name="usuarios_invitacion_reenviada" xml:space="preserve">
     <value>Wir haben die Einladung zu Ihrem Falke-Konto erneut gesendet.</value>
@@ -2904,7 +2904,7 @@ Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort 
     <value>Benutzer einladen</value>
   </data>
   <data name="usuarios_la_cuenta_queda_en_estado_pendiente" xml:space="preserve">
-    <value>Das Konto bleibt im Status „Aktivierung ausstehend“, bis die Person den Link öffnet und ihr Passwort festlegt.</value>
+    <value>Das Konto bleibt im Status "Aktivierung ausstehend", bis die Person den Link öffnet und ihr Passwort festlegt.</value>
   </data>
   <data name="usuarios_la_invitacion_ya_se_envio" xml:space="preserve">
     <value>Die Einladung wurde bereits gesendet</value>
@@ -3599,10 +3599,10 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
     <value>Wenn Sie es nicht waren, ignorieren Sie diese Nachricht: Ihr aktuelles Passwort bleibt gültig.</value>
   </data>
   <data name="permiso_del_sistema_eliminar" xml:space="preserve">
-    <value>„{0}“ ist eine Systemberechtigung: Sie wird vom Entwickler festgelegt und kann nicht gelöscht werden.</value>
+    <value>"{0}" ist eine Systemberechtigung: Sie wird vom Entwickler festgelegt und kann nicht gelöscht werden.</value>
   </data>
   <data name="permiso_rol_base_eliminar" xml:space="preserve">
-    <value>„{0}“ ist eine Basisrolle des Systems: Sie kann nicht gelöscht werden.</value>
+    <value>"{0}" ist eine Basisrolle des Systems: Sie kann nicht gelöscht werden.</value>
   </data>
   <data name="falke_js_modo_dia" xml:space="preserve">
     <value>Zum Tagmodus wechseln</value>
@@ -3617,22 +3617,22 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
     <value>Passwort ausblenden</value>
   </data>
   <data name="permiso_simple_no_contiene" xml:space="preserve">
-    <value>„{0}“ ist eine einfache Berechtigung und kann keine anderen Berechtigungen enthalten.</value>
+    <value>"{0}" ist eine einfache Berechtigung und kann keine anderen Berechtigungen enthalten.</value>
   </data>
   <data name="permiso_simple_sin_hijos" xml:space="preserve">
-    <value>„{0}“ ist eine einfache Berechtigung und hat keine untergeordneten Elemente.</value>
+    <value>"{0}" ist eine einfache Berechtigung und hat keine untergeordneten Elemente.</value>
   </data>
   <data name="permiso_a_si_mismo" xml:space="preserve">
     <value>Eine Berechtigung kann sich nicht selbst enthalten.</value>
   </data>
   <data name="permiso_ya_incluye" xml:space="preserve">
-    <value>„{0}“ enthält „{1}“ bereits.</value>
+    <value>"{0}" enthält "{1}" bereits.</value>
   </data>
   <data name="permiso_ciclo" xml:space="preserve">
-    <value>Das Hinzufügen von „{0}“ zu „{1}“ würde einen Zusammensetzungszyklus erzeugen.</value>
+    <value>Das Hinzufügen von "{0}" zu "{1}" würde einen Zusammensetzungszyklus erzeugen.</value>
   </data>
   <data name="permiso_no_incluye" xml:space="preserve">
-    <value>„{0}“ enthält „{1}“ nicht.</value>
+    <value>"{0}" enthält "{1}" nicht.</value>
   </data>
   <data name="integridad_registros_agregados" xml:space="preserve">
     <value>In der Tabelle {0} wurden von außerhalb der Anwendung hinzugefügte Einträge erkannt.</value>
@@ -4346,7 +4346,7 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
     <value>Aufnahme wird auf dem Server gespeichert… Schließen Sie diese Seite nicht.</value>
   </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
-    <value>Die Sitzung „{0}“ ist jetzt in Ihrem Konto gespeichert.</value>
+    <value>Die Sitzung "{0}" ist jetzt in Ihrem Konto gespeichert.</value>
   </data>
   <data name="grabacion_ok_ver" xml:space="preserve">
     <value>Analyse ansehen</value>
@@ -4355,7 +4355,7 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
     <value>Weiteren Teil aufnehmen</value>
   </data>
   <data name="grabacion_ok_otra_ayuda" xml:space="preserve">
-    <value>Fahren Sie mit einem weiteren Teil desselben Tests fort. Kategorie und Testerdaten bleiben erhalten, die Aufnahme heißt „{0}“.</value>
+    <value>Fahren Sie mit einem weiteren Teil desselben Tests fort. Kategorie und Testerdaten bleiben erhalten, die Aufnahme heißt "{0}".</value>
   </data>
   <data name="grabacion_responsable_tu" xml:space="preserve">
     <value>Verantwortlich (Sie)</value>
@@ -4446,5 +4446,65 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   </data>
   <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
     <value>Verlauf jeder Sitzung übereinandergelegt: Wo sich mehr Linien treffen, ging der Blick öfter hin.</value>
+  </data>
+  <data name="grabacion_dispositivo" xml:space="preserve">
+    <value>Gerät</value>
+  </data>
+  <data name="grabacion_dispositivo_sin" xml:space="preserve">
+    <value>Keine Geräte</value>
+  </data>
+  <data name="sesion_dispositivo_invalido" xml:space="preserve">
+    <value>Das gewählte Gerät ist Ihrem Unternehmen nicht zugewiesen.</value>
+  </data>
+  <data name="mistobiis_mis_tobiis" xml:space="preserve">
+    <value>Meine Tobiis</value>
+  </data>
+  <data name="mistobiis_bajada" xml:space="preserve">
+    <value>Die Eyetracker Ihres Unternehmens und die Werkzeuge, um sie vor der Aufnahme vorzubereiten.</value>
+  </data>
+  <data name="mistobiis_tobiis_de_tu_empresa" xml:space="preserve">
+    <value>Tobiis Ihres Unternehmens</value>
+  </data>
+  <data name="mistobiis_herramientas" xml:space="preserve">
+    <value>Werkzeuge</value>
+  </data>
+  <data name="mistobiis_abrir_tobii_experience" xml:space="preserve">
+    <value>Tobii Experience öffnen</value>
+  </data>
+  <data name="mistobiis_recalibrar_tobii" xml:space="preserve">
+    <value>Tobii neu kalibrieren</value>
+  </data>
+  <data name="mistobiis_calibrar_pantalla" xml:space="preserve">
+    <value>Bildschirm einrichten</value>
+  </data>
+  <data name="mistobiis_previsualizar_mirada" xml:space="preserve">
+    <value>Blick Vorschau</value>
+  </data>
+  <data name="mistobiis_dejar_de_previsualizar" xml:space="preserve">
+    <value>Vorschau beenden</value>
+  </data>
+  <data name="mistobiis_agente_conectado" xml:space="preserve">
+    <value>Falke-Agent verbunden</value>
+  </data>
+  <data name="mistobiis_agente_no_responde" xml:space="preserve">
+    <value>Der Falke-Agent wurde nicht gefunden. Prüfen Sie, ob er installiert ist und läuft (Bereich Installation).</value>
+  </data>
+  <data name="mistobiis_tobii_conectado" xml:space="preserve">
+    <value>Tobii verbunden</value>
+  </data>
+  <data name="mistobiis_tobii_sin_conectar" xml:space="preserve">
+    <value>Tobii nicht verbunden</value>
+  </data>
+  <data name="mistobiis_guia_recalibrar" xml:space="preserve">
+    <value>Tobii Experience wurde geöffnet. Klicken Sie auf das Zahnrad (oben links) und dann auf "Meine Kalibrierung verbessern".</value>
+  </data>
+  <data name="mistobiis_guia_pantalla" xml:space="preserve">
+    <value>Tobii Experience wurde geöffnet. Klicken Sie auf das Zahnrad (oben links), suchen Sie "Bildschirm wechseln" und klicken Sie auf "Bildschirm einrichten".</value>
+  </data>
+  <data name="mistobiis_guia_previa" xml:space="preserve">
+    <value>Tobii Experience wurde geöffnet. Aktivieren Sie "Preview my gaze", um dort die Blickspur zu sehen. Diese Seite zeigt ebenfalls einen Punkt mit Spur (besser im Vollbild, F11). Beenden mit der Schaltfläche oder Esc.</value>
+  </data>
+  <data name="mistobiis_guia_dejar_previa" xml:space="preserve">
+    <value>Um die Vorschau zu beenden, deaktivieren Sie "Preview my gaze" auch in Tobii Experience.</value>
   </data>
 </root>

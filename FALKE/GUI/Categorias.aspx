@@ -119,7 +119,7 @@
                                 <div class="acciones-fila">
                                     <a class="btn btn-fantasma btn-chico" href="<%: ResolveUrl("~/Visualizaciones.aspx") %>" data-i18n="comun.verSesiones">[[categorias_ver_sesiones]]</a>
                                     <asp:PlaceHolder runat="server" Visible="<%# PuedeGestionar %>">
-                                        <button type="button" class="icono-boton" aria-label="[[categorias_editar_la_categoria]]" data-editar-categoria>
+                                        <button type="button" class="icono-boton" aria-label="[[categorias_editar_la_categoria]]" data-abre-modal="modalCategoria" data-editar-categoria>
                                             <svg width="17" height="17" aria-hidden="true"><use href="#i-lapiz" /></svg>
                                         </button>
                                         <asp:LinkButton ID="btnEliminarCategoria" runat="server" CssClass="icono-boton" ToolTip="[[categorias_eliminar_la_categoria]]"

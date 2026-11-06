@@ -55,6 +55,8 @@ namespace GUI
             get { return SesionActual_GUI.HayUsuario ? (SesionActual_GUI.Nombre ?? string.Empty) : string.Empty; }
         }
 
+        protected bool SinDispositivos { get; private set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!SesionActual_GUI.ExigirPermiso(TLL.Patentes_TLL.OPERAR_ANALISIS)) return;
@@ -67,6 +69,11 @@ namespace GUI
 
             rptCategorias.DataSource = ArmarCategorias();
             rptCategorias.DataBind();
+
+            var dispositivos = ArmarDispositivos();
+            SinDispositivos = dispositivos.Count == 0;
+            rptDispositivos.DataSource = dispositivos;
+            rptDispositivos.DataBind();
 
             rptEdades.DataSource = ArmarOpciones(PerfilTester_BE.RangosEdad, null);
             rptEdades.DataBind();
@@ -96,6 +103,29 @@ namespace GUI
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("NuevaGrabacion.Categorias", ex);
+            }
+
+            return opciones;
+        }
+
+        // los dispositivos asignados a la empresa del usuario
+        private List<Opcion> ArmarDispositivos()
+        {
+            var opciones = new List<Opcion>();
+
+            try
+            {
+                var actor = SesionActual_GUI.ObtenerActor();
+                if (actor == null) return opciones;
+
+                foreach (Dispositivo_BE d in new SesionGrabada_BLL().DispositivosParaGrabar(actor))
+                {
+                    opciones.Add(new Opcion { Valor = d.IdDispositivo.ToString(), Texto = d.Modelo + " - " + d.NumeroSerie });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("NuevaGrabacion.Dispositivos", ex);
             }
 
             return opciones;
@@ -228,6 +258,7 @@ namespace GUI
         public class DatosSesion
         {
             public int idCategoria { get; set; }
+            public int idDispositivo { get; set; }
             public string nombre { get; set; }
             public string objetivo { get; set; }
             public string edad { get; set; }
@@ -301,6 +332,7 @@ namespace GUI
                 var sesion = new SesionGrabada_BE
                 {
                     IdCategoria = datos.idCategoria,
+                    IdDispositivo = datos.idDispositivo,
                     Nombre = datos.nombre,
                     Objetivo = datos.objetivo,
                     RangoEdad = datos.edad,

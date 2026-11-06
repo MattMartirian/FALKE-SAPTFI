@@ -4447,4 +4447,64 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
   <data name="analisismultiple_recorrido_superpuesto" xml:space="preserve">
     <value>Percurso de cada sessão sobreposto: onde mais linhas se encontram, o olhar passou mais vezes.</value>
   </data>
+  <data name="grabacion_dispositivo" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
+  <data name="grabacion_dispositivo_sin" xml:space="preserve">
+    <value>Sem dispositivos</value>
+  </data>
+  <data name="sesion_dispositivo_invalido" xml:space="preserve">
+    <value>O dispositivo escolhido não está atribuído à sua empresa.</value>
+  </data>
+  <data name="mistobiis_mis_tobiis" xml:space="preserve">
+    <value>Meus Tobiis</value>
+  </data>
+  <data name="mistobiis_bajada" xml:space="preserve">
+    <value>Os eye trackers da sua empresa e as ferramentas para deixá-los prontos antes de gravar.</value>
+  </data>
+  <data name="mistobiis_tobiis_de_tu_empresa" xml:space="preserve">
+    <value>Tobiis da sua empresa</value>
+  </data>
+  <data name="mistobiis_herramientas" xml:space="preserve">
+    <value>Ferramentas</value>
+  </data>
+  <data name="mistobiis_abrir_tobii_experience" xml:space="preserve">
+    <value>Abrir Tobii Experience</value>
+  </data>
+  <data name="mistobiis_recalibrar_tobii" xml:space="preserve">
+    <value>Recalibrar Tobii</value>
+  </data>
+  <data name="mistobiis_calibrar_pantalla" xml:space="preserve">
+    <value>Configurar tela</value>
+  </data>
+  <data name="mistobiis_previsualizar_mirada" xml:space="preserve">
+    <value>Pré-visualizar olhar</value>
+  </data>
+  <data name="mistobiis_dejar_de_previsualizar" xml:space="preserve">
+    <value>Parar de pré-visualizar</value>
+  </data>
+  <data name="mistobiis_agente_conectado" xml:space="preserve">
+    <value>Agente do Falke conectado</value>
+  </data>
+  <data name="mistobiis_agente_no_responde" xml:space="preserve">
+    <value>O agente do Falke não foi encontrado. Verifique se está instalado e em execução (seção Instalação).</value>
+  </data>
+  <data name="mistobiis_tobii_conectado" xml:space="preserve">
+    <value>Tobii conectado</value>
+  </data>
+  <data name="mistobiis_tobii_sin_conectar" xml:space="preserve">
+    <value>Tobii não conectado</value>
+  </data>
+  <data name="mistobiis_guia_recalibrar" xml:space="preserve">
+    <value>O Tobii Experience foi aberto. Clique na roda de configurações (canto superior esquerdo) e depois em "Melhorar minha calibração".</value>
+  </data>
+  <data name="mistobiis_guia_pantalla" xml:space="preserve">
+    <value>O Tobii Experience foi aberto. Clique na roda de configurações (canto superior esquerdo), procure "Alterar tela" e clique em "Configurar tela".</value>
+  </data>
+  <data name="mistobiis_guia_previa" xml:space="preserve">
+    <value>O Tobii Experience foi aberto. Ative "Preview my gaze" para ver o rastro do seu olhar lá. Esta página também mostra um ponto com rastro (melhor com o navegador em tela cheia, F11). Termine com o botão ou com Esc.</value>
+  </data>
+  <data name="mistobiis_guia_dejar_previa" xml:space="preserve">
+    <value>Para parar a pré-visualização, desative também "Preview my gaze" no Tobii Experience.</value>
+  </data>
 </root>

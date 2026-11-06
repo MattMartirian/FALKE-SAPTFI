@@ -14,12 +14,12 @@ namespace ORM
         {
             string sql = @"
                 INSERT INTO SesionGrabadaTable
-                    (id_categoria, id_usuario, fecha_sesion, estado_sesion,
+                    (id_categoria, id_usuario, id_dispositivo, fecha_sesion, estado_sesion,
                      nombre_sesion, objetivo_sesion,
                      rango_edad_tester, genero_tester, familiaridad_tester,
                      duracion_seg_sesion, muestras_sesion, bytes_video_sesion, desfase_mirada_ms_sesion)
                 VALUES
-                    (@idCategoria, @idUsuario, @fecha, @estado,
+                    (@idCategoria, @idUsuario, @idDispositivo, @fecha, @estado,
                      @nombre, @objetivo,
                      @edad, @genero, @familiaridad,
                      @duracion, @muestras, @bytes, @desfase);
@@ -28,6 +28,7 @@ namespace ORM
             s.IdSesion = Gestor.EjecutarScalar<int>(sql,
                 new SqlParameter("@idCategoria", s.IdCategoria),
                 new SqlParameter("@idUsuario", s.IdUsuario),
+                new SqlParameter("@idDispositivo", s.IdDispositivo),
                 new SqlParameter("@fecha", s.Fecha),
                 new SqlParameter("@estado", s.Estado),
                 new SqlParameter("@nombre", ValorONulo(s.Nombre)),
@@ -101,6 +102,7 @@ namespace ORM
                 IdSesion = Valor<int>(dr, "id_sesion"),
                 IdCategoria = Valor<int>(dr, "id_categoria"),
                 IdUsuario = Valor<int>(dr, "id_usuario"),
+                IdDispositivo = Valor<int>(dr, "id_dispositivo"),
                 Fecha = Valor<DateTime>(dr, "fecha_sesion"),
                 Estado = Valor<string>(dr, "estado_sesion"),
                 Nombre = Valor<string>(dr, "nombre_sesion"),

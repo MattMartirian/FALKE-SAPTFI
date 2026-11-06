@@ -1,5 +1,6 @@
 using System;
 using SERVICES;
+using TE;
 using TLL;
 
 namespace GUI
@@ -15,6 +16,9 @@ namespace GUI
         {
             if (IsPostBack) return;
 
+            // el enlace es para definir la clave de otra cuenta (o la propia desde afuera): si hay una sesion abierta se cierra
+            CerrarSesionAbierta();
+
             ResultadoToken_TLL validacion = new Contrasena_TLL().ValidarTokenContrasena(Token);
 
             if (validacion.Exito)
@@ -26,6 +30,22 @@ namespace GUI
                 pnlForm.Visible = false;
                 MostrarError(TextoDelMotivo(validacion.Motivo));
             }
+        }
+
+        private void CerrarSesionAbierta()
+        {
+            if (!SesionActual_GUI.HayUsuario) return;
+
+            try
+            {
+                new BitacoraGestor_TLL().Registrar(SesionActual_GUI.IdUsuario, "Seguridad", EventosBitacora_TLL.CIERRE_SESION, CriticidadBitacora.Baja);
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("DefinirClave.CierreSesion", ex);
+            }
+
+            SesionActual_GUI.Cerrar();
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
