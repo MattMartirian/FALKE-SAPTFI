@@ -1048,7 +1048,7 @@
     <value>Se registró la empresa "{0}" y su administrador {1} (pendiente de activación).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
-    <value> No se pudo enviar el correo de activación: desde Usuarios se puede reenviar la invitación.</value>
+    <value> Hubo un error al enviar el correo de activación. Reenvíe la invitación más tarde desde la sección Usuarios.</value>
   </data>
   <data name="empresa_nueva_ok_enlace" xml:space="preserve">
     <value> Le enviamos un correo con el enlace de activación.</value>

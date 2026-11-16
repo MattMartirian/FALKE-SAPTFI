@@ -1048,7 +1048,7 @@
     <value>A empresa "{0}" e o seu administrador {1} foram cadastrados (ativação pendente).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
-    <value> Não foi possível enviar o e-mail de ativação: o convite pode ser reenviado em Usuários.</value>
+    <value> Ocorreu um erro ao enviar o e-mail de ativação. Reenvie o convite mais tarde na seção Usuários.</value>
   </data>
   <data name="empresa_nueva_ok_enlace" xml:space="preserve">
     <value> Enviamos um e-mail com o link de ativação.</value>

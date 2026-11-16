@@ -1048,7 +1048,7 @@
     <value>Das Unternehmen "{0}" und sein Administrator {1} wurden angelegt (Aktivierung ausstehend).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
-    <value> Die Aktivierungs-E-Mail konnte nicht gesendet werden: Die Einladung kann unter Benutzer erneut gesendet werden.</value>
+    <value> Beim Senden der Aktivierungs-E-Mail ist ein Fehler aufgetreten. Senden Sie die Einladung später im Bereich Benutzer erneut.</value>
   </data>
   <data name="empresa_nueva_ok_enlace" xml:space="preserve">
     <value> Wir haben eine E-Mail mit dem Aktivierungslink gesendet.</value>

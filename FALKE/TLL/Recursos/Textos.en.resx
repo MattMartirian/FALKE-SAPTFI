@@ -1048,7 +1048,7 @@
     <value>The company "{0}" and its administrator {1} were registered (pending activation).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
-    <value> The activation email could not be sent: the invitation can be resent from Users.</value>
+    <value> There was an error sending the activation email. Resend the invitation later from the Users section.</value>
   </data>
   <data name="empresa_nueva_ok_enlace" xml:space="preserve">
     <value> We sent an email with the activation link.</value>
