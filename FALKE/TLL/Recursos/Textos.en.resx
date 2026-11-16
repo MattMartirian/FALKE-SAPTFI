@@ -4721,4 +4721,238 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="panel_categoria" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="ayuda_boton" xml:space="preserve">
+    <value>Find out how this page works</value>
+  </data>
+  <data name="ayuda_subtitulo" xml:space="preserve">
+    <value>What this page is for</value>
+  </data>
+  <data name="ayuda_panel" xml:space="preserve">
+    <value>This is the Falke home screen.
+It shows a summary of your company's activity and the latest movements made from your account.
+- With "New recording" you start an eye-tracking session directly from here.
+To return to this screen from any other, use the Falke logo or "Home page" in the menu.</value>
+  </data>
+  <data name="ayuda_visualizaciones" xml:space="preserve">
+    <value>This is the session viewing screen.
+From here you open a recorded session and analyze the tester's gaze: general metrics, video with tracking, heat map, areas of interest and blind spots, dispersion, attention versus distraction and gaze path.
+- With "Filters" you search by name, category and date range. "Clear filters" resets the search.
+- With "View details" on each chart you open that analysis in detail.
+- With "Download report" you generate a PDF of the session. You choose the sections and the language, and confirm with "Export report".
+To analyze a session:
+1. Apply the filters you need to find it in the list.
+2. Select the session.
+3. Review the metrics and open each chart with "View details".
+4. To get the analysis as a PDF, click "Download report" and choose the data to include.</value>
+  </data>
+  <data name="ayuda_nuevagrabacion" xml:space="preserve">
+    <value>This is the new recording screen.
+From here you record an eye-tracking session: you set up the session data, check the equipment and record while the tester uses the asset you are evaluating.
+- With "Continue" you move from the session data to the equipment check.
+- With "Open Tobii Experience" you calibrate the eye tracker. With "Check again" you repeat the check after fixing an item.
+- With "Start recording" the countdown begins and then the capture. "Pause" and "Resume" stop and continue it, "Restart" starts it over and "Finish" ends it.
+- With "Save" the session is stored in your account. "Discard" saves nothing. "Record another part" continues the same test and "View analysis" opens the saved session.
+To record a session:
+1. Choose the category and the device, name the session and enter the tester's anonymous data.
+2. Click "Continue" and verify that the required items are green.
+3. Choose the screen to record and the start moment, and click "Start recording".
+4. Switch to the application you are going to evaluate and work as usual.
+5. Click "Finish", review the video and click "Save".</value>
+  </data>
+  <data name="ayuda_descargas" xml:space="preserve">
+    <value>This is the installation screen.
+It gathers the programs the PC needs to record gaze: the Tobii Eye Tracker 5 driver and the Falke agent. They are installed once per PC.
+- With "Download all (.zip)" you download both programs in a single file.
+Requirements: 64-bit Windows 10 or 11 and the Tobii Eye Tracker 5 connected by USB.
+To install them:
+1. Download the file with "Download all (.zip)".
+2. Install Tobii Experience and restart the PC if it asks you to.
+3. Connect the Tobii Eye Tracker 5 and complete its calibration.
+4. Run AgenteMirada.exe. It installs itself and stays active at every Windows startup.
+5. Open "New recording": the page checks that the agent is active.</value>
+  </data>
+  <data name="ayuda_categorias" xml:space="preserve">
+    <value>This is the categories screen.
+A category represents a digital asset of your company, such as an app or a video game, and groups the sessions recorded on it. From here you create, search, edit and delete categories.
+- With "New category" you open the creation form.
+- With the search box, "Asset type" and "Show deactivated" you filter the list.
+- With "View sessions" you access the sessions recorded on that category.
+- If you delete a category that has recorded sessions, it is deactivated instead of removed.
+To create a category:
+1. Click "New category".
+2. Type the name and choose the type of digital asset.
+3. Fill in the fields specific to that type, such as the name of the evaluated asset and the flow to analyze.
+4. Save the category.</value>
+  </data>
+  <data name="ayuda_analisismultiple" xml:space="preserve">
+    <value>This is the multiple analysis screen.
+It combines several sessions to average the results and identify which patterns repeat across different testers. The sessions must belong to the same category and at least two are needed.
+- With "Select all in this category" you mark every session of that category.
+- With "Generate analysis" you get the combined result with its averaged charts.
+- With "Regenerate data" you recalculate the result after changing the selection.
+- With "Download report" you generate a PDF. You choose the content and the language, and confirm with "Export report".
+To generate an analysis:
+1. Select a session from the list. Sessions from other categories are disabled.
+2. Add at least one more session, or use "Select all in this category".
+3. Click "Generate analysis".
+4. To exclude a session, uncheck it and click "Regenerate data".
+5. To get the result as a PDF, click "Download report".</value>
+  </data>
+  <data name="ayuda_mistobiis" xml:space="preserve">
+    <value>This is the My Tobiis screen.
+It shows your company's eye trackers and gathers the tools to prepare them before recording.
+- With "Open Tobii Experience" you open the manufacturer's program.
+- With "Recalibrate Tobii" you improve the device's calibration.
+- With "Set up screen" you configure the eye tracker for your monitor.
+- With "Preview gaze" you verify where the device is registering your gaze.
+If a notice says the Falke agent was not found, verify that it is installed and running. It is installed from "Installation".
+To prepare the Tobii before recording:
+1. Click "Recalibrate Tobii" and follow the instructions in Tobii Experience.
+2. If you changed monitors, click "Set up screen".
+3. Click "Preview gaze" and verify that the dot follows your gaze.</value>
+  </data>
+  <data name="ayuda_usuarios" xml:space="preserve">
+    <value>This is the users screen for your company.
+It lists the members with their role and status. If you manage the account, from here you invite new users and manage the existing ones. If not, you view the list and edit your own details.
+- With "Invite user" you register a person. They receive a link by email to activate their account.
+- With "Manage", on a user's row, you change the account status or the role.
+- With "Edit details" you change the first name, last name and interface language.
+- With "Resend invitation" you send a new activation link to someone who has not yet activated their account.
+- With the search box and the company, role and status filters you narrow the list.
+To invite a user:
+1. Click "Invite user".
+2. Fill in the person's details, including their email address.
+3. Send the invitation.
+4. The person receives a link by email to set their password.</value>
+  </data>
+  <data name="ayuda_miempresa" xml:space="preserve">
+    <value>This is your company screen.
+It shows the company's details and the devices it has on loan. You can update the industry, address and contact phone. Pattern Blue manages the company name, tax ID, plan and billing: if any of them changed, let us know and it will be updated.
+- With "Edit contact" you enable the editable fields.
+- With "View employees" you access your company's user list.
+To update the contact details:
+1. Click "Edit contact".
+2. Change the industry, address or phone.
+3. Save the changes.</value>
+  </data>
+  <data name="ayuda_empresas" xml:space="preserve">
+    <value>This is the client companies screen.
+It is the portfolio of companies that contracted Falke, with their plan and status. From here you search for a company, view its detail, edit its data and change its status.
+- With "All", "Active", "Blocked" and "Deactivated" you filter the list by status.
+- With "New company" you register a client company.
+- Each company's detail has tabs for data, plan, team and sessions, and links to its devices and users.
+- With "Edit" you change the data. Changing the company name, tax ID or plan requires a reason and is recorded in the audit log.
+To change a company's status:
+1. Find the company and open its detail.
+2. Click the company status button.
+3. Choose the new status and enter the reason, which is required.
+4. Confirm the change.</value>
+  </data>
+  <data name="ayuda_empresanueva" xml:space="preserve">
+    <value>This is the client company registration screen.
+Pattern Blue's manager uses it once the commercial agreement is formalized. You enter the company's data and its initial administrator's, who receives a link by email to activate the account.
+- When you register, the company and its initial administrator are created together.
+- The tax ID has 11 digits, with or without hyphens. Tax data is entered exactly as it appears on the invoice.
+To register a company:
+1. Fill in the company data: company name, tax ID, industry, address, subscription plan, billing and contact number.
+2. Fill in the first name, last name and email of the initial administrator.
+3. Register the company.
+4. If the activation email could not be sent, resend the invitation later from "Users".</value>
+  </data>
+  <data name="ayuda_dispositivos" xml:space="preserve">
+    <value>This is the devices screen.
+It is the eye tracker inventory and shows which company each one is loaned to. From here you add devices, lend them, record returns and retire the ones no longer in use.
+- With "Models" you manage the device models. A model is never deleted: once retired, it stops being offered for new devices.
+- With "Add device" you add a unit to the inventory as available. The serial number is the factory one and is not changed afterwards.
+- With "Assign to company" you lend an available device to an active company.
+- With "Record return" you close the loan. If the device comes back faulty, mark it to send it to maintenance.
+- With "Retire" you take the device out of service. The reason is required.
+To lend a device:
+1. Click "Assign to company".
+2. Choose the available device and the company.
+3. Confirm. The delivery date is today and the loan continues until you record the return.</value>
+  </data>
+  <data name="ayuda_bitacora" xml:space="preserve">
+    <value>This is the audit log screen.
+It records the relevant actions in the system: who performed them, when, in which module and with what severity. Records cannot be edited or deleted.
+- With "From", "To", "Time from" and "Time to" you define the period.
+- With "Module", "Action", "User", "Company" and "Severity" you filter by event type or by person.
+- With "Previous" and "Next" you move between result pages.
+To find an event:
+1. Define the period with dates and times.
+2. Filter by module, action, user, company or severity.
+3. Review the results.
+4. If there is more than one page, advance with "Next".</value>
+  </data>
+  <data name="ayuda_integridad" xml:space="preserve">
+    <value>This is the database integrity screen.
+It verifies that the data has not been altered, by comparing the check digits of each record (DVH) and of each table (DVV). The system runs this check at sign-in. From here you view the result per table and, if needed, recalculate.
+- With "View details" on each table you view its records and the ones that do not match.
+- With "Recalculate check digits" you generate them again from the current data. You must indicate the scope and the reason.
+Recalculating takes the current data as valid, so do it only after reviewing what changed. While inconsistencies exist, the other users cannot enter the system.
+To review and correct integrity:
+1. Check the status of each table.
+2. If there are inconsistencies, open "View details" to identify the records that do not match.
+3. If the change is legitimate, click "Recalculate check digits".
+4. Indicate the scope and the reason, and confirm.</value>
+  </data>
+  <data name="ayuda_roles" xml:space="preserve">
+    <value>This is the roles and permissions screen.
+A role gathers groups and permissions. Groups organize permissions and can contain other groups. The system defines the permissions and from here they are only combined.
+- With "New role" you create a role and with "New group" you create a group.
+- With "Delete" you remove the selected role or group.
+- When you select an item you see what it includes, its effective permissions and where else it is included.
+- Gestor and Webmaster are fixed roles: their composition cannot be edited and they cannot be deleted.
+To create a role:
+1. Click "New role".
+2. Type the name and choose the role type.
+3. Check the groups and permissions it includes.
+4. Save the role.</value>
+  </data>
+  <data name="ayuda_respaldos" xml:space="preserve">
+    <value>This is the backups screen.
+It manages the database backups. They are stored on the server and are not downloaded from here.
+- With "Generate backup" you create a copy of the database at that moment.
+- Each backup in the list has a button to restore it.
+Restoring replaces the whole database with the state of the copy: anything loaded afterward is lost. When you confirm, all sessions are closed, including yours.
+To restore a backup:
+1. Choose the backup in the list and click its restore button.
+2. Read the notice about what will be lost.
+3. Type RESTAURAR to confirm.
+4. Click "Restore and close sessions".
+5. When it finishes, sign in again and check the integrity screen.</value>
+  </data>
+  <data name="ayuda_idiomas" xml:space="preserve">
+    <value>This is the languages screen.
+It shows the interface languages and their translations. From here you add languages, edit translations, enable or disable a language and delete it.
+- With "Add language" you create a new one. If you choose a bundled package, its translations are loaded. If you create it from scratch, you must enter the translations by hand.
+- With "Translations" you open a language's texts next to the base text. When you edit a translation, it is marked as manual.
+- With "Pending only" you filter the untranslated texts.
+- With "Enable" and "Disable" you define whether the language is available in the application.
+To edit a translation:
+1. Click "Translations" on the language you want to change.
+2. Find the text or turn on "Pending only".
+3. Open the text and type the translation. Keep placeholders such as {0} or {1}.
+4. Save. If you leave it empty, it stays pending and the base text is shown.</value>
+  </data>
+  <data name="ayuda_miperfil" xml:space="preserve">
+    <value>This is your profile screen.
+It shows your account details. You can change your first name, last name and interface language. The email is your sign-in identifier and is not changed from here: to change it, ask whoever manages your account.
+- With "Change my password" you access the screen to set a new one.
+With the emergency access there is no personal data to edit.
+To update your details:
+1. Change your first name, last name or interface language.
+2. Save the changes.</value>
+  </data>
+  <data name="ayuda_miclave" xml:space="preserve">
+    <value>This is the screen to change your password.
+It asks for the current password and the new one. When you change it, sessions open on other computers are closed and you have to sign in again on them.
+- With the eye icon you show or hide what you type.
+- With "Back to my profile" you leave without changing anything.
+To change the password:
+1. Type the current password.
+2. Type the new one. It must have at least 8 characters, with an uppercase letter, a lowercase letter, a number and a special character.
+3. Repeat the new password.
+4. Save the change.</value>
+  </data>
 </root>

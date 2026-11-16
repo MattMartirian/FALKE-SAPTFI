@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Web;
 using System.Web.UI.HtmlControls;
 using TLL;
@@ -16,6 +18,81 @@ namespace GUI
                 if (rolActual == null) rolActual = Etiquetas_GUI.De(SesionActual_GUI.EsEmergencia ? Usuario_TLL.ROL_GESTOR : SesionActual_GUI.Rol);
 
                 return rolActual;
+            }
+        }
+
+        // Las pantallas que tienen ayuda: el botón "?" de la barra superior abre un cuadro con el texto de la clave ayuda_<pantalla>.
+        private static readonly HashSet<string> PaginasConAyuda = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "panel", "visualizaciones", "nuevagrabacion", "descargas", "categorias", "analisismultiple", "mistobiis", "usuarios", "miempresa", "empresas", "empresanueva", "dispositivos", "bitacora", "integridad", "roles", "respaldos", "idiomas", "miperfil", "miclave"
+        };
+
+        private string paginaActual;
+
+        private string PaginaActual
+        {
+            get
+            {
+                if (paginaActual == null) paginaActual = System.IO.Path.GetFileNameWithoutExtension(Request.CurrentExecutionFilePath) ?? string.Empty;
+
+                return paginaActual;
+            }
+        }
+
+        public bool TieneAyuda
+        {
+            get { return PaginasConAyuda.Contains(PaginaActual); }
+        }
+
+        public string TextoAyuda
+        {
+            get { return IdiomaActual_GUI.Texto("ayuda_" + PaginaActual.ToLowerInvariant()); }
+        }
+
+        // El texto de ayuda trae una línea por párrafo. Las que empiezan con "- " son items de lista y las que empiezan con "1. " son pasos numerados.
+        public string HtmlAyuda
+        {
+            get
+            {
+                StringBuilder html = new StringBuilder();
+                string listaAbierta = null;
+
+                foreach (string cruda in (TextoAyuda ?? string.Empty).Replace("\r", string.Empty).Split('\n'))
+                {
+                    string linea = cruda.Trim();
+
+                    if (linea.Length == 0) continue;
+
+                    string tipo = null;
+                    string contenido = linea;
+                    int punto = linea.IndexOf(". ", StringComparison.Ordinal);
+
+                    if (linea.StartsWith("- ", StringComparison.Ordinal))
+                    {
+                        tipo = "ul";
+                        contenido = linea.Substring(2);
+                    }
+                    else if (punto > 0 && punto <= 2 && char.IsDigit(linea[0]))
+                    {
+                        tipo = "ol";
+                        contenido = linea.Substring(punto + 2);
+                    }
+
+                    if (tipo != listaAbierta)
+                    {
+                        if (listaAbierta != null) html.Append("</").Append(listaAbierta).Append(">");
+                        if (tipo != null) html.Append("<").Append(tipo).Append(">");
+
+                        listaAbierta = tipo;
+                    }
+
+                    if (tipo != null) html.Append("<li>").Append(HttpUtility.HtmlEncode(contenido)).Append("</li>");
+                    else html.Append(linea.EndsWith(":", StringComparison.Ordinal) ? "<p class=\"ayuda-intro\">" : "<p>").Append(HttpUtility.HtmlEncode(linea)).Append("</p>");
+                }
+
+                if (listaAbierta != null) html.Append("</").Append(listaAbierta).Append(">");
+
+                return html.ToString();
             }
         }
 

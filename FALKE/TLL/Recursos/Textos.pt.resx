@@ -4721,4 +4721,238 @@ Para ativá-la e definir a sua senha, abra este link (expira em 48 horas):
   <data name="panel_categoria" xml:space="preserve">
     <value>Categoria</value>
   </data>
+  <data name="ayuda_boton" xml:space="preserve">
+    <value>Descubra como esta página funciona</value>
+  </data>
+  <data name="ayuda_subtitulo" xml:space="preserve">
+    <value>Para que serve esta página</value>
+  </data>
+  <data name="ayuda_panel" xml:space="preserve">
+    <value>Esta é a tela inicial do Falke.
+Mostra um resumo da atividade da sua empresa e as últimas movimentações feitas a partir da sua conta.
+- Com "Nova gravação" você inicia uma sessão de rastreamento ocular diretamente daqui.
+Para voltar a esta tela a partir de qualquer outra, use o logotipo do Falke ou "Página inicial" no menu.</value>
+  </data>
+  <data name="ayuda_visualizaciones" xml:space="preserve">
+    <value>Esta é a tela de visualização de sessões.
+Daqui você abre uma sessão gravada e analisa o olhar do testador: métricas gerais, vídeo com rastreamento, mapa de calor, zonas de interesse e cegas, dispersão, atenção versus distração e trajeto.
+- Com "Filtros" você busca por nome, categoria e intervalo de datas. "Limpar filtros" restabelece a busca.
+- Com "Ver detalhes" em cada gráfico você abre essa análise em detalhe.
+- Com "Baixar relatório" você gera um PDF da sessão. Escolhe as seções e o idioma, e confirma com "Exportar relatório".
+Para analisar uma sessão:
+1. Aplique os filtros de que precisar para encontrá-la na lista.
+2. Selecione a sessão.
+3. Revise as métricas e abra cada gráfico com "Ver detalhes".
+4. Para obter a análise em PDF, clique em "Baixar relatório" e escolha os dados a incluir.</value>
+  </data>
+  <data name="ayuda_nuevagrabacion" xml:space="preserve">
+    <value>Esta é a tela de nova gravação.
+Daqui você registra uma sessão de rastreamento ocular: configura os dados da sessão, verifica o equipamento e grava enquanto o testador usa o ativo que você avalia.
+- Com "Continuar" você passa dos dados da sessão para a verificação do equipamento.
+- Com "Abrir Tobii Experience" você calibra o eye tracker. Com "Verificar novamente" você repete o controle depois de corrigir um item.
+- Com "Iniciar gravação" começa a contagem regressiva e depois a captura. "Pausar" e "Retomar" a interrompem e a continuam, "Reiniciar" a recomeça e "Finalizar" a encerra.
+- Com "Salvar" a sessão fica registrada na sua conta. "Descartar" não salva nada. "Gravar outra parte" continua o mesmo teste e "Ver análise" abre a sessão salva.
+Para gravar uma sessão:
+1. Escolha a categoria e o dispositivo, dê um nome à sessão e preencha os dados anônimos do testador.
+2. Clique em "Continuar" e verifique se os itens obrigatórios estão verdes.
+3. Escolha a tela a gravar e o momento de início, e clique em "Iniciar gravação".
+4. Passe para o aplicativo que vai avaliar e trabalhe normalmente.
+5. Clique em "Finalizar", revise o vídeo e clique em "Salvar".</value>
+  </data>
+  <data name="ayuda_descargas" xml:space="preserve">
+    <value>Esta é a tela de instalação.
+Reúne os programas de que o PC precisa para registrar o olhar: o driver do Tobii Eye Tracker 5 e o agente do Falke. Eles são instalados uma única vez por PC.
+- Com "Baixar tudo (.zip)" você baixa os dois programas em um único arquivo.
+Requisitos: Windows 10 ou 11 de 64 bits e o Tobii Eye Tracker 5 conectado por USB.
+Para instalá-los:
+1. Baixe o arquivo com "Baixar tudo (.zip)".
+2. Instale o Tobii Experience e reinicie o PC se ele solicitar.
+3. Conecte o Tobii Eye Tracker 5 e conclua a calibração.
+4. Execute AgenteMirada.exe. Ele se instala sozinho e fica ativo a cada inicialização do Windows.
+5. Abra "Nova gravação": a página verifica se o agente está ativo.</value>
+  </data>
+  <data name="ayuda_categorias" xml:space="preserve">
+    <value>Esta é a tela de categorias.
+Uma categoria representa um ativo digital da sua empresa, como um aplicativo ou um videogame, e agrupa as sessões gravadas sobre ele. Daqui você cria, busca, edita e exclui categorias.
+- Com "Nova categoria" você abre o formulário de cadastro.
+- Com a busca, "Tipo de ativo" e "Mostrar desativadas" você filtra a lista.
+- Com "Ver sessões" você acessa as sessões gravadas sobre essa categoria.
+- Se você excluir uma categoria que tem sessões gravadas, em vez de ser apagada ela fica desativada.
+Para criar uma categoria:
+1. Clique em "Nova categoria".
+2. Digite o nome e escolha o tipo de ativo digital.
+3. Preencha os campos específicos desse tipo, como o nome do ativo avaliado e o fluxo a analisar.
+4. Salve a categoria.</value>
+  </data>
+  <data name="ayuda_analisismultiple" xml:space="preserve">
+    <value>Esta é a tela de análise múltipla.
+Combina várias sessões para calcular a média dos resultados e identificar quais padrões se repetem entre diferentes testadores. As sessões devem ser da mesma categoria e são necessárias pelo menos duas.
+- Com "Selecionar todas desta categoria" você marca todas as sessões dessa categoria.
+- Com "Gerar análise" você obtém o resultado combinado com seus gráficos médios.
+- Com "Regenerar dados" você recalcula o resultado depois de alterar a seleção.
+- Com "Baixar relatório" você gera um PDF. Escolhe o conteúdo e o idioma, e confirma com "Exportar relatório".
+Para gerar uma análise:
+1. Selecione uma sessão da lista. As de outras categorias ficam desabilitadas.
+2. Adicione pelo menos mais uma sessão, ou use "Selecionar todas desta categoria".
+3. Clique em "Gerar análise".
+4. Para excluir uma sessão, desmarque-a e clique em "Regenerar dados".
+5. Para obter o resultado em PDF, clique em "Baixar relatório".</value>
+  </data>
+  <data name="ayuda_mistobiis" xml:space="preserve">
+    <value>Esta é a tela de Meus Tobiis.
+Mostra os eye trackers da sua empresa e reúne as ferramentas para prepará-los antes de gravar.
+- Com "Abrir Tobii Experience" você abre o programa do fabricante.
+- Com "Recalibrar Tobii" você melhora a calibração do dispositivo.
+- Com "Configurar tela" você configura o eye tracker para o seu monitor.
+- Com "Pré-visualizar olhar" você verifica onde o dispositivo registra o olhar.
+Se aparecer o aviso de que o agente do Falke não foi encontrado, verifique se ele está instalado e em execução. Ele é instalado em "Instalação".
+Para preparar o Tobii antes de gravar:
+1. Clique em "Recalibrar Tobii" e siga as instruções do Tobii Experience.
+2. Se você trocou de monitor, clique em "Configurar tela".
+3. Clique em "Pré-visualizar olhar" e verifique se o ponto acompanha o seu olhar.</value>
+  </data>
+  <data name="ayuda_usuarios" xml:space="preserve">
+    <value>Esta é a tela de usuários da sua empresa.
+Lista os integrantes com sua função e seu status. Se você administra a conta, daqui convida novos usuários e gerencia os existentes. Se não, consulta a lista e edita seus próprios dados.
+- Com "Convidar usuário" você cadastra uma pessoa. Ela recebe por e-mail um link para ativar a conta.
+- Com "Gerenciar", na linha de um usuário, você altera o status da conta ou a função.
+- Com "Editar dados" você altera nome, sobrenome e idioma da interface.
+- Com "Reenviar convite" você envia um novo link de ativação a quem ainda não ativou a conta.
+- Com a busca e os filtros de empresa, função e status você reduz a lista.
+Para convidar um usuário:
+1. Clique em "Convidar usuário".
+2. Preencha os dados da pessoa, incluindo o e-mail.
+3. Envie o convite.
+4. A pessoa recebe um link por e-mail para definir a senha.</value>
+  </data>
+  <data name="ayuda_miempresa" xml:space="preserve">
+    <value>Esta é a tela da sua empresa.
+Mostra os dados da empresa e os dispositivos que ela tem em empréstimo. Você pode atualizar o ramo, o endereço e o telefone de contato. A razão social, o CUIT, o plano e o faturamento são administrados pela Pattern Blue: se algum mudou, comunique e será atualizado.
+- Com "Editar contato" você habilita os campos editáveis.
+- Com "Ver funcionários" você acessa a lista de usuários da sua empresa.
+Para atualizar os dados de contato:
+1. Clique em "Editar contato".
+2. Altere o ramo, o endereço ou o telefone.
+3. Salve as alterações.</value>
+  </data>
+  <data name="ayuda_empresas" xml:space="preserve">
+    <value>Esta é a tela de empresas cliente.
+É a carteira de empresas que contrataram o Falke, com seu plano e seu status. Daqui você busca uma empresa, consulta o detalhe, edita os dados e altera o status.
+- Com "Todas", "Ativa", "Bloqueada" e "Desativada" você filtra a lista por status.
+- Com "Nova empresa" você cadastra uma empresa cliente.
+- O detalhe de cada empresa tem abas de dados, plano, equipe e sessões, e acessos aos seus dispositivos e usuários.
+- Com "Editar" você altera os dados. Mudar a razão social, o CUIT ou o plano exige informar um motivo e fica registrado no registro de auditoria.
+Para alterar o status de uma empresa:
+1. Busque a empresa e abra o detalhe.
+2. Clique no botão de status da empresa.
+3. Escolha o novo status e informe o motivo, que é obrigatório.
+4. Confirme a alteração.</value>
+  </data>
+  <data name="ayuda_empresanueva" xml:space="preserve">
+    <value>Esta é a tela de cadastro de empresas cliente.
+O gestor da Pattern Blue a usa depois de formalizado o acordo comercial. Preenchem-se os dados da empresa e os do administrador inicial, que recebe um link por e-mail para ativar a conta.
+- Ao cadastrar, a empresa e o administrador inicial são criados juntos.
+- O CUIT tem 11 dígitos, com ou sem hífens. Os dados fiscais são preenchidos exatamente como constam na nota fiscal.
+Para cadastrar uma empresa:
+1. Preencha os dados da empresa: razão social, CUIT, ramo, endereço, plano de assinatura, faturamento e número de contato.
+2. Preencha nome, sobrenome e e-mail do administrador inicial.
+3. Cadastre a empresa.
+4. Se o e-mail de ativação não pôde ser enviado, reenvie o convite mais tarde em "Usuários".</value>
+  </data>
+  <data name="ayuda_dispositivos" xml:space="preserve">
+    <value>Esta é a tela de dispositivos.
+É o inventário de eye trackers e indica a qual empresa cada um está emprestado. Daqui você cadastra equipamentos, empresta, registra devoluções e dá baixa nos que não são mais usados.
+- Com "Modelos" você administra os modelos de dispositivo. Um modelo não é apagado: ao dar baixa, deixa de ser oferecido para equipamentos novos.
+- Com "Adicionar dispositivo" você incorpora um equipamento ao inventário como disponível. O número de série é o de fábrica e não é alterado depois.
+- Com "Atribuir a uma empresa" você empresta um dispositivo disponível a uma empresa ativa.
+- Com "Registrar devolução" você encerra o empréstimo. Se o equipamento volta com falhas, marque-o para enviar à manutenção.
+- Com "Baixar" você retira o dispositivo. O motivo é obrigatório.
+Para emprestar um dispositivo:
+1. Clique em "Atribuir a uma empresa".
+2. Escolha o dispositivo disponível e a empresa.
+3. Confirme. A data de entrega é a do dia e o empréstimo continua até você registrar a devolução.</value>
+  </data>
+  <data name="ayuda_bitacora" xml:space="preserve">
+    <value>Esta é a tela do registro de auditoria.
+Registra as ações relevantes do sistema: quem as realizou, quando, em qual módulo e com qual criticidade. Os registros não podem ser editados nem excluídos.
+- Com "De", "Até", "Hora de" e "Hora até" você define o período.
+- Com "Módulo", "Ação", "Usuário", "Empresa" e "Criticidade" você filtra por tipo de evento ou por pessoa.
+- Com "Anterior" e "Próxima" você navega entre as páginas de resultados.
+Para buscar um evento:
+1. Defina o período com datas e horas.
+2. Filtre por módulo, ação, usuário, empresa ou criticidade.
+3. Revise os resultados.
+4. Se houver mais de uma página, avance com "Próxima".</value>
+  </data>
+  <data name="ayuda_integridad" xml:space="preserve">
+    <value>Esta é a tela de integridade do banco de dados.
+Verifica se os dados não foram alterados, comparando os dígitos verificadores de cada registro (DVH) e de cada tabela (DVV). O sistema faz esse controle ao iniciar sessão. Daqui você consulta o resultado por tabela e, se for o caso, recalcula.
+- Com "Ver detalhes" em cada tabela você consulta seus registros e os que não coincidem.
+- Com "Recalcular dígitos verificadores" você os gera de novo com os dados atuais. É preciso informar o alcance e o motivo.
+Recalcular toma como válidos os dados atuais, por isso convém fazê-lo só depois de revisar o que mudou. Enquanto houver inconsistências, os demais usuários não conseguem entrar no sistema.
+Para revisar e corrigir a integridade:
+1. Consulte o status de cada tabela.
+2. Se houver inconsistências, abra "Ver detalhes" para identificar os registros que não coincidem.
+3. Se a alteração for legítima, clique em "Recalcular dígitos verificadores".
+4. Informe o alcance e o motivo, e confirme.</value>
+  </data>
+  <data name="ayuda_roles" xml:space="preserve">
+    <value>Esta é a tela de funções e permissões.
+Uma função reúne grupos e permissões. Os grupos organizam permissões e podem conter outros grupos. As permissões são definidas pelo sistema e daqui apenas são combinadas.
+- Com "Nova função" você cria uma função e com "Novo grupo" você cria um grupo.
+- Com "Excluir" você remove a função ou o grupo selecionado.
+- Ao selecionar um elemento, você vê o que ele inclui, suas permissões efetivas e em que outros está incluído.
+- Gestor e Webmaster são funções fixas: sua composição não pode ser editada e elas não podem ser excluídas.
+Para criar uma função:
+1. Clique em "Nova função".
+2. Digite o nome e escolha o tipo de função.
+3. Marque os grupos e as permissões que ela inclui.
+4. Salve a função.</value>
+  </data>
+  <data name="ayuda_respaldos" xml:space="preserve">
+    <value>Esta é a tela de backups.
+Administra as cópias de segurança do banco de dados. Elas ficam armazenadas no servidor e não são baixadas daqui.
+- Com "Gerar backup" você cria uma cópia do banco nesse momento.
+- Cada backup da lista tem um botão para restaurá-lo.
+Restaurar substitui todo o banco pelo estado da cópia: o que foi carregado depois se perde. Ao confirmar, todas as sessões são encerradas, inclusive a sua.
+Para restaurar um backup:
+1. Escolha o backup na lista e clique no botão de restauração.
+2. Leia o aviso sobre o que será perdido.
+3. Digite RESTAURAR para confirmar.
+4. Clique em "Restaurar e encerrar as sessões".
+5. Ao terminar, entre de novo e revise a tela de integridade.</value>
+  </data>
+  <data name="ayuda_idiomas" xml:space="preserve">
+    <value>Esta é a tela de idiomas.
+Mostra os idiomas da interface e suas traduções. Daqui você adiciona idiomas, edita traduções, ativa ou desativa um idioma e o exclui.
+- Com "Adicionar idioma" você cria um novo. Se escolher um pacote incluído, suas traduções são carregadas. Se criá-lo do zero, você precisa inserir as traduções manualmente.
+- Com "Traduções" você abre os textos de um idioma ao lado do texto base. Ao editar uma tradução, ela fica marcada como manual.
+- Com "Só pendentes" você filtra os textos sem tradução.
+- Com "Ativar" e "Desativar" você define se o idioma está disponível no aplicativo.
+Para editar uma tradução:
+1. Clique em "Traduções" no idioma que quer alterar.
+2. Procure o texto ou ative "Só pendentes".
+3. Abra o texto e digite a tradução. Mantenha marcadores como {0} ou {1}.
+4. Salve. Se deixá-la vazia, ela fica pendente e o texto base é exibido.</value>
+  </data>
+  <data name="ayuda_miperfil" xml:space="preserve">
+    <value>Esta é a tela do seu perfil.
+Mostra os dados da sua conta. Você pode alterar nome, sobrenome e idioma da interface. O e-mail é o seu identificador de acesso e não é alterado por aqui: para modificá-lo, peça a quem administra a sua conta.
+- Com "Alterar minha senha" você acessa a tela para definir uma nova.
+Com o acesso de emergência não há dados pessoais para editar.
+Para atualizar seus dados:
+1. Altere nome, sobrenome ou idioma da interface.
+2. Salve as alterações.</value>
+  </data>
+  <data name="ayuda_miclave" xml:space="preserve">
+    <value>Esta é a tela para alterar a sua senha.
+Solicita a senha atual e a nova. Ao alterá-la, as sessões abertas em outros computadores são encerradas e é preciso entrar de novo neles.
+- Com o ícone do olho você mostra ou oculta o que digita.
+- Com "Voltar ao meu perfil" você sai sem alterar nada.
+Para alterar a senha:
+1. Digite a senha atual.
+2. Digite a nova. Ela deve ter pelo menos 8 caracteres, com maiúscula, minúscula, número e um caractere especial.
+3. Repita a senha nova.
+4. Salve a alteração.</value>
+  </data>
 </root>
