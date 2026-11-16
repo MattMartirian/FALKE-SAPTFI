@@ -31,5 +31,10 @@ namespace BE
         public string NombreCategoria { get; set; }
         public string TipoActivo { get; set; }
         public string NombreAnalista { get; set; }
+
+        public string Plataforma { get; set; }
+        public string SistemaOperativo { get; set; }
+        public string Canal { get; set; }
+        public string Flujo { get; set; }
     }
 }

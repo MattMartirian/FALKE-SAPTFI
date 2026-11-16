@@ -6,7 +6,7 @@ namespace GUI
 {
     public partial class Descargas : PaginaConAviso_GUI
     {
-        private static readonly bool MODO_PRUEBA = true;
+        private static readonly bool MODO_PRUEBA = false;
 
         // el zip con todo el software (agente + instalador de Tobii) se arma a mano y se deja en esta carpeta (viaja con la publicacion del sitio)
         private const string CARPETA = "~/Instaladores";

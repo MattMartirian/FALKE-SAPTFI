@@ -12,35 +12,64 @@
 
         <h2 data-i18n="vis.rail.sesiones">[[categorias_sesiones]]</h2>
 
-        <div class="vis-buscador campo-buscar">
-            <label class="solo-lectores" for="visBuscar" data-i18n="vis.buscar">[[visualizaciones_buscar_por_nombre]]</label>
-            <svg aria-hidden="true"><use href="#i-buscar" /></svg>
-            <input type="search" class="entrada" id="visBuscar"
-                   placeholder="Checkout, onboarding..." data-i18n-attr="placeholder:vis.buscar.placeholder" />
-        </div>
+        <button type="button" class="vis-filtros-toggle" id="btnFiltros" aria-expanded="false" aria-controls="visFiltrosPanel">
+            <svg width="16" height="16" aria-hidden="true"><use href="#i-filtro" /></svg>
+            <span class="vis-filtros-texto">[[vis_filtros_boton]]</span>
+            <span class="vis-filtros-n" id="visFiltrosN" hidden></span>
+            <svg class="vis-filtros-flecha" width="16" height="16" aria-hidden="true"><use href="#i-flecha-abajo" /></svg>
+        </button>
 
-        <div class="vis-chips chips" data-unico role="group" aria-label="[[visualizaciones_filtrar_por_categoria]]">
-            <button type="button" class="chip" aria-pressed="true" data-categoria="todas" data-i18n="vis.cat.todas">[[empresas_todas]]</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="appweb" data-i18n="vis.cat.appweb">[[analisismultiple_app_web]]</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="software" data-i18n="vis.cat.software">[[analisismultiple_software]]</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="videojuego" data-i18n="vis.cat.videojuego">[[analisismultiple_videojuego]]</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="publicidad" data-i18n="vis.cat.publicidad">[[categorias_publicidad]]</button>
-            <button type="button" class="chip" aria-pressed="false" data-categoria="appmovil" data-i18n="vis.cat.appmovil">[[analisismultiple_app_movil]]</button>
-        </div>
+        <div class="vis-filtros-panel" id="visFiltrosPanel" hidden>
+            <div class="vis-buscador campo-buscar">
+                <label class="solo-lectores" for="visBuscar" data-i18n="vis.buscar">[[visualizaciones_buscar_por_nombre]]</label>
+                <svg aria-hidden="true"><use href="#i-buscar" /></svg>
+                <input type="search" class="entrada" id="visBuscar"
+                       placeholder="Checkout, onboarding..." data-i18n-attr="placeholder:vis.buscar.placeholder" />
+            </div>
 
-        <div class="vis-filtros" role="group" aria-label="[[grabacion_tester_titulo]]">
-            <select class="entrada" id="filtroEdad" aria-label="[[grabacion_tester_edad]]">
-                <option value="">[[vis_filtro_edad]]</option>
-                <asp:Repeater ID="rptFiltroEdad" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
-            </select>
-            <select class="entrada" id="filtroGenero" aria-label="[[grabacion_tester_genero]]">
-                <option value="">[[vis_filtro_genero]]</option>
-                <asp:Repeater ID="rptFiltroGenero" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
-            </select>
-            <select class="entrada" id="filtroFamiliaridad" aria-label="[[grabacion_tester_familiaridad]]">
-                <option value="">[[vis_filtro_familiaridad]]</option>
-                <asp:Repeater ID="rptFiltroFamiliaridad" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
-            </select>
+            <div class="vis-chips chips" data-unico role="group" aria-label="[[visualizaciones_filtrar_por_categoria]]">
+                <button type="button" class="chip" aria-pressed="true" data-categoria="todas" data-i18n="vis.cat.todas">[[empresas_todas]]</button>
+                <button type="button" class="chip" aria-pressed="false" data-categoria="appweb" data-i18n="vis.cat.appweb">[[analisismultiple_app_web]]</button>
+                <button type="button" class="chip" aria-pressed="false" data-categoria="software" data-i18n="vis.cat.software">[[analisismultiple_software]]</button>
+                <button type="button" class="chip" aria-pressed="false" data-categoria="videojuego" data-i18n="vis.cat.videojuego">[[analisismultiple_videojuego]]</button>
+                <button type="button" class="chip" aria-pressed="false" data-categoria="publicidad" data-i18n="vis.cat.publicidad">[[categorias_publicidad]]</button>
+                <button type="button" class="chip" aria-pressed="false" data-categoria="appmovil" data-i18n="vis.cat.appmovil">[[analisismultiple_app_movil]]</button>
+            </div>
+
+            <div class="vis-filtros" role="group" aria-label="[[grabacion_tester_titulo]]">
+                <select class="entrada" id="filtroEdad" aria-label="[[grabacion_tester_edad]]">
+                    <option value="">[[vis_filtro_edad]]</option>
+                    <asp:Repeater ID="rptFiltroEdad" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
+                </select>
+                <select class="entrada" id="filtroGenero" aria-label="[[grabacion_tester_genero]]">
+                    <option value="">[[vis_filtro_genero]]</option>
+                    <asp:Repeater ID="rptFiltroGenero" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
+                </select>
+                <select class="entrada" id="filtroFamiliaridad" aria-label="[[grabacion_tester_familiaridad]]">
+                    <option value="">[[vis_filtro_familiaridad]]</option>
+                    <asp:Repeater ID="rptFiltroFamiliaridad" runat="server"><ItemTemplate><option value='<%#: Eval("Valor") %>'><%#: Eval("Texto") %></option></ItemTemplate></asp:Repeater>
+                </select>
+            </div>
+
+            <div class="vis-filtros" role="group" aria-label="[[vis_filtros_activo]]">
+                <div class="vis-fechas">
+                    <label class="vis-fecha"><span>[[vis_filtro_desde]]</span><input type="date" class="entrada" id="filtroDesde" /></label>
+                    <label class="vis-fecha"><span>[[vis_filtro_hasta]]</span><input type="date" class="entrada" id="filtroHasta" /></label>
+                </div>
+                <select class="entrada" id="filtroPlataforma" data-extra="plataforma" aria-label="[[vis_filtro_plataforma]]" hidden>
+                    <option value="">[[vis_filtro_plataforma]]</option>
+                </select>
+                <select class="entrada" id="filtroSo" data-extra="so" aria-label="[[vis_filtro_so]]" hidden>
+                    <option value="">[[vis_filtro_so]]</option>
+                </select>
+                <select class="entrada" id="filtroCanal" data-extra="canal" aria-label="[[vis_filtro_canal]]" hidden>
+                    <option value="">[[vis_filtro_canal]]</option>
+                </select>
+                <select class="entrada" id="filtroFlujo" data-extra="flujo" aria-label="[[vis_filtro_flujo]]" hidden>
+                    <option value="">[[vis_filtro_flujo]]</option>
+                </select>
+                <button type="button" class="btn btn-fantasma btn-chico btn-bloque" id="btnLimpiarFiltros">[[vis_filtro_limpiar]]</button>
+            </div>
         </div>
 
         <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Categorias.aspx") %>">
@@ -57,7 +86,9 @@
                     <button type="button" class="vis-sesion"
                             data-token='<%#: Eval("Token") %>' data-categoria='<%#: Eval("TipoClave") %>'
                             data-nombre='<%#: Eval("Nombre") %>' data-categoria-nombre='<%#: Eval("Categoria") %>' data-tipo='<%#: Eval("Tipo") %>'
-                            data-fecha='<%#: Eval("Fecha") %>' data-duracion='<%#: Eval("Duracion") %>' data-duracion-seg='<%#: Eval("DuracionSegundos") %>'
+                            data-fecha='<%#: Eval("Fecha") %>' data-fecha-iso='<%#: Eval("FechaIso") %>'
+                            data-plataforma='<%#: Eval("Plataforma") %>' data-so='<%#: Eval("SistemaOperativo") %>' data-canal='<%#: Eval("Canal") %>' data-flujo='<%#: Eval("Flujo") %>'
+                            data-duracion='<%#: Eval("Duracion") %>' data-duracion-seg='<%#: Eval("DuracionSegundos") %>'
                             data-analista='<%#: Eval("Analista") %>' data-objetivo='<%#: Eval("Objetivo") %>' data-muestras='<%#: Eval("Muestras") %>'
                             data-edad='<%#: Eval("Edad") %>' data-genero='<%#: Eval("Genero") %>' data-familiaridad='<%#: Eval("Familiaridad") %>'
                             data-perfil='<%#: Eval("Perfil") %>' data-desfase='<%#: Eval("DesfaseMs") %>'>
@@ -564,6 +595,10 @@
             var filtroEdad = document.getElementById("filtroEdad");
             var filtroGenero = document.getElementById("filtroGenero");
             var filtroFamiliaridad = document.getElementById("filtroFamiliaridad");
+            var filtroDesde = document.getElementById("filtroDesde");
+            var filtroHasta = document.getElementById("filtroHasta");
+            var filtrosExtra = document.querySelectorAll("[data-extra]");
+            var btnLimpiarFiltros = document.getElementById("btnLimpiarFiltros");
             var vacio = document.getElementById("sesionesVacio");
             var categoriaActiva = "todas";
 
@@ -597,6 +632,42 @@
                 }
             }
 
+            // Filtros adicionales segun el tipo de activo elegido: cada lista (plataforma, sistema operativo, canal, flujo)
+            // se arma con los valores que existen en las sesiones de ese tipo y solo se muestra si hay alguno.
+            function armarFiltrosExtra() {
+                for (var f = 0; f < filtrosExtra.length; f++) {
+                    var combo = filtrosExtra[f];
+                    var atributo = "data-" + combo.getAttribute("data-extra");
+                    var anterior = combo.value;
+                    var valores = [];
+
+                    if (categoriaActiva !== "todas") {
+                        for (var i = 0; i < sesiones.length; i++) {
+                            if (sesiones[i].getAttribute("data-categoria") !== categoriaActiva) continue;
+
+                            var valor = sesiones[i].getAttribute(atributo);
+
+                            if (valor && valores.indexOf(valor) === -1) valores.push(valor);
+                        }
+
+                        valores.sort(function (a, b) { return a.localeCompare(b); });
+                    }
+
+                    while (combo.options.length > 1) combo.remove(1);
+
+                    for (var v = 0; v < valores.length; v++) {
+                        var opcion = document.createElement("option");
+
+                        opcion.value = valores[v];
+                        opcion.textContent = valores[v];
+                        combo.appendChild(opcion);
+                    }
+
+                    combo.value = valores.indexOf(anterior) !== -1 ? anterior : "";
+                    combo.hidden = valores.length === 0;
+                }
+            }
+
             function filtrar() {
                 var texto = normalizar(buscar.value);
                 var visibles = 0;
@@ -608,7 +679,16 @@
                     var okEdad = !filtroEdad.value || s.getAttribute("data-edad") === filtroEdad.value;
                     var okGenero = !filtroGenero.value || s.getAttribute("data-genero") === filtroGenero.value;
                     var okFam = !filtroFamiliaridad.value || s.getAttribute("data-familiaridad") === filtroFamiliaridad.value;
-                    var mostrar = okCategoria && okTexto && okEdad && okGenero && okFam;
+                    var fechaIso = s.getAttribute("data-fecha-iso") || "";
+                    var okDesde = !filtroDesde.value || fechaIso >= filtroDesde.value;
+                    var okHasta = !filtroHasta.value || fechaIso <= filtroHasta.value;
+                    var okExtra = true;
+
+                    for (var f = 0; f < filtrosExtra.length; f++) {
+                        if (!filtrosExtra[f].hidden && filtrosExtra[f].value && s.getAttribute("data-" + filtrosExtra[f].getAttribute("data-extra")) !== filtrosExtra[f].value) okExtra = false;
+                    }
+
+                    var mostrar = okCategoria && okTexto && okEdad && okGenero && okFam && okDesde && okHasta && okExtra;
 
                     s.hidden = !mostrar;
 
@@ -616,7 +696,32 @@
                 }
 
                 vacio.hidden = visibles > 0 || sesiones.length === 0;
+                mostrarCantidadFiltros();
             }
+
+            // cuenta los filtros activos para mostrarlos en el boton aunque el panel este colapsado
+            function mostrarCantidadFiltros() {
+                var n = 0;
+                if (buscar.value.trim() !== "") n++;
+                if (categoriaActiva !== "todas") n++;
+                if (filtroEdad.value) n++;
+                if (filtroGenero.value) n++;
+                if (filtroFamiliaridad.value) n++;
+                if (filtroDesde.value) n++;
+                if (filtroHasta.value) n++;
+                for (var f = 0; f < filtrosExtra.length; f++) { if (!filtrosExtra[f].hidden && filtrosExtra[f].value) n++; }
+                var marca = document.getElementById("visFiltrosN");
+                marca.textContent = n;
+                marca.hidden = n === 0;
+            }
+
+            var btnFiltros = document.getElementById("btnFiltros");
+            var panelFiltros = document.getElementById("visFiltrosPanel");
+            btnFiltros.addEventListener("click", function () {
+                var abierto = btnFiltros.getAttribute("aria-expanded") === "true";
+                btnFiltros.setAttribute("aria-expanded", abierto ? "false" : "true");
+                panelFiltros.hidden = abierto;
+            });
 
             for (var i = 0; i < chips.length; i++) {
                 chips[i].addEventListener("click", function () {
@@ -624,14 +729,38 @@
                         chips[j].setAttribute("aria-pressed", chips[j] === this ? "true" : "false");
                     }
                     categoriaActiva = this.getAttribute("data-categoria");
+                    armarFiltrosExtra();
                     filtrar();
                 });
+            }
+
+            // vuelve al listado completo sin recargar la pagina
+            function limpiarFiltros() {
+                buscar.value = "";
+                filtroEdad.value = "";
+                filtroGenero.value = "";
+                filtroFamiliaridad.value = "";
+                filtroDesde.value = "";
+                filtroHasta.value = "";
+                categoriaActiva = "todas";
+
+                for (var j = 0; j < chips.length; j++) {
+                    chips[j].setAttribute("aria-pressed", chips[j].getAttribute("data-categoria") === "todas" ? "true" : "false");
+                }
+
+                armarFiltrosExtra();
+                filtrar();
             }
 
             buscar.addEventListener("input", filtrar);
             filtroEdad.addEventListener("change", filtrar);
             filtroGenero.addEventListener("change", filtrar);
             filtroFamiliaridad.addEventListener("change", filtrar);
+            filtroDesde.addEventListener("change", filtrar);
+            filtroHasta.addEventListener("change", filtrar);
+            btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
+
+            for (var fx = 0; fx < filtrosExtra.length; fx++) filtrosExtra[fx].addEventListener("change", filtrar);
 
 
             function limpiarTablero() {

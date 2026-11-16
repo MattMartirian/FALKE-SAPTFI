@@ -17,5 +17,15 @@ namespace GUI
 
             Email_SERVICE.Enviar(email, IdiomaActual_GUI.Texto("usuarios_mail_invitacion_asunto"), cuerpo);
         }
+
+        public static void EnviarAvisoBloqueo(string emailAdministrador, string nombreAdministrador, string nombreBloqueado, string emailBloqueado)
+        {
+            string cuerpo =
+                IdiomaActual_GUI.Texto("correo_hola", nombreAdministrador) + Environment.NewLine + Environment.NewLine +
+                IdiomaActual_GUI.Texto("correo_bloqueo_texto", nombreBloqueado, emailBloqueado) + Environment.NewLine +
+                IdiomaActual_GUI.Texto("correo_bloqueo_accion") + Environment.NewLine;
+
+            Email_SERVICE.Enviar(emailAdministrador, IdiomaActual_GUI.Texto("correo_bloqueo_asunto"), cuerpo);
+        }
     }
 }

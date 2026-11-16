@@ -61,12 +61,32 @@ namespace GUI
                     return;
                 }
 
+                AvisarBloqueoAdministradores(resultado);
                 AvisarMotivo(resultado.Motivo, resultado.IntentosRestantes);
             }
             catch (Exception ex)
             {
                 LogErrores_SERVICE.Registrar("Ingresar", ex);
                 Avisar(IdiomaActual_GUI.Texto("comun_error_procesar_vuelve"));
+            }
+        }
+
+        private static void AvisarBloqueoAdministradores(ResultadoLogin_TLL resultado)
+        {
+            if (resultado.UsuarioBloqueado == null || resultado.AdministradoresAvisar == null) return;
+
+            string nombre = (resultado.UsuarioBloqueado.NombreUsuario + " " + resultado.UsuarioBloqueado.ApellidoUsuario).Trim();
+
+            foreach (var admin in resultado.AdministradoresAvisar)
+            {
+                try
+                {
+                    CorreosCuenta_GUI.EnviarAvisoBloqueo(admin.EmailUsuario, admin.NombreUsuario, nombre, resultado.UsuarioBloqueado.EmailUsuario);
+                }
+                catch (Exception ex)
+                {
+                    LogErrores_SERVICE.Registrar("Ingresar.AvisoBloqueo", ex);
+                }
             }
         }
 

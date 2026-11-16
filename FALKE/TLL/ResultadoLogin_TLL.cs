@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TE;
 
 namespace TLL
@@ -13,6 +14,9 @@ namespace TLL
 
         public int? IntentosRestantes { get; private set; }
 
+        public Usuario_TE UsuarioBloqueado { get; private set; }
+        public List<Usuario_TE> AdministradoresAvisar { get; private set; }
+
         private ResultadoLogin_TLL() { }
 
         public static ResultadoLogin_TLL Exitoso(Usuario_TE u, bool requiereRevisarIntegridad = false) => new ResultadoLogin_TLL { Exito = true, Usuario = u, RequiereRevisarIntegridad = requiereRevisarIntegridad };
@@ -20,6 +24,9 @@ namespace TLL
         public static ResultadoLogin_TLL CredencialesInvalidas(int? intentosRestantes = null) => new ResultadoLogin_TLL { Exito = false, Motivo = "CREDENCIALES_INVALIDAS", IntentosRestantes = intentosRestantes };
 
         public static ResultadoLogin_TLL BloqueadoPorIntentos() =>       new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_BLOQUEADO_INTENTOS" };
+
+        public static ResultadoLogin_TLL RecienBloqueado(Usuario_TE bloqueado, List<Usuario_TE> administradores) =>
+            new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_BLOQUEADO_INTENTOS", UsuarioBloqueado = bloqueado, AdministradoresAvisar = administradores };
 
         public static ResultadoLogin_TLL Inactivo() =>                   new ResultadoLogin_TLL { Exito = false, Motivo = "USUARIO_INACTIVO" };
 

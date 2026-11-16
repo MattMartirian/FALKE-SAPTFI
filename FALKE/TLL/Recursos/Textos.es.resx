@@ -3425,6 +3425,15 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="correo_activar_enlace" xml:space="preserve">
     <value>Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas):</value>
   </data>
+  <data name="correo_bloqueo_asunto" xml:space="preserve">
+    <value>Cuenta bloqueada en Falke</value>
+  </data>
+  <data name="correo_bloqueo_texto" xml:space="preserve">
+    <value>La cuenta de {0} ({1}) se bloqueó por superar el máximo de intentos fallidos de inicio de sesión.</value>
+  </data>
+  <data name="correo_bloqueo_accion" xml:space="preserve">
+    <value>La persona puede recuperar el acceso desde la pantalla de inicio de sesión, con la opción de restablecer la contraseña. Si no reconocés esta actividad, revisá la cuenta desde la sección Usuarios.</value>
+  </data>
   <data name="correo_cuenta_creada" xml:space="preserve">
     <value>Se creó tu cuenta en Falke.</value>
   </data>
@@ -4163,6 +4172,30 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="grabacion_rec_subiendo" xml:space="preserve">
     <value>Guardando la grabación en el servidor… No cierres esta página.</value>
   </data>
+  <data name="grabacion_rec_pausar" xml:space="preserve">
+    <value>Pausar</value>
+  </data>
+  <data name="grabacion_rec_reanudar" xml:space="preserve">
+    <value>Reanudar</value>
+  </data>
+  <data name="grabacion_rec_reiniciar" xml:space="preserve">
+    <value>Reiniciar</value>
+  </data>
+  <data name="grabacion_rec_en_pausa" xml:space="preserve">
+    <value>En pausa</value>
+  </data>
+  <data name="grabacion_rec_reiniciar_titulo" xml:space="preserve">
+    <value>Reiniciar la grabación</value>
+  </data>
+  <data name="grabacion_rec_reiniciar_texto" xml:space="preserve">
+    <value>Se descarta lo grabado hasta ahora y la sesión vuelve a empezar desde cero, con la cuenta regresiva elegida. La pantalla compartida se mantiene.</value>
+  </data>
+  <data name="grabacion_rec_no_reiniciar" xml:space="preserve">
+    <value>No reiniciar</value>
+  </data>
+  <data name="grabacion_rec_si_reiniciar" xml:space="preserve">
+    <value>Sí, reiniciar</value>
+  </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
     <value>La sesión "{0}" ya está guardada en tu cuenta.</value>
   </data>
@@ -4204,6 +4237,33 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   </data>
   <data name="vis_filtro_familiaridad" xml:space="preserve">
     <value>Familiaridad: todas</value>
+  </data>
+  <data name="vis_filtros_activo" xml:space="preserve">
+    <value>Filtros por fecha y atributos</value>
+  </data>
+  <data name="vis_filtro_desde" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="vis_filtro_hasta" xml:space="preserve">
+    <value>Hasta</value>
+  </data>
+  <data name="vis_filtro_plataforma" xml:space="preserve">
+    <value>Plataforma</value>
+  </data>
+  <data name="vis_filtro_so" xml:space="preserve">
+    <value>Sistema operativo</value>
+  </data>
+  <data name="vis_filtro_canal" xml:space="preserve">
+    <value>Canal de distribución</value>
+  </data>
+  <data name="vis_filtro_flujo" xml:space="preserve">
+    <value>Pantalla o flujo</value>
+  </data>
+  <data name="vis_filtro_limpiar" xml:space="preserve">
+    <value>Limpiar filtros</value>
+  </data>
+  <data name="vis_filtros_boton" xml:space="preserve">
+    <value>Filtros</value>
   </data>
   <data name="vis_tester_perfil" xml:space="preserve">
     <value>Tester: {0} · {1} · familiaridad {2}</value>

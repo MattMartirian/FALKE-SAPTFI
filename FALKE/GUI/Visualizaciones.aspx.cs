@@ -19,6 +19,11 @@ namespace GUI
             public string Tipo { get; set; }
             public string TipoClave { get; set; }
             public string Fecha { get; set; }
+            public string FechaIso { get; set; }
+            public string Plataforma { get; set; }
+            public string SistemaOperativo { get; set; }
+            public string Canal { get; set; }
+            public string Flujo { get; set; }
             public string Duracion { get; set; }
             public int DuracionSegundos { get; set; }
             public string Analista { get; set; }
@@ -87,6 +92,11 @@ namespace GUI
                         Tipo = EtiquetaTipo(s.TipoActivo),
                         TipoClave = (s.TipoActivo ?? string.Empty).ToLowerInvariant(),
                         Fecha = s.Fecha.ToString("dd MMM yyyy", cultura),
+                        FechaIso = s.Fecha.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        Plataforma = (s.Plataforma ?? string.Empty).Trim(),
+                        SistemaOperativo = (s.SistemaOperativo ?? string.Empty).Trim(),
+                        Canal = (s.Canal ?? string.Empty).Trim(),
+                        Flujo = (s.Flujo ?? string.Empty).Trim(),
                         Duracion = FormatoDuracion(s.DuracionSegundos),
                         DuracionSegundos = s.DuracionSegundos,
                         Analista = s.NombreAnalista,

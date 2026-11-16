@@ -63,10 +63,19 @@ namespace ORM
         // El filtro por empresa va en el SQL (JOIN con la categoria): una sesion de otra empresa no se puede traer ni sabiendo su ID.
         private const string SQL_CON_DATOS = @"
             SELECT s.*, c.nombre_categoria, c.tipo_activo_digital_categoria,
-                   LTRIM(RTRIM(ISNULL(u.nombre_usuario, '') + ' ' + ISNULL(u.apellido_usuario, ''))) AS nombre_analista
+                   LTRIM(RTRIM(ISNULL(u.nombre_usuario, '') + ' ' + ISNULL(u.apellido_usuario, ''))) AS nombre_analista,
+                   c.flujo_analizado_categoria AS flujo_categoria,
+                   COALESCE(vj.plataforma_videojuego, aw.dispositivo_objetivo_appweb) AS plataforma_categoria,
+                   COALESCE(am.sistema_operativo_appmovil, sw.sistema_operativo_software) AS so_categoria,
+                   pu.canal_distribucion_publicidad AS canal_categoria
             FROM SesionGrabadaTable s
             INNER JOIN CategoriaTable c ON c.id_categoria = s.id_categoria
             LEFT JOIN UsuarioTable u ON u.id_usuario = s.id_usuario
+            LEFT JOIN CategoriaAppWebTable aw ON aw.id_categoria = c.id_categoria
+            LEFT JOIN CategoriaAppMovilTable am ON am.id_categoria = c.id_categoria
+            LEFT JOIN CategoriaPublicidadTable pu ON pu.id_categoria = c.id_categoria
+            LEFT JOIN CategoriaSoftwareTable sw ON sw.id_categoria = c.id_categoria
+            LEFT JOIN CategoriaVideojuegoTable vj ON vj.id_categoria = c.id_categoria
             WHERE c.id_empresa = @idEmpresa";
 
         public List<SesionGrabada_BE> ObtenerPorEmpresa(int idEmpresa)
@@ -117,7 +126,11 @@ namespace ORM
                 DVH = Valor<string>(dr, "DVH"),
                 NombreCategoria = dr.Table.Columns.Contains("nombre_categoria") ? Valor<string>(dr, "nombre_categoria") : null,
                 TipoActivo = dr.Table.Columns.Contains("tipo_activo_digital_categoria") ? Valor<string>(dr, "tipo_activo_digital_categoria") : null,
-                NombreAnalista = dr.Table.Columns.Contains("nombre_analista") ? Valor<string>(dr, "nombre_analista") : null
+                NombreAnalista = dr.Table.Columns.Contains("nombre_analista") ? Valor<string>(dr, "nombre_analista") : null,
+                Plataforma = dr.Table.Columns.Contains("plataforma_categoria") ? Valor<string>(dr, "plataforma_categoria") : null,
+                SistemaOperativo = dr.Table.Columns.Contains("so_categoria") ? Valor<string>(dr, "so_categoria") : null,
+                Canal = dr.Table.Columns.Contains("canal_categoria") ? Valor<string>(dr, "canal_categoria") : null,
+                Flujo = dr.Table.Columns.Contains("flujo_categoria") ? Valor<string>(dr, "flujo_categoria") : null
             };
         }
     }
