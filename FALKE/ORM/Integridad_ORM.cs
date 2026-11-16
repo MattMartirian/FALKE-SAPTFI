@@ -65,7 +65,10 @@ namespace ORM
         public List<string> ObtenerDVHs(TablasBD tabla)
         {
             string nombreTabla = NombreTabla(tabla);
-            string sql = $"SELECT DVH FROM {nombreTabla} WHERE DVH IS NOT NULL";
+            // el DVV encadena los DVH en este orden: sin ORDER BY SQL Server no lo garantiza
+            var columnasPK = ObtenerColumnasPrimaria(nombreTabla);
+            string orden = columnasPK.Count > 0 ? " ORDER BY " + string.Join(", ", columnasPK) : string.Empty;
+            string sql = $"SELECT DVH FROM {nombreTabla} WHERE DVH IS NOT NULL{orden}";
 
             var dt = Gestor.EjecutarQuery(sql);
             var dvhs = new List<string>();

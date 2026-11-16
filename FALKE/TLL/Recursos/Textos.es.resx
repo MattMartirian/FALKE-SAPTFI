@@ -4565,6 +4565,9 @@ Para activarla y definir tu contraseña, entrá a este enlace (vence en 48 horas
   <data name="bitacora_ev_informe_exportado" xml:space="preserve">
     <value>Informe de sesión exportado</value>
   </data>
+  <data name="bitacora_ev_analisis_multiple_generado" xml:space="preserve">
+    <value>Análisis múltiple generado</value>
+  </data>
   <data name="vis_exportar_idioma" xml:space="preserve">
     <value>Idioma del informe</value>
   </data>

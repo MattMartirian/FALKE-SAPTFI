@@ -4565,6 +4565,9 @@ To activate it and set your password, open this link (it expires in 48 hours):
   <data name="bitacora_ev_informe_exportado" xml:space="preserve">
     <value>Session report exported</value>
   </data>
+  <data name="bitacora_ev_analisis_multiple_generado" xml:space="preserve">
+    <value>Multiple analysis generated</value>
+  </data>
   <data name="vis_exportar_idioma" xml:space="preserve">
     <value>Report language</value>
   </data>

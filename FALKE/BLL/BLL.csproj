@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Categoria_BLL.cs" />
     <Compile Include="SesionGrabada_BLL.cs" />
+    <Compile Include="AnalisisMultiple_BLL.cs" />
     <Compile Include="Dispositivo_BLL.cs" />
     <Compile Include="ModeloDispositivo_BLL.cs" />
     <Compile Include="Empresa_BLL.cs" />
