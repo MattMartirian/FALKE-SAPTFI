@@ -4955,4 +4955,7 @@ To change the password:
 3. Repeat the new password.
 4. Save the change.</value>
   </data>
+  <data name="vis_sin_empresa" xml:space="preserve">
+    <value>This account is not associated with any company, so there are no sessions to show. Sessions belong to each client company and are viewed from their accounts.</value>
+  </data>
 </root>

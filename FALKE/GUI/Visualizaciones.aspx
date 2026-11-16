@@ -12,7 +12,7 @@
 
         <h2 data-i18n="vis.rail.sesiones">[[categorias_sesiones]]</h2>
 
-        <button type="button" class="vis-filtros-toggle" id="btnFiltros" aria-expanded="false" aria-controls="visFiltrosPanel">
+        <button type="button" class="vis-filtros-toggle" id="btnFiltros" aria-expanded="false" aria-controls="visFiltrosPanel" <%= SinEmpresa ? "style=\"display:none\"" : "" %>>
             <svg width="16" height="16" aria-hidden="true"><use href="#i-filtro" /></svg>
             <span class="vis-filtros-texto">[[vis_filtros_boton]]</span>
             <span class="vis-filtros-n" id="visFiltrosN" hidden></span>
@@ -72,12 +72,12 @@
             </div>
         </div>
 
-        <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Categorias.aspx") %>">
+        <a class="btn btn-secundario btn-chico btn-bloque" href="<%: ResolveUrl("~/Categorias.aspx") %>" <%= SinEmpresa ? "style=\"display:none\"" : "" %>>
             <svg width="16" height="16" aria-hidden="true"><use href="#i-mas" /></svg>
             <span data-i18n="vis.nuevaCategoria">[[categorias_nueva_categoria]]</span>
         </a>
 
-        <h2 data-i18n="vis.rail.listado">[[visualizaciones_listado_de_sesiones]]</h2>
+        <h2 data-i18n="vis.rail.listado" <%= SinEmpresa ? "style=\"display:none\"" : "" %>>[[visualizaciones_listado_de_sesiones]]</h2>
 
         <div class="vis-lista" id="listaSesiones">
             <%-- Una fila por sesion de la empresa del usuario (la arma el servidor). El token es al azar: no es el ID de la base. --%>
@@ -119,8 +119,8 @@
 
         <div class="vacio" id="vacioMain">
             <svg width="28" height="28" aria-hidden="true"><use href="#i-video" /></svg>
-            <p class="sin-margen"><%: Traducir(HaySesiones ? "vis_elige_sesion" : "vis_sin_sesiones_empresa") %></p>
-            <% if (!HaySesiones) { %>
+            <p class="sin-margen"><%: Traducir(SinEmpresa ? "vis_sin_empresa" : HaySesiones ? "vis_elige_sesion" : "vis_sin_sesiones_empresa") %></p>
+            <% if (!HaySesiones && !SinEmpresa) { %>
             <a class="btn btn-primario" href="<%: ResolveUrl("~/NuevaGrabacion.aspx") %>">[[app_nueva_grabacion]]</a>
             <% } %>
         </div>

@@ -4955,4 +4955,7 @@ Para alterar a senha:
 3. Repita a senha nova.
 4. Salve a alteração.</value>
   </data>
+  <data name="vis_sin_empresa" xml:space="preserve">
+    <value>Esta conta não está associada a nenhuma empresa, por isso não há sessões para mostrar. As sessões pertencem a cada empresa cliente e são vistas a partir das suas contas.</value>
+  </data>
 </root>

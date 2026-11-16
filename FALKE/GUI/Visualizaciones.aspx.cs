@@ -46,6 +46,7 @@ namespace GUI
 
         protected bool HayError;
         protected bool HaySesiones;
+        protected bool SinEmpresa;
 
         // url de un archivo estatico (css / js) con su fecha de modificacion, asi el navegador no usa una copia vieja del cache
         protected string UrlVersionada(string rutaVirtual)
@@ -76,6 +77,13 @@ namespace GUI
             {
                 ActorUsuario_TE actor = SesionActual_GUI.ObtenerActor();
                 if (actor == null) return;
+
+                // La cuenta de emergencia no pertenece a ninguna empresa: no tiene sesiones propias, y eso no es un error.
+                if (actor.IdEmpresa <= 0)
+                {
+                    SinEmpresa = true;
+                    return;
+                }
 
                 CultureInfo cultura = IdiomaActual_GUI.Cultura;
 

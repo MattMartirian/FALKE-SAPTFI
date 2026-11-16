@@ -4955,4 +4955,7 @@ Para cambiar la contraseña:
 3. Repetí la contraseña nueva.
 4. Guardá el cambio.</value>
   </data>
+  <data name="vis_sin_empresa" xml:space="preserve">
+    <value>Esta cuenta no está asociada a ninguna empresa, por eso no tiene sesiones para mostrar. Las sesiones pertenecen a cada empresa cliente y se ven desde sus cuentas.</value>
+  </data>
 </root>

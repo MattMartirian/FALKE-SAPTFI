@@ -16,6 +16,7 @@
     position: sticky;
     top: var(--alto-topbar);
     align-self: start;
+    min-height: calc(100vh - var(--alto-topbar));
     max-height: calc(100vh - var(--alto-topbar));
     overflow-y: auto;
     display: flex;
@@ -489,6 +490,7 @@ html[data-tema="noche"] .vis-filtros-n
     {
         position: static;
         max-height: none;
+        min-height: 0;
         border-right: 0;
         border-bottom: 1px solid var(--borde);
     }
@@ -533,4 +535,26 @@ html[data-tema="noche"] .vis-filtros-n
     height: 36px;
     border-radius: var(--radio-sm);
     cursor: pointer;
+}
+
+/* Estado vacio del area principal: centrado vertical y boton separado del texto */
+#vacioMain
+{
+    min-height: calc(100vh - var(--alto-topbar) - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 24px;
+}
+
+#vacioMain[hidden]
+{
+    display: none;
+}
+
+#vacioMain svg
+{
+    margin-bottom: 0;
 }

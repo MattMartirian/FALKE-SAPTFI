@@ -4955,4 +4955,7 @@ So ändern Sie das Passwort:
 3. Wiederholen Sie das neue Passwort.
 4. Speichern Sie die Änderung.</value>
   </data>
+  <data name="vis_sin_empresa" xml:space="preserve">
+    <value>Dieses Konto ist keinem Unternehmen zugeordnet, daher gibt es keine Sitzungen anzuzeigen. Sitzungen gehören zu den einzelnen Kundenunternehmen und werden über deren Konten angezeigt.</value>
+  </data>
 </root>
