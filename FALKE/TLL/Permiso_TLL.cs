@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ORM;
+using SERVICES;
 using TE;
 
 namespace TLL
@@ -12,12 +13,14 @@ namespace TLL
         private readonly PermisoRepository permisoRepo;
         private readonly UsuarioRepository usuarioRepo;
         private readonly BitacoraGestor_TLL bitacora;
+        private readonly GestorIntegridad_SERVICE gestorIntegridad;
 
         public Permiso_TLL()
         {
             permisoRepo = new PermisoRepository();
             usuarioRepo = new UsuarioRepository();
             bitacora = new BitacoraGestor_TLL();
+            gestorIntegridad = new GestorIntegridad_SERVICE();
         }
 
 
@@ -108,6 +111,7 @@ namespace TLL
             {
                 permiso.Descripcion = nueva;
                 permisoRepo.Modificar(permiso);
+                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { permiso.Nombre });
 
                 bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_DESCRIPCION, CriticidadBitacora.Media,
                     DetalleBitacora_TLL.Armar(permiso.Nombre));
@@ -179,6 +183,10 @@ namespace TLL
 
                 permisoRepo.Modificar(objetivo);
 
+                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { objetivo.Nombre });
+                foreach (string a in aAgregar) gestorIntegridad.ActualizarDVHRegistro(TablasBD.RelacionPermisos, new[] { objetivo.Nombre, a });
+                gestorIntegridad.GuardarIntegridadTabla(TablasBD.RelacionPermisos);
+
                 bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_COMPOSICION, CriticidadBitacora.Alta,
                     DetalleBitacora_TLL.Armar(nombre));
             });
@@ -213,6 +221,9 @@ namespace TLL
                 permisoRepo.Modificar(compuesto);
                 permisoRepo.Eliminar(nombre);
 
+                gestorIntegridad.GuardarIntegridadTabla(TablasBD.RelacionPermisos);
+                gestorIntegridad.GuardarIntegridadTabla(TablasBD.Permiso);
+
                 bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_BAJA, CriticidadBitacora.Alta,
                     DetalleBitacora_TLL.Armar(nombre));
             });
@@ -236,6 +247,7 @@ namespace TLL
             Transaccion_ORM.Ejecutar(() =>
             {
                 permisoRepo.Alta(new PermisoCompuesto_TE(nombre, esRol) { Descripcion = descripcion, EsDeGestion = esRol && deGestion });
+                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Permiso, new[] { nombre });
 
                 bitacora.Auditar(actor, "Roles", null, EventosBitacora_TLL.ROL_ALTA, CriticidadBitacora.Media,
                     DetalleBitacora_TLL.Armar(nombre));

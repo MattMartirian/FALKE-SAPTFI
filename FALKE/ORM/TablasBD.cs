@@ -17,6 +17,9 @@ namespace ORM
         Dispositivo,
         Prestamo,
         ModeloDispositivo,
-        Backup
+        Backup,
+        Idioma,
+        Permiso,
+        RelacionPermisos
     }
 }
