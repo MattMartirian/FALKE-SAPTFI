@@ -2,6 +2,7 @@
 using SECURITY;
 using SERVICES;
 using System;
+using System.Collections.Generic;
 using TE;
 
 namespace TLL
@@ -75,7 +76,7 @@ namespace TLL
             {
                 RegistrarIntentoFallido(usuario);
 
-                if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos) return ResultadoLogin_TLL.BloqueadoPorIntentos();
+                if (usuario.Estado == EstadoUsuario.BloqueadoPorIntentos) return ResultadoLogin_TLL.RecienBloqueado(usuario, AdministradoresDeLaEmpresa(usuario));
 
                 return ResultadoLogin_TLL.CredencialesInvalidas(Math.Max(0, MAX_INTENTOS_FALLIDOS - usuario.IntentosFallidosUsuario));
             }
@@ -169,6 +170,31 @@ namespace TLL
                         DetalleBitacora_TLL.Clave("bitacora_det_intento_fallido", DetalleBitacora_TLL.Clave(contexto), usuario.IntentosFallidosUsuario, MAX_INTENTOS_FALLIDOS)));
                 }
             });
+        }
+
+        // Usuarios activos de la misma empresa que pueden cambiar el estado de una cuenta (el Administrador). Quien se bloqueó no se avisa a sí mismo.
+        private List<Usuario_TE> AdministradoresDeLaEmpresa(Usuario_TE bloqueado)
+        {
+            var lista = new List<Usuario_TE>();
+
+            try
+            {
+                foreach (Usuario_TE u in usuarioRepo.ObtenerPorEmpresa(bloqueado.IdEmpresa))
+                {
+                    if (u.IdUsuario == bloqueado.IdUsuario) continue;
+                    if (u.Estado != EstadoUsuario.Activo) continue;
+                    if (string.IsNullOrWhiteSpace(u.EmailUsuario)) continue;
+                    if (!Permiso_TLL.ComprobarPermiso(Patentes_TLL.CAMBIAR_ESTADO_USUARIO, u.Rol)) continue;
+
+                    lista.Add(u);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogErrores_SERVICE.Registrar("Autenticacion.AdministradoresDeLaEmpresa", ex);
+            }
+
+            return lista;
         }
 
         private void ResetearIntentosFallidos(Usuario_TE usuario)

@@ -110,6 +110,52 @@ namespace GUI
             }
         }
 
+        public class RespuestaRegistro
+        {
+            public bool ok { get; set; }
+            public string mensaje { get; set; }
+        }
+
+        // Deja constancia de quien genero el analisis y con que sesiones. El calculo sigue ocurriendo en el navegador.
+        [WebMethod(EnableSession = true)]
+        public RespuestaRegistro RegistrarAnalisis(string[] tokens)
+        {
+            try
+            {
+                ActorUsuario_TE actor = SesionActual_GUI.ObtenerActor();
+                if (actor == null) return new RespuestaRegistro { mensaje = IdiomaActual_GUI.Texto("comun_sesion_expirada") };
+
+                var guardados = Session[GrabacionArchivo_GUI.CLAVE_SESION] as Dictionary<string, int>;
+                var ids = new List<int>();
+
+                if (guardados == null || tokens == null || tokens.Length == 0 || tokens.Length > MAX_SESIONES)
+                    return new RespuestaRegistro { mensaje = IdiomaActual_GUI.Texto("sesion_no_existe") };
+
+                foreach (string token in tokens)
+                {
+                    int idSesion;
+
+                    if (token == null || !guardados.TryGetValue(token, out idSesion))
+                        return new RespuestaRegistro { mensaje = IdiomaActual_GUI.Texto("sesion_no_existe") };
+
+                    ids.Add(idSesion);
+                }
+
+                new AnalisisMultiple_BLL().Registrar(actor, ids);
+
+                return new RespuestaRegistro { ok = true };
+            }
+            catch (Exception ex)
+            {
+                var traducible = ex as IMensajeTraducible_TLL;
+
+                if (traducible != null) return new RespuestaRegistro { mensaje = traducible.Traducir(IdiomaActual_GUI.Codigo) };
+
+                LogErrores_SERVICE.Registrar("AnalisisMultiple.Registrar", ex);
+                return new RespuestaRegistro { mensaje = IdiomaActual_GUI.Texto("vis_exportar_error") };
+            }
+        }
+
         private static RespuestaInformeMultiple Armar(InformeMultiple_BE informe, string codigo)
         {
             CultureInfo cultura = Traductor_TLL.Cultura(codigo);

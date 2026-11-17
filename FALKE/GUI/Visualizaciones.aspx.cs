@@ -19,6 +19,11 @@ namespace GUI
             public string Tipo { get; set; }
             public string TipoClave { get; set; }
             public string Fecha { get; set; }
+            public string FechaIso { get; set; }
+            public string Plataforma { get; set; }
+            public string SistemaOperativo { get; set; }
+            public string Canal { get; set; }
+            public string Flujo { get; set; }
             public string Duracion { get; set; }
             public int DuracionSegundos { get; set; }
             public string Analista { get; set; }
@@ -41,6 +46,7 @@ namespace GUI
 
         protected bool HayError;
         protected bool HaySesiones;
+        protected bool SinEmpresa;
 
         // url de un archivo estatico (css / js) con su fecha de modificacion, asi el navegador no usa una copia vieja del cache
         protected string UrlVersionada(string rutaVirtual)
@@ -72,6 +78,13 @@ namespace GUI
                 ActorUsuario_TE actor = SesionActual_GUI.ObtenerActor();
                 if (actor == null) return;
 
+                // La cuenta de emergencia no pertenece a ninguna empresa: no tiene sesiones propias, y eso no es un error.
+                if (actor.IdEmpresa <= 0)
+                {
+                    SinEmpresa = true;
+                    return;
+                }
+
                 CultureInfo cultura = IdiomaActual_GUI.Cultura;
 
                 foreach (SesionGrabada_BE s in new SesionGrabada_BLL().Listar(actor))
@@ -87,6 +100,11 @@ namespace GUI
                         Tipo = EtiquetaTipo(s.TipoActivo),
                         TipoClave = (s.TipoActivo ?? string.Empty).ToLowerInvariant(),
                         Fecha = s.Fecha.ToString("dd MMM yyyy", cultura),
+                        FechaIso = s.Fecha.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        Plataforma = (s.Plataforma ?? string.Empty).Trim(),
+                        SistemaOperativo = (s.SistemaOperativo ?? string.Empty).Trim(),
+                        Canal = (s.Canal ?? string.Empty).Trim(),
+                        Flujo = (s.Flujo ?? string.Empty).Trim(),
                         Duracion = FormatoDuracion(s.DuracionSegundos),
                         DuracionSegundos = s.DuracionSegundos,
                         Analista = s.NombreAnalista,

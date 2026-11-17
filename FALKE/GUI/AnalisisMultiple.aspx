@@ -660,6 +660,7 @@
             errorInforme: "[[js:vis_exportar_error]]"
         };
         var URL_INFORME = "<%: ResolveUrl("~/AnalisisMultiple_WebMethod.asmx") %>/DatosInformeMultiple";
+        var URL_REGISTRO = "<%: ResolveUrl("~/AnalisisMultiple_WebMethod.asmx") %>/RegistrarAnalisis";
         var URL_LOGO = "<%: ResolveUrl("~/Content/img/falke-logo.svg") %>";
     </script>
 
@@ -855,6 +856,18 @@
 
             document.getElementById("btnRegenerar").addEventListener("click", regenerar);
 
+            function registrarAnalisis(casillas) {
+                var tokens = [];
+                for (var i = 0; i < casillas.length; i++) tokens.push(casillas[i].value);
+
+                fetch(URL_REGISTRO, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    body: JSON.stringify({ tokens: tokens })
+                }).catch(function () { });
+            }
+
             btnGenerar.addEventListener("click", function () {
                 var marcadas = elegidas();
                 var nombres = [];
@@ -863,6 +876,8 @@
                 for (var i = 0; i < marcadas.length; i++) {
                     nombres.push(marcadas[i].getAttribute("data-nombre"));
                 }
+
+                registrarAnalisis(marcadas);
 
                 subtitulo.textContent = filaActiva().getAttribute("data-categoria-nombre") + " · " + nombres.join(" · ");
 

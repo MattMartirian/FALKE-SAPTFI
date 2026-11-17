@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ORM;
+using SERVICES;
 using TE;
 
 namespace TLL
@@ -20,6 +21,7 @@ namespace TLL
         private readonly TraduccionRepository traduccionRepo;
         private readonly ITraductorAutomatico_TLL traductor;
         private readonly BitacoraGestor_TLL bitacora;
+        private readonly GestorIntegridad_SERVICE gestorIntegridad;
 
         public Idioma_TLL() : this(new TraductorResx_TLL()) { }
 
@@ -29,6 +31,7 @@ namespace TLL
             traduccionRepo = new TraduccionRepository();
             this.traductor = traductor;
             bitacora = new BitacoraGestor_TLL();
+            gestorIntegridad = new GestorIntegridad_SERVICE();
         }
 
         public List<Idioma_TE> ListarActivos()
@@ -102,6 +105,7 @@ namespace TLL
             {
                 idiomaRepo.Alta(idioma);
                 traduccionRepo.AltaMasiva(Armar(idioma.IdIdioma, codigo));
+                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Idioma, new[] { idioma.IdIdioma.ToString() });
 
                 bitacora.Auditar(actor, MODULO, null, EventosBitacora_TLL.IDIOMA_ALTA, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(idioma.NombreIdioma));
             });
@@ -130,6 +134,7 @@ namespace TLL
             Transaccion_ORM.Ejecutar(() =>
             {
                 idiomaRepo.Modificar(idioma);
+                gestorIntegridad.ActualizarDVHRegistro(TablasBD.Idioma, new[] { idioma.IdIdioma.ToString() });
 
                 bitacora.Auditar(actor, MODULO, null, activo ? EventosBitacora_TLL.IDIOMA_HABILITADO : EventosBitacora_TLL.IDIOMA_DESHABILITADO, CriticidadBitacora.Media, DetalleBitacora_TLL.Armar(idioma.NombreIdioma));
             });
@@ -148,6 +153,7 @@ namespace TLL
             {
                 traduccionRepo.EliminarPorIdioma(idIdioma);
                 idiomaRepo.Eliminar(idIdioma);
+                gestorIntegridad.GuardarIntegridadTabla(TablasBD.Idioma);
 
                 bitacora.Auditar(actor, MODULO, null, EventosBitacora_TLL.IDIOMA_BAJA, CriticidadBitacora.Alta, DetalleBitacora_TLL.Armar(idioma.NombreIdioma));
             });

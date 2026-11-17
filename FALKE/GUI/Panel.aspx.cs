@@ -53,6 +53,23 @@ namespace GUI
 
             if (actor == null) return;
 
+            CargarTodo(actor);
+        }
+
+        // el cambio de idioma llega despues de Page_Load: se vuelven a enlazar las listas para que los textos y fechas salgan en el idioma nuevo
+        protected override void AlCambiarIdioma()
+        {
+            base.AlCambiarIdioma();
+
+            ActorUsuario_TE actor = SesionActual_GUI.ObtenerActor();
+
+            if (actor == null) return;
+
+            CargarTodo(actor);
+        }
+
+        private void CargarTodo(ActorUsuario_TE actor)
+        {
             CargarSesiones(actor);
             CargarCategorias(actor);
             CargarDispositivos(actor);

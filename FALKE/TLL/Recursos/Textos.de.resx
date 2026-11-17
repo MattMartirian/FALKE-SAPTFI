@@ -1048,7 +1048,7 @@
     <value>Das Unternehmen "{0}" und sein Administrator {1} wurden angelegt (Aktivierung ausstehend).</value>
   </data>
   <data name="empresa_nueva_ok_correo_falla" xml:space="preserve">
-    <value> Die Aktivierungs-E-Mail konnte nicht gesendet werden: Die Einladung kann unter Benutzer erneut gesendet werden.</value>
+    <value> Beim Senden der Aktivierungs-E-Mail ist ein Fehler aufgetreten. Senden Sie die Einladung später im Bereich Benutzer erneut.</value>
   </data>
   <data name="empresa_nueva_ok_enlace" xml:space="preserve">
     <value> Wir haben eine E-Mail mit dem Aktivierungslink gesendet.</value>
@@ -3425,6 +3425,15 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="correo_activar_enlace" xml:space="preserve">
     <value>Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (läuft in 48 Stunden ab):</value>
   </data>
+  <data name="correo_bloqueo_asunto" xml:space="preserve">
+    <value>Konto in Falke gesperrt</value>
+  </data>
+  <data name="correo_bloqueo_texto" xml:space="preserve">
+    <value>Das Konto von {0} ({1}) wurde gesperrt, weil die maximale Anzahl fehlgeschlagener Anmeldeversuche überschritten wurde.</value>
+  </data>
+  <data name="correo_bloqueo_accion" xml:space="preserve">
+    <value>Die Person kann den Zugang über die Anmeldeseite mit der Option zum Zurücksetzen des Passworts wiederherstellen. Wenn Sie diese Aktivität nicht erkennen, prüfen Sie das Konto im Bereich Benutzer.</value>
+  </data>
   <data name="correo_cuenta_creada" xml:space="preserve">
     <value>Ihr Falke-Konto wurde erstellt.</value>
   </data>
@@ -4163,6 +4172,30 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="grabacion_rec_subiendo" xml:space="preserve">
     <value>Aufnahme wird auf dem Server gespeichert… Schließen Sie diese Seite nicht.</value>
   </data>
+  <data name="grabacion_rec_pausar" xml:space="preserve">
+    <value>Pausieren</value>
+  </data>
+  <data name="grabacion_rec_reanudar" xml:space="preserve">
+    <value>Fortsetzen</value>
+  </data>
+  <data name="grabacion_rec_reiniciar" xml:space="preserve">
+    <value>Neu starten</value>
+  </data>
+  <data name="grabacion_rec_en_pausa" xml:space="preserve">
+    <value>Pausiert</value>
+  </data>
+  <data name="grabacion_rec_reiniciar_titulo" xml:space="preserve">
+    <value>Aufnahme neu starten</value>
+  </data>
+  <data name="grabacion_rec_reiniciar_texto" xml:space="preserve">
+    <value>Alles bisher Aufgezeichnete wird verworfen und die Sitzung beginnt mit dem gewählten Countdown von vorn. Der freigegebene Bildschirm bleibt ausgewählt.</value>
+  </data>
+  <data name="grabacion_rec_no_reiniciar" xml:space="preserve">
+    <value>Nicht neu starten</value>
+  </data>
+  <data name="grabacion_rec_si_reiniciar" xml:space="preserve">
+    <value>Ja, neu starten</value>
+  </data>
   <data name="grabacion_ok_texto" xml:space="preserve">
     <value>Die Sitzung "{0}" ist jetzt in Ihrem Konto gespeichert.</value>
   </data>
@@ -4204,6 +4237,33 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   </data>
   <data name="vis_filtro_familiaridad" xml:space="preserve">
     <value>Vertrautheit: alle</value>
+  </data>
+  <data name="vis_filtros_activo" xml:space="preserve">
+    <value>Filter nach Datum und Merkmalen</value>
+  </data>
+  <data name="vis_filtro_desde" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="vis_filtro_hasta" xml:space="preserve">
+    <value>Bis</value>
+  </data>
+  <data name="vis_filtro_plataforma" xml:space="preserve">
+    <value>Plattform</value>
+  </data>
+  <data name="vis_filtro_so" xml:space="preserve">
+    <value>Betriebssystem</value>
+  </data>
+  <data name="vis_filtro_canal" xml:space="preserve">
+    <value>Vertriebskanal</value>
+  </data>
+  <data name="vis_filtro_flujo" xml:space="preserve">
+    <value>Bildschirm oder Ablauf</value>
+  </data>
+  <data name="vis_filtro_limpiar" xml:space="preserve">
+    <value>Filter zurücksetzen</value>
+  </data>
+  <data name="vis_filtros_boton" xml:space="preserve">
+    <value>Filter</value>
   </data>
   <data name="vis_tester_perfil" xml:space="preserve">
     <value>Tester: {0} · {1} · Vertrautheit {2}</value>
@@ -4505,6 +4565,9 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   <data name="bitacora_ev_informe_exportado" xml:space="preserve">
     <value>Sitzungsbericht exportiert</value>
   </data>
+  <data name="bitacora_ev_analisis_multiple_generado" xml:space="preserve">
+    <value>Mehrfachanalyse erstellt</value>
+  </data>
   <data name="vis_exportar_idioma" xml:space="preserve">
     <value>Sprache des Berichts</value>
   </data>
@@ -4657,5 +4720,242 @@ Um es zu aktivieren und Ihr Passwort festzulegen, öffnen Sie diesen Link (er l�
   </data>
   <data name="panel_categoria" xml:space="preserve">
     <value>Kategorie</value>
+  </data>
+  <data name="ayuda_boton" xml:space="preserve">
+    <value>Erfahren Sie, wie diese Seite funktioniert</value>
+  </data>
+  <data name="ayuda_subtitulo" xml:space="preserve">
+    <value>Wozu diese Seite dient</value>
+  </data>
+  <data name="ayuda_panel" xml:space="preserve">
+    <value>Dies ist die Startseite von Falke.
+Sie zeigt eine Zusammenfassung der Aktivität Ihres Unternehmens und die letzten Vorgänge, die von Ihrem Konto aus ausgeführt wurden.
+- Mit "Neue Aufnahme" starten Sie direkt von hier aus eine Eye-Tracking-Sitzung.
+Um von einer anderen Seite hierher zurückzukehren, nutzen Sie das Falke-Logo oder im Menü "Startseite".</value>
+  </data>
+  <data name="ayuda_visualizaciones" xml:space="preserve">
+    <value>Dies ist die Seite zur Ansicht der Sitzungen.
+Von hier öffnen Sie eine aufgezeichnete Sitzung und analysieren den Blick der Testperson: allgemeine Metriken, Video mit Tracking, Heatmap, Interessen- und blinde Zonen, Streuung, Aufmerksamkeit gegenüber Ablenkung und Blickverlauf.
+- Mit "Filter" suchen Sie nach Name, Kategorie und Datumsbereich. "Filter zurücksetzen" stellt die Suche zurück.
+- Mit "Details anzeigen" bei jedem Diagramm öffnen Sie diese Analyse im Detail.
+- Mit "Bericht herunterladen" erzeugen Sie ein PDF der Sitzung. Sie wählen Abschnitte und Sprache und bestätigen mit "Bericht exportieren".
+So analysieren Sie eine Sitzung:
+1. Wenden Sie die Filter an, die Sie brauchen, um sie in der Liste zu finden.
+2. Wählen Sie die Sitzung aus.
+3. Prüfen Sie die Metriken und öffnen Sie jedes Diagramm mit "Details anzeigen".
+4. Um die Analyse als PDF zu erhalten, klicken Sie auf "Bericht herunterladen" und wählen Sie die aufzunehmenden Daten.</value>
+  </data>
+  <data name="ayuda_nuevagrabacion" xml:space="preserve">
+    <value>Dies ist die Seite für neue Aufnahmen.
+Von hier zeichnen Sie eine Eye-Tracking-Sitzung auf: Sie konfigurieren die Sitzungsdaten, prüfen das Gerät und nehmen auf, während die Testperson das bewertete Produkt nutzt.
+- Mit "Weiter" gehen Sie von den Sitzungsdaten zur Prüfung des Geräts.
+- Mit "Tobii Experience öffnen" kalibrieren Sie den Eye-Tracker. Mit "Erneut prüfen" wiederholen Sie die Kontrolle, nachdem Sie einen Punkt behoben haben.
+- Mit "Aufnahme starten" beginnen der Countdown und danach die Erfassung. "Pausieren" und "Fortsetzen" halten sie an und setzen sie fort, "Neu starten" beginnt von vorn und "Beenden" schließt sie ab.
+- Mit "Speichern" wird die Sitzung in Ihrem Konto abgelegt. "Verwerfen" speichert nichts. "Weiteren Teil aufnehmen" setzt denselben Test fort und "Analyse ansehen" öffnet die gespeicherte Sitzung.
+So zeichnen Sie eine Sitzung auf:
+1. Wählen Sie Kategorie und Gerät, benennen Sie die Sitzung und geben Sie die anonymen Daten der Testperson ein.
+2. Klicken Sie auf "Weiter" und prüfen Sie, ob die Pflichtpunkte grün sind.
+3. Wählen Sie den aufzunehmenden Bildschirm und den Startzeitpunkt und klicken Sie auf "Aufnahme starten".
+4. Wechseln Sie zu der Anwendung, die Sie bewerten, und arbeiten Sie wie gewohnt.
+5. Klicken Sie auf "Beenden", prüfen Sie das Video und klicken Sie auf "Speichern".</value>
+  </data>
+  <data name="ayuda_descargas" xml:space="preserve">
+    <value>Dies ist die Installationsseite.
+Sie bündelt die Programme, die der PC für die Blickaufzeichnung braucht: den Treiber des Tobii Eye Tracker 5 und den Falke-Agenten. Sie werden einmal pro PC installiert.
+- Mit "Alles herunterladen (.zip)" laden Sie beide Programme in einer einzigen Datei herunter.
+Voraussetzungen: Windows 10 oder 11 mit 64 Bit und der per USB angeschlossene Tobii Eye Tracker 5.
+So installieren Sie sie:
+1. Laden Sie die Datei mit "Alles herunterladen (.zip)" herunter.
+2. Installieren Sie Tobii Experience und starten Sie den PC neu, wenn dies verlangt wird.
+3. Schließen Sie den Tobii Eye Tracker 5 an und schließen Sie die Kalibrierung ab.
+4. Führen Sie AgenteMirada.exe aus. Das Programm installiert sich selbst und ist bei jedem Windows-Start aktiv.
+5. Öffnen Sie "Neue Aufnahme": Die Seite prüft, ob der Agent aktiv ist.</value>
+  </data>
+  <data name="ayuda_categorias" xml:space="preserve">
+    <value>Dies ist die Seite der Kategorien.
+Eine Kategorie steht für ein digitales Produkt Ihres Unternehmens, etwa eine App oder ein Videospiel, und fasst die dazu aufgezeichneten Sitzungen zusammen. Hier legen Sie Kategorien an, suchen, bearbeiten und löschen sie.
+- Mit "Neue Kategorie" öffnen Sie das Formular zum Anlegen.
+- Mit der Suche, "Asset-Typ" und "Deaktivierte anzeigen" filtern Sie die Liste.
+- Mit "Sitzungen anzeigen" greifen Sie auf die zu dieser Kategorie aufgezeichneten Sitzungen zu.
+- Wenn Sie eine Kategorie mit aufgezeichneten Sitzungen löschen, wird sie deaktiviert statt entfernt.
+So legen Sie eine Kategorie an:
+1. Klicken Sie auf "Neue Kategorie".
+2. Geben Sie den Namen ein und wählen Sie den Typ des digitalen Produkts.
+3. Füllen Sie die Felder aus, die für diesen Typ gelten, etwa den Namen des bewerteten Produkts und den zu analysierenden Ablauf.
+4. Speichern Sie die Kategorie.</value>
+  </data>
+  <data name="ayuda_analisismultiple" xml:space="preserve">
+    <value>Dies ist die Seite der Mehrfachanalyse.
+Sie kombiniert mehrere Sitzungen, um die Ergebnisse zu mitteln und zu erkennen, welche Muster sich bei verschiedenen Testpersonen wiederholen. Die Sitzungen müssen zur selben Kategorie gehören und es werden mindestens zwei benötigt.
+- Mit "Alle dieser Kategorie auswählen" markieren Sie alle Sitzungen dieser Kategorie.
+- Mit "Analyse erstellen" erhalten Sie das kombinierte Ergebnis mit seinen gemittelten Diagrammen.
+- Mit "Daten neu erzeugen" berechnen Sie das Ergebnis nach einer Änderung der Auswahl neu.
+- Mit "Bericht herunterladen" erzeugen Sie ein PDF. Sie wählen Inhalt und Sprache und bestätigen mit "Bericht exportieren".
+So erstellen Sie eine Analyse:
+1. Wählen Sie eine Sitzung aus der Liste. Sitzungen anderer Kategorien sind deaktiviert.
+2. Fügen Sie mindestens eine weitere Sitzung hinzu oder nutzen Sie "Alle dieser Kategorie auswählen".
+3. Klicken Sie auf "Analyse erstellen".
+4. Um eine Sitzung auszuschließen, deaktivieren Sie sie und klicken Sie auf "Daten neu erzeugen".
+5. Um das Ergebnis als PDF zu erhalten, klicken Sie auf "Bericht herunterladen".</value>
+  </data>
+  <data name="ayuda_mistobiis" xml:space="preserve">
+    <value>Dies ist die Seite Meine Tobiis.
+Sie zeigt die Eye-Tracker Ihres Unternehmens und bündelt die Werkzeuge, um sie vor der Aufnahme vorzubereiten.
+- Mit "Tobii Experience öffnen" starten Sie das Programm des Herstellers.
+- Mit "Tobii neu kalibrieren" verbessern Sie die Kalibrierung des Geräts.
+- Mit "Bildschirm einrichten" konfigurieren Sie den Eye-Tracker für Ihren Monitor.
+- Mit "Blick Vorschau" prüfen Sie, wo das Gerät Ihren Blick erfasst.
+Wenn ein Hinweis meldet, dass der Falke-Agent nicht gefunden wurde, prüfen Sie, ob er installiert ist und läuft. Er wird unter "Installation" installiert.
+So bereiten Sie den Tobii vor der Aufnahme vor:
+1. Klicken Sie auf "Tobii neu kalibrieren" und folgen Sie den Anweisungen in Tobii Experience.
+2. Wenn Sie den Monitor gewechselt haben, klicken Sie auf "Bildschirm einrichten".
+3. Klicken Sie auf "Blick Vorschau" und prüfen Sie, ob der Punkt Ihrem Blick folgt.</value>
+  </data>
+  <data name="ayuda_usuarios" xml:space="preserve">
+    <value>Dies ist die Benutzerseite Ihres Unternehmens.
+Sie listet die Mitglieder mit Rolle und Status auf. Wenn Sie das Konto verwalten, laden Sie von hier neue Benutzer ein und verwalten die vorhandenen. Andernfalls sehen Sie die Liste und bearbeiten Ihre eigenen Daten.
+- Mit "Benutzer einladen" legen Sie eine Person an. Sie erhält per E-Mail einen Link zur Aktivierung ihres Kontos.
+- Mit "Verwalten" in der Zeile eines Benutzers ändern Sie den Kontostatus oder die Rolle.
+- Mit "Daten bearbeiten" ändern Sie Vorname, Nachname und Oberflächensprache.
+- Mit "Einladung erneut senden" schicken Sie einen neuen Aktivierungslink an jemanden, der sein Konto noch nicht aktiviert hat.
+- Mit der Suche und den Filtern für Unternehmen, Rolle und Status grenzen Sie die Liste ein.
+So laden Sie einen Benutzer ein:
+1. Klicken Sie auf "Benutzer einladen".
+2. Füllen Sie die Daten der Person aus, einschließlich ihrer E-Mail-Adresse.
+3. Senden Sie die Einladung.
+4. Die Person erhält per E-Mail einen Link, um ihr Passwort festzulegen.</value>
+  </data>
+  <data name="ayuda_miempresa" xml:space="preserve">
+    <value>Dies ist die Seite Ihres Unternehmens.
+Sie zeigt die Daten des Unternehmens und die Geräte, die es ausgeliehen hat. Sie können Branche, Adresse und Kontakttelefon aktualisieren. Firmenname, Steuernummer, Tarif und Abrechnung verwaltet Pattern Blue: Hat sich eines davon geändert, teilen Sie es mit und es wird aktualisiert.
+- Mit "Kontakt bearbeiten" aktivieren Sie die bearbeitbaren Felder.
+- Mit "Mitarbeiter anzeigen" greifen Sie auf die Benutzerliste Ihres Unternehmens zu.
+So aktualisieren Sie die Kontaktdaten:
+1. Klicken Sie auf "Kontakt bearbeiten".
+2. Ändern Sie Branche, Adresse oder Telefon.
+3. Speichern Sie die Änderungen.</value>
+  </data>
+  <data name="ayuda_empresas" xml:space="preserve">
+    <value>Dies ist die Seite der Kundenunternehmen.
+Sie ist das Portfolio der Unternehmen, die Falke beauftragt haben, mit Tarif und Status. Von hier suchen Sie ein Unternehmen, sehen seine Details, bearbeiten seine Daten und ändern seinen Status.
+- Mit "Alle", "Aktiv", "Gesperrt" und "Deaktiviert" filtern Sie die Liste nach Status.
+- Mit "Neues Unternehmen" registrieren Sie ein Kundenunternehmen.
+- Die Details jedes Unternehmens haben Reiter für Daten, Tarif, Team und Sitzungen sowie Zugänge zu seinen Geräten und Benutzern.
+- Mit "Bearbeiten" ändern Sie die Daten. Eine Änderung von Firmenname, Steuernummer oder Tarif erfordert einen Grund und wird im Audit-Protokoll festgehalten.
+So ändern Sie den Status eines Unternehmens:
+1. Suchen Sie das Unternehmen und öffnen Sie seine Details.
+2. Klicken Sie auf die Schaltfläche für den Status des Unternehmens.
+3. Wählen Sie den neuen Status und geben Sie den Grund an, der Pflicht ist.
+4. Bestätigen Sie die Änderung.</value>
+  </data>
+  <data name="ayuda_empresanueva" xml:space="preserve">
+    <value>Dies ist die Seite zur Registrierung von Kundenunternehmen.
+Der Manager von Pattern Blue nutzt sie, sobald die Geschäftsvereinbarung formalisiert ist. Erfasst werden die Daten des Unternehmens und die seines ersten Administrators, der per E-Mail einen Link zur Aktivierung seines Kontos erhält.
+- Bei der Registrierung werden das Unternehmen und sein erster Administrator gemeinsam angelegt.
+- Die Steuernummer hat 11 Ziffern, mit oder ohne Bindestriche. Die steuerlichen Daten werden so eingetragen, wie sie auf der Rechnung stehen.
+So registrieren Sie ein Unternehmen:
+1. Füllen Sie die Unternehmensdaten aus: Firmenname, Steuernummer, Branche, Adresse, Abo-Tarif, Abrechnung und Kontaktnummer.
+2. Füllen Sie Vorname, Nachname und E-Mail des ersten Administrators aus.
+3. Registrieren Sie das Unternehmen.
+4. Konnte die Aktivierungs-E-Mail nicht gesendet werden, senden Sie die Einladung später unter "Benutzer" erneut.</value>
+  </data>
+  <data name="ayuda_dispositivos" xml:space="preserve">
+    <value>Dies ist die Geräteseite.
+Sie ist das Inventar der Eye-Tracker und zeigt, an welches Unternehmen jedes Gerät verliehen ist. Von hier erfassen Sie Geräte, verleihen sie, buchen Rückgaben und scheiden nicht mehr genutzte Geräte aus.
+- Mit "Modelle" verwalten Sie die Gerätemodelle. Ein Modell wird nie gelöscht: Nach der Ausmusterung wird es für neue Geräte nicht mehr angeboten.
+- Mit "Gerät hinzufügen" nehmen Sie ein Gerät als verfügbar ins Inventar auf. Die Seriennummer ist die des Herstellers und wird später nicht geändert.
+- Mit "Einem Unternehmen zuweisen" verleihen Sie ein verfügbares Gerät an ein aktives Unternehmen.
+- Mit "Rückgabe erfassen" beenden Sie den Verleih. Kommt das Gerät mit Defekten zurück, markieren Sie es für die Wartung.
+- Mit "Ausmustern" nehmen Sie das Gerät außer Betrieb. Der Grund ist Pflicht.
+So verleihen Sie ein Gerät:
+1. Klicken Sie auf "Einem Unternehmen zuweisen".
+2. Wählen Sie das verfügbare Gerät und das Unternehmen.
+3. Bestätigen Sie. Das Übergabedatum ist das heutige und der Verleih dauert bis zur erfassten Rückgabe.</value>
+  </data>
+  <data name="ayuda_bitacora" xml:space="preserve">
+    <value>Dies ist die Seite des Audit-Protokolls.
+Es hält die relevanten Aktionen im System fest: wer sie ausgeführt hat, wann, in welchem Modul und mit welchem Schweregrad. Einträge lassen sich weder bearbeiten noch löschen.
+- Mit "Von", "Bis", "Uhrzeit von" und "Uhrzeit bis" legen Sie den Zeitraum fest.
+- Mit "Modul", "Aktion", "Benutzer", "Unternehmen" und "Schweregrad" filtern Sie nach Ereignisart oder Person.
+- Mit "Zurück" und "Weiter" wechseln Sie zwischen den Ergebnisseiten.
+So finden Sie ein Ereignis:
+1. Legen Sie den Zeitraum mit Datum und Uhrzeit fest.
+2. Filtern Sie nach Modul, Aktion, Benutzer, Unternehmen oder Schweregrad.
+3. Prüfen Sie die Ergebnisse.
+4. Bei mehr als einer Seite blättern Sie mit "Weiter" vor.</value>
+  </data>
+  <data name="ayuda_integridad" xml:space="preserve">
+    <value>Dies ist die Seite zur Integrität der Datenbank.
+Sie prüft, ob die Daten verändert wurden, indem die Prüfziffern jedes Datensatzes (DVH) und jeder Tabelle (DVV) verglichen werden. Das System führt diese Kontrolle bei der Anmeldung durch. Von hier sehen Sie das Ergebnis pro Tabelle und berechnen bei Bedarf neu.
+- Mit "Details anzeigen" bei einer Tabelle sehen Sie ihre Datensätze und die, die nicht übereinstimmen.
+- Mit "Prüfziffern neu berechnen" erzeugen Sie sie aus den aktuellen Daten neu. Umfang und Grund sind anzugeben.
+Beim Neuberechnen gelten die aktuellen Daten als gültig. Tun Sie es daher erst, nachdem Sie geprüft haben, was sich geändert hat. Solange Unstimmigkeiten bestehen, können die übrigen Benutzer nicht ins System.
+So prüfen und korrigieren Sie die Integrität:
+1. Prüfen Sie den Status jeder Tabelle.
+2. Bei Unstimmigkeiten öffnen Sie "Details anzeigen", um die nicht übereinstimmenden Datensätze zu erkennen.
+3. Ist die Änderung berechtigt, klicken Sie auf "Prüfziffern neu berechnen".
+4. Geben Sie Umfang und Grund an und bestätigen Sie.</value>
+  </data>
+  <data name="ayuda_roles" xml:space="preserve">
+    <value>Dies ist die Seite für Rollen und Berechtigungen.
+Eine Rolle fasst Gruppen und Berechtigungen zusammen. Gruppen ordnen Berechtigungen und können andere Gruppen enthalten. Die Berechtigungen legt das System fest und sie werden von hier nur kombiniert.
+- Mit "Neue Rolle" legen Sie eine Rolle an und mit "Neue Gruppe" eine Gruppe.
+- Mit "Löschen" entfernen Sie die ausgewählte Rolle oder Gruppe.
+- Wenn Sie ein Element auswählen, sehen Sie, was es enthält, seine wirksamen Berechtigungen und wo es sonst enthalten ist.
+- Gestor und Webmaster sind feste Rollen: Ihre Zusammensetzung lässt sich nicht bearbeiten und sie lassen sich nicht löschen.
+So legen Sie eine Rolle an:
+1. Klicken Sie auf "Neue Rolle".
+2. Geben Sie den Namen ein und wählen Sie die Rollenart.
+3. Markieren Sie die Gruppen und Berechtigungen, die sie enthält.
+4. Speichern Sie die Rolle.</value>
+  </data>
+  <data name="ayuda_respaldos" xml:space="preserve">
+    <value>Dies ist die Seite der Sicherungen.
+Hier werden die Datenbanksicherungen verwaltet. Sie sind auf dem Server gespeichert und werden von hier nicht heruntergeladen.
+- Mit "Backup erstellen" legen Sie in diesem Moment eine Kopie der Datenbank an.
+- Jede Sicherung in der Liste hat eine Schaltfläche zum Wiederherstellen.
+Beim Wiederherstellen wird die gesamte Datenbank durch den Stand der Kopie ersetzt: Was danach erfasst wurde, geht verloren. Mit der Bestätigung werden alle Sitzungen beendet, auch Ihre.
+So stellen Sie eine Sicherung wieder her:
+1. Wählen Sie die Sicherung in der Liste und klicken Sie auf ihre Schaltfläche zum Wiederherstellen.
+2. Lesen Sie den Hinweis darauf, was verloren geht.
+3. Geben Sie zur Bestätigung RESTAURAR ein.
+4. Klicken Sie auf "Wiederherstellen und Sitzungen beenden".
+5. Melden Sie sich danach neu an und prüfen Sie die Integritätsseite.</value>
+  </data>
+  <data name="ayuda_idiomas" xml:space="preserve">
+    <value>Dies ist die Seite der Sprachen.
+Sie zeigt die Sprachen der Oberfläche und ihre Übersetzungen. Von hier fügen Sie Sprachen hinzu, bearbeiten Übersetzungen, aktivieren oder deaktivieren eine Sprache und löschen sie.
+- Mit "Sprache hinzufügen" legen Sie eine neue an. Wählen Sie ein mitgeliefertes Paket, werden seine Übersetzungen geladen. Legen Sie sie von Grund auf an, müssen Sie die Übersetzungen von Hand eintragen.
+- Mit "Übersetzungen" öffnen Sie die Texte einer Sprache neben dem Basistext. Eine bearbeitete Übersetzung wird als manuell markiert.
+- Mit "Nur ausstehende" filtern Sie die noch nicht übersetzten Texte.
+- Mit "Aktivieren" und "Deaktivieren" legen Sie fest, ob die Sprache in der Anwendung verfügbar ist.
+So bearbeiten Sie eine Übersetzung:
+1. Klicken Sie bei der Sprache, die Sie ändern möchten, auf "Übersetzungen".
+2. Suchen Sie den Text oder aktivieren Sie "Nur ausstehende".
+3. Öffnen Sie den Text und geben Sie die Übersetzung ein. Behalten Sie Platzhalter wie {0} oder {1} bei.
+4. Speichern Sie. Lassen Sie sie leer, bleibt sie ausstehend und der Basistext wird angezeigt.</value>
+  </data>
+  <data name="ayuda_miperfil" xml:space="preserve">
+    <value>Dies ist die Seite Ihres Profils.
+Sie zeigt die Daten Ihres Kontos. Sie können Vorname, Nachname und Oberflächensprache ändern. Die E-Mail-Adresse ist Ihre Zugangskennung und wird hier nicht geändert: Um sie zu ändern, wenden Sie sich an die Person, die Ihr Konto verwaltet.
+- Mit "Mein Passwort ändern" gelangen Sie zur Seite, auf der Sie ein neues festlegen.
+Beim Notfallzugang gibt es keine persönlichen Daten zu bearbeiten.
+So aktualisieren Sie Ihre Daten:
+1. Ändern Sie Vorname, Nachname oder Oberflächensprache.
+2. Speichern Sie die Änderungen.</value>
+  </data>
+  <data name="ayuda_miclave" xml:space="preserve">
+    <value>Auf dieser Seite ändern Sie Ihr Passwort.
+Sie verlangt das aktuelle und das neue Passwort. Nach der Änderung werden Sitzungen auf anderen Rechnern beendet und Sie müssen sich dort neu anmelden.
+- Mit dem Augensymbol blenden Sie Ihre Eingabe ein oder aus.
+- Mit "Zurück zu meinem Profil" verlassen Sie die Seite, ohne etwas zu ändern.
+So ändern Sie das Passwort:
+1. Geben Sie das aktuelle Passwort ein.
+2. Geben Sie das neue ein. Es braucht mindestens 8 Zeichen mit Großbuchstabe, Kleinbuchstabe, Ziffer und Sonderzeichen.
+3. Wiederholen Sie das neue Passwort.
+4. Speichern Sie die Änderung.</value>
+  </data>
+  <data name="vis_sin_empresa" xml:space="preserve">
+    <value>Dieses Konto ist keinem Unternehmen zugeordnet, daher gibt es keine Sitzungen anzuzeigen. Sitzungen gehören zu den einzelnen Kundenunternehmen und werden über deren Konten angezeigt.</value>
   </data>
 </root>

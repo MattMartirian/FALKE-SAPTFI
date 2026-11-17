@@ -1764,3 +1764,34 @@ html[data-tema="noche"] .chip[aria-pressed="true"]
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Ayuda en línea: el cuadro del botón "?" de la barra superior */
+.ayuda-texto p
+{
+    margin: 0 0 10px;
+    line-height: 1.55;
+}
+
+.ayuda-texto .ayuda-intro
+{
+    margin-top: 14px;
+    font-weight: 600;
+}
+
+.ayuda-texto ul,
+.ayuda-texto ol
+{
+    margin: 0 0 12px;
+    padding-left: 22px;
+}
+
+.ayuda-texto ul { list-style: disc; }
+.ayuda-texto ol { list-style: decimal; }
+
+.ayuda-texto li
+{
+    margin-bottom: 7px;
+    line-height: 1.5;
+    padding-left: 2px;
+}

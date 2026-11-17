@@ -16,6 +16,7 @@
     position: sticky;
     top: var(--alto-topbar);
     align-self: start;
+    min-height: calc(100vh - var(--alto-topbar));
     max-height: calc(100vh - var(--alto-topbar));
     overflow-y: auto;
     display: flex;
@@ -29,6 +30,74 @@
     font-weight: 600;
     color: var(--texto-suave);
     margin: 0;
+}
+
+.vis-filtros-toggle
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    color: var(--texto);
+    font-family: inherit;
+    font-size: .92rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+}
+
+.vis-filtros-toggle:hover
+{
+    border-color: var(--acento);
+}
+
+.vis-filtros-texto
+{
+    flex: 1;
+}
+
+.vis-filtros-n
+{
+    min-width: 20px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--marca-azul);
+    color: var(--marca-perla);
+    font-size: .75rem;
+    text-align: center;
+}
+
+html[data-tema="noche"] .vis-filtros-n
+{
+    background: var(--acento);
+    color: var(--marca-azul);
+}
+
+.vis-filtros-flecha
+{
+    flex: none;
+    transition: transform .28s cubic-bezier(.22, 1, .36, 1);
+}
+
+.vis-filtros-toggle[aria-expanded="true"] .vis-filtros-flecha
+{
+    transform: rotate(180deg);
+}
+
+.vis-filtros-panel
+{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.vis-filtros-panel[hidden]
+{
+    display: none;
 }
 
 .vis-buscador
@@ -47,6 +116,34 @@
 {
     display: grid;
     gap: 8px;
+}
+
+.vis-fechas
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+}
+
+.vis-fecha
+{
+    display: block;
+    min-width: 0;
+}
+
+.vis-fecha input[type="date"]
+{
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.vis-fecha span
+{
+    display: block;
+    margin-bottom: 2px;
+    font-size: .75rem;
+    color: var(--texto-suave);
 }
 
 .vis-sesion .categoria
@@ -393,6 +490,7 @@
     {
         position: static;
         max-height: none;
+        min-height: 0;
         border-right: 0;
         border-bottom: 1px solid var(--borde);
     }
@@ -437,4 +535,26 @@
     height: 36px;
     border-radius: var(--radio-sm);
     cursor: pointer;
+}
+
+/* Estado vacio del area principal: centrado vertical y boton separado del texto */
+#vacioMain
+{
+    min-height: calc(100vh - var(--alto-topbar) - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 24px;
+}
+
+#vacioMain[hidden]
+{
+    display: none;
+}
+
+#vacioMain svg
+{
+    margin-bottom: 0;
 }

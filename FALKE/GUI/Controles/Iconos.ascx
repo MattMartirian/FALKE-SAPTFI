@@ -7,6 +7,10 @@
         <circle cx="12" cy="12" r="2.6" />
     </symbol>
 
+    <symbol id="i-ayuda" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9.6 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1.1.8-1.1 1.6M12 16.8h.01" />
+    </symbol>
     <symbol id="i-casa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3.5 10.5 12 3.5l8.5 7M5.5 9.5V20h13V9.5" />
     </symbol>

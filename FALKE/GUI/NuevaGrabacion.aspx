@@ -567,6 +567,18 @@
             display: none !important;
         }
 
+        #panelPaso3:not([data-pausa="si"]) [data-si-pausa],
+        #panelPaso3[data-pausa="si"] [data-no-pausa]
+        {
+            display: none !important;
+        }
+
+        #panelPaso3[data-pausa="si"] .punto
+        {
+            animation: none;
+            opacity: .45;
+        }
+
         .contenido:has(#panelPaso3[data-estado="guardado"]):not(:has(#panelPaso2:not([hidden])))
         {
             padding: 24px;
@@ -925,7 +937,8 @@
                 </div>
                 <div class="indicador-rec visor-rec" data-solo="grabando">
                     <span class="punto" aria-hidden="true"></span>
-                    <span>[[nuevagrabacion_grabando]]</span>
+                    <span data-no-pausa>[[nuevagrabacion_grabando]]</span>
+                    <span data-si-pausa>[[grabacion_rec_en_pausa]]</span>
                 </div>
             </div>
         </div>
@@ -1010,6 +1023,18 @@
             </button>
             <button type="button" class="btn btn-secundario" id="btnCancelarCuenta" data-solo="cuenta">[[categorias_cancelar]]</button>
             <button type="button" class="btn btn-secundario izquierda" data-abre-modal="modalCancelar" data-solo="grabando">[[categorias_cancelar]]</button>
+            <button type="button" class="btn btn-secundario" id="btnPausar" data-solo="grabando" data-no-pausa>
+                <svg width="17" height="17" aria-hidden="true"><use href="#i-pausa" /></svg>
+                <span>[[grabacion_rec_pausar]]</span>
+            </button>
+            <button type="button" class="btn btn-secundario" id="btnReanudar" data-solo="grabando" data-si-pausa>
+                <svg width="17" height="17" aria-hidden="true"><use href="#i-play" /></svg>
+                <span>[[grabacion_rec_reanudar]]</span>
+            </button>
+            <button type="button" class="btn btn-secundario" id="btnReiniciar" data-abre-modal="modalReiniciar" data-solo="grabando">
+                <svg width="17" height="17" aria-hidden="true"><use href="#i-refrescar" /></svg>
+                <span>[[grabacion_rec_reiniciar]]</span>
+            </button>
             <button type="button" class="btn btn-primario btn-grande" id="btnFinalizar" data-solo="grabando">
                 <svg width="17" height="17" aria-hidden="true"><use href="#i-tilde" /></svg>
                 <span>[[nuevagrabacion_finalizar]]</span>
@@ -1045,6 +1070,34 @@
         <div class="modal-pie">
             <button type="button" class="btn btn-secundario" data-cierra-modal>[[grabacion_rec_no_descartar]]</button>
             <button type="button" class="btn btn-peligro" id="btnDescartar" data-cierra-modal>[[nuevagrabacion_si_descartar_todo]]</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-fondo" id="modalReiniciar" role="dialog" aria-modal="true" aria-labelledby="reiTitulo" hidden>
+    <div class="modal">
+        <div class="modal-cabecera">
+            <div>
+                <h2 id="reiTitulo">[[grabacion_rec_reiniciar_titulo]]</h2>
+                <p class="subtitulo sin-margen">
+                    [[nuevagrabacion_esta_accion_no_se_puede_deshacer]]
+                </p>
+            </div>
+            <button type="button" class="modal-cerrar" data-cierra-modal aria-label="[[categorias_cerrar]]">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-cerrar" /></svg>
+            </button>
+        </div>
+        <div class="modal-cuerpo">
+            <div class="aviso aviso-peligro mb-0">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-alerta" /></svg>
+                <p class="sin-margen">
+                    [[grabacion_rec_reiniciar_texto]]
+                </p>
+            </div>
+        </div>
+        <div class="modal-pie">
+            <button type="button" class="btn btn-secundario" data-cierra-modal>[[grabacion_rec_no_reiniciar]]</button>
+            <button type="button" class="btn btn-peligro" id="btnConfirmarReiniciar" data-cierra-modal>[[grabacion_rec_si_reiniciar]]</button>
         </div>
     </div>
 </div>
@@ -1233,6 +1286,9 @@
             var btnIniciarRec = document.getElementById("btnIniciarRec");
             var btnCancelarCuenta = document.getElementById("btnCancelarCuenta");
             var btnFinalizar = document.getElementById("btnFinalizar");
+            var btnPausar = document.getElementById("btnPausar");
+            var btnReanudar = document.getElementById("btnReanudar");
+            var btnConfirmarReiniciar = document.getElementById("btnConfirmarReiniciar");
             var btnGuardar = document.getElementById("btnGuardar");
             var btnDescartar = document.getElementById("btnDescartar");
             var bitrate = Number(panel3.getAttribute("data-bitrate"));
@@ -1262,6 +1318,38 @@
             var temporizadorCuenta = null;
             var temporizadorReloj = null;
             var temporizadorMirada = null;
+
+            // PAUSAS: MediaRecorder.pause() deja de grabar y el video queda SIN el tiempo en pausa (una sola linea de tiempo continua).
+            // El agente sigue guardando mirada durante la pausa, asi que al guardar se descartan esas muestras y se
+            // corre la hora (u) de las siguientes la duracion de las pausas anteriores: mirada y video siguen alineados.
+            // Si en alguna version de Chrome el video conservara el hueco, poner esta constante en false.
+            var PAUSA_FUERA_DEL_VIDEO = true;
+            var enPausa = false;
+            var pausaDesde = 0;
+            var pausas = [];
+            var totalPausaMs = 0;
+            var miradaAjustada = null;
+
+            function reiniciarPausas() {
+                enPausa = false;
+                pausaDesde = 0;
+                pausas = [];
+                totalPausaMs = 0;
+                miradaAjustada = null;
+                panel3.removeAttribute("data-pausa");
+            }
+
+            // milisegundos de grabacion efectiva (sin contar las pausas)
+            function grabadoMs(hasta) {
+                var total = hasta - inicioVideo;
+
+                if (PAUSA_FUERA_DEL_VIDEO) {
+                    total -= totalPausaMs;
+                    if (enPausa) total -= hasta - pausaDesde;
+                }
+
+                return Math.max(0, total);
+            }
 
             function ponerEstado(estado) {
                 panel3.setAttribute("data-estado", estado);
@@ -1312,6 +1400,7 @@
 
                 trozos = [];
                 grabando = false;
+                reiniciarPausas();
                 videoFinal = null;
                 resumenMirada = null;
                 fuenteNombre.textContent = "-";
@@ -1439,6 +1528,7 @@
 
                     inicioMirada = datos.inicio_utc;
                     trozos = [];
+                    reiniciarPausas();
                     // videoKeyFrameIntervalDuration: un cuadro completo cada 400 ms. Sin esto Chrome casi no los pone y,
                     // al adelantar un video pesado, el visor tiene que decodificar desde el principio y queda congelado
                     grabador = new MediaRecorder(flujo, { mimeType: formato, videoBitsPerSecond: bitrate, videoKeyFrameIntervalDuration: 400 });
@@ -1458,7 +1548,7 @@
                     protegerSalida(true);
 
                     temporizadorReloj = setInterval(function () {
-                        reloj.textContent = formatoTiempo(Date.now() - inicioVideo);
+                        reloj.textContent = formatoTiempo(grabadoMs(Date.now()));
                     }, 500);
 
                     temporizadorMirada = setInterval(function () {
@@ -1484,6 +1574,15 @@
                 clearInterval(temporizadorReloj);
                 clearInterval(temporizadorMirada);
                 finVideo = Date.now();
+
+                // si termina estando en pausa, esa pausa se cierra en este instante
+                if (enPausa) {
+                    pausas.push({ desde: pausaDesde, hasta: finVideo });
+                    totalPausaMs += finVideo - pausaDesde;
+                    enPausa = false;
+                    panel3.removeAttribute("data-pausa");
+                }
+
                 detenido = consultar("/detener");
 
                 grabador.onstop = function () {
@@ -1497,11 +1596,117 @@
 
                         resumenMirada = datos;
                         videoFinal = new Blob(trozos, { type: "video/webm" });
-                        mostrarResumen();
+
+                        // con pausas, la cantidad de muestras que se muestra es la real (sin las de las pausas)
+                        if (pausas.length > 0 && resumenMirada) {
+                            obtenerMirada().then(function (resultado) {
+                                miradaAjustada = resultado.blob;
+                                resumenMirada.muestras = resultado.cantidad;
+                            }).catch(function () {
+                                miradaAjustada = null;
+                            }).then(mostrarResumen);
+                        } else {
+                            mostrarResumen();
+                        }
                     });
                 };
 
                 grabador.stop();
+            }
+
+            // baja el archivo de mirada del agente y le saca las muestras tomadas durante las pausas
+            function obtenerMirada() {
+                return fetch(urlAgente + "/archivo", { cache: "no-store" })
+                    .then(function (respuesta) {
+                        if (!respuesta.ok) throw new Error();
+
+                        return respuesta.blob();
+                    })
+                    .then(quitarPausas);
+            }
+
+            // devuelve { blob, cantidad }. Sin pausas devuelve el archivo tal cual
+            function quitarPausas(mirada) {
+                if (pausas.length === 0) return Promise.resolve({ blob: mirada, cantidad: null });
+
+                return mirada.text().then(function (texto) {
+                    var datos = JSON.parse(texto);
+                    var lista = datos.muestras || [];
+                    var conservadas = [];
+
+                    for (var i = 0; i < lista.length; i++) {
+                        var m = lista[i];
+                        var restar = 0;
+                        var duranteLaPausa = false;
+
+                        for (var p = 0; p < pausas.length; p++) {
+                            if (m.u >= pausas[p].hasta) {
+                                restar += pausas[p].hasta - pausas[p].desde;
+                            } else if (m.u >= pausas[p].desde) {
+                                duranteLaPausa = true;
+                                break;
+                            }
+                        }
+
+                        if (duranteLaPausa) continue;
+
+                        if (PAUSA_FUERA_DEL_VIDEO) m.u = m.u - restar;
+
+                        conservadas.push(m);
+                    }
+
+                    datos.muestras = conservadas;
+
+                    return { blob: new Blob([JSON.stringify(datos)], { type: "application/json" }), cantidad: conservadas.length };
+                });
+            }
+
+            function pausar() {
+                if (!grabando || enPausa || !grabador || grabador.state !== "recording") return;
+
+                pausaDesde = Date.now();
+                grabador.pause();
+                enPausa = true;
+                panel3.setAttribute("data-pausa", "si");
+                btnReanudar.focus();
+            }
+
+            function reanudar() {
+                if (!grabando || !enPausa || !grabador || grabador.state !== "paused") return;
+
+                var ahora = Date.now();
+
+                grabador.resume();
+                pausas.push({ desde: pausaDesde, hasta: ahora });
+                totalPausaMs += ahora - pausaDesde;
+                enPausa = false;
+                panel3.removeAttribute("data-pausa");
+                btnPausar.focus();
+            }
+
+            // descarta lo grabado, conserva la pantalla elegida y vuelve a empezar (con la cuenta regresiva elegida)
+            function reiniciar() {
+                if (!grabando || !grabador) return;
+
+                var anterior = grabador;
+                var cierreAgente;
+
+                grabando = false;
+                clearInterval(temporizadorReloj);
+                clearInterval(temporizadorMirada);
+                cierreAgente = consultar("/detener");
+
+                anterior.ondataavailable = null;
+                anterior.onstop = function () {
+                    cierreAgente.then(function () {
+                        trozos = [];
+                        reiniciarPausas();
+                        protegerSalida(false);
+                        comenzar();
+                    });
+                };
+
+                anterior.stop();
             }
 
             function mostrarResumen() {
@@ -1514,7 +1719,7 @@
                 previa.hidden = false;
                 visorVacio.hidden = true;
 
-                document.getElementById("resDuracion").textContent = formatoTiempo(finVideo - inicioVideo);
+                document.getElementById("resDuracion").textContent = formatoTiempo(grabadoMs(finVideo));
                 document.getElementById("resMuestras").textContent = muestras;
                 document.getElementById("resTamano").textContent = (videoFinal.size / 1048576).toFixed(1) + " MB";
                 avisoSinMuestras.hidden = muestras > 0;
@@ -1617,7 +1822,7 @@
                     edad: document.getElementById("grEdad").value,
                     genero: document.getElementById("grGenero").value,
                     familiaridad: document.getElementById("grFamiliaridad").value,
-                    duracion: Math.round((finVideo - inicioVideo) / 1000),
+                    duracion: Math.round(grabadoMs(finVideo) / 1000),
                     desfaseMiradaMs: resumenMirada && inicioMirada ? Math.round(inicioMirada - inicioVideo) : 0
                 };
                 var token = null;
@@ -1657,12 +1862,7 @@
                 bloquear(true);
                 textoSubida.textContent = "[[js:grabacion_rec_subiendo]]";
 
-                fetch(urlAgente + "/archivo", { cache: "no-store" })
-                    .then(function (respuesta) {
-                        if (!respuesta.ok) throw new Error();
-
-                        return respuesta.blob();
-                    })
+                (miradaAjustada ? Promise.resolve(miradaAjustada) : obtenerMirada().then(function (resultado) { return resultado.blob; }))
                     .then(function (mirada) {
                         subir(videoFinal, mirada);
                     })
@@ -1689,6 +1889,9 @@
             btnIniciarRec.addEventListener("click", comenzar);
             btnCancelarCuenta.addEventListener("click", cancelarCuenta);
             btnFinalizar.addEventListener("click", function () { terminar(false); });
+            btnPausar.addEventListener("click", pausar);
+            btnReanudar.addEventListener("click", reanudar);
+            btnConfirmarReiniciar.addEventListener("click", reiniciar);
             btnGuardar.addEventListener("click", guardar);
             btnOtraParte.addEventListener("click", otraParte);
             btnDescartar.addEventListener("click", descartar);
