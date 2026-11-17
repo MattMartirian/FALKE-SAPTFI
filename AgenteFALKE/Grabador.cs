@@ -5,10 +5,6 @@ using System.Text;
 
 namespace AgenteMirada
 {
-    /// <summary>
-    /// Junta las muestras en memoria (10 por segundo) y, al detener, escribe un unico JSON valido (una muestra por linea, para que se lea bien).
-    /// Si la grabacion se interrumpe antes de detener, no queda archivo: se pierde.
-    /// </summary>
     public class Grabador
     {
         private const int INTERVALO_MUESTREO_MS = 100;
@@ -40,7 +36,6 @@ namespace AgenteMirada
             get { lock (candado) { return grabando; } }
         }
 
-        // la ultima mirada recibida (para la previsualizacion): si pasó mas de 1 segundo sin muestras, cuenta como invalida
         public string UltimaMuestraJson()
         {
             lock (candado)

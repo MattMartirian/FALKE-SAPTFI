@@ -53,7 +53,6 @@
     <EmbeddedResource Include="tobii_stream_engine.dll">
       <LogicalName>tobii_stream_engine.dll</LogicalName>
     </EmbeddedResource>
-    <None Include="LEEME.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
