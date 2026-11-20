@@ -6,7 +6,7 @@ using TE;
 
 namespace TLL
 {
-    // Enlaces de un solo uso que se mandan por correo: activación de cuenta (48 h) y recuperación de contraseña (2 h).
+
     public class TokenCuenta_TLL
     {
         public const string TOKEN_ACTIVACION = "activacion";
@@ -36,7 +36,6 @@ namespace TLL
             return Emitir(idUsuario, TOKEN_RECUPERACION, VIGENCIA_RECUPERACION);
         }
 
-        // Marca el token como usado e invalida los demás pendientes del mismo tipo. Se llama dentro de la transacción de quien lo usa.
         internal void Consumir(TokenInfo info)
         {
             tokenRepo.MarcarUsado(info.IdToken);
@@ -70,7 +69,6 @@ namespace TLL
             var usuario = usuarioRepo.ObtenerPorPK(info.IdUsuario);
             if (usuario == null) return ResultadoToken_TLL.Falla("TOKEN_INVALIDO");
 
-            // Un enlace que se mandó antes de dar de baja o bloquear la cuenta ya no sirve.
             if (usuario.Estado == EstadoUsuario.Inactivo || usuario.Estado == EstadoUsuario.BloqueoEstricto) return ResultadoToken_TLL.Falla("TOKEN_INVALIDO");
 
             return ResultadoToken_TLL.Ok(usuario.EmailUsuario);

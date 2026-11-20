@@ -8,9 +8,6 @@ using TE;
 
 namespace TLL
 {
-    // ABM de usuarios: alta por invitación, reenvío de la invitación, listado, cambio de estado, de rol y de datos, y el perfil propio.
-    // Las demás responsabilidades están en Autenticacion_TLL (inicio de sesión), Contrasena_TLL (cambio y recuperación de contraseña),
-    // TokenCuenta_TLL (enlaces por correo) y AccesoEmergencia_TLL (cuenta de emergencia).
     public class Usuario_TLL
     {
         public const string ROL_GESTOR = "Gestor";
