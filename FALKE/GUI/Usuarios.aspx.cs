@@ -494,7 +494,6 @@ namespace GUI
             return (u.NombreUsuario + " " + u.ApellidoUsuario).Trim();
         }
 
-        // Las invitaciones reenviadas se recuerdan un rato en la sesión: el botón queda gris, con un check, en lugar de dar un aviso.
         private const string CLAVE_INVITACIONES = "usuarios.invitacionesEnviadas";
         private static readonly TimeSpan MEMORIA_DE_INVITACIONES = TimeSpan.FromMinutes(15);
 
@@ -534,7 +533,6 @@ namespace GUI
             return Etiquetas_GUI.De(rol);
         }
 
-        // Las cuentas dadas de baja o con bloqueo estricto se muestran atenuadas.
         protected static string ClaseFila(object item)
         {
             EstadoUsuario estado = ((UsuarioListado_TE)item).Estado;

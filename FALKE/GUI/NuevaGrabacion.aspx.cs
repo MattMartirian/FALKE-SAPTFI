@@ -45,7 +45,6 @@ namespace GUI
             public string Texto { get; set; }
         }
 
-        // Solo se muestra: la sesion siempre se guarda con el ID del usuario logueado (el servidor no acepta otro).
         protected string NombreAnalista
         {
             get { return SesionActual_GUI.HayUsuario ? (SesionActual_GUI.Nombre ?? string.Empty) : string.Empty; }
@@ -104,7 +103,6 @@ namespace GUI
             return opciones;
         }
 
-        // los dispositivos asignados a la empresa del usuario
         private List<Opcion> ArmarDispositivos()
         {
             var opciones = new List<Opcion>();

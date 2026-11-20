@@ -21,7 +21,6 @@ namespace GUI
             }
         }
 
-        // Las pantallas que tienen ayuda: el botón "?" de la barra superior abre un cuadro con el texto de la clave ayuda_<pantalla>.
         private static readonly HashSet<string> PaginasConAyuda = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "panel", "visualizaciones", "nuevagrabacion", "descargas", "categorias", "analisismultiple", "mistobiis", "usuarios", "miempresa", "empresas", "empresanueva", "dispositivos", "bitacora", "integridad", "roles", "respaldos", "idiomas", "miperfil", "miclave"
@@ -49,7 +48,6 @@ namespace GUI
             get { return IdiomaActual_GUI.Texto("ayuda_" + PaginaActual.ToLowerInvariant()); }
         }
 
-        // El texto de ayuda trae una línea por párrafo. Las que empiezan con "- " son items de lista y las que empiezan con "1. " son pasos numerados.
         public string HtmlAyuda
         {
             get
@@ -98,13 +96,11 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Las pantallas de la aplicación muestran datos de la cuenta: el navegador no las guarda, así que
-            // "atrás" después de cerrar sesión no las vuelve a mostrar.
+
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
 
-            // Mientras se restaura la base nadie puede usar la aplicación: se desvía a la pantalla de mantenimiento.
             if (Respaldo_TLL.RestauracionEnCurso)
             {
                 Response.Redirect("Mantenimiento.aspx", false);
@@ -120,7 +116,6 @@ namespace GUI
             MarcarPaginaActual();
         }
 
-        // El botón de perfil dice, al pasar el mouse, de quién es la sesión.
         private void MostrarUsuario()
         {
             string nombre = SesionActual_GUI.HayUsuario ? (SesionActual_GUI.Nombre ?? string.Empty) : string.Empty;
@@ -141,7 +136,6 @@ namespace GUI
             navMisTobiis.Visible = operaAnalisis;
 
             navUsuarios.Visible = Puede(Patentes_TLL.VER_USUARIOS);
-            // Quien ve todas las empresas ya tiene su pantalla de Empresas: "Mi empresa" es para el administrador de un cliente.
             navMiEmpresa.Visible = Puede(Patentes_TLL.VER_DATOS_EMPRESA) && SesionActual_GUI.IdEmpresa > 0 && !Puede(Patentes_TLL.VER_USUARIOS_TODAS_EMPRESAS);
             navEmpresas.Visible = Puede(Patentes_TLL.VER_USUARIOS_TODAS_EMPRESAS);
             navDispositivos.Visible = Puede(Patentes_TLL.VER_DISPOSITIVOS);

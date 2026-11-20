@@ -420,7 +420,6 @@
 
                 resumen.textContent = info.resumen || "";
 
-                // Si hay registros puntuales, ellos explican la diferencia; si no, se aclara de qué tipo es.
                 var generales = (info.registros || []).length === 0 ? (info.motivos || []) : [];
                 var lista = "";
                 for (var m = 0; m < generales.length; m++) lista += "<li>" + esc(generales[m]) + "</li>";

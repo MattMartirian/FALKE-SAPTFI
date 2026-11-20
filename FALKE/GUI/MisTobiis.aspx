@@ -129,7 +129,6 @@
                 });
             }
 
-            // abre Tobii Experience (lo hace el agente, porque el navegador no puede abrir programas) y muestra los pasos que siguen
             function abrirTobii(guiaSiAbre) {
                 pedir("/tobii").then(function (datos) {
                     if (datos === null) {
@@ -145,7 +144,6 @@
             document.getElementById("btnRecalibrar").addEventListener("click", function () { abrirTobii(textos.guiaRecalibrar); });
             document.getElementById("btnPantalla").addEventListener("click", function () { abrirTobii(textos.guiaPantalla); });
 
-            // previsualizar mirada: un punto y una estela que siguen la mirada sobre esta pagina
             var lienzo = null;
             var intervalo = null;
             var estela = [];
@@ -158,7 +156,6 @@
 
                 if (!datos.ok) return;
 
-                // la mirada viene respecto de la pantalla: se la pasa a la ventana del navegador (se ajusta mejor en pantalla completa)
                 var px = datos.x * screen.width - window.screenX;
                 var py = datos.y * screen.height - window.screenY - (window.outerHeight - window.innerHeight);
 
@@ -176,7 +173,6 @@
             }
 
             function empezarPrevia() {
-                // tambien se abre Tobii Experience, donde esta la opcion "Preview my gaze"
                 pedir("/tobii");
 
                 lienzo = document.createElement("canvas");

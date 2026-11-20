@@ -25,10 +25,6 @@ namespace BLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        /// <summary>
-        /// Deja registrado quien genero un analisis multiple, cuando y con que sesiones. Las sesiones se validan igual que
-        /// al exportar: tienen que ser de la empresa del actor y de la misma categoria.
-        /// </summary>
         public AnalisisMultiple_BE Registrar(ActorUsuario_TE actor, List<int> idSesiones)
         {
             actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
@@ -68,7 +64,6 @@ namespace BLL
 
                 foreach (int id in ids) GuardarDvh(TablasBD.AnalisisMultiple_Sesion, new[] { analisis.IdAnalisis.ToString(), id.ToString() });
 
-                // el DVV se recalcula una sola vez por tabla, no por fila
                 gestorIntegridad.GuardarIntegridadTabla(TablasBD.AnalisisMultiple);
                 gestorIntegridad.GuardarIntegridadTabla(TablasBD.AnalisisMultiple_Sesion);
 

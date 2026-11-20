@@ -56,7 +56,6 @@ namespace GUI
             CargarTodo(actor);
         }
 
-        // el cambio de idioma llega despues de Page_Load: se vuelven a enlazar las listas para que los textos y fechas salgan en el idioma nuevo
         protected override void AlCambiarIdioma()
         {
             base.AlCambiarIdioma();

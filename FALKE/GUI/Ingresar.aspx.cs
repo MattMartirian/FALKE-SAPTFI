@@ -12,7 +12,6 @@ namespace GUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Segundo paso del inicio de sesión: ya con una sesión de identificador nuevo, se completa la sesión con el ticket de un solo uso.
             if (!IsPostBack && !string.IsNullOrEmpty(Request.QueryString["inicio"]) && CompletarInicioDeSesion()) return;
 
             if (!IsPostBack && SesionActual_GUI.RedirigirSiAutenticado()) return;
@@ -50,8 +49,7 @@ namespace GUI
                 var resultado = new Autenticacion_TLL().ValidarCredenciales(email, txtPass.Text);
 
                 if (resultado.Exito)
-                {
-                    // Se renueva el identificador de la sesión: se descarta la anterior y la sesión nueva se arma en el pedido siguiente.
+                { 
                     string ticket = InicioDeSesion_GUI.Preparar(resultado.Usuario, chkRecordarme.Checked, resultado.RequiereRevisarIntegridad, Request.UserHostAddress);
 
                     SesionActual_GUI.DescartarSesionActual();
@@ -89,8 +87,6 @@ namespace GUI
                 }
             }
         }
-
-        // Devuelve true si inició la sesión (y ya redirigió). Un ticket vencido, repetido o de otra dirección no hace nada: se muestra el formulario.
         private bool CompletarInicioDeSesion()
         {
             InicioDeSesion_GUI.Pendiente pendiente = InicioDeSesion_GUI.Consumir(Request.QueryString["inicio"], Request.UserHostAddress);
@@ -103,7 +99,6 @@ namespace GUI
             if (pendiente.Recordarme)
                 SesionActual_GUI.RecordarEnEsteEquipo(pendiente.Usuario.IdUsuario);
 
-            // Si la integridad de los datos está comprometida y esta cuenta puede repararla, entra directo a Dígito verificador.
             Response.Redirect(pendiente.IrAIntegridad ? "Integridad.aspx" : "Panel.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
 
@@ -115,7 +110,6 @@ namespace GUI
             switch (motivo)
             {
                 case "CREDENCIALES_INVALIDAS":
-                    // Los intentos restantes solo llegan si el correo existe: con uno inexistente el mensaje es el genérico.
                     return IdiomaActual_GUI.Texto("ingresar_datos_incorrectos") + (intentosRestantes.HasValue
                         ? " " + (intentosRestantes.Value == 1 ? IdiomaActual_GUI.Texto("login_quedan_uno") : IdiomaActual_GUI.Texto("login_quedan_varios", intentosRestantes.Value))
                         : string.Empty);

@@ -628,7 +628,6 @@
         var URL_ARCHIVO = "<%: ResolveUrl("~/GrabacionArchivo.ashx") %>";
         var GRUPOS = <%= GruposJson %>;
 
-        // textos traducidos para los .js (un .js externo no puede leer los [[...]] del servidor)
         var MultiTextos = {
             duracion: "[[js:analisismultiple_duracion_promedio]]",
             fijacionMedia: "[[js:analisismultiple_fijacion_media]]",
@@ -703,7 +702,6 @@
                 return document.querySelectorAll("input[name='sesion']:checked");
             }
 
-            // la fila de la primera sesion elegida; de ahi sale la categoria activa (null si no hay ninguna)
             function filaActiva() {
                 var marcadas = elegidas();
 
@@ -757,7 +755,6 @@
                 casillas[i].addEventListener("change", actualizar);
             }
 
-            // marca todas las sesiones de la categoria de la que ya elegiste una
             btnCategoria.addEventListener("click", function () {
                 var activa = filaActiva();
 
@@ -782,8 +779,6 @@
             var cuerpo = document.getElementById("resultadoCuerpo");
             var corrida = 0;
 
-            // los graficos (cada uno arma su canvas dentro de su tarjeta)
-            // los 6 graficos (cada uno arma su canvas dentro de su tarjeta)
             var graficoCalor = new GraficoCalor("graficoCalor");
             var graficoZonas = new GraficoZonas("graficoZonas");
             var graficoDispersion = new GraficoDispersion("graficoDispersion");
@@ -791,7 +786,6 @@
             var graficoRecorrido = new GraficoRecorrido("graficoRecorrido");
             var graficoPorSesion = new GraficoPorSesion("graficoPorSesion");
 
-            // leyenda de atencion: dorado = atencion, gris = distraccion (con los porcentajes si se conocen)
             function leyendaAtencion(pct) {
                 var activa = MultiTextos.atencionActiva;
                 var sacadico = MultiTextos.atencionSacadico;
@@ -810,7 +804,7 @@
 
             armarFiltros(filtros, GRUPOS);
 
-            // arma calidad, metricas, tablas y graficos con las sesiones que cumplen el filtro del tester
+            // arma calidad, metricas, tablas y graficos con las sesiones que cumplen el filtro q le mando
             function regenerar() {
                 var elegidas = filtrarSesiones(filtros, sesionesCargadas);
                 var conMirada = [];

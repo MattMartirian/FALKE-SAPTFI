@@ -112,19 +112,17 @@ namespace TLL
             return ResultadoLogin_TLL.Exitoso(usuario, revisarIntegridad);
         }
 
-        // Marca que cambia cuando cambia la contraseña: las sesiones y las cookies de "recordarme" que la llevan dejan de valer.
+
         public string HuellaDeAcceso(Usuario_TE usuario)
         {
             return cifrador.Encoder(usuario.ContrasenaHashUsuario ?? string.Empty).Substring(0, 16);
         }
 
-        // Pattern Blue (la empresa proveedora) nunca se bloquea: desde ahí se administra todo.
         public bool EmpresaPermiteIngreso(int idEmpresa)
         {
             return MotivoEmpresaSinIngreso(idEmpresa) == null;
         }
 
-        // null si la empresa deja entrar; si no, por qué no: bloqueada (sigue siendo cliente) o deshabilitada (dada de baja).
         public string MotivoEmpresaSinIngreso(int idEmpresa)
         {
             if (idEmpresa <= 0 || idEmpresa == BitacoraGestor_TLL.ID_EMPRESA_PROVEEDORA) return null;
@@ -172,7 +170,7 @@ namespace TLL
             });
         }
 
-        // Usuarios activos de la misma empresa que pueden cambiar el estado de una cuenta (el Administrador). Quien se bloqueó no se avisa a sí mismo.
+      
         private List<Usuario_TE> AdministradoresDeLaEmpresa(Usuario_TE bloqueado)
         {
             var lista = new List<Usuario_TE>();
@@ -210,7 +208,6 @@ namespace TLL
             });
         }
 
-        // La cuenta de emergencia siempre entra; si la integridad está comprometida, también se la lleva a Dígito verificador.
         private bool HayInconsistenciasDeIntegridad()
         {
             try

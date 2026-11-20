@@ -567,7 +567,6 @@
                 if (e.target && e.target.id === "txtDatosEmail") actualizarAvisoDatos();
             });
 
-            // Invitar: el gestor ve un aviso mientras la empresa elegida no sea la suya.
             function actualizarAvisoInvitacion() {
                 var lista = document.getElementById("invEmpresa");
                 var aviso = document.getElementById("avisoInvEmpresa");
@@ -578,7 +577,6 @@
                 poner("invEmpresaNombre", lista.options[lista.selectedIndex] ? lista.options[lista.selectedIndex].text : "");
             }
 
-            // Editar datos: avisos y confirmación según a quién se edita y qué se cambia.
             function actualizarAvisoDatos() {
                 var modal = document.getElementById("modalDatos");
                 if (!modal) return;

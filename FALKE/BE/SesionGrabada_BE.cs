@@ -27,7 +27,6 @@ namespace BE
 
         public string DVH { get; set; }
 
-        // Solo de lectura (vienen de los JOIN del listado, no son columnas de SesionGrabadaTable)
         public string NombreCategoria { get; set; }
         public string TipoActivo { get; set; }
         public string NombreAnalista { get; set; }

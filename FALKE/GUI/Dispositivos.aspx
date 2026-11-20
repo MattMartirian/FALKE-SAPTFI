@@ -640,7 +640,6 @@
 
             function porId(id) { return document.getElementById(id); }
 
-            // Cada botón del detalle avisa sobre qué dispositivo actúa: el servidor lo lee del campo oculto.
             document.addEventListener("click", function (e) {
                 var boton = e.target.closest ? e.target.closest("[data-dispositivo]") : null;
                 if (!boton) return;
@@ -649,13 +648,11 @@
                 var oculto = porId("hfDispositivo");
                 if (oculto) oculto.value = id;
 
-                // "Asignar a empresa" desde el detalle: el dispositivo ya viene elegido.
                 if (boton.hasAttribute("data-asignar-actual")) {
                     var lista = porId("ddlAsigDispositivo");
                     if (lista) lista.value = id;
                 }
 
-                // "Editar datos": el formulario se llena con los datos de ese dispositivo.
                 if (boton.hasAttribute("data-rellena-edicion")) {
                     var modelo = porId("ddlEdModelo"), firmware = porId("txtEdFirmware"), driver = porId("txtEdDriver");
                     if (modelo) modelo.value = boton.getAttribute("data-modelo");
@@ -663,7 +660,6 @@
                     if (driver) driver.value = boton.getAttribute("data-driver") || "";
                 }
 
-                // Acciones que se confirman y se envían con un botón oculto del servidor.
                 var destino = boton.getAttribute("data-envia");
                 if (destino) {
                     var texto = boton.getAttribute("data-confirma");
@@ -672,7 +668,6 @@
                 }
             });
 
-            // En la ventana de modelos, Enter agrega el modelo nuevo o guarda el nombre que se está editando.
             document.addEventListener("keydown", function (e) {
                 if (e.key !== "Enter" || !e.target || e.target.tagName !== "INPUT" || e.target.type !== "text") return;
                 if (!e.target.closest || !e.target.closest("#modalModelos")) return;
@@ -684,7 +679,6 @@
                 if (accion) accion.click();
             });
 
-            // Si el detalle de un dispositivo llega abierto (por ejemplo después de dar un alta), se lo deja a la vista.
             window.addEventListener("load", function () {
                 var abierto = document.querySelector(".fila-detalle .acordeon-panel.abierto");
                 if (abierto && abierto.scrollIntoView) abierto.scrollIntoView({ block: "nearest" });

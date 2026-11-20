@@ -24,7 +24,6 @@ namespace GUI
 
             actor = SesionActual_GUI.ObtenerActor();
 
-            // Quien ve todas las empresas (el Gestor, la cuenta de emergencia) tiene su pantalla de Empresas: "Mi empresa" es para el administrador de un cliente.
             if (actor.VeTodasLasEmpresas())
             {
                 Response.Redirect("Empresas.aspx", false);
@@ -46,7 +45,6 @@ namespace GUI
             phSoloPatternBlue.Visible = !puedeEditar;
         }
 
-        // Los datos se muestran al final del pedido para que reflejen lo que se acaba de guardar.
         protected void Page_PreRender(object sender, EventArgs e)
         {
             if (actor == null) return;
@@ -90,7 +88,6 @@ namespace GUI
                 rptDispositivos.DataBind();
                 phSinDispositivos.Visible = dispositivos.Count == 0;
 
-                // Si el guardado falló se conserva lo que la persona escribió; si no, el formulario arranca con los datos actuales.
                 if (!edicionEnCurso)
                 {
                     edRubro.Text = empresa.Rubro;

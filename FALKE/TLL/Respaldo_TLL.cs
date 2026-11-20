@@ -49,7 +49,6 @@ namespace TLL
             return lista;
         }
 
-        // Copia completa de la base, verificada al terminar. Devuelve el registro de la copia.
         public Respaldo_TE Generar(ActorUsuario_TE actor)
         {
             actor.Exigir(Patentes_TLL.HACER_RESPALDO);
@@ -80,7 +79,6 @@ namespace TLL
                 Tamano = tamano
             };
 
-            // El archivo ya existe: si el registro o la auditoría fallan, se revierten juntos.
             Transaccion_ORM.Ejecutar(() =>
             {
                 respaldoRepo.Alta(respaldo);
@@ -92,7 +90,7 @@ namespace TLL
             return respaldo;
         }
 
-        // Reemplaza toda la base por la de la copia elegida. Quien llama debe cerrar las sesiones al terminar.
+
         public void Restaurar(ActorUsuario_TE actor, int idRespaldo, string confirmacion)
         {
             actor.Exigir(Patentes_TLL.RESTAURAR_RESPALDO);
@@ -120,7 +118,6 @@ namespace TLL
 
             try
             {
-                // La restauración devuelve la tabla de respaldos al estado de la copia: se guarda lo que había para no perder el registro de las posteriores.
                 List<Respaldo_TE> registrados = respaldoRepo.ObtenerTodos();
 
                 try
@@ -141,7 +138,7 @@ namespace TLL
             }
         }
 
-        // Las copias hechas después de la restaurada siguen existiendo como archivos: se vuelven a registrar para poder usarlas.
+
         private void Reincorporar(List<Respaldo_TE> registrados)
         {
             try
@@ -163,7 +160,7 @@ namespace TLL
             }
         }
 
-        // El evento se escribe en la base ya restaurada. Si el usuario no existía cuando se hizo la copia, el evento queda sin usuario y se nombra en el texto.
+       
         private void AuditarRestauracion(ActorUsuario_TE actor, Respaldo_TE respaldo)
         {
             try

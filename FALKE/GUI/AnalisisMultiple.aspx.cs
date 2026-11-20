@@ -32,10 +32,8 @@ namespace GUI
         protected bool HayError;
         protected bool HaySesiones;
 
-        // los grupos del tester (edad, genero, familiaridad) con su texto traducido, en JSON para el navegador
         protected string GruposJson;
 
-        // url de un archivo estatico (css / js) con su fecha de modificacion, asi el navegador no usa una copia vieja del cache
         protected string UrlVersionada(string rutaVirtual)
         {
             return ResolveUrl(rutaVirtual) + "?v=" + System.IO.File.GetLastWriteTimeUtc(Server.MapPath(rutaVirtual)).Ticks;
@@ -83,8 +81,6 @@ namespace GUI
             return "[" + string.Join(",", partes.ToArray()) + "]";
         }
 
-        // lista las sesiones de la empresa del usuario (el BLL toma la empresa del actor, no del navegador)
-        // al navegador le llega un token al azar por sesion, igual que en Visualizaciones
         private void CargarSesiones()
         {
             var items = new List<SesionItem>();

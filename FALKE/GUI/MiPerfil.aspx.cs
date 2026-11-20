@@ -10,7 +10,6 @@ using TLL;
 
 namespace GUI
 {
-    // El espacio personal de cada usuario. No pide ningún permiso: basta con haber iniciado sesión, y siempre trabaja sobre la propia cuenta.
     public partial class MiPerfil : PaginaConAviso_GUI
     {
         private const string CLAVE_AVISO = "perfil.aviso";
@@ -136,7 +135,6 @@ namespace GUI
                 tll.ActualizarPerfil(actor.IdUsuario, txtNombre.Text, txtApellido.Text, idioma);
                 IdiomaActual_GUI.Cambiar(CodigoDe(idioma));
 
-                // El nombre de la sesión (arriba a la derecha y en los saludos) se actualiza enseguida.
                 Usuario_TE actualizado = tll.ObtenerPorId(actor.IdUsuario);
                 if (actualizado != null)
                 {

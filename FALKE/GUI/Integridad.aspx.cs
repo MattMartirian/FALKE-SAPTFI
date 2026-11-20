@@ -149,7 +149,6 @@ namespace GUI
                     AppendJsonString(json, detalle);
                     json.Append(",\"motivos\":[");
 
-                    // Diferencias que no son de un registro puntual (registros agregados o eliminados, firma global).
                     var generales = lista.FindAll(x => x.Tipo != TipoInconsistencia.RegistroAlterado);
                     for (int k = 0; k < generales.Count; k++)
                     {

@@ -19,7 +19,6 @@ namespace GUI
             get { return (Request.QueryString["e"] ?? string.Empty).Trim(); }
         }
 
-        // Las listas con casillas se arman en Init para que reciban lo que se tildó antes de que corra el botón.
         protected void Page_Init(object sender, EventArgs e)
         {
             actor = SesionActual_GUI.ObtenerActor();
@@ -124,8 +123,6 @@ namespace GUI
             badgeClase.Attributes["class"] = "badge " + (esRol ? "badge-info" : "badge-neutro");
             phEtiquetas.Visible = !esPatente;
             litMeta.Text = Server.HtmlEncode(Meta(actual));
-
-            // Los permisos los define el sistema: no se combinan ni se eliminan, solo se les edita la descripción.
             phComposicion.Visible = !esPatente;
             btnAbrirEliminar.Visible = !esPatente && !actual.EsBase;
             pnlFijo.Visible = actual.EsFijo;
@@ -217,7 +214,6 @@ namespace GUI
                 string.Empty, "modalEliminar");
         }
 
-        // destino: a qué elemento ir después de un éxito (null = quedarse donde está; vacío = volver a la lista).
         private void Ejecutar(string origen, string exito, Action accion, string destino, string modalSiFalla = null)
         {
             if (!Intentar(accion, origen, mensaje => Fallar(mensaje, modalSiFalla))) return;

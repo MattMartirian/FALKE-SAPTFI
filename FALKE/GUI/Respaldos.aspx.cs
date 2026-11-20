@@ -18,8 +18,6 @@ namespace GUI
         }
 
         private ActorUsuario_TE actor;
-
-        // Entrar y ver es VER_RESPALDOS; generar y restaurar piden cada uno el suyo.
         protected bool PuedeGenerar { get; private set; }
         protected bool PuedeRestaurar { get; private set; }
 
@@ -141,7 +139,6 @@ namespace GUI
                 return;
             }
 
-            // La base cambió: ninguna sesión abierta (tampoco esta) sigue siendo confiable.
             SesionActual_GUI.CerrarTodasLasSesiones();
             SesionActual_GUI.Cerrar();
             Response.Redirect("Ingresar.aspx?cuenta=respaldo", false);

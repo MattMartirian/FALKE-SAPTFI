@@ -1164,7 +1164,6 @@
 
             var campoNombre = document.getElementById("grNombre");
 
-            // habilita "Continuar" solo si estan la categoria, el perfil del tester y el nombre
             function revisarPerfil() {
                 var completo = campoNombre.value.trim() !== "";
 
@@ -1181,8 +1180,6 @@
 
             campoNombre.addEventListener("input", revisarPerfil);
 
-            // el navegador puede restaurar los valores (recargar, volver atras) SIN avisar con "change":
-            // por eso se revisa una vez al cargar y cada vez que la pagina se muestra de nuevo
             revisarPerfil();
             window.addEventListener("pageshow", revisarPerfil);
 
@@ -1318,11 +1315,6 @@
             var temporizadorCuenta = null;
             var temporizadorReloj = null;
             var temporizadorMirada = null;
-
-            // PAUSAS: MediaRecorder.pause() deja de grabar y el video queda SIN el tiempo en pausa (una sola linea de tiempo continua).
-            // El agente sigue guardando mirada durante la pausa, asi que al guardar se descartan esas muestras y se
-            // corre la hora (u) de las siguientes la duracion de las pausas anteriores: mirada y video siguen alineados.
-            // Si en alguna version de Chrome el video conservara el hueco, poner esta constante en false.
             var PAUSA_FUERA_DEL_VIDEO = true;
             var enPausa = false;
             var pausaDesde = 0;
@@ -1513,7 +1505,7 @@
             //   1. Se inicia al agente (/iniciar) y empieza a guardar mirada y devuelve su hora de inicio
             //   2. Se crea el MediaRecorder sobre el MediaStream
             //   3. recorder.start(1000) devuelve una parte cada 1000ms
-            //   4. onstart marca inicioVideo (Date.now()) cuando el MediaRecorder realmente arranca.
+            //   4. onstart marca inicioVideo (Date.now()) cuando el MediaRecorder arranca
             function empezar() {
                 visorCuenta.hidden = true;
 
@@ -1529,8 +1521,6 @@
                     inicioMirada = datos.inicio_utc;
                     trozos = [];
                     reiniciarPausas();
-                    // videoKeyFrameIntervalDuration: un cuadro completo cada 400 ms. Sin esto Chrome casi no los pone y,
-                    // al adelantar un video pesado, el visor tiene que decodificar desde el principio y queda congelado
                     grabador = new MediaRecorder(flujo, { mimeType: formato, videoBitsPerSecond: bitrate, videoKeyFrameIntervalDuration: 400 });
                     grabador.ondataavailable = function (evento) {
                         if (evento.data.size > 0) trozos.push(evento.data);
@@ -1597,7 +1587,6 @@
                         resumenMirada = datos;
                         videoFinal = new Blob(trozos, { type: "video/webm" });
 
-                        // con pausas, la cantidad de muestras que se muestra es la real (sin las de las pausas)
                         if (pausas.length > 0 && resumenMirada) {
                             obtenerMirada().then(function (resultado) {
                                 miradaAjustada = resultado.blob;

@@ -173,8 +173,6 @@
             "use strict";
 
             function porId(id) { return document.getElementById(id); }
-
-            // El botón de cada fila dice qué copia se va a restaurar.
             document.addEventListener("click", function (e) {
                 var boton = e.target.closest ? e.target.closest("[data-respaldo]") : null;
                 if (!boton) return;
@@ -186,7 +184,6 @@
                 revisar();
             });
 
-            // El botón de restaurar se habilita cuando se escribió la palabra (el servidor lo vuelve a comprobar).
             function revisar() {
                 var caja = porId("txtConfirmacion"), boton = porId("btnRestaurar");
                 if (caja && boton) boton.disabled = caja.value.trim().toUpperCase() !== "RESTAURAR";

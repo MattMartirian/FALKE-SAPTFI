@@ -527,7 +527,6 @@
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">
     <script>
-        // textos traducidos para los .js de las visualizaciones (un .js externo no puede leer los [[...]] del servidor)
         var VisTextos = {
             errorCargar: "[[js:vis_error_cargar]]",
             sinDatos: "[[js:vis_calor_sin_datos]]",
@@ -578,11 +577,11 @@
     <script>
         (function () {
             "use strict";
-            // COMO FUNCIONA ESTA PAGINA
-            // - La lista de sesiones la arma el backend con las de la empresa del usuario logueado.
-            // - Al elegir una sesion se pide el JSON a GrabacionArchivo.ashx
-            // - El video tambien sale de GrabacionArchivo.ashx (con Range, para poder saltar).
-            // - Las visualizaciones (video, mapa de calor, zonas...) son clases en Scripts/visualizaciones/; aca solo se conectan.
+            // COMO FUNCIONA ESTO
+            // La lista de sesiones la arma el backend con las de la empresa del usuario logueado
+            // Al elegir una sesion se pide el JSON a GrabacionArchivo.ashx
+            // El video tambien sale de GrabacionArchivo.ashx (con Range, para poder saltar)
+            // Las visualizaciones son clases en Scripts/visualizaciones
 
             var URL_ARCHIVO = "<%: ResolveUrl("~/GrabacionArchivo.ashx") %>";
             var COLOR_CORAL = "#F26157";
@@ -614,7 +613,7 @@
             var visorSubtitulo = document.getElementById("visorSubtitulo");
 
             var actual = null;   
-            var cargaN = 0;      // numero de la ultima carga, para ignorar respuestas viejas si el usuario cambia rapido
+            var cargaN = 0;      
 
             function normalizar(texto) {
                 return window.Falke && window.Falke.normalizar ? window.Falke.normalizar(texto) : String(texto || "").toLowerCase().trim();
@@ -632,8 +631,6 @@
                 }
             }
 
-            // Filtros adicionales segun el tipo de activo elegido: cada lista (plataforma, sistema operativo, canal, flujo)
-            // se arma con los valores que existen en las sesiones de ese tipo y solo se muestra si hay alguno.
             function armarFiltrosExtra() {
                 for (var f = 0; f < filtrosExtra.length; f++) {
                     var combo = filtrosExtra[f];

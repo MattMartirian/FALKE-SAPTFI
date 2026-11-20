@@ -23,15 +23,10 @@ namespace GUI
         private ActorUsuario_TE actor;
         private Dictionary<int, List<Prestamo_BE>> historiales = new Dictionary<int, List<Prestamo_BE>>();
         private int idAbierto;
-
-        // Entrar y consultar es VER_DISPOSITIVOS; cada acción pide además el suyo
-        // (alta e inventario, asignación a empresas, o gestión del catálogo de modelos).
         protected bool PuedeAlta { get; private set; }
         protected bool PuedeAsignar { get; private set; }
         protected bool PuedeModelos { get; private set; }
 
-        // El dispositivo sobre el que actúa la página: al entrar, el que llegó en la dirección (?id=); después, el que eligió
-        // el botón del detalle (campo oculto). Un envío que no viene de un dispositivo (por ejemplo, Buscar) no lo conserva.
         private int Seleccionado
         {
             get
@@ -43,8 +38,6 @@ namespace GUI
                 return int.TryParse(texto, out id) && id > 0 ? id : 0;
             }
         }
-
-        // Las listas se arman en Init: así reciben lo que se eligió antes de que corra el evento del botón.
         protected void Page_Init(object sender, EventArgs e)
         {
             actor = SesionActual_GUI.ObtenerActor();
@@ -113,7 +106,6 @@ namespace GUI
 
             if (!string.IsNullOrEmpty(aviso)) Avisar("aviso-exito", aviso);
 
-            // Después de agregar, renombrar o dar de baja un modelo se vuelve a la ventana de modelos con el resultado.
             if (PuedeModelos && Request.QueryString["modelos"] == "1")
             {
                 string avisoModelos = Session[CLAVE_AVISO_MODELOS] as string;
@@ -188,13 +180,11 @@ namespace GUI
 
             if (PuedeAlta)
             {
-                // Un dispositivo nuevo solo puede ser de un modelo activo.
                 ddlAltaModelo.Items.Clear();
                 ddlAltaModelo.Items.Add(new ListItem(modelos.Any(m => m.Activo) ? IdiomaActual_GUI.Texto("disp_elegir_modelo_opcion") : IdiomaActual_GUI.Texto("disp_sin_modelos"), "0"));
                 foreach (ModeloDispositivo_BE modelo in modelos.Where(m => m.Activo))
                     ddlAltaModelo.Items.Add(new ListItem(modelo.Nombre, modelo.IdModelo.ToString(CultureInfo.InvariantCulture)));
 
-                // Al editar también aparecen los dados de baja: un dispositivo puede conservar el suyo.
                 ddlEdModelo.Items.Clear();
                 foreach (ModeloDispositivo_BE modelo in modelos)
                     ddlEdModelo.Items.Add(new ListItem(modelo.Activo ? modelo.Nombre : IdiomaActual_GUI.Texto("disp_modelo_de_baja_sufijo", modelo.Nombre), modelo.IdModelo.ToString(CultureInfo.InvariantCulture)));
@@ -237,11 +227,8 @@ namespace GUI
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            // Buscar no es una acción sobre un dispositivo: no se vuelve a abrir el último que se tocó.
             hfDispositivo.Value = string.Empty;
         }
-
-        // ---- Inventario
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
@@ -342,8 +329,6 @@ namespace GUI
                 Avisar("aviso-exito", IdiomaActual_GUI.Texto("disp_actualizado"));
         }
 
-        // ---- Modelos
-
         protected void btnAgregarModelo_Click(object sender, EventArgs e)
         {
             if (actor == null || !PuedeModelos) return;
@@ -379,7 +364,6 @@ namespace GUI
             }
         }
 
-        // Si sale bien se vuelve a cargar la página (así las listas de modelos se arman de nuevo); si no, se muestra el motivo en la misma ventana.
         private void EjecutarModelos(Action accion, string origen, string exito)
         {
             bool salioBien = Intentar(accion, origen, mensaje =>
@@ -395,9 +379,6 @@ namespace GUI
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        // ---- Auxiliares
-
-        // Devuelve true si salió bien. Si falla, muestra el motivo y reabre el modal para no perder lo escrito.
         private bool Ejecutar(Action accion, string origen, string modal)
         {
             return Intentar(accion, origen, mensaje => Fallar(mensaje, modal));
@@ -427,8 +408,6 @@ namespace GUI
         {
             Avisar(pnlAvisoModelos, litAvisoModelos, variante, texto);
         }
-
-        // ---- Para las plantillas
 
         protected static string Fecha(DateTime fecha)
         {
@@ -467,8 +446,6 @@ namespace GUI
                 default: return "disponible";
             }
         }
-
-        // Los dispositivos dados de baja se ven atenuados.
         protected static string ClaseFila(object item)
         {
             return ((Dispositivo_BE)item).Estado == EstadoDispositivo.DeBaja ? "fila-baja-dispositivo" : string.Empty;

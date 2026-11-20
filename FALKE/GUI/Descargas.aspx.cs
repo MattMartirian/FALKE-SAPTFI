@@ -8,7 +8,6 @@ namespace GUI
     {
         private static readonly bool MODO_PRUEBA = false;
 
-        // el zip con todo el software (agente + instalador de Tobii) se arma a mano y se deja en esta carpeta (viaja con la publicacion del sitio)
         private const string CARPETA = "~/Instaladores";
         private const string ARCHIVO = "FALKE_SW.zip";
 
@@ -48,7 +47,7 @@ namespace GUI
             return Path.Combine(Server.MapPath(CARPETA), ARCHIVO);
         }
 
-        // manda el zip tal cual esta en el servidor (TransmitFile no lo carga entero en memoria)
+        // manda el zip tal cual esta en el servidor
         private void EnviarArchivo()
         {
             Response.Clear();

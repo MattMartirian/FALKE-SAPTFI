@@ -34,10 +34,6 @@ namespace BLL
             bitacora = new BitacoraGestor_TLL();
         }
 
-        /// <summary>
-        /// Sesiones de la empresa del usuario con la sesion iniciada. La empresa sale del ACTOR (sesion del servidor),
-        /// nunca de un parametro: no hay forma de pedir las de otra empresa.
-        /// </summary>
         public List<SesionGrabada_BE> Listar(ActorUsuario_TE actor)
         {
             actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
@@ -47,10 +43,6 @@ namespace BLL
             return sesionRepo.ObtenerPorEmpresa(actor.IdEmpresa);
         }
 
-        /// <summary>
-        /// Una sesion, solo si es de la empresa del actor. Si no existe o es de otra empresa, el resultado es el mismo
-        /// (sesion_no_existe) para no revelar que el ID existe.
-        /// </summary>
         public SesionGrabada_BE ObtenerPropia(ActorUsuario_TE actor, int idSesion)
         {
             actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
@@ -127,10 +119,6 @@ namespace BLL
         public static string NombreVideo(int idSesion) { return idSesion + ".webm"; }
         public static string NombreMirada(int idSesion) { return idSesion + ".json"; }
 
-        /// <summary>
-        /// Guarda la sesion y sus dos archivos (video y mirada) bajo el mismo ID.
-        /// Todo o nada: si falla algo, no queda fila ni archivos.
-        /// </summary>
         public SesionGrabada_BE Guardar(ActorUsuario_TE actor, SesionGrabada_BE sesion, Stream video, Stream mirada, string carpeta)
         {
             actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
@@ -146,7 +134,6 @@ namespace BLL
             if (!actor.EsEmergencia && categoria.IdEmpresa != actor.IdEmpresa) throw new ExcepcionNoAutorizada_TLL("categoria_otra_empresa");
             if (!categoria.Activa) throw new ExcepcionTraducible_TLL("sesion_categoria_inactiva");
 
-            // el dispositivo tiene que estar asignado a la empresa de la categoria
             bool dispositivoDeLaEmpresa = dispositivoRepo.ObtenerDeEmpresa(categoria.IdEmpresa).Exists(d => d.IdDispositivo == sesion.IdDispositivo);
             if (!dispositivoDeLaEmpresa) throw new ExcepcionTraducible_TLL("sesion_dispositivo_invalido");
 
@@ -202,9 +189,6 @@ namespace BLL
             return sesion;
         }
 
-        /// <summary>
-        /// Nombre de la siguiente parte: "Menu" -> "Menu - 2", "Menu - 2" -> "Menu - 3".
-        /// </summary>
         public string ProponerNombreSiguiente(ActorUsuario_TE actor, int idCategoria, string nombre)
         {
             actor.Exigir(Patentes_TLL.OPERAR_ANALISIS);
