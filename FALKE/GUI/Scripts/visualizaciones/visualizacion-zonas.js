@@ -1,6 +1,5 @@
 "use strict";
 
-// ZONAS DE INTERES Y ZONAS CIEGAS
 
 class VisualizacionZonas extends VisualizacionTramo {
     constructor() {

@@ -81,7 +81,6 @@ namespace GUI
             ViewState[K_AVISOS] = avisos;
         }
 
-        // se registra la pagina que se abre como observador de SujetoIdioma_TLL (se accede desde IdiomaActual_GUI.Sujeto)
         protected override void OnInit(EventArgs e)
         {
             sujeto = IdiomaActual_GUI.Sujeto;
@@ -104,8 +103,6 @@ namespace GUI
 
             base.OnUnload(e);
         }
-
-        // aca se traducen las cosas en una pagina X
         public void ActualizarIdioma(string codigoIdioma)
         {
             codigo = codigoIdioma;
@@ -141,12 +138,11 @@ namespace GUI
 
         protected virtual void AlCambiarIdioma()
         {
-            // template method aca cada pagina decide que hacer
+           
         }
 
         protected override void Render(HtmlTextWriter writer)
         {
-            // la pagina se dibuja primero en un texto en memoria para poder reemplazar los textos
             StringWriter textoPagina = new StringWriter();
             HtmlTextWriter escritorTemporal = new HtmlTextWriter(textoPagina);
 
@@ -155,7 +151,6 @@ namespace GUI
 
             string html = textoPagina.ToString();
 
-            // por cada [[clave]] o [[js:clave]] se llama a reemplazar
             html = Marcador.Replace(html, Reemplazar);
 
             writer.Write(html);
@@ -163,7 +158,6 @@ namespace GUI
 
         private string Reemplazar(Match marcador)
         {
-            // grupo 2: la clave a traducir          grupo 1: el prefijo "js:" por [[js:clave]]
             string clave = marcador.Groups[2].Value;
             bool esParaJavaScript = marcador.Groups[1].Success;
 
@@ -171,15 +165,12 @@ namespace GUI
 
             if (esParaJavaScript)
             {
-                // para textos dentro de un <script> ignora comillas, barras y saltos de linea para que el texto no rompa el js
                 texto = HttpUtility.JavaScriptStringEncode(texto);
 
-                // elimina las comillas simples '
                 texto = texto.Replace("\\'", "\\u0027");
                 return texto;
             }
 
-            // convierte <, >, & y comillas en entidades para que el texto no se interprete como codigo
             return HttpUtility.HtmlEncode(texto);
         }
     }

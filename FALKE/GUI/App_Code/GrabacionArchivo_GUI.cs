@@ -54,7 +54,7 @@ namespace GUI
             }
             catch (HttpException)
             {
-                // el navegador corto la descarga (saltar en el video, cerrar la pagina): es normal
+                // el navegador corto la descarga (saltar en el video, cerrar la pagina)
             }
             catch (Exception ex)
             {
@@ -71,7 +71,6 @@ namespace GUI
             long fin = total - 1;
             bool parcial = false;
 
-            // El <video> pide pedazos ("Range: bytes=a-b") para poder saltar a cualquier punto sin bajar todo.
             string rango = ctx.Request.Headers["Range"];
 
             if (!string.IsNullOrEmpty(rango) && rango.StartsWith("bytes=", StringComparison.OrdinalIgnoreCase))

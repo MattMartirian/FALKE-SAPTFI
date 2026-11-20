@@ -16,7 +16,6 @@ namespace GUI
         {
             if (IsPostBack) return;
 
-            // el enlace es para definir la clave de otra cuenta (o la propia desde afuera): si hay una sesion abierta se cierra
             CerrarSesionAbierta();
 
             ResultadoToken_TLL validacion = new Contrasena_TLL().ValidarTokenContrasena(Token);

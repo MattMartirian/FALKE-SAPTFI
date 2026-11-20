@@ -449,13 +449,11 @@
         }
     }
 
-    // Para buscar sin distinguir mayúsculas ni tildes: "razon" encuentra "Razón".
     function normalizar(texto)
     {
         return String(texto == null ? "" : texto).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
     }
 
-    // Los buscadores en vivo filtran mientras se escribe: Enter no tiene que enviar la página.
     document.addEventListener("keydown", function (e)
     {
         if (e.key === "Enter" && e.target && e.target.tagName === "INPUT" && e.target.type === "search") e.preventDefault();

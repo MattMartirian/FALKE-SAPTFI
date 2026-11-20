@@ -1,7 +1,5 @@
 "use strict";
 
-// FUNCIONES COMPARTIDAS
-
 var CALOR_ANCHO = 96;
 var CALOR_ALTO = 54;
 var CALOR_RADIO = 4;

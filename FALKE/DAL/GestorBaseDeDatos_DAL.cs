@@ -108,8 +108,6 @@ namespace DAL
 
         #region Servidor (respaldos)
 
-        // Copiar y restaurar la base se hace desde "master", en conexiones propias y fuera de cualquier transacción:
-        // BACKUP y RESTORE no pueden correr dentro de una, y la restauración desconecta a todos los que usan la base.
         public string NombreBaseDeDatos
         {
             get { return new SqlConnectionStringBuilder(connectionString).InitialCatalog; }

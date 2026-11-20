@@ -1,7 +1,5 @@
 "use strict";
 
-// dispersion de la mirada
-
 class VisualizacionDispersion extends VisualizacionTramo {
     constructor() {
         super();
@@ -19,10 +17,8 @@ class VisualizacionDispersion extends VisualizacionTramo {
 
         if (puntos.length === 0) return;
 
-        // centro y dispersion de los puntos
         var c = covarianza(puntos);
 
-        // la elipse necesita al menos 3 puntos
         if (puntos.length >= 3) dibujarElipse(ctx, c.cx, c.cy, c.sxx, c.syy, c.sxy);
 
         ctx.fillStyle = "rgba(86,99,124,.75)";

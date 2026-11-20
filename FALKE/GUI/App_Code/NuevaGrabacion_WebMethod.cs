@@ -13,7 +13,7 @@ using TLL;
 namespace GUI
 {
     // Web methods de Nueva grabacion: suben el video por partes y guardan la sesion.
-    // La pagina los llama con fetch a NuevaGrabacion_WebMethod.asmx/<metodo> (ver urlMetodos en NuevaGrabacion.aspx).
+    // La pagina los llama con fetch a NuevaGrabacion_WebMethod.asmx/<metodo>
     [WebService(Namespace = "http://falke.local/")]
     [ScriptService]
     public class NuevaGrabacion_WebMethod : WebService
@@ -148,8 +148,6 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                // En C# solo se puede capturar un tipo que herede de Exception, no una interfaz:
-                // por eso se pregunta si la excepcion implementa IMensajeTraducible_TLL.
                 var traducible = ex as IMensajeTraducible_TLL;
 
                 if (traducible != null) return new RespuestaGuardado { mensaje = traducible.Traducir(IdiomaActual_GUI.Codigo) };

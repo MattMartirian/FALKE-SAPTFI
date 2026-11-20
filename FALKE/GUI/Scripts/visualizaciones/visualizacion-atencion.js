@@ -126,14 +126,12 @@ class VisualizacionAtencion extends VisualizacionTramo {
 
         ctx.clearRect(0, 0, w, h);
 
-        // fondo: lo que quede sin pintar es "sin datos"
         ctx.fillStyle = COLOR_SIN_DATOS;
         ctx.fillRect(0, 0, w, h);
 
         for (var i = 0; i < pts.length; i++) {
             if (estados[i] === 0) continue;
 
-            // lo que queda fuera del tramo elegido se ve apagado
             ctx.globalAlpha = pts[i].t >= desdeMs && pts[i].t <= hastaMs ? 1 : 0.3;
             ctx.fillStyle = estados[i] === 2 ? COLOR_ATENCION : COLOR_DISTRACCION;
             ctx.fillRect(pts[i].t / durMs * w, 0, ancho, h);
@@ -141,7 +139,6 @@ class VisualizacionAtencion extends VisualizacionTramo {
 
         ctx.globalAlpha = 1;
 
-        // marca del momento actual del video
         ctx.fillStyle = "#F26157";
         ctx.fillRect(this.video.currentTime * 1000 / durMs * w - 1, 0, 3, h);
     }

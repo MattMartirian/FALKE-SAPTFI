@@ -171,14 +171,11 @@ namespace GUI
             Ctx.Session[K_PERMISOS] = permiso;
             Ctx.Session[K_EPOCA] = Volatile.Read(ref epocaSesiones);
         }
-
-        // Después de restaurar la base: todas las sesiones abiertas dejan de valer y quienes estaban conectados tienen que volver a entrar.
         public static void CerrarTodasLasSesiones()
         {
             Interlocked.Increment(ref epocaSesiones);
         }
 
-        // Se llama justo después de entrar y justo después de cambiar la contraseña desde esta sesión.
         public static void FijarHuella(Usuario_TE usuario)
         {
             if (Ctx == null || usuario == null || usuario.EsCuentaEmergencia) return;
@@ -186,7 +183,6 @@ namespace GUI
             Ctx.Session[K_HUELLA] = new Autenticacion_TLL().HuellaDeAcceso(usuario);
         }
 
-        // Quien cambia su contraseña conserva su propia sesión (y su "recordarme" en este equipo); las demás caen.
         public static void ActualizarHuellaTrasCambioDeClave()
         {
             if (!HayUsuario || EsEmergencia) return;
@@ -199,7 +195,6 @@ namespace GUI
             if (Ctx.Request.Cookies[COOKIE_RECORDARME] != null) RecordarEnEsteEquipo(IdUsuario);
         }
 
-        // Descarta la sesión actual y le quita la cookie al navegador: el próximo pedido arranca con una sesión nueva, de otro identificador.
         public static void DescartarSesionActual()
         {
             if (Ctx == null) return;

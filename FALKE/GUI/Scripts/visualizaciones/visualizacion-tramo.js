@@ -1,7 +1,5 @@
 "use strict";
 
-// VISUALIZACION CON TRAMO (clase intermedia)
-// La usan el mapa de calor y las zonas. Agrega lo que tienen en comun como las barras desde/hasta para elegir que parte del video se analiza
 
 class VisualizacionTramo extends Visualizacion {
     constructor() {

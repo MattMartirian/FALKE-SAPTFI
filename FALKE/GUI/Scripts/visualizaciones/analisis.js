@@ -1,7 +1,5 @@
 "use strict";
 
-// ANALISIS
-
 var INTERVALO_MS = 100;     
 var UMBRAL_FIJACION = 0.055;  
 var ATENCION_MIN_MS = 800;  
@@ -115,7 +113,6 @@ function estadosAtencion(pts, fijs) {
             continue;
         }
 
-        // salto las fijaciones que ya terminaron
         while (f < fijs.length && fijs[f].t0 + fijs[f].dur <= t) f++;
 
         var dentro = f < fijs.length && fijs[f].t0 <= t && fijs[f].dur >= ATENCION_MIN_MS;

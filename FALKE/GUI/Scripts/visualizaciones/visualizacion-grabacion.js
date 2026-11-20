@@ -1,7 +1,5 @@
 "use strict";
 
-// grabacion con seguimiento
-
 class VisualizacionGrabacion extends Visualizacion {
     constructor() {
         super();
@@ -10,7 +8,6 @@ class VisualizacionGrabacion extends Visualizacion {
         this.leyenda = VisTextos.grabacionLeyenda;
     }
 
-    // la base "visualizacion" lo llama cada vez que el video cambia
     dibujar() {
         var analisis = this.sesion.analisis;
 

@@ -1,7 +1,5 @@
 "use strict";
 
-// MAPA DE CALOR
-
 class VisualizacionCalor extends VisualizacionTramo {
     constructor() {
         super();

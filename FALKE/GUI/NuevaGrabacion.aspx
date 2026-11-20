@@ -1816,7 +1816,7 @@
                 };
                 var token = null;
 
-                barraSubida.value = 0; // empieza vacia; bloquear(true) hace visible el contenedor .subida
+                barraSubida.value = 0;
                 textoSubida.textContent = "[[js:grabacion_rec_subiendo]]";
                 bloquear(true);
 

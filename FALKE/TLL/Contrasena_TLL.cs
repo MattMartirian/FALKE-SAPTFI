@@ -131,7 +131,6 @@ namespace TLL
             return ResultadoToken_TLL.Ok(usuario.EmailUsuario);
         }
 
-        // Mínimo 8 caracteres, con mayúscula, minúscula, número y un carácter especial (ni letra, ni número, ni espacio).
         public static bool EsContrasenaAceptable(string contrasena)
         {
             return !string.IsNullOrWhiteSpace(contrasena)

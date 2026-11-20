@@ -1,8 +1,5 @@
 "use strict";
 
-// VISOR
-// maneja el modal donde se ven las visualizaciones
-
 var Visor = {
     tipos: {},      
     activa: null,   

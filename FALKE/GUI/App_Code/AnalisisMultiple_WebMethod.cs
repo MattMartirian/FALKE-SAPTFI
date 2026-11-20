@@ -116,7 +116,6 @@ namespace GUI
             public string mensaje { get; set; }
         }
 
-        // Deja constancia de quien genero el analisis y con que sesiones. El calculo sigue ocurriendo en el navegador.
         [WebMethod(EnableSession = true)]
         public RespuestaRegistro RegistrarAnalisis(string[] tokens)
         {

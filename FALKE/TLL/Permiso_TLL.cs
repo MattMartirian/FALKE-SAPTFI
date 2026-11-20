@@ -229,7 +229,6 @@ namespace TLL
             });
         }
 
-        // Las patentes que da un rol o un grupo (sin los nombres de los grupos intermedios). Sin permiso, ninguna.
         public static HashSet<string> ObtenerPatentes(PermisoAbstracto_TE permiso)
         {
             return permiso == null ? new HashSet<string>() : permiso.ObtenerPatentes();
@@ -269,8 +268,7 @@ namespace TLL
             return nombre == Usuario_TLL.ROL_GESTOR || nombre == Usuario_TLL.ROL_WEBMASTER || nombre == Usuario_TLL.ROL_ADMINISTRADOR || nombre == Usuario_TLL.ROL_ANALISTA;
         }
 
-        // Gestor y Webmaster son fijos: su composición no se edita, para que Pattern Blue nunca quede sin acceso a lo que cada uno cuida.
-        // Solo la cuenta de emergencia puede cambiarla (es la que queda para arreglar un error de configuración).
+       
         private static bool EsRolFijo(string nombre)
         {
             return nombre == Usuario_TLL.ROL_GESTOR || nombre == Usuario_TLL.ROL_WEBMASTER;
@@ -293,7 +291,6 @@ namespace TLL
             throw new ExcepcionNoAutorizada_TLL("permiso_sin_permiso_gestionar");
         }
 
-        // Para cada permiso, los roles y grupos que lo incluyen directamente.
         private static Dictionary<string, List<string>> IndexarPadres(IEnumerable<PermisoAbstracto_TE> permisos)
         {
             var indice = new Dictionary<string, List<string>>();

@@ -103,7 +103,6 @@ namespace TLL
             if (respaldo == null) throw new ExcepcionTraducible_TLL("respaldo_no_existe");
             if (!servidor.ArchivoExiste(respaldo.Ruta)) throw new ExcepcionTraducible_TLL("respaldo_archivo_falta");
 
-            // Antes de tocar nada se comprueba que el archivo se pueda leer: una copia dañada no debe destruir la base actual.
             try
             {
                 servidor.Verificar(respaldo.Ruta);
